@@ -2,7 +2,7 @@
 
 ## 2026-10-19 (Sidd)
 - Project renamed to NAPOR: Risk Assessment. NAPOR is the underlying engine; this project applies it to risk
-  assessment. Updated README, AGENT.md and the workbook title. Repository name stays `napor`.
+  assessment. Updated README, AGENT.md and the workbook title. Repository renamed on GitHub to `siddraw/NAPOR-risk-assessment`.
 
 ## 2026-10-19 (weekly agent)
 Data updates only; no model rules changed.
