@@ -1,0 +1,124 @@
+[
+ {
+  "id": "F001",
+  "made_on": "2026-10-14",
+  "news_through": "2026-10-11",
+  "question": "Will Iran hit back for the US strike that disabled a blockade runner in the Gulf of Oman (Oct 10-11, event #104)?",
+  "resolves_yes_if": "Between Oct 11 and Oct 16 (inclusive), Iran (IRGC or Iranian state forces) carries out, or officially claims, a strike or attack on US forces, a US base, or a US-flagged or US-escorted ship, as reported by an allowed outlet or official statement. Attacks on other commercial shipping by unknown attackers do not count.",
+  "deadline": "2026-10-16",
+  "probability": 0.25,
+  "basis": "Phase model (best in backtest): in the current holding pattern 0 of 2 hostile acts drew a reply -> (0+1)/(2+2) = 25%. For comparison, naval-pressure moves in ALL phases drew a reply 2 of 3 (67%). Also: Trump says no US strikes before Nov 3; Iran is reviewing the US counter-offer.",
+  "option": "D",
+  "related_events": [
+   104
+  ],
+  "outcome": "NO",
+  "resolved_on": "2026-10-19",
+  "resolution_note": "NO. No allowed outlet or official statement reports an Iranian (IRGC or state) strike or attack on US forces, a US base, or a US-flagged or US-escorted ship during Oct 11-16. Al Jazeera (Oct 17) lists the week's attacks as all on commercial ships and says the US had not responded to them. Close call to note: Iran's security chief said (Oct 11) Iran was striking ships in the 'US-backed' oil shuttle, and the IRGC said one tanker hit on Oct 17-18 was crossing 'with US support'; no outlet says any ship hit Oct 11-16 was US-flagged or under US warship escort, and the Oct 17-18 claim falls after the deadline. CENTCOM's Oct 14 statement about a dhow 'targeting' US ships refers to Oct 6 surveillance, before the window.",
+  "brier": 0.062,
+  "sources": [
+   "https://www.aljazeera.com/news/2026/10/17/us-and-iran-both-claim-control-of-strait-of-hormuz-amid-attacks-on-vessels",
+   "https://www.aljazeera.com/economy/2026/10/12/iran-sets-crosshairs-on-us-uae-oil-shuttle-out-of-strait-of-hormuz",
+   "https://www.aljazeera.com/news/2026/10/18/iran-says-two-tankers-catch-fire-after-hitting-mines-in-strait-of-hormuz",
+   "https://www.timesofisrael.com/liveblog_entry/us-says-it-destroyed-iranian-affiliated-vessel-conducting-surveillance-last-week"
+  ]
+ },
+ {
+  "id": "F002",
+  "made_on": "2026-10-14",
+  "news_through": "2026-10-11",
+  "question": "Will there be at least one new attack on a commercial ship in or near the Strait of Hormuz / Gulf (by Iran or an unidentified attacker) during Oct 12-18?",
+  "resolves_yes_if": "An allowed outlet, UKMTO or CENTCOM reports at least one new projectile, drone, mine or boarding attack on a commercial vessel in the Gulf, Strait of Hormuz or Gulf of Oman dated Oct 12-18, not attributed to the US. Houthi attacks in the Red Sea do not count.",
+  "deadline": "2026-10-18",
+  "probability": 0.83,
+  "basis": "Baseline: 8 such acts in 4.6 weeks of the current phase = 1.8 per week. Chance of at least one in a week (Poisson) = 1 - e^-1.8 = 83%.",
+  "option": "A",
+  "related_events": [
+   84,
+   90,
+   94,
+   96,
+   100,
+   101,
+   103,
+   105
+  ],
+  "outcome": "YES",
+  "resolved_on": "2026-10-19",
+  "resolution_note": "YES. On Oct 13 the Singapore-flagged container ship GFS Pride was hit by a projectile in the Strait of Hormuz and sank (Reuters, citing Singapore's MPA; all 21 crew safe), and UKMTO reported a tanker hit the same day (Al Jazeera). CENTCOM said an IRGC projectile hit GFS Pride. More attacks followed (Oct 16-17 off Saudi Arabia; UKMTO counted 10-12 in the week to Oct 16).",
+  "brier": 0.029,
+  "sources": [
+   "https://www.internazionale.it/ultime-notizie-reuters/2026/10/14/container-ship-sinks-near-hormuz-after-being-hit-by-projectile-sources-say",
+   "https://www.aljazeera.com/news/2026/10/14/iran-steps-up-hormuz-surveillance-attacks-soar-oil-flows-crash-again",
+   "https://www.aljazeera.com/news/2026/10/17/us-and-iran-both-claim-control-of-strait-of-hormuz-amid-attacks-on-vessels",
+   "https://www.cbsnews.com/live-updates/iran-war-us-trump-strait-of-hormuz-yemen-houthis-saudi-arabia/"
+  ]
+ },
+ {
+  "id": "F003",
+  "made_on": "2026-10-19",
+  "news_through": "2026-10-18",
+  "question": "Will the US strike a target on Iranian land or in Iranian territorial waters between Oct 20 and Nov 3 (inclusive)?",
+  "resolves_yes_if": "An allowed outlet or an official US statement reports a US strike (air, missile, drone or naval gunfire) on a target on Iranian soil, an Iranian island, or in an Iranian port or territorial waters, dated Oct 20-Nov 3. Blockade enforcement against ships at sea outside Iranian territorial waters, seizures, and strikes by Israel alone do not count.",
+  "deadline": "2026-11-03",
+  "probability": 0.28,
+  "basis": "Phase base rate: in the holding pattern (since Sep 10) there have been 0 US strikes on Iranian land in 5 full weeks -> weekly chance (0+1)/(5+2) = 14%; over 15 days 1-(1-0.14)^(15/7) = 28%. Not in the model: Trump's public pledge of no strikes before Nov 3 (#97) and reported strike plans (#111).",
+  "option": "F",
+  "related_events": [
+   97,
+   111
+  ],
+  "outcome": null,
+  "resolved_on": null,
+  "resolution_note": null,
+  "brier": null
+ },
+ {
+  "id": "F004",
+  "made_on": "2026-10-19",
+  "news_through": "2026-10-18",
+  "question": "Will there be at least one new attack on a commercial ship in or near the Strait of Hormuz / Gulf (by Iran or an unidentified attacker) during Oct 19-25?",
+  "resolves_yes_if": "An allowed outlet, UKMTO or CENTCOM reports at least one new projectile, drone, mine or boarding attack on a commercial vessel in the Gulf, Strait of Hormuz or Gulf of Oman dated Oct 19-25, not attributed to the US. Houthi attacks in the Red Sea do not count.",
+  "deadline": "2026-10-25",
+  "probability": 0.89,
+  "basis": "Baseline: 12 logged attack rows in 5.6 weeks of the current phase = 2.2 per week; chance of at least one in a week (Poisson) = 1 - e^-2.2 = 89%. Logged rows under-count single attacks (UKMTO counted 10-12 in the week to Oct 16), so this is likely conservative. Same method as F002.",
+  "option": "A",
+  "related_events": [
+   84,
+   90,
+   94,
+   96,
+   100,
+   101,
+   103,
+   105,
+   109,
+   112,
+   113,
+   114
+  ],
+  "outcome": null,
+  "resolved_on": null,
+  "resolution_note": null,
+  "brier": null
+ },
+ {
+  "id": "F005",
+  "made_on": "2026-10-19",
+  "news_through": "2026-10-18",
+  "question": "Will Iran attack US forces, a US base, or a US-flagged or US Navy-escorted ship between Oct 19 and Nov 3 (inclusive)?",
+  "resolves_yes_if": "Iran (IRGC or Iranian state forces) carries out, or officially claims, a strike or attack on US forces, a US base, a US-flagged ship, or a ship that an allowed outlet or CENTCOM says was under US Navy escort at the time, dated Oct 19-Nov 3. Attacks on other commercial ships (including ships only 'coordinating with' or 'supported by' the US), surveillance or warnings, and Houthi attacks do not count.",
+  "deadline": "2026-11-03",
+  "probability": 0.3,
+  "basis": "Phase base rate: 0 Iranian attacks on US forces in 5 full weeks of the holding pattern (last one: Jordan base, Sep 8-9, #80) -> weekly chance 14%; over 16 days = 30%. Not in the model: Iran's stated wish to hurt the US before the midterms through shipping and oil prices, rather than direct attacks.",
+  "option": "A",
+  "related_events": [
+   80,
+   113
+  ],
+  "outcome": null,
+  "resolved_on": null,
+  "resolution_note": null,
+  "brier": null
+ }
+]

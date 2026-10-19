@@ -1,0 +1,422 @@
+[
+ {
+  "report_id": "R0219",
+  "published": "2026-10-14",
+  "outlet": "Times of Israel (Reuters liveblog)",
+  "kind": "Independent outlet",
+  "headline": "US says it destroyed Iranian-affiliated vessel conducting surveillance last week",
+  "url": "https://www.timesofisrael.com/liveblog_entry/us-says-it-destroyed-iranian-affiliated-vessel-conducting-surveillance-last-week",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 106,
+  "candidates": [
+   {
+    "score": 0.289,
+    "event_id": 105,
+    "date": "2026-10-11",
+    "detail": "UKMTO: an unidentified projectile hits an outbound tanker in the strait; separately the UA"
+   },
+   {
+    "score": 0.24,
+    "event_id": 104,
+    "date": "2026-10-11",
+    "detail": "CENTCOM releases footage of a fighter jet bombing the stern of a cargo ship it says was ru"
+   },
+   {
+    "score": 0.0,
+    "event_id": 103,
+    "date": "2026-10-10",
+    "detail": "IRGC Navy CLAIMS an unnamed supertanker on an unauthorised route hit a naval mine and caug"
+   }
+  ],
+  "match_score": 0.289,
+  "seen": "filed by matcher (not yet confirmed by a person)",
+  "status": "confirmed by weekly agent 2026-10-19: logged as new event #106 (sources in audit_sources.py)",
+  "received": "2026-10-19"
+ },
+ {
+  "report_id": "R0220",
+  "published": "2026-10-08",
+  "outlet": "Treasury",
+  "kind": "Official statement",
+  "headline": "Operation Economic Outcast Neutralizes Iranian Regime's Remaining Shadow Fleet Network",
+  "url": "https://home.treasury.gov/news/press-releases/sb0653/",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 106,
+  "candidates": [
+   {
+    "score": 0.452,
+    "event_id": 97,
+    "date": "2026-10-08",
+    "detail": "Trump says on Truth Social the US 'will not be attacking Iran at any time prior to the Mid"
+   },
+   {
+    "score": 0.368,
+    "event_id": 95,
+    "date": "2026-10-06",
+    "detail": "VP Vance tells Reuters Iran must make a 'meaningful' cut to uranium enrichment to end the "
+   },
+   {
+    "score": 0.282,
+    "event_id": 96,
+    "date": "2026-10-07",
+    "detail": "UKMTO reports a tanker struck off northern Qatar, well west of the strait"
+   }
+  ],
+  "match_score": 0.452,
+  "seen": "filed by matcher (not yet confirmed by a person)",
+  "status": "confirmed by weekly agent 2026-10-19: logged as new event #107 (sources in audit_sources.py)",
+  "received": "2026-10-19"
+ },
+ {
+  "report_id": "R0221",
+  "published": "2026-10-11",
+  "outlet": "Times of Israel (Reuters liveblog)",
+  "kind": "Independent outlet",
+  "headline": "Iran says US response to its proposal to reopen Hormuz was 'insufficient'",
+  "url": "https://www.timesofisrael.com/liveblog_entry/iran-says-us-response-to-its-proposal-to-reopen-hormuz-was-insufficient/",
+  "decision": "POSSIBLE MATCH - human should check",
+  "matched_event": 103,
+  "proposed_new_event_id": null,
+  "candidates": [
+   {
+    "score": 0.592,
+    "event_id": 103,
+    "date": "2026-10-10",
+    "detail": "IRGC Navy CLAIMS an unnamed supertanker on an unauthorised route hit a naval mine and caug"
+   },
+   {
+    "score": 0.536,
+    "event_id": 101,
+    "date": "2026-10-09",
+    "detail": "IRGC Navy CLAIMS it hit the LPG carrier NV Sunshine on an 'illegal route' and warns ships "
+   },
+   {
+    "score": 0.484,
+    "event_id": 99,
+    "date": "2026-10-09",
+    "detail": "FM Araghchi says Iran is reviewing the US counter-proposal and will answer 'within the nex"
+   }
+  ],
+  "match_score": 0.592,
+  "seen": "filed by matcher (not yet confirmed by a person)",
+  "status": "confirmed by weekly agent 2026-10-19: logged as new event #108 (sources in audit_sources.py)",
+  "received": "2026-10-19"
+ },
+ {
+  "report_id": "R0222",
+  "published": "2026-10-12",
+  "outlet": "Al Jazeera",
+  "kind": "Independent outlet",
+  "headline": "Iran sets crosshairs on 'US-UAE' oil shuttle out of Strait of Hormuz",
+  "url": "https://www.aljazeera.com/economy/2026/10/12/iran-sets-crosshairs-on-us-uae-oil-shuttle-out-of-strait-of-hormuz",
+  "decision": "POSSIBLE MATCH - human should check",
+  "matched_event": 103,
+  "proposed_new_event_id": null,
+  "candidates": [
+   {
+    "score": 0.573,
+    "event_id": 103,
+    "date": "2026-10-10",
+    "detail": "IRGC Navy CLAIMS an unnamed supertanker on an unauthorised route hit a naval mine and caug"
+   },
+   {
+    "score": 0.528,
+    "event_id": 105,
+    "date": "2026-10-11",
+    "detail": "UKMTO: an unidentified projectile hits an outbound tanker in the strait; separately the UA"
+   },
+   {
+    "score": 0.396,
+    "event_id": 100,
+    "date": "2026-10-09",
+    "detail": "Unidentified projectile hits the laden supertanker GEM NO.2 at anchor off the UAE, outside"
+   }
+  ],
+  "match_score": 0.573,
+  "seen": "filed by matcher (not yet confirmed by a person)",
+  "status": "needs human check: IRGC claims of tanker strikes overnight Oct 11-12 (one near Sohar; three 'mine' hits over the weekend) may be the same incidents as #103 (Oct 10 IRGC mine claim) and/or #105 (Oct 11 UKMTO tanker hit). Not logged.",
+  "received": "2026-10-19"
+ },
+ {
+  "report_id": "R0223",
+  "published": "2026-10-14",
+  "outlet": "Reuters via Internazionale",
+  "kind": "Independent outlet",
+  "headline": "Container ship sinks near Hormuz after being hit by projectile, sources say",
+  "url": "https://www.internazionale.it/ultime-notizie-reuters/2026/10/14/container-ship-sinks-near-hormuz-after-being-hit-by-projectile-sources-say",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 106,
+  "candidates": [
+   {
+    "score": 0.45,
+    "event_id": 105,
+    "date": "2026-10-11",
+    "detail": "UKMTO: an unidentified projectile hits an outbound tanker in the strait; separately the UA"
+   },
+   {
+    "score": 0.307,
+    "event_id": 104,
+    "date": "2026-10-11",
+    "detail": "CENTCOM releases footage of a fighter jet bombing the stern of a cargo ship it says was ru"
+   },
+   {
+    "score": 0.0,
+    "event_id": 103,
+    "date": "2026-10-10",
+    "detail": "IRGC Navy CLAIMS an unnamed supertanker on an unauthorised route hit a naval mine and caug"
+   }
+  ],
+  "match_score": 0.45,
+  "seen": "filed by matcher (not yet confirmed by a person)",
+  "status": "confirmed by weekly agent 2026-10-19: logged as new event #109 (sources in audit_sources.py)",
+  "received": "2026-10-19"
+ },
+ {
+  "report_id": "R0224",
+  "published": "2026-10-15",
+  "outlet": "Treasury",
+  "kind": "Official statement",
+  "headline": "Operation Economic Outcast Targets Iran's International Financial Networks and Shadow Banking Architecture",
+  "url": "https://home.treasury.gov/news/press-releases/sb0660",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 106,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 105,
+    "date": "2026-10-11",
+    "detail": "UKMTO: an unidentified projectile hits an outbound tanker in the strait; separately the UA"
+   },
+   {
+    "score": 0.0,
+    "event_id": 104,
+    "date": "2026-10-11",
+    "detail": "CENTCOM releases footage of a fighter jet bombing the stern of a cargo ship it says was ru"
+   },
+   {
+    "score": 0.0,
+    "event_id": 103,
+    "date": "2026-10-10",
+    "detail": "IRGC Navy CLAIMS an unnamed supertanker on an unauthorised route hit a naval mine and caug"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "filed by matcher (not yet confirmed by a person)",
+  "status": "confirmed by weekly agent 2026-10-19: logged as new event #110 (sources in audit_sources.py)",
+  "received": "2026-10-19"
+ },
+ {
+  "report_id": "R0225",
+  "published": "2026-10-16",
+  "outlet": "CBS News",
+  "kind": "Independent outlet",
+  "headline": "Iran says Strait of Hormuz reopening, seven-day ceasefire conditions still on the table",
+  "url": "https://www.cbsnews.com/live-updates/iran-war-us-trump-strait-of-hormuz-yemen-houthis-saudi-arabia/",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 106,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 105,
+    "date": "2026-10-11",
+    "detail": "UKMTO: an unidentified projectile hits an outbound tanker in the strait; separately the UA"
+   },
+   {
+    "score": 0.0,
+    "event_id": 104,
+    "date": "2026-10-11",
+    "detail": "CENTCOM releases footage of a fighter jet bombing the stern of a cargo ship it says was ru"
+   },
+   {
+    "score": 0.0,
+    "event_id": 103,
+    "date": "2026-10-10",
+    "detail": "IRGC Navy CLAIMS an unnamed supertanker on an unauthorised route hit a naval mine and caug"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "filed by matcher (not yet confirmed by a person)",
+  "status": "confirmed by weekly agent 2026-10-19: logged as new event #111 (sources in audit_sources.py)",
+  "received": "2026-10-19"
+ },
+ {
+  "report_id": "R0226",
+  "published": "2026-10-17",
+  "outlet": "Al Jazeera",
+  "kind": "Independent outlet",
+  "headline": "US and Iran both claim control of Strait of Hormuz amid attacks on vessels",
+  "url": "https://www.aljazeera.com/news/2026/10/17/us-and-iran-both-claim-control-of-strait-of-hormuz-amid-attacks-on-vessels",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 106,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 105,
+    "date": "2026-10-11",
+    "detail": "UKMTO: an unidentified projectile hits an outbound tanker in the strait; separately the UA"
+   },
+   {
+    "score": 0.0,
+    "event_id": 104,
+    "date": "2026-10-11",
+    "detail": "CENTCOM releases footage of a fighter jet bombing the stern of a cargo ship it says was ru"
+   },
+   {
+    "score": 0.0,
+    "event_id": 103,
+    "date": "2026-10-10",
+    "detail": "IRGC Navy CLAIMS an unnamed supertanker on an unauthorised route hit a naval mine and caug"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "filed by matcher (not yet confirmed by a person)",
+  "status": "confirmed by weekly agent 2026-10-19: logged as new event #112 (sources in audit_sources.py)",
+  "received": "2026-10-19"
+ },
+ {
+  "report_id": "R0227",
+  "published": "2026-10-18",
+  "outlet": "Al Jazeera",
+  "kind": "Independent outlet",
+  "headline": "Iran says two tankers catch fire after hitting mines in Strait of Hormuz",
+  "url": "https://www.aljazeera.com/news/2026/10/18/iran-says-two-tankers-catch-fire-after-hitting-mines-in-strait-of-hormuz",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 106,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 105,
+    "date": "2026-10-11",
+    "detail": "UKMTO: an unidentified projectile hits an outbound tanker in the strait; separately the UA"
+   },
+   {
+    "score": 0.0,
+    "event_id": 104,
+    "date": "2026-10-11",
+    "detail": "CENTCOM releases footage of a fighter jet bombing the stern of a cargo ship it says was ru"
+   },
+   {
+    "score": 0.0,
+    "event_id": 103,
+    "date": "2026-10-10",
+    "detail": "IRGC Navy CLAIMS an unnamed supertanker on an unauthorised route hit a naval mine and caug"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "filed by matcher (not yet confirmed by a person)",
+  "status": "confirmed by weekly agent 2026-10-19: logged as new event #113 (sources in audit_sources.py)",
+  "received": "2026-10-19"
+ },
+ {
+  "report_id": "R0228",
+  "published": "2026-10-18",
+  "outlet": "CBS News",
+  "kind": "Independent outlet",
+  "headline": "Iran says Strait of Hormuz reopening, seven-day ceasefire conditions still on the table",
+  "url": "https://www.cbsnews.com/live-updates/iran-war-us-trump-strait-of-hormuz-yemen-houthis-saudi-arabia/",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 106,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 105,
+    "date": "2026-10-11",
+    "detail": "UKMTO: an unidentified projectile hits an outbound tanker in the strait; separately the UA"
+   },
+   {
+    "score": 0.0,
+    "event_id": 104,
+    "date": "2026-10-11",
+    "detail": "CENTCOM releases footage of a fighter jet bombing the stern of a cargo ship it says was ru"
+   },
+   {
+    "score": 0.0,
+    "event_id": 103,
+    "date": "2026-10-10",
+    "detail": "IRGC Navy CLAIMS an unnamed supertanker on an unauthorised route hit a naval mine and caug"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "filed by matcher (not yet confirmed by a person)",
+  "status": "confirmed by weekly agent 2026-10-19: logged as new event #114 (sources in audit_sources.py)",
+  "received": "2026-10-19"
+ },
+ {
+  "report_id": "R0229",
+  "published": "2026-10-18",
+  "outlet": "CBS News",
+  "kind": "Independent outlet",
+  "headline": "Iran says Strait of Hormuz reopening, seven-day ceasefire conditions still on the table",
+  "url": "https://www.cbsnews.com/live-updates/iran-war-us-trump-strait-of-hormuz-yemen-houthis-saudi-arabia/",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 106,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 105,
+    "date": "2026-10-11",
+    "detail": "UKMTO: an unidentified projectile hits an outbound tanker in the strait; separately the UA"
+   },
+   {
+    "score": 0.0,
+    "event_id": 104,
+    "date": "2026-10-11",
+    "detail": "CENTCOM releases footage of a fighter jet bombing the stern of a cargo ship it says was ru"
+   },
+   {
+    "score": 0.0,
+    "event_id": 103,
+    "date": "2026-10-10",
+    "detail": "IRGC Navy CLAIMS an unnamed supertanker on an unauthorised route hit a naval mine and caug"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "filed by matcher (not yet confirmed by a person)",
+  "status": "confirmed by weekly agent 2026-10-19: logged as new event #115 (sources in audit_sources.py)",
+  "received": "2026-10-19"
+ },
+ {
+  "report_id": "R0252",
+  "published": "2026-10-18",
+  "outlet": "Al Jazeera (with AFP)",
+  "kind": "Independent outlet",
+  "headline": "Iran says two tankers catch fire after hitting mines in Strait of Hormuz",
+  "url": "https://www.aljazeera.com/news/2026/10/18/iran-says-two-tankers-catch-fire-after-hitting-mines-in-strait-of-hormuz",
+  "decision": "SAME EVENT",
+  "matched_event": 113,
+  "proposed_new_event_id": null,
+  "candidates": [
+   {
+    "score": 0.647,
+    "event_id": 113,
+    "date": "2026-10-17",
+    "detail": "IRGC CLAIMS two supertankers, each carrying about 2 million barrels, hit naval mines on an"
+   },
+   {
+    "score": 0.637,
+    "event_id": 115,
+    "date": "2026-10-18",
+    "detail": "FM Araghchi says Tehran is reviewing US 'comments' on its proposal; if the US complies, 't"
+   },
+   {
+    "score": 0.31,
+    "event_id": 114,
+    "date": "2026-10-18",
+    "detail": "UKMTO: a tug is struck by two unknown projectiles off the UAE; damaged but continuing its "
+   }
+  ],
+  "match_score": 0.647,
+  "seen": "filed by matcher (not yet confirmed by a person)",
+  "status": "needs human check: Iranian army claim only, no ship names; could overlap #112 (tankers hit off Saudi Arabia Oct 16-17) or be separate Gulf of Oman incidents. Not logged.",
+  "received": "2026-10-19"
+ }
+]

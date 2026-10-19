@@ -1,0 +1,212 @@
+[
+ {
+  "id": "S001",
+  "opened_on": "2026-10-18",
+  "news_through": "2026-10-11",
+  "situation": "Holding pattern, Oct 11: the US has just disabled a blockade runner (#104); attacks on shipping continue; Trump says no US strikes before Nov 3; Iran says it will answer the US counter-offer within days. What does the US do next (Oct 12-25)?",
+  "prompted_by_event": 104,
+  "phase": "Holding pattern",
+  "intensity": "Medium (8 pts)",
+  "options_snapshot": {
+   "A": {
+    "name": "Hold: no new action",
+    "1. Harm to people": "Ship crews: attacks on shipping continue at ~1.8 a week (e.g. On Peace, Oct 6: 12 crew injured). No new US act to answer.",
+    "2. Escalation": "No new US trigger. Iranian or unidentified attacks on shipping keep happening anyway (baseline). Whether holding back changes Iran's behaviour: not measured.",
+    "3. Military cost": "No added interceptor use from a US act; the blockade and patrols continue to cost what they cost now (not measured).",
+    "4. Economic harm": "Baseline: ~1.8 attacks on shipping a week in the current phase. Oil prices and shipping costs: not measured.",
+    "5. Political / diplomatic": "Iran is expected to answer the US counter-offer; Trump's no-strike pledge stands until Nov 3. Strain with allies: not measured.",
+    "Pros (analyst notes)": "No new US act for Iran to answer, so no added risk of retaliation from it. Keeps Trump's stated no-strike pledge before Nov 3. Leaves room for Iran's expected reply to the US counter-offer. Uses no interceptors.",
+    "Other notes on harms (analyst notes)": "Attacks on shipping continue at about 1-2 a week (baseline), injuring crews (On Peace: 12 hurt) and raising shipping risk. Whether holding back weakens deterrence cannot be measured from this log.",
+    "Evidence strength": "No data"
+   },
+   "B": {
+    "name": "Diplomatic move",
+    "1. Harm to people": "No direct casualties from the move itself.",
+    "2. Escalation": "Iran struck within 7 days after 2 of 6 past conciliatory US moves (timing only, not shown to be replies). Reply rate to diplomacy: not measured (not in the census).",
+    "3. Military cost": "No interceptor use expected from the move itself.",
+    "4. Economic harm": "Attacks on shipping, 7 days before -> after past cases: 2 -> 5 (total). Oil prices and shipping costs: not measured.",
+    "5. Political / diplomatic": "Talks or diplomatic moves within 14 days after: 4 of 6. Strain with allies (Jordan, Gulf states, UK): not measured.",
+    "Pros (analyst notes)": "No direct casualties. In the log, US diplomatic moves were usually followed by more diplomacy within two weeks (see measured column). A deal is the only option that addresses all the goals at once: the June memorandum included phased Hormuz reopening and an end to the blockade.",
+    "Other notes on harms (analyst notes)": "Past deals did not hold: the April ceasefire was violated the same day, and the June deal collapsed on Jul 7 (Iran later said it never took effect). Shipping attacks continued during talks. Political costs of concessions are not measured here.",
+    "Evidence strength": "6 past cases (timing only)"
+   },
+   "C": {
+    "name": "New sanctions",
+    "1. Harm to people": "No direct casualties. Harm to ordinary Iranians from sanctions: not measured.",
+    "2. Escalation": "Iran replied within ~5 days: 0 of 2 (0%) (range 0%-66%). Fast (within 2 days): No past replies to measure. Back-and-forth past one reply: No past replies. In the current quiet phase: 0 of 2.",
+    "3. Military cost": "No interceptor use expected from the move itself.",
+    "4. Economic harm": "Attacks on shipping, 7 days before -> after past cases: 1 -> 4 (total). Oil prices and shipping costs: not measured.",
+    "5. Political / diplomatic": "Talks or diplomatic moves within 14 days after: 2 of 2. Strain with allies (Jordan, Gulf states, UK): not measured.",
+    "Pros (analyst notes)": "Economic pressure without casualties or interceptor use. Neither past case drew an Iranian military reply.",
+    "Other notes on harms (analyst notes)": "No measured effect on shipping attacks (they rose in the following week, during the record week, so this may be coincidence). Possible economic harm to ordinary Iranians is not measured. Iran's president called talks 'futile' days later (no causal link shown).",
+    "Evidence strength": "Very thin"
+   },
+   "D": {
+    "name": "Naval pressure (blockade enforcement, transits, seizures)",
+    "1. Harm to people": "Iranian replies that hurt people: 0 of 2. US personnel hurt in these logged replies: 0 of 2 (US troops were killed on Jul 17, #65, during the July campaign, which is outside these counts). Civilian harm reported in the US act itself: 0 of 3 reported.",
+    "2. Escalation": "Iran replied within ~5 days: 2 of 3 (67%) (range 21%-94%). Fast (within 2 days): 0 of 2. Back-and-forth past one reply: ~33% (all chains, n=15). In the current quiet phase: Not tested in this phase yet.",
+    "3. Military cost": "Patriot interceptors: ~20 if the reply is a missile salvo like Sep 8-9. Confirmed US equipment losses in past replies: none logged.",
+    "4. Economic harm": "Attacks on shipping, 7 days before -> after past cases: 3 -> 3 (total). Oil prices and shipping costs: not measured.",
+    "5. Political / diplomatic": "Talks or diplomatic moves within 14 days after: 0 of 3. Strain with allies (Jordan, Gulf states, UK): not measured.",
+    "Pros (analyst notes)": "Aims directly at the blockade and Hormuz goals. In the April cases, no direct Iranian strike followed within 7 days, and the replies that came caused no casualties (0 of 2).",
+    "Other notes on harms (analyst notes)": "Iran answered 2 of 3 past cases at sea (re-closing the Strait, seizing ships), so pressure at sea can spread at sea. Risk to the crews of disabled ships. The Oct 10-11 case is still open (forecast F001).",
+    "Evidence strength": "Very thin"
+   },
+   "E": {
+    "name": "Strike Iranian shipping (e.g. tankers)",
+    "1. Harm to people": "Iranian replies that hurt people: 0 of 1. US personnel hurt in these logged replies: 0 of 1 (US troops were killed on Jul 17, #65, during the July campaign, which is outside these counts). Civilian harm reported in the US act itself: 0 of 2 reported.",
+    "2. Escalation": "Iran replied within ~5 days: 2 of 2 (100%) (range 34%-100%). Fast (within 2 days): 1 of 1. Back-and-forth past one reply: ~33% (all chains, n=15). In the current quiet phase: Not tested in this phase yet.",
+    "3. Military cost": "Patriot interceptors: ~30 if the reply is a missile salvo like Sep 8-9. Confirmed US equipment losses in past replies: Sep 8-9 Jordan: 1 A-10 lost a wing, ~8 F-15s lightly damaged (CBS, anonymous US sources).",
+    "4. Economic harm": "Attacks on shipping, 7 days before -> after past cases: 1 -> 0 (total). Oil prices and shipping costs: not measured.",
+    "5. Political / diplomatic": "Talks or diplomatic moves within 14 days after: 0 of 2. Strain with allies (Jordan, Gulf states, UK): not measured.",
+    "Pros (analyst notes)": "In both past cases, logged attacks on shipping dropped to zero the following week. Hits IRGC oil revenue (US claim). Crews were told to abandon ship before the Sep 8 strike, and no deaths were reported.",
+    "Other notes on harms (analyst notes)": "Both cases drew Iranian missile fire within days (at a US warship, then at a Jordan base, where an A-10 was badly damaged, ~8 F-15s were lightly damaged and ~30 Patriots were used). Possible environmental damage from destroyed laden tankers is not measured.",
+    "Evidence strength": "Very thin"
+   },
+   "F": {
+    "name": "Strike military sites (equipment, not people)",
+    "1. Harm to people": "Iranian replies that hurt people: 1 of 4 (#62 Qatar: 3 wounded incl. a child). US personnel hurt in these logged replies: 0 of 4 (US troops were killed on Jul 17, #65, during the July campaign, which is outside these counts). Civilian harm reported in the US act itself: 1 of 5: #60 Two bridges among the 90 targets (civilian infrastructure); no casualty figure in the log.",
+    "2. Escalation": "Iran replied within ~5 days: 5 of 5 (100%) (range 57%-100%). Fast (within 2 days): 3 of 4. Back-and-forth past one reply: ~33% (all chains, n=15). In the current quiet phase: Not tested in this phase yet.",
+    "3. Military cost": "Patriot interceptors: ~30 if the reply is a missile salvo like Sep 8-9. Confirmed US equipment losses in past replies: none logged.",
+    "4. Economic harm": "Attacks on shipping, 7 days before -> after past cases: 3 -> 1 (total). Oil prices and shipping costs: not measured.",
+    "5. Political / diplomatic": "Talks or diplomatic moves within 14 days after: 2 of 5. Strain with allies (Jordan, Gulf states, UK): not measured.",
+    "Pros (analyst notes)": "Aims to reduce Iran's ability to launch missiles, drones and mines (military effect is claimed by CENTCOM, not independently measured). In 1 of 4 logged replies did anyone get hurt.",
+    "Other notes on harms (analyst notes)": "Every past case drew a reply; Iranian strikes followed within 7 days in most. One logged reply wounded civilians in Qatar. One past wave hit bridges (civilian infrastructure). Untested in the current quiet phase: it could restart the cycle.",
+    "Evidence strength": "Thin"
+   },
+   "G": {
+    "name": "Strike that risks killing personnel",
+    "1. Harm to people": "Iranian replies that hurt people: 1 of 4 (#5 Tel Aviv: 1 killed, 27 injured (Times of Israel); Kuwait airport: mino). US personnel hurt in these logged replies: 0 of 4 (US troops were killed on Jul 17, #65, during the July campaign, which is outside these counts). Civilian harm reported in the US act itself: 2 of 4: #2 Minab girls' school: Iranian authorities say 168-175 killed; no country has claimed the strike (AP, NBC); #74 Kuhestak wedding: Iranian figures 4-5 killed incl. children, 50+ wounded; the US said it was investigating.",
+    "2. Escalation": "Iran replied within ~5 days: 4 of 4 (100%) (range 51%-100%). Fast (within 2 days): 4 of 4. Back-and-forth past one reply: ~33% (all chains, n=15). In the current quiet phase: Not tested in this phase yet.",
+    "3. Military cost": "Patriot interceptors: ~30 if the reply is a missile salvo like Sep 8-9. Confirmed US equipment losses in past replies: Jun 9: a US Apache helicopter downed over the Strait (crew rescued).",
+    "4. Economic harm": "Attacks on shipping, 7 days before -> after past cases: 1 -> 1 (total). Oil prices and shipping costs: not measured.",
+    "5. Political / diplomatic": "Talks or diplomatic moves within 14 days after: 1 of 4. Strain with allies (Jordan, Gulf states, UK): not measured.",
+    "Pros (analyst notes)": "Can remove commanders or units preparing attacks (e.g. the Aug 30 Larak strike hit launchers said to be preparing sea mines). Military effect is claimed, not independently measured.",
+    "Other notes on harms (analyst notes)": "Every past case drew a fast reply, mostly the same day. Civilians were reported killed in 2 of 4 past cases (Iranian figures). One logged reply killed a civilian in Tel Aviv. Highest risk of a longer back-and-forth.",
+    "Evidence strength": "Thin"
+   },
+   "H": {
+    "name": "Change force posture (deploy or withdraw)",
+    "1. Harm to people": "No direct casualties from the move itself.",
+    "2. Escalation": "Iran struck within 7 days after 0 of 3 past posture changes (all early October). Not tested as triggers.",
+    "3. Military cost": "No interceptor use expected from the move itself.",
+    "4. Economic harm": "Attacks on shipping, 7 days before -> after past cases: 5 -> 13 (total). Oil prices and shipping costs: not measured.",
+    "5. Political / diplomatic": "Talks or diplomatic moves within 14 days after: 3 of 3. Strain with allies (Jordan, Gulf states, UK): not measured.",
+    "Pros (analyst notes)": "No direct harm. Adding forces strengthens defence; pulling back reduces exposure (bombers left RAF Fairford after a suspected Iranian drone plot).",
+    "Other notes on harms (analyst notes)": "Deployments in early October were followed by more shipping attacks, but that was the record week anyway. No data on how Iran reads deployments or withdrawals.",
+    "Evidence strength": "3 past cases (timing only)"
+   }
+  },
+  "us_choice": null,
+  "us_choice_detail": null,
+  "choice_event_ids": [],
+  "outcome": null,
+  "sources": [],
+  "closed_on": null
+ },
+ {
+  "id": "S002",
+  "opened_on": "2026-10-19",
+  "news_through": "2026-10-18",
+  "situation": "Holding pattern, Oct 18: attacks on shipping are at a record (GFS Pride sunk Oct 13; UKMTO counted 10-12 attacks in the week to Oct 16) and the US has not answered them militarily; CBS reports strike plans that could use the 'mother of all bombs'; Trump's no-strike pledge runs to the Nov 3 midterms and he says he expects a deal after them; Iran is reviewing US 'comments' on its proposal. What does the US do in the two weeks after the midterms (Nov 4-17)?",
+  "prompted_by_event": 111,
+  "phase": "Holding pattern",
+  "intensity": "High (12 pts)",
+  "options_snapshot": {
+   "A": {
+    "name": "Hold: no new action",
+    "1. Harm to people": "Ship crews: attacks on shipping continue at ~2.2 a week (e.g. On Peace, Oct 6: 12 crew injured). No new US act to answer.",
+    "2. Escalation": "No new US trigger. Iranian or unidentified attacks on shipping keep happening anyway (baseline). Whether holding back changes Iran's behaviour: not measured.",
+    "3. Military cost": "No added interceptor use from a US act; the blockade and patrols continue to cost what they cost now (not measured).",
+    "4. Economic harm": "Baseline: ~2.2 attacks on shipping a week in the current phase. Oil prices and shipping costs: not measured.",
+    "5. Political / diplomatic": "Iran is expected to answer the US counter-offer; Trump's no-strike pledge stands until Nov 3. Strain with allies: not measured.",
+    "Pros (analyst notes)": "No new US act for Iran to answer, so no added risk of retaliation from it. Keeps Trump's stated no-strike pledge before Nov 3. Leaves room for Iran's expected reply to the US counter-offer. Uses no interceptors.",
+    "Other notes on harms (analyst notes)": "Attacks on shipping continue at about 1-2 a week (baseline), injuring crews (On Peace: 12 hurt) and raising shipping risk. Whether holding back weakens deterrence cannot be measured from this log.",
+    "Evidence strength": "No data"
+   },
+   "B": {
+    "name": "Diplomatic move",
+    "1. Harm to people": "No direct casualties from the move itself.",
+    "2. Escalation": "Iran struck within 7 days after 2 of 7 past conciliatory US moves (timing only, not shown to be replies). Reply rate to diplomacy: not measured (not in the census).",
+    "3. Military cost": "No interceptor use expected from the move itself.",
+    "4. Economic harm": "Attacks on shipping, 7 days before -> after past cases: 5 -> 9 (total). Oil prices and shipping costs: not measured.",
+    "5. Political / diplomatic": "Talks or diplomatic moves within 14 days after: 5 of 7. Strain with allies (Jordan, Gulf states, UK): not measured.",
+    "Pros (analyst notes)": "No direct casualties. In the log, US diplomatic moves were usually followed by more diplomacy within two weeks (see measured column). A deal is the only option that addresses all the goals at once: the June memorandum included phased Hormuz reopening and an end to the blockade.",
+    "Other notes on harms (analyst notes)": "Past deals did not hold: the April ceasefire was violated the same day, and the June deal collapsed on Jul 7 (Iran later said it never took effect). Shipping attacks continued during talks. Political costs of concessions are not measured here.",
+    "Evidence strength": "7 past cases (timing only)"
+   },
+   "C": {
+    "name": "New sanctions",
+    "1. Harm to people": "No direct casualties. Harm to ordinary Iranians from sanctions: not measured.",
+    "2. Escalation": "Iran replied within ~5 days: 0 of 2 (0%) (range 0%-66%). Fast (within 2 days): No past replies to measure. Back-and-forth past one reply: No past replies. In the current quiet phase: 0 of 2.",
+    "3. Military cost": "No interceptor use expected from the move itself.",
+    "4. Economic harm": "Attacks on shipping, 7 days before -> after past cases: 4 -> 8 (total). Oil prices and shipping costs: not measured.",
+    "5. Political / diplomatic": "Talks or diplomatic moves within 14 days after: 3 of 3. Strain with allies (Jordan, Gulf states, UK): not measured.",
+    "Pros (analyst notes)": "Economic pressure without casualties or interceptor use. Neither past case drew an Iranian military reply.",
+    "Other notes on harms (analyst notes)": "No measured effect on shipping attacks (they rose in the following week, during the record week, so this may be coincidence). Possible economic harm to ordinary Iranians is not measured. Iran's president called talks 'futile' days later (no causal link shown).",
+    "Evidence strength": "Very thin"
+   },
+   "D": {
+    "name": "Naval pressure (blockade enforcement, transits, seizures)",
+    "1. Harm to people": "Iranian replies that hurt people: 0 of 2. US personnel hurt in these logged replies: 0 of 2 (US troops were killed on Jul 17, #65, during the July campaign, which is outside these counts). Civilian harm reported in the US act itself: 0 of 4 reported.",
+    "2. Escalation": "Iran replied within ~5 days: 2 of 3 (67%) (range 21%-94%). Fast (within 2 days): 0 of 2. Back-and-forth past one reply: ~31% (all chains, n=16). In the current quiet phase: Not tested in this phase yet.",
+    "3. Military cost": "Patriot interceptors: ~20 if the reply is a missile salvo like Sep 8-9. Confirmed US equipment losses in past replies: none logged.",
+    "4. Economic harm": "Attacks on shipping, 7 days before -> after past cases: 7 -> 7 (total). Oil prices and shipping costs: not measured.",
+    "5. Political / diplomatic": "Talks or diplomatic moves within 14 days after: 1 of 4. Strain with allies (Jordan, Gulf states, UK): not measured.",
+    "Pros (analyst notes)": "Aims directly at the blockade and Hormuz goals. In the April cases, no direct Iranian strike followed within 7 days, and the replies that came caused no casualties (0 of 2).",
+    "Other notes on harms (analyst notes)": "Iran answered 2 of 3 past cases at sea (re-closing the Strait, seizing ships), so pressure at sea can spread at sea. Risk to the crews of disabled ships. The Oct 10-11 case drew no attack on US forces (forecast F001: NO), but shipping attacks surged the same week; whether that counts as a reply is not settled.",
+    "Evidence strength": "Very thin"
+   },
+   "E": {
+    "name": "Strike Iranian shipping (e.g. tankers)",
+    "1. Harm to people": "Iranian replies that hurt people: 0 of 1. US personnel hurt in these logged replies: 0 of 1 (US troops were killed on Jul 17, #65, during the July campaign, which is outside these counts). Civilian harm reported in the US act itself: 0 of 3 reported.",
+    "2. Escalation": "Iran replied within ~5 days: 2 of 2 (100%) (range 34%-100%). Fast (within 2 days): 1 of 1. Back-and-forth past one reply: ~31% (all chains, n=16). In the current quiet phase: Not tested in this phase yet.",
+    "3. Military cost": "Patriot interceptors: ~30 if the reply is a missile salvo like Sep 8-9. Confirmed US equipment losses in past replies: Sep 8-9 Jordan: 1 A-10 lost a wing, ~8 F-15s lightly damaged (CBS, anonymous US sources).",
+    "4. Economic harm": "Attacks on shipping, 7 days before -> after past cases: 2 -> 5 (total). Oil prices and shipping costs: not measured.",
+    "5. Political / diplomatic": "Talks or diplomatic moves within 14 days after: 1 of 3. Strain with allies (Jordan, Gulf states, UK): not measured.",
+    "Pros (analyst notes)": "In both past cases, logged attacks on shipping dropped to zero the following week. Hits IRGC oil revenue (US claim). Crews were told to abandon ship before the Sep 8 strike, and no deaths were reported.",
+    "Other notes on harms (analyst notes)": "Both cases drew Iranian missile fire within days (at a US warship, then at a Jordan base, where an A-10 was badly damaged, ~8 F-15s were lightly damaged and ~30 Patriots were used). Possible environmental damage from destroyed laden tankers is not measured.",
+    "Evidence strength": "Very thin"
+   },
+   "F": {
+    "name": "Strike military sites (equipment, not people)",
+    "1. Harm to people": "Iranian replies that hurt people: 1 of 4 (#62 Qatar: 3 wounded incl. a child). US personnel hurt in these logged replies: 0 of 4 (US troops were killed on Jul 17, #65, during the July campaign, which is outside these counts). Civilian harm reported in the US act itself: 1 of 5: #60 Two bridges among the 90 targets (civilian infrastructure); no casualty figure in the log.",
+    "2. Escalation": "Iran replied within ~5 days: 5 of 5 (100%) (range 57%-100%). Fast (within 2 days): 3 of 4. Back-and-forth past one reply: ~31% (all chains, n=16). In the current quiet phase: Not tested in this phase yet.",
+    "3. Military cost": "Patriot interceptors: ~30 if the reply is a missile salvo like Sep 8-9. Confirmed US equipment losses in past replies: none logged.",
+    "4. Economic harm": "Attacks on shipping, 7 days before -> after past cases: 3 -> 1 (total). Oil prices and shipping costs: not measured.",
+    "5. Political / diplomatic": "Talks or diplomatic moves within 14 days after: 2 of 5. Strain with allies (Jordan, Gulf states, UK): not measured.",
+    "Pros (analyst notes)": "Aims to reduce Iran's ability to launch missiles, drones and mines (military effect is claimed by CENTCOM, not independently measured). In 1 of 4 logged replies did anyone get hurt.",
+    "Other notes on harms (analyst notes)": "Every past case drew a reply; Iranian strikes followed within 7 days in most. One logged reply wounded civilians in Qatar. One past wave hit bridges (civilian infrastructure). Untested in the current quiet phase: it could restart the cycle.",
+    "Evidence strength": "Thin"
+   },
+   "G": {
+    "name": "Strike that risks killing personnel",
+    "1. Harm to people": "Iranian replies that hurt people: 1 of 4 (#5 Tel Aviv: 1 killed, 27 injured (Times of Israel); Kuwait airport: mino). US personnel hurt in these logged replies: 0 of 4 (US troops were killed on Jul 17, #65, during the July campaign, which is outside these counts). Civilian harm reported in the US act itself: 2 of 4: #2 Minab girls' school: Iranian authorities say 168-175 killed; no country has claimed the strike (AP, NBC); #74 Kuhestak wedding: Iranian figures 4-5 killed incl. children, 50+ wounded; the US said it was investigating.",
+    "2. Escalation": "Iran replied within ~5 days: 4 of 4 (100%) (range 51%-100%). Fast (within 2 days): 4 of 4. Back-and-forth past one reply: ~31% (all chains, n=16). In the current quiet phase: Not tested in this phase yet.",
+    "3. Military cost": "Patriot interceptors: ~30 if the reply is a missile salvo like Sep 8-9. Confirmed US equipment losses in past replies: Jun 9: a US Apache helicopter downed over the Strait (crew rescued).",
+    "4. Economic harm": "Attacks on shipping, 7 days before -> after past cases: 1 -> 1 (total). Oil prices and shipping costs: not measured.",
+    "5. Political / diplomatic": "Talks or diplomatic moves within 14 days after: 1 of 4. Strain with allies (Jordan, Gulf states, UK): not measured.",
+    "Pros (analyst notes)": "Can remove commanders or units preparing attacks (e.g. the Aug 30 Larak strike hit launchers said to be preparing sea mines). Military effect is claimed, not independently measured.",
+    "Other notes on harms (analyst notes)": "Every past case drew a fast reply, mostly the same day. Civilians were reported killed in 2 of 4 past cases (Iranian figures). One logged reply killed a civilian in Tel Aviv. Highest risk of a longer back-and-forth.",
+    "Evidence strength": "Thin"
+   },
+   "H": {
+    "name": "Change force posture (deploy or withdraw)",
+    "1. Harm to people": "No direct casualties from the move itself.",
+    "2. Escalation": "Iran struck within 7 days after 0 of 3 past posture changes (all early October). Not tested as triggers.",
+    "3. Military cost": "No interceptor use expected from the move itself.",
+    "4. Economic harm": "Attacks on shipping, 7 days before -> after past cases: 5 -> 13 (total). Oil prices and shipping costs: not measured.",
+    "5. Political / diplomatic": "Talks or diplomatic moves within 14 days after: 3 of 3. Strain with allies (Jordan, Gulf states, UK): not measured.",
+    "Pros (analyst notes)": "No direct harm. Adding forces strengthens defence; pulling back reduces exposure (bombers left RAF Fairford after a suspected Iranian drone plot).",
+    "Other notes on harms (analyst notes)": "Deployments in early October were followed by more shipping attacks, but that was the record week anyway. No data on how Iran reads deployments or withdrawals.",
+    "Evidence strength": "3 past cases (timing only)"
+   }
+  },
+  "us_choice": null,
+  "us_choice_detail": null,
+  "choice_event_ids": [],
+  "outcome": null,
+  "sources": [],
+  "closed_on": null
+ }
+]
