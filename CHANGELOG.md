@@ -56,3 +56,6 @@ Data updates only; no model rules changed.
 - Removed the top "right now" panel; each option tab now carries its availability, key dates, what we are
   waiting on, and the situation summary. Added likely-outcome bars, a risk gauge, a five-axis radar and
   shipping before/after bars to every option, and a weekly shipping chart plus open forecasts for Hold.
+
+## 2026-10-20 - Explorer layout tidy-up
+- War intensity and conditions moved into pop-up windows opened from two summary buttons; option list stays in view while scrolling; pros, harms and unknowns side by side; past-case table folds away.

@@ -235,6 +235,36 @@ tr.off td{opacity:.35}
 details.sit{font-size:13px}
 details.sit summary{cursor:pointer;color:var(--accent)}
 details.sit ul{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+/* toolbar + modals */
+.toolbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media(max-width:700px){.toolbar{grid-template-columns:1fr}}
+.tb{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;align-items:center;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;min-width:0}
+.tb:hover{border-color:var(--accent)}
+.tb .tl{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tb .tv{font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tb .tv .mono{font-weight:400;color:var(--muted);font-size:14px}
+.tb .go{font-size:13px;color:var(--accent);white-space:nowrap;grid-row:1/3;grid-column:2}
+.tb .mini{grid-column:1;display:grid;grid-template-columns:repeat(4,1fr);height:8px;border-radius:99px;overflow:hidden;position:relative}
+.tb .mini u{position:absolute;top:-3px;width:3px;height:14px;background:var(--needle);border-radius:2px;margin-left:-1.5px}
+.tb .sub{font-size:12px;color:var(--muted);grid-column:1}
+.tbwrap{position:relative;min-width:0}
+.tbclear{position:absolute;right:10px;bottom:10px;border:1px solid var(--line);background:var(--panel);border-radius:99px;font-size:12px;padding:1px 9px;cursor:pointer}
+.modal{position:fixed;inset:0;z-index:20;background:rgba(10,15,22,.55);display:flex;align-items:flex-start;justify-content:center;
+  padding:max(24px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) max(24px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));overflow:auto}
+.sheet{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 20px 20px;width:100%;max-width:1040px;box-shadow:0 20px 50px rgba(0,0,0,.3);outline:none}
+.x{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--panel);font-size:20px;line-height:1;cursor:pointer;z-index:2}
+.x:hover{border-color:var(--accent)}
+body.locked{overflow:hidden}
+.modal[hidden],[hidden]{display:none!important}
+/* tidier detail */
+.detail section{border-top:1px solid var(--line);padding-top:18px}
+.detail h3{font-size:21px}
+@media(min-width:861px){.list{position:sticky;top:12px}}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.three .box{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;min-width:0;font-size:14px}
+.three .box b{display:block;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+details.cases summary{cursor:pointer;color:var(--accent);font-size:14px;font-weight:500}
+details.cases[open] summary{margin-bottom:10px}
 footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
 .err{padding:24px;text-align:center;color:var(--muted)}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -252,9 +282,10 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
       <button id="tab-compare" aria-pressed="false">Compare all</button>
     </div>
   </div>
-  <section class="panel" id="intensity" aria-label="War intensity"></section>
-  <section class="panel" id="lens" aria-label="Conditions lens"></section>
+  <div class="toolbar" id="toolbar"></div>
   <div id="view"></div>
+  <div class="modal" id="m-int" hidden><div class="sheet" role="dialog" aria-modal="true" aria-label="War intensity" tabindex="-1"><button class="x" data-close aria-label="Close">×</button><section id="intensity"></section></div></div>
+  <div class="modal" id="m-lens" hidden><div class="sheet" role="dialog" aria-modal="true" aria-label="How much did the conditions matter?" tabindex="-1"><button class="x" data-close aria-label="Close">×</button><section id="lens"></section></div></div>
   <footer>
     <p>Percentages are x of n past cases in the NAPOR log. The bar shows the 95% range the true rate could plausibly sit in (Wilson interval). With 2 to 7 cases that range is very wide, so read each number as a hint. "After" is not "because of". Oil prices, strain with allies and harm to ordinary Iranians are not measured.</p>
     <p>The risk index averages five measured rates (equal weights unless you change them). It summarizes how past cases of that kind went. It is not a forecast and not a recommendation, and the options are not ranked.</p>
@@ -382,7 +413,7 @@ function renderIntensity(){
   const below = D.series.filter(s => s[1] < pts).length / D.series.length;
   const ph = D.phases.find(p => dt >= p.start && dt <= p.end), evs = windowEvents(idx);
   $("#intensity").innerHTML =
-    `<h2>War intensity</h2><div class="gauge-row"><div class="read"><div class="big mono">${pts} <small>points · ${isNow ? "now" : "as of " + fmtDate(dt)}</small></div>` +
+    `<h2 style="padding-right:44px">War intensity</h2><div class="gauge-row"><div class="read"><div class="big mono">${pts} <small>points · ${isNow ? "now" : "as of " + fmtDate(dt)}</small></div>` +
     `<span class="bandname" style="background:var(--b${b})">${BAND_NAMES[b]}</span>` +
     `<p class="facts">Hotter than ${Math.round(below*100)}% of days since the war began (peak ${peak}). Phase: ${esc(ph ? ph.name : "–")}.${isNow ? "" : ' <button class="linkbtn" id="nowbtn">Back to now</button>'}</p></div>` +
     `<div class="scale" aria-label="Intensity scale"><div class="needle" style="left:${left}%"></div><div class="segs">${BAND_NAMES.map((n,i) => `<div style="background:var(--b${i})">${n}</div>`).join("")}</div><div class="ticks">${D.intensity.bands.map(([l]) => `<span>${l}${l === 12 ? "+" : ""} pts</span>`).join("")}</div></div></div>` +
@@ -514,12 +545,12 @@ function renderLens(){
   if(!LENS) buildLens();
   const sel = S.phase ? ["phase", S.phase] : S.band ? ["band", S.band] : null;
   const total = D.options.reduce((a,o) => a + o.cases.length, 0), shown = D.options.reduce((a,o) => a + activeCases(o).length, 0);
-  let h = `<h2>How much did the conditions matter?</h2><p class="note" style="margin-bottom:12px">Click a war phase or an intensity level. You see how much it played a role in the past, and every option below recalculates using only cases from that condition. Click it again to clear.</p>`;
+  let h = `<h2 style="padding-right:44px">How much did the conditions matter?</h2><p class="note" style="margin-bottom:12px">Click a war phase or an intensity level. You see how much it played a role in the past, and every option below recalculates using only cases from that condition. Click it again to clear.</p>`;
   h += `<div class="lens-group"><div class="gl"><span>War phase</span></div><div class="tiles">${PHASE_ORDER.map((p,i) => tileHtml("phase", p, i)).join("")}</div></div>`;
   h += `<div class="lens-group"><div class="gl"><span>Intensity at the time of the US action</span></div><div class="tiles">${BAND_NAMES.map((b,i) => tileHtml("band", b, i)).join("")}</div></div>`;
   if(S.phase) h += lensDetail("phase", S.phase);
   if(S.band) h += lensDetail("band", S.band);
-  h += `<div class="lensbar"><span><b>Now showing:</b> ${sel ? esc(sel[1]) : "all past cases"} · ${shown} of ${total} past cases</span>${sel ? '<button class="linkbtn" id="lens-clear">Clear</button>' : ""}<button class="linkbtn" id="lens-now">Conditions like now (${esc(D.phase)})</button></div>`;
+  h += `<div class="lensbar"><span><b>Now showing:</b> ${sel ? esc(sel[1]) : "all past cases"} · ${shown} of ${total} past cases</span>${sel ? '<button class="linkbtn" id="lens-clear">Clear</button>' : ""}<button class="linkbtn" id="lens-now">Conditions like now (${esc(D.phase)})</button><button class="linkbtn" data-close style="margin-left:auto;background:var(--accent);color:var(--accent-ink);border-color:var(--accent)">Done</button></div>`;
   $("#lens").innerHTML = h;
 }
 document.addEventListener("click", ev => {
@@ -648,9 +679,8 @@ function renderExplore(){
     `<div class="meter"><span>${st.cases} of ${st.total} past cases ${S.phase || S.band ? "match the condition you picked" : "in the log"}</span><span class="bar"><i style="width:${Math.min(100, st.cases / 8 * 100)}%"></i></span><span>8+ cases is a fair sample</span></div></div>`;
   h += `<section><h2>Likely outcomes if the US does this</h2>${outcomesBlock(o, st, ix)}</section>`;
   h += `<section><h2>NAPOR risk assessment</h2>${indexPanel(o, cs)}</section>`;
-  h += `<section><h2>Pros and other harms (analyst notes, not data)</h2><div class="two"><div class="box"><b>Pros</b>${esc(o.pros)}</div><div class="box"><b>Other harms</b>${esc(o.harms)}</div></div></section>`;
-  h += `<section><h2>What the data cannot tell us</h2><p>${esc(o.unknown)}</p></section>`;
-  h += `<section><h2>Past cases behind these numbers</h2>${caseTable(o)}</section>`;
+  h += `<section><h2>Pros and other harms (analyst notes, not data)</h2><div class="three"><div class="box"><b>Pros</b>${esc(o.pros)}</div><div class="box"><b>Other harms</b>${esc(o.harms)}</div><div class="box"><b>What the data cannot tell us</b>${esc(o.unknown)}</div></div></section>`;
+  h += `<section><h2>Past cases behind these numbers</h2>${o.cases.length ? `<details class="cases"><summary>Show the ${o.cases.length} past case${o.cases.length === 1 ? "" : "s"}, one row each</summary>${caseTable(o)}</details>` : caseTable(o)}</section>`;
   h += '</div></div>';
   $("#view").innerHTML = h;
   document.querySelectorAll(".list button").forEach(b => b.onclick = () => { pick(b.dataset.k); refresh(); });
@@ -690,11 +720,42 @@ function renderCompare(){
   document.querySelectorAll(".frow").forEach(r => r.onclick = () => { pick(r.dataset.k); setMode("explore"); });
 }
 function renderView(){ S.mode === "explore" ? renderExplore() : renderCompare(); }
-function refresh(){ renderLens(); renderView(); drawChart(); }
+function renderToolbar(){
+  const pts = D.intensity.pts, b = bandOf(pts), peak = D.intensity.peak;
+  const lo = D.intensity.bands[b][0], hi = b < 3 ? D.intensity.bands[b+1][0] : peak;
+  const left = (b + (b === 0 ? .5 : Math.min(.95, Math.max(.05, (pts - lo) / Math.max(1, hi - lo))))) / 4 * 100;
+  const sel = S.phase || S.band, total = D.options.reduce((a,o) => a + o.cases.length, 0), shown = D.options.reduce((a,o) => a + activeCases(o).length, 0);
+  $("#toolbar").innerHTML =
+    `<button class="tb" data-open="m-int"><span class="tl">War intensity</span><span class="go">Open timeline ›</span>` +
+    `<span class="tv"><span class="pill" style="background:var(--b${b});color:var(--ink);border-color:var(--line)">${BAND_NAMES[b]}</span><span class="mono">${pts} pts · ${esc(D.phase)}</span></span>` +
+    `<span class="mini" aria-hidden="true">${BAND_NAMES.map((n,i) => `<i style="background:var(--b${i})"></i>`).join("")}<u style="left:${left}%"></u></span></button>` +
+    `<div class="tbwrap"><button class="tb" data-open="m-lens" style="width:100%"><span class="tl">Which past cases count</span><span class="go">${sel ? "Change ›" : "Explore conditions ›"}</span>` +
+    `<span class="tv">${sel ? esc(sel) : "All past cases"} <span class="mono">${shown} of ${total}</span></span>` +
+    `<span class="sub">${sel ? "Every number below uses only cases from this condition." : "See how much each war phase and intensity level mattered."}</span></button>` +
+    (sel ? `<button class="tbclear" id="tb-clear" aria-label="Clear condition">Clear ×</button>` : "") + `</div>`;
+}
+let lastOpener = null;
+function openModal(id, opener){
+  const m = $("#" + id); lastOpener = opener || document.activeElement;
+  m.hidden = false; document.body.classList.add("locked");
+  if(id === "m-int") { renderIntensity(); } else { renderLens(); }
+  $(".sheet", m).focus();
+}
+function closeModal(){
+  document.querySelectorAll(".modal").forEach(m => m.hidden = true); document.body.classList.remove("locked");
+  if(lastOpener && document.contains(lastOpener)) lastOpener.focus();
+}
+document.addEventListener("click", ev => {
+  const op = ev.target.closest("[data-open]"); if(op){ openModal(op.dataset.open, op); return; }
+  if(ev.target.closest("[data-close]") || ev.target.classList.contains("modal")){ closeModal(); return; }
+  if(ev.target.id === "tb-clear"){ S.phase = S.band = null; refresh(); }
+});
+document.addEventListener("keydown", ev => { if(ev.key === "Escape" && document.querySelector(".modal:not([hidden])")) closeModal(); });
+function refresh(){ renderToolbar(); if(!$("#m-lens").hidden) renderLens(); renderView(); if(!$("#m-int").hidden) drawChart(); }
 function setMode(m){
   S.mode = m;
   $("#tab-explore").setAttribute("aria-pressed", m === "explore"); $("#tab-compare").setAttribute("aria-pressed", m === "compare");
-  renderView(); drawChart();
+  renderView();
 }
 $("#tab-explore").onclick = () => setMode("explore"); $("#tab-compare").onclick = () => setMode("compare");
 
@@ -702,8 +763,8 @@ function boot(d){
   D = d;
   if(!D.options.some(x => x.key === S.sel)) S.sel = "D";
   $("#stamp").textContent = "Updated " + fmtDate(D.generated, true) + " · news through " + fmtDate(D.asof, true) + " · refreshes every Monday";
-  renderIntensity(); renderLens(); renderView();
-  let t; window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(drawChart, 80); });
+  renderToolbar(); renderView();
+  let t; window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => { if(!$("#m-int").hidden) drawChart(); }, 80); });
 }
 fetch("data.json", {cache:"no-store"}).then(r => { if(!r.ok) throw 0; return r.json(); }).then(boot)
   .catch(() => { $("#view").innerHTML = '<div class="panel err">Could not load data.json. Ask Claude to republish the explorer.</div>'; $("#stamp").textContent = ""; });
