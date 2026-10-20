@@ -43,38 +43,38 @@
   "asof": "2026-10-18",
   "intensity": 12,
   "band": "High",
-  "events": 112,
+  "events": 175,
   "options": {
    "A": {
     "n": 0,
     "index": null
    },
    "B": {
-    "n": 7,
-    "index": 0.229
+    "n": 16,
+    "index": 0.188
    },
    "C": {
-    "n": 4,
-    "index": 0.2
+    "n": 11,
+    "index": 0.187
    },
    "D": {
-    "n": 4,
-    "index": 0.283
+    "n": 5,
+    "index": 0.26
    },
    "E": {
     "n": 3,
     "index": 0.5
    },
    "F": {
-    "n": 5,
-    "index": 0.48
+    "n": 12,
+    "index": 0.567
    },
    "G": {
-    "n": 4,
-    "index": 0.7
+    "n": 7,
+    "index": 0.629
    },
    "H": {
-    "n": 3,
+    "n": 10,
     "index": 0.2
    }
   }
