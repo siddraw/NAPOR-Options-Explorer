@@ -10,9 +10,10 @@ CHAIN  - a back-and-forth: events linked by "this was a reply to that". Each cha
 """
 from collections import defaultdict
 from data import d, events, pairs, MERGED, event_kind
+import prewar as _pre
 
 # (phase type, start, end, what marks the start)
-PHASES = [
+PHASES = list(_pre.PHASES) + [
     ("Open war",           d(2026, 2, 28), d(2026, 4, 7),  "#2 Operation Epic Fury opens the war"),
     ("Fragile ceasefire",  d(2026, 4, 8),  d(2026, 7, 7),  "#28 two-week ceasefire (Apr 7-8); renewed Jun 8 (#43); interim deal Jun 17 (#50)"),
     ("Open war",           d(2026, 7, 8),  d(2026, 7, 25), "#59 Trump declares the ceasefire over; #60 90-target strike wave"),
@@ -55,37 +56,44 @@ for a, b in _links:
     _groups[_find(a)] |= {a, b}
 _chains = sorted((sorted(g, key=lambda i: (EV[i][1], i)) for g in _groups.values()), key=lambda ids: (EV[ids[0]][1], ids[0]))
 
-NAMES = [
-    "Opening campaign and Iran's first retaliation",
-    "Strikes on Tehran leadership sites -> drones on US embassy in Riyadh",
-    "Natanz -> Iranian missiles toward Dimona/Arad",
-    "IRGC Navy chief killed -> Prince Sultan AB strike",
-    "April ceasefire -> Israeli strikes in Lebanon -> Strait restricted",
-    "Failed Islamabad talks -> US blockade -> Strait closed again",
-    "Ship seizures, tit-for-tat",
-    "US destroyers attacked -> US strikes near Bandar Abbas",
-    "June 8-11 flare-up (air-defense crews killed -> Apache downed -> US strikes -> Jordan)",
-    "Interim deal signed -> US blockade ends",
-    "Israeli strikes in Lebanon -> Strait closed again",
-    "First interim-deal violation -> US strikes -> Iran fires at Kuwait/Bahrain",
-    "Deal collapses -> July US campaign -> Iranian retaliation",
-    "Larak Island -> Jordan -> Sep 1 strike wave -> Jordan",
-    "Missiles at a US warship -> tankers destroyed -> Jordan base hit",
-    "Autumn diplomacy: 7-day plan -> rejection -> counter-offer",
-    "RAF Fairford plot -> US bombers withdrawn",
-    "Houthi missile strikes on Riyadh (separate front, context)",
-]
+# Chain names, keyed by the chain's first event (so adding older events never shifts a name).
+NAMES = {
+    2: "Opening campaign and Iran's first retaliation",
+    10: "Strikes on Tehran leadership sites -> drones on US embassy in Riyadh",
+    16: "Natanz -> Iranian missiles toward Dimona/Arad",
+    20: "IRGC Navy chief killed -> Prince Sultan AB strike",
+    28: "April ceasefire -> Israeli strikes in Lebanon -> Strait restricted",
+    34: "Failed Islamabad talks -> US blockade -> Strait closed again",
+    37: "Ship seizures, tit-for-tat",
+    41: "US destroyers attacked -> US strikes near Bandar Abbas",
+    43: "June 8-11 flare-up (air-defense crews killed -> Apache downed -> US strikes -> Jordan)",
+    50: "Interim deal signed -> US blockade ends",
+    52: "Israeli strikes in Lebanon -> Strait closed again",
+    54: "First interim-deal violation -> US strikes -> Iran fires at Kuwait/Bahrain",
+    57: "Deal collapses -> July US campaign -> Iranian retaliation",
+    70: "Larak Island -> Jordan -> Sep 1 strike wave -> Jordan",
+    78: "Missiles at a US warship -> tankers destroyed -> Jordan base hit",
+    81: "Autumn diplomacy: 7-day plan -> rejection -> counter-offer",
+    83: "RAF Fairford plot -> US bombers withdrawn",
+    97: "No-strike pledge before the midterms -> reported strike plans",
+    98: "Houthi missile strikes on Riyadh (separate front, context)",
+}
+NAMES.update(_pre.CHAIN_NAMES)
+_WAR_START = d(2026, 2, 27)
 
 THREADS = []
 event_thread = {}
-for n, ids in enumerate(_chains, start=1):
-    tid = f"T{n:02d}"
-    name = NAMES[n - 1] if n <= len(NAMES) else "Unnamed chain"
+_count = {"P": 0, "T": 0}
+for ids in _chains:
+    _pfx = "P" if EV[ids[0]][1] < _WAR_START else "T"     # P = before the 2026 war, T = during it
+    _count[_pfx] += 1
+    tid = f"{_pfx}{_count[_pfx]:02d}"
+    name = NAMES.get(ids[0], "Unnamed chain")
     kinds = [event_kind[i] for i in ids]
     # rounds = how many times the acting side switched between US/Israel and Iran
     def side(i):
         a = EV[i][2].lower()
-        if a.startswith("iran"): return "Iran"
+        if a.startswith("iran") or "iran-backed" in a or "iranian-made" in a: return "Iran"
         if a.startswith(("us", "israel")): return "US/Israel"
         return None
     sides = [side(i) for i in ids if side(i)]

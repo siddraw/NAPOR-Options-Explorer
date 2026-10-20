@@ -213,7 +213,7 @@ def census_stats(category):
     low = only clearly-linked replies count; best = linked + timing-only; high = also counts 'unclear'."""
     rows = [c for c in census if c[1] == category]
     strong = sum(1 for c in rows if c[2] == "R-strong")
-    weak = sum(1 for c in rows if c[2] == "R-weak")
+    weak = sum(1 for c in rows if c[2] in ("R-weak", "R-proxy"))
     none_ = sum(1 for c in rows if c[2] == "N")
     unclear = sum(1 for c in rows if c[2] == "Unclear")
     unverified = sum(1 for c in rows if c[2] == "Unverified")

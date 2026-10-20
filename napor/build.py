@@ -286,7 +286,7 @@ FACTOR_TABLE_START = table_start  # header row of the category table
 ws6 = wb.create_sheet("Trigger Census")
 ws6.sheet_view.showGridLines = False
 GREY_FILL = PatternFill("solid", fgColor="EDEDED")
-STATUS_FILL = {"R-strong": HIGH_FILL, "R-weak": MED_FILL, "N": LOW_FILL, "Unclear": MED_FILL, "Unverified": GREY_FILL}
+STATUS_FILL = {"R-strong": HIGH_FILL, "R-weak": MED_FILL, "R-proxy": MED_FILL, "N": LOW_FILL, "Unclear": MED_FILL, "Unverified": GREY_FILL}
 
 census_sorted = sorted(census, key=lambda r: r[0])
 n_census = len(census_sorted)
@@ -336,7 +336,7 @@ for j, h in enumerate(headers6s, start=1):
 for i, cat in enumerate(cats3, start=SUM_HDR + 1):
     ws6.cell(row=i, column=1, value=cat)
     ws6.cell(row=i, column=2, value=f"=C{i}+D{i}")
-    ws6.cell(row=i, column=3, value=f'=COUNTIFS({C_CAT},A{i},{C_STAT},"R-strong")+COUNTIFS({C_CAT},A{i},{C_STAT},"R-weak")')
+    ws6.cell(row=i, column=3, value=f'=COUNTIFS({C_CAT},A{i},{C_STAT},"R-strong")+COUNTIFS({C_CAT},A{i},{C_STAT},"R-weak")+COUNTIFS({C_CAT},A{i},{C_STAT},"R-proxy")')
     ws6.cell(row=i, column=4, value=f'=COUNTIFS({C_CAT},A{i},{C_STAT},"N")')
     ws6.cell(row=i, column=5, value=f'=COUNTIFS({C_CAT},A{i},{C_STAT},"Unclear")')
     ws6.cell(row=i, column=6, value=f'=COUNTIFS({C_CAT},A{i},{C_STAT},"Unverified")')
@@ -385,7 +385,7 @@ for i, (tid, cat, status, note) in enumerate(census_sorted, start=det_first):
     if _ev is None:
         if event_audit[tid]["check"] in ("Pending", "Not supported"):
             _ev = "Trigger event itself is Pending credible sourcing"
-        elif status == "R-strong":
+        elif status in ("R-strong", "R-proxy"):
             _rids = [p[2] for p in pairs if p[1] == tid] or ([73] if tid == 71 else [])
             _ev = f"Trigger: {event_audit[tid]['check']}. Reply " + ", ".join(f"#{r}: {event_audit[r]['check']}" for r in _rids)
         else:
@@ -601,7 +601,7 @@ _r = 5
 from collections import Counter as _C
 _cen_ph = {}
 for _tid, _cat, _st, _nt in census:
-    if _st in ("R-strong", "R-weak", "N"):
+    if _st in ("R-strong", "R-weak", "R-proxy", "N"):
         _p = THREADS.event_phase[_tid]; a, n = _cen_ph.get(_p, (0, 0))
         _cen_ph[_p] = (a + (_st != "N"), n + 1)
 for name, a, bnd, why in THREADS.PHASES:

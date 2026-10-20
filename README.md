@@ -34,7 +34,9 @@ Build the workbook: `cd napor && python3 build.py` → `NAPOR_iran_war.xlsx`.
 
 ## Known limits
 
-- Small samples: most options rest on 2–5 past cases.
+- Small samples: options rest on 3–16 past cases (2019 onward; pre-war record in `napor/prewar.py`).
+- Before 2026 most replies came from Iran-backed militias; they count as replies and are labelled "proxy".
+- Pre-war years are logged less densely than 2026, so war intensity before 2026 is understated.
 - The phase boundaries were drawn with hindsight.
 - July's nightly US strikes and pre-September shipping attacks are under-logged.
 - "After" is not "because of".

@@ -1414,3 +1414,9 @@ SOURCES.update({
  114: [_CBS18],
  115: [_CBS18],
 })
+
+
+# Pre-war record (prewar.py)
+from prewar import SOURCES as _PRE_SOURCES, VERDICT as _PRE_VERDICT
+SOURCES.update(_PRE_SOURCES)
+VERDICT.update(_PRE_VERDICT)

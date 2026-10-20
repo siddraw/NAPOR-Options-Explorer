@@ -7,7 +7,7 @@
   --bg:#f3f4f6; --panel:#ffffff; --ink:#15202b; --muted:#5b6876; --line:#d8dde3; --soft:#eaedf1;
   --accent:#2a5c8f; --accent-ink:#ffffff; --accent-soft:#dde8f3; --open:#9aa5b1;
   --b0:#dfe5ec; --b1:#f2dba0; --b2:#eba35a; --b3:#c4452f; --needle:#15202b;
-  --ph0:#e8ecf1; --ph1:#dbe6f2; --ph2:#f0e3d6; --ph3:#e2ebe3;
+  --ph0:#e8ecf1; --ph1:#dbe6f2; --ph2:#f0e3d6; --ph3:#e2ebe3; --ph4:#ece4f1; --ph5:#f3ecd2; --ph6:#dcecea; --ph7:#f1dfe0;
   --k1:#2a5c8f; --k2:#b4553a; --k3:#6b5ba8; --k4:#2f8575; --k5:#a08328;
   --f-sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -16,13 +16,13 @@
   --bg:#0f151c; --panel:#171f28; --ink:#e6ebf0; --muted:#9aa7b4; --line:#2b3642; --soft:#202a35;
   --accent:#7fb2e5; --accent-ink:#0f151c; --accent-soft:#1f3347; --open:#617080;
   --b0:#2a3541; --b1:#6b5a2c; --b2:#b36d2d; --b3:#e0624a; --needle:#e6ebf0;
-  --ph0:#222c37; --ph1:#1f3347; --ph2:#3a2f26; --ph3:#25332a;
+  --ph0:#222c37; --ph1:#1f3347; --ph2:#3a2f26; --ph3:#25332a; --ph4:#2f2738; --ph5:#36311f; --ph6:#1f3533; --ph7:#3a2528;
   --k1:#7fb2e5; --k2:#e08a6f; --k3:#a99bdc; --k4:#5cc0ad; --k5:#d4b85a; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0f151c; --panel:#171f28; --ink:#e6ebf0; --muted:#9aa7b4; --line:#2b3642; --soft:#202a35;
   --accent:#7fb2e5; --accent-ink:#0f151c; --accent-soft:#1f3347; --open:#617080;
   --b0:#2a3541; --b1:#6b5a2c; --b2:#b36d2d; --b3:#e0624a; --needle:#e6ebf0;
-  --ph0:#222c37; --ph1:#1f3347; --ph2:#3a2f26; --ph3:#25332a;
+  --ph0:#222c37; --ph1:#1f3347; --ph2:#3a2f26; --ph3:#25332a; --ph4:#2f2738; --ph5:#36311f; --ph6:#1f3533; --ph7:#3a2528;
   --k1:#7fb2e5; --k2:#e08a6f; --k3:#a99bdc; --k4:#5cc0ad; --k5:#d4b85a; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-sans);font-size:15px;line-height:1.5;
@@ -75,7 +75,13 @@ details.fold li{margin:3px 0}
 .scale .needle::after{content:"";position:absolute;left:-1px;top:12px;width:2px;height:28px;background:var(--needle)}
 .scale .ticks{display:grid;grid-template-columns:repeat(4,1fr);font-size:11px;color:var(--muted);margin-top:4px;font-family:var(--f-mono)}
 .chartbox{position:relative;width:100%}
-.chartbox svg{display:block;width:100%;height:auto;touch-action:pan-y}
+.chartwrap{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.yaxis{flex:0 0 34px;background:var(--panel);border-right:1px solid var(--line)}
+.yaxis svg{display:block}
+.scroller{flex:1;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;min-width:0}
+.scroller svg{display:block;max-width:none}
+.yearjump{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:var(--muted);margin-bottom:8px}
+.yearjump .chip{padding:1px 9px;font-size:12px}
 .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;padding:6px 9px;border-radius:6px;max-width:260px;line-height:1.35;z-index:3}
 .chartfoot{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;font-size:12px;color:var(--muted);margin-top:8px}
 .chartfoot .lg{display:inline-flex;align-items:center;gap:5px}
@@ -196,11 +202,13 @@ tr.off td{opacity:.35}
 .klegend i{width:11px;height:11px;border-radius:3px;display:inline-block}
 
 /* visuals */
-.vis{display:grid;grid-template-columns:minmax(0,230px) minmax(0,1fr) minmax(0,270px);gap:18px;align-items:center}
-@media(max-width:900px){.vis{grid-template-columns:1fr 1fr}.vis .stackcol{grid-column:1/-1}}
+.vis{display:grid;grid-template-columns:minmax(0,210px) minmax(0,1.15fr) minmax(0,1fr);gap:18px;align-items:center}
+@media(max-width:1000px){.vis{grid-template-columns:1fr 1fr}.vis .stackcol{grid-column:1/-1}}
 @media(max-width:560px){.vis{grid-template-columns:1fr}}
 .gauge{text-align:center}
 .gauge svg,.radar svg{width:100%;height:auto;display:block;overflow:visible}
+.cap{font-size:11.5px;color:var(--muted);text-align:center;margin-top:2px;line-height:1.35}
+.formula{font-family:var(--f-mono);font-size:12.5px;background:var(--soft);border-radius:6px;padding:6px 10px;margin:8px 0;display:inline-block}
 .gauge .rng{font-size:12px;color:var(--muted)}
 .flow{display:flex;flex-direction:column;gap:9px}
 .fl{display:grid;grid-template-columns:minmax(120px,210px) minmax(0,1fr) 112px;gap:4px 12px;align-items:center}
@@ -287,7 +295,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
   <div class="modal" id="m-int" hidden><div class="sheet" role="dialog" aria-modal="true" aria-label="War intensity" tabindex="-1"><button class="x" data-close aria-label="Close">×</button><section id="intensity"></section></div></div>
   <div class="modal" id="m-lens" hidden><div class="sheet" role="dialog" aria-modal="true" aria-label="How much did the conditions matter?" tabindex="-1"><button class="x" data-close aria-label="Close">×</button><section id="lens"></section></div></div>
   <footer>
-    <p>Percentages are x of n past cases in the NAPOR log. The bar shows the 95% range the true rate could plausibly sit in (Wilson interval). With 2 to 7 cases that range is very wide, so read each number as a hint. "After" is not "because of". Oil prices, strain with allies and harm to ordinary Iranians are not measured.</p>
+    <p>Percentages are x of n past cases in the NAPOR log. The bar shows the 95% range the true rate could plausibly sit in (Wilson interval). With small samples that range is wide, so read each number as a hint. Before 2026, Iran mostly answered through militias it arms in Iraq and Syria; those replies count and are labelled "proxy". "After" is not "because of". Oil prices, strain with allies and harm to ordinary Iranians are not measured.</p>
     <p>The risk index averages five measured rates (equal weights unless you change them). It summarizes how past cases of that kind went. It is not a forecast and not a recommendation, and the options are not ranked.</p>
     <p>War intensity counts logged hostile events in the 14 days before each date (2 points per direct strike, 1 per shipping attack or blockade move, +2 if someone died). Big campaigns are logged as a few rows, so hot weeks are understated.</p>
     <p>This page reads data.json, which the weekly NAPOR agent regenerates every Monday. "Right now" notes are the agent's reading of the news, not data.</p>
@@ -301,8 +309,8 @@ const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;
 const dd = iso => new Date(iso + "T12:00:00");
 const fmtDate = (iso, y) => dd(iso).toLocaleDateString("en-US", y ? {month:"short", day:"numeric", year:"numeric"} : {month:"short", day:"numeric"});
 const BAND_NAMES = ["Quiet","Low","Medium","High"];
-const PHASE_ORDER = ["Open war","Fragile ceasefire","Low-intensity war","Holding pattern"];
-const PHASE_VAR = {"Open war":"--ph0","Fragile ceasefire":"--ph1","Low-intensity war":"--ph2","Holding pattern":"--ph3"};
+let PHASE_ORDER = [], PHASE_VAR = {};
+function setPhases(){ PHASE_ORDER = [...new Set(D.phases.map(p => p.name))]; PHASE_ORDER.forEach((p, i) => PHASE_VAR[p] = "--ph" + (i % 8)); }
 const CATS = ["people","escalation","military","economic","political"];
 const CAT_NAME = {people:"Harm to people", escalation:"Escalation", military:"Military cost", economic:"Economic harm", political:"Political / diplomatic"};
 const S = {sel:"D", mode:"explore", metric:"index", phase:null, band:null, pin:null, w:{people:1,escalation:1,military:1,economic:1,political:1}};
@@ -331,8 +339,8 @@ function catScores(o, cs){
 }
 const CAT_DEF = {
   people: o => "Share of past cases where someone was reported hurt, in the US action itself or in an Iranian reply.",
-  escalation: o => o.trigger ? "Share of past cases followed by an Iranian reply within about 5 days." : "Share of past cases followed by an Iranian strike within 7 days (timing only, not shown to be a reply).",
-  military: o => ["D","E","F","G"].includes(o.key) ? "Share of past cases whose Iranian reply was a missile or drone strike. Those use up interceptors: about " + D.patriots + " Patriots in one salvo (Sep 8-9)." : "No direct military cost expected from the move itself, so this counts as 0%.",
+  escalation: o => o.trigger ? "Share of past cases followed by a reply from Iran or an Iran-backed group within about 5 days." : "Share of past cases followed by a strike from Iran or an Iran-backed group within 7 days (timing only).",
+  military: o => ["D","E","F","G"].includes(o.key) ? "Share of past cases answered with a missile, rocket or drone strike. Those use up interceptors: about " + D.patriots + " Patriots in one salvo (Sep 8-9)." : "No direct military cost expected from the move itself, so this counts as 0%.",
   economic: o => "Share of past cases where attacks on shipping rose in the 7 days after, compared with the 7 days before.",
   political: o => "Share of past cases NOT followed by talks or diplomatic moves within 14 days."
 };
@@ -364,10 +372,10 @@ function stats(o){
   };
 }
 const METRICS = {
-  reply: {name:"Iran replied within about 5 days", unit:"past cases", trig:true},
+  reply: {name:"Iran or an Iran-backed group replied within ~5 days", unit:"past cases", trig:true},
   fast: {name:"Reply came within 2 days", unit:"replies logged", trig:true},
   hurt: {name:"Reply hurt people", unit:"replies logged", trig:true},
-  strike7: {name:"Iran struck within 7 days after", unit:"past cases, timing only"},
+  strike7: {name:"Iran or an Iran-backed group struck within 7 days", unit:"past cases, timing only"},
   talks14: {name:"Talks or diplomatic moves within 14 days", unit:"past cases"},
   civ: {name:"Civilian harm reported in the US act itself", unit:"past cases"}
 };
@@ -415,10 +423,10 @@ function renderIntensity(){
   $("#intensity").innerHTML =
     `<h2 style="padding-right:44px">War intensity</h2><div class="gauge-row"><div class="read"><div class="big mono">${pts} <small>points · ${isNow ? "now" : "as of " + fmtDate(dt)}</small></div>` +
     `<span class="bandname" style="background:var(--b${b})">${BAND_NAMES[b]}</span>` +
-    `<p class="facts">Hotter than ${Math.round(below*100)}% of days since the war began (peak ${peak}). Phase: ${esc(ph ? ph.name : "–")}.${isNow ? "" : ' <button class="linkbtn" id="nowbtn">Back to now</button>'}</p></div>` +
+    `<p class="facts">Hotter than ${Math.round(below*100)}% of days since the record starts (${fmtDate(D.series[0][0], true)}; peak ${peak}). Phase: ${esc(ph ? ph.name : "–")}.${isNow ? "" : ' <button class="linkbtn" id="nowbtn">Back to now</button>'}</p></div>` +
     `<div class="scale" aria-label="Intensity scale"><div class="needle" style="left:${left}%"></div><div class="segs">${BAND_NAMES.map((n,i) => `<div style="background:var(--b${i})">${n}</div>`).join("")}</div><div class="ticks">${D.intensity.bands.map(([l]) => `<span>${l}${l === 12 ? "+" : ""} pts</span>`).join("")}</div></div></div>` +
     `<div class="chartbox" id="chartbox"></div>` +
-    `<div class="chartfoot"><span>Hover or use ← → to read a day. Click to pin it.</span><span class="lg"><i class="dot"></i> Iran replied</span><span class="lg"><i class="dot no"></i> no reply</span><span class="lg"><i class="dot open"></i> not yet known</span></div>` +
+    `<div class="chartfoot"><span>Scroll sideways for earlier years. Hover or use ← → to read a day; click to pin it.</span><span class="lg"><i class="dot"></i> Iran or proxy replied</span><span class="lg"><i class="dot no"></i> no reply</span><span class="lg"><i class="dot open"></i> not yet known</span></div>` +
     `<div class="evlist"><h2>What counted in the 14 days up to ${fmtDate(dt)}</h2>` +
     (evs.length ? '<ul>' + evs.map(e => `<li><span class="mono">${fmtDate(e.date)}</span><span class="pts">+${e.pts}</span><span>${esc(e.title.length > 120 ? e.title.slice(0,117) + "…" : e.title)}</span></li>`).join('') + '</ul>' : '<p class="nodata">No hostile events logged in this window.</p>') + '</div>';
   const nb = $("#nowbtn"); if(nb) nb.onclick = () => { S.pin = null; renderIntensity(); };
@@ -426,42 +434,50 @@ function renderIntensity(){
 }
 function drawChart(){
   const box = $("#chartbox"); if(!box) return;
-  const W = Math.max(300, box.clientWidth), H = 270, L = 34, Rr = 8, T = 30, BT = 196, LANE = 214, AX = 250;
-  const n = D.series.length, x = i => L + (W - L - Rr) * i / (n - 1);
+  const prev = $(".scroller", box), prevScroll = prev ? prev.scrollLeft : null, prevMax = prev ? prev.scrollWidth - prev.clientWidth : null;
+  const AXW = 34, PXD = 1.8, H = 270, T = 30, BT = 196, LANE = 214, AX = 250, Rr = 10, L = 4;
+  const n = D.series.length, VW = Math.max(260, box.clientWidth - AXW), W = Math.max(VW, Math.round(n * PXD) + L + Rr);
+  const x = i => L + (W - L - Rr) * i / (n - 1);
   const ymax = Math.ceil(D.intensity.peak / 5) * 5 + 2, y = v => BT - (BT - T) * v / ymax;
   const o = D.options.find(q => q.key === S.sel), cs = o.cases;
   const idxOf = iso => Math.round((dd(iso) - dd(D.series[0][0])) / 864e5);
-  let s = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" tabindex="0" role="img" aria-label="War intensity over time. Use left and right arrow keys to move through days.">`;
   const bl = D.intensity.bands.map(b => b[0]);
+  // fixed y-axis
+  let ax = `<svg viewBox="0 0 ${AXW} ${H}" width="${AXW}" height="${H}" aria-hidden="true">`;
+  [0, bl[2], bl[3], ymax - 2].forEach(v => { ax += `<text x="${AXW-5}" y="${y(v)+4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="IBM Plex Mono,monospace">${v}</text>`; });
+  ax += `<text x="4" y="${T-6}" font-size="9" fill="var(--muted)">pts</text></svg>`;
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" tabindex="0" role="img" aria-label="War intensity over time. Use left and right arrow keys to move through days.">`;
   [[bl[1],bl[2],"var(--b1)"],[bl[2],bl[3],"var(--b2)"],[bl[3],ymax,"var(--b3)"]].forEach(([a,b2,f]) => { s += `<rect x="${L}" y="${y(b2)}" width="${W-L-Rr}" height="${y(a) - y(b2)}" fill="${f}" opacity=".28"/>`; });
-  [bl[1],bl[2],bl[3]].forEach(v => { s += `<line x1="${L}" x2="${W-Rr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-dasharray="3 3"/>`; if(v !== 1) s += `<text x="${L-5}" y="${y(v)+4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="IBM Plex Mono,monospace">${v}</text>`; });
-  s += `<text x="${L-5}" y="${y(0)+4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="IBM Plex Mono,monospace">0</text>`;
+  [bl[1],bl[2],bl[3]].forEach(v => { s += `<line x1="${L}" x2="${W-Rr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-dasharray="3 3"/>`; });
   D.phases.forEach(p => { const a = idxOf(p.start), b = idxOf(p.end), w = x(b) - x(a), sel = S.phase === p.name;
-    s += `<rect x="${x(a)}" y="4" width="${Math.max(1,w)}" height="18" fill="var(${PHASE_VAR[p.name]})" stroke="${sel ? "var(--accent)" : "var(--line)"}" stroke-width="${sel ? 2.5 : 1}"/>` + (w > 84 ? `<text x="${x(a)+6}" y="17" font-size="11" fill="var(--ink)">${esc(p.name)}</text>` : '');
+    s += `<rect x="${x(a)}" y="4" width="${Math.max(1,w)}" height="18" fill="var(${PHASE_VAR[p.name]})" stroke="${sel ? "var(--accent)" : "var(--line)"}" stroke-width="${sel ? 2.5 : 1}"><title>${esc(p.name)}: ${fmtDate(p.start, true)} – ${fmtDate(p.end, true)}</title></rect>` + (w > 90 ? `<text x="${x(a)+6}" y="17" font-size="11" fill="var(--ink)" pointer-events="none">${esc(p.name)}</text>` : '');
     if(sel) s += `<rect x="${x(a)}" y="${T}" width="${Math.max(1,w)}" height="${BT-T}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="4 3"/>`; });
   let line = "", area = `M${x(0)},${y(0)}`;
   D.series.forEach((r, i) => { line += (i ? "L" : "M") + x(i).toFixed(1) + "," + y(r[1]).toFixed(1); area += "L" + x(i).toFixed(1) + "," + y(r[1]).toFixed(1); });
   area += `L${x(n-1)},${y(0)}Z`;
-  s += `<path d="${area}" fill="var(--accent)" opacity=".18"/><path d="${line}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round"/>`;
+  s += `<path d="${area}" fill="var(--accent)" opacity=".18"/><path d="${line}" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linejoin="round"/>`;
   if(S.band){ const bi = BAND_NAMES.indexOf(S.band); let run = null; const segs = [];
     D.series.forEach((r, i) => { const inb = bandOf(r[1]) === bi; if(inb && run === null) run = i; if((!inb || i === n-1) && run !== null){ segs.push([run, inb ? i : i-1]); run = null; } });
     segs.forEach(([a,b]) => { s += `<rect x="${x(a)}" y="${BT+2}" width="${Math.max(2, x(b)-x(a))}" height="5" fill="var(--accent)"/>`; }); }
-  const first = dd(D.series[0][0]);
-  for(let m = 0; m < 12; m++){
-    const t = new Date(first.getFullYear(), first.getMonth() + m + (first.getDate() > 1 ? 1 : 0), 1, 12), i = Math.round((t - first) / 864e5);
-    if(i > 0 && i < n - 12) s += `<line x1="${x(i)}" x2="${x(i)}" y1="${BT}" y2="${BT+4}" stroke="var(--muted)"/><text x="${x(i)}" y="${AX-18}" text-anchor="middle" font-size="10" fill="var(--muted)">${t.toLocaleDateString("en-US",{month:"short"})}</text>`;
+  const first = dd(D.series[0][0]), last = dd(D.series[n-1][0]);
+  for(let t = new Date(first.getFullYear(), first.getMonth() + 1, 1, 12); t <= last; t = new Date(t.getFullYear(), t.getMonth() + 1, 1, 12)){
+    const i = Math.round((t - first) / 864e5), jan = t.getMonth() === 0;
+    s += `<line x1="${x(i)}" x2="${x(i)}" y1="${jan ? T : BT}" y2="${BT+4}" stroke="${jan ? "var(--line)" : "var(--muted)"}"${jan ? ' stroke-dasharray="2 3"' : ''}/>`;
+    s += `<text x="${x(i)}" y="${AX-18}" text-anchor="middle" font-size="${jan ? 11 : 9.5}" font-weight="${jan ? 600 : 400}" fill="${jan ? "var(--ink)" : "var(--muted)"}">${jan ? t.getFullYear() : t.toLocaleDateString("en-US",{month:"short"})}</text>`;
   }
   s += `<line x1="${L}" x2="${W-Rr}" y1="${BT}" y2="${BT}" stroke="var(--muted)"/>`;
-  s += `<text x="${L}" y="${LANE-10}" font-size="10" fill="var(--muted)">Option ${o.key} past cases${S.phase || S.band ? " (faded = outside the selected condition)" : ""}</text>`;
   const act = new Set(activeCases(o).map(c => c.id));
   cs.forEach(c => {
     const i = idxOf(c.date), on = act.has(c.id), cl = c.replied;
     s += `<circle cx="${x(i)}" cy="${LANE+6}" r="6" fill="${cl === true ? "var(--accent)" : "none"}" stroke="${cl === null ? "var(--open)" : "var(--accent)"}" stroke-width="2"${cl === null ? ' stroke-dasharray="3 2"' : ''} opacity="${on ? 1 : .25}"/>`;
   });
-  if(!cs.length) s += `<text x="${L+150}" y="${LANE-10}" font-size="10" fill="var(--muted)">(none in the log)</text>`;
-  s += `<g id="ov"></g></svg><div class="tip" id="tip" hidden></div>`;
-  box.innerHTML = s;
-  const svg = $("svg", box), tip = $("#tip", box), ov = $("#ov", box);
+  s += `<g id="ov"></g></svg>`;
+  const years = []; for(let yv = first.getFullYear(); yv <= last.getFullYear(); yv++) years.push(yv);
+  box.innerHTML = `<div class="yearjump" role="group" aria-label="Jump to year"><span>Option ${o.key} past cases on the bottom row${S.phase || S.band ? " (faded = outside the condition)" : ""} · jump to:</span>${years.map(yv => `<button class="chip" data-year="${yv}">${yv}</button>`).join("")}</div>` +
+    `<div class="chartwrap"><div class="yaxis">${ax}</div><div class="scroller">${s}</div></div><div class="tip" id="tip" hidden></div>`;
+  const sc = $(".scroller", box), svg = $(".scroller svg", box), tip = $("#tip", box), ov = $("#ov", box);
+  sc.scrollLeft = prevScroll === null ? sc.scrollWidth : (prevMax !== null && prevScroll >= prevMax - 2 ? sc.scrollWidth : prevScroll);
+  box.querySelectorAll("[data-year]").forEach(b => b.onclick = () => { const i = idxOf(b.dataset.year + "-01-01"); sc.scrollTo({left: Math.max(0, x(Math.max(0, i)) - 20), behavior: "smooth"}); });
   let hover = null;
   const paint = () => {
     const pi = pinIndex();
@@ -469,27 +485,31 @@ function drawChart(){
     if(hover !== null && hover !== pi) g += `<line x1="${x(hover)}" x2="${x(hover)}" y1="${T}" y2="${BT}" stroke="var(--muted)" stroke-dasharray="2 2"/><circle cx="${x(hover)}" cy="${y(D.series[hover][1])}" r="4" fill="var(--panel)" stroke="var(--ink)" stroke-width="1.5"/>`;
     ov.innerHTML = g;
   };
-  const caseNear = px => { let best = null, bd = 12; cs.forEach(c => { const d = Math.abs(x(idxOf(c.date)) - px); if(d < bd){ bd = d; best = c; } }); return best; };
+  const caseNear = px => { let best = null, bd = 10; cs.forEach(c => { const d = Math.abs(x(idxOf(c.date)) - px); if(d < bd){ bd = d; best = c; } }); return best; };
   const show = (i, px) => {
     hover = i; paint();
     const r = D.series[i], b = bandOf(r[1]), ph = D.phases.find(p => r[0] >= p.start && r[0] <= p.end), c = caseNear(px);
-    let h = `<b>${fmtDate(r[0], true)}</b><br>${r[1]} pts · ${BAND_NAMES[b]}<br>${esc(ph ? ph.name : "")}`;
-    if(c) h += `<br><br>#${c.id} ${esc(c.title.slice(0, 90))}${c.title.length > 90 ? "…" : ""}<br>${c.replied === true ? "Iran replied" : c.replied === false ? "No reply" : "Reply not yet known"}`;
+    let h = `<b>${fmtDate(r[0], true)}</b><br>${r[1]} points · ${BAND_NAMES[b]}<br>${esc(ph ? ph.name : "")}`;
+    if(c) h += `<br><br>#${c.id} ${esc(c.title.slice(0, 90))}${c.title.length > 90 ? "…" : ""}<br>${c.replied === true ? "Iran or proxy replied" : c.replied === false ? "No reply" : "Reply not yet known"}`;
     tip.innerHTML = h; tip.hidden = false;
-    const tw = tip.offsetWidth; tip.style.left = Math.min(W - tw - 4, Math.max(4, x(i) + 12)) + "px"; tip.style.top = "36px";
+    const vx = AXW + x(i) - sc.scrollLeft, tw = tip.offsetWidth, bw = box.clientWidth;
+    tip.style.left = Math.min(bw - tw - 4, Math.max(4, vx + 12)) + "px"; tip.style.top = (sc.offsetTop + 36) + "px";
   };
   const idxFrom = ev => { const r = svg.getBoundingClientRect(), px = (ev.clientX - r.left) * (W / r.width); return [Math.max(0, Math.min(n-1, Math.round((px - L) / (W - L - Rr) * (n-1)))), px]; };
   svg.addEventListener("pointermove", ev => { const [i, px] = idxFrom(ev); show(i, px); });
   svg.addEventListener("pointerleave", () => { hover = null; tip.hidden = true; paint(); });
+  sc.addEventListener("scroll", () => { tip.hidden = true; });
   svg.addEventListener("click", ev => { const [i, px] = idxFrom(ev), c = caseNear(px); S.pin = i === n - 1 ? null : (c ? idxOf(c.date) : i); renderIntensity(); });
   svg.addEventListener("keydown", ev => {
     const k = ev.key; if(!["ArrowLeft","ArrowRight","Home","End"].includes(k)) return; ev.preventDefault();
     let i = pinIndex(); i = k === "ArrowLeft" ? i - 1 : k === "ArrowRight" ? i + 1 : k === "Home" ? 0 : n - 1; i = Math.max(0, Math.min(n-1, i));
-    S.pin = i === n - 1 ? null : i; renderIntensity(); const sv = $("#chartbox svg"); if(sv) sv.focus();
+    S.pin = i === n - 1 ? null : i; renderIntensity();
+    const sc2 = $("#chartbox .scroller"), sv = $("#chartbox .scroller svg");
+    if(sc2){ const px = x(i); if(px < sc2.scrollLeft + 20 || px > sc2.scrollLeft + sc2.clientWidth - 20) sc2.scrollLeft = px - sc2.clientWidth / 2; }
+    if(sv) sv.focus();
   });
   paint();
 }
-
 /* ---------- conditions lens ---------- */
 let LENS = null;
 function buildLens(){
@@ -531,14 +551,14 @@ function lensDetail(kind, name){
     shareRow("Shipping attacks per week", m.ship + " shipping events logged in " + m.days + " days", Math.min(1, (m.days ? m.ship / m.days * 7 : 0) / 5), (m.days ? (m.ship / m.days * 7).toFixed(1) : "–")) +
     `</div><div>` +
     shareRow("Share of all past US actions that happened here", m.cases + " of " + LENS.totCases + " past cases behind the options", LENS.totCases ? m.cases / LENS.totCases : 0, LENS.totCases ? Math.round(m.cases / LENS.totCases * 100) + "%" : "–") +
-    rateRow("Iran replied to a US action", "past cases here, all options pooled", m.reply) +
+    rateRow("Iran or a proxy replied to a US action", "past cases here, all options pooled", m.reply) +
     rateRow("Someone was hurt (US action or reply)", "past cases here", m.hurt) +
     rateRow("Talks followed within 14 days", "past cases here", m.talks) + `</div></div></div>`;
 }
 function tileHtml(kind, name, i){
   const m = LENS[kind][name], pressed = (kind === "phase" ? S.phase : S.band) === name, col = kind === "phase" ? PHASE_VAR[name] : "--b" + i;
   return `<button class="tile" data-kind="${kind}" data-name="${esc(name)}" aria-pressed="${pressed}" style="border-top-color:var(${col})"><span class="tn">${esc(name)}</span>` +
-    `<span class="tbig">${m.reply.n ? P(m.reply.k, m.reply.n) : "–"}</span><span class="tm">Iran replied to US actions${m.reply.n ? " (" + m.reply.k + " of " + m.reply.n + ")" : ""}</span>` +
+    `<span class="tbig">${m.reply.n ? P(m.reply.k, m.reply.n) : "–"}</span><span class="tm">Iran or proxy replied to US actions${m.reply.n ? " (" + m.reply.k + " of " + m.reply.n + ")" : ""}</span>` +
     `<span class="tm">${m.days} days · ${Math.round(m.shareDays*100)}% of the war · ${m.cases} US actions</span></button>`;
 }
 function renderLens(){
@@ -579,20 +599,31 @@ function gaugeSvg(ix){
     `<text x="22" y="116" font-size="10" fill="var(--muted)" font-family="IBM Plex Mono,monospace">0</text><text x="178" y="116" font-size="10" fill="var(--muted)" font-family="IBM Plex Mono,monospace" text-anchor="end">100%</text></svg>` +
     `<div class="rng">NAPOR risk index<br>range ${Math.round(ix.lo*100)}–${Math.round(ix.hi*100)}% · ${ix.n} past case${ix.n === 1 ? "" : "s"}</div></div>`;
 }
+const SHORT = {people:"People hurt", escalation:"Escalation", military:"Military cost", economic:"Economic", political:"Political"};
 function radarSvg(ix){
-  const cx = 130, cy = 120, r = 78, ang = i => (-90 + i*72) * Math.PI/180, pt = (i, f) => [cx + r*f*Math.cos(ang(i)), cy + r*f*Math.sin(ang(i))];
+  const cx = 150, cy = 118, r = 78, ang = i => (-90 + i*72) * Math.PI/180, pt = (i, f) => [cx + r*f*Math.cos(ang(i)), cy + r*f*Math.sin(ang(i))];
   let g = '';
   [.25,.5,.75,1].forEach(f => { g += `<polygon points="${CATS.map((c,i) => pt(i,f).map(v => v.toFixed(1)).join(",")).join(" ")}" fill="none" stroke="var(--line)"/>`; });
+  g += `<text x="${cx+3}" y="${cy - r*.5 + 3}" font-size="8.5" fill="var(--muted)" font-family="IBM Plex Mono,monospace">50%</text>`;
   CATS.forEach((c,i) => { const [x,y] = pt(i,1); g += `<line x1="${cx}" y1="${cy}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="var(--line)"/>`; });
   const vals = ix.parts.map(p => p.ok ? p.p : 0);
   g += `<polygon points="${vals.map((v,i) => pt(i,v).map(q => q.toFixed(1)).join(",")).join(" ")}" fill="var(--accent)" fill-opacity=".22" stroke="var(--accent)" stroke-width="2"/>`;
   ix.parts.forEach((p, i) => {
-    const [x,y] = pt(i, vals[i]), [lx,ly] = pt(i, 1.3), anchor = Math.abs(lx - cx) < 8 ? "middle" : lx > cx ? "start" : "end";
+    const [x,y] = pt(i, vals[i]), [lx,ly0] = pt(i, 1.1), sn = Math.sin(ang(i)), cs = Math.cos(ang(i));
+    const anchor = Math.abs(cs) < .2 ? "middle" : cs > 0 ? "start" : "end";
+    const ly = sn < -.9 ? ly0 - 14 : sn > .5 ? ly0 + 8 : ly0 - 2;
+    const val = !p.ok ? "no data" : p.s.assumed ? "0% (assumed)" : Math.round(p.p*100) + "%";
     g += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5" fill="var(--k${i+1})" stroke="var(--panel)" stroke-width="1.5"/>` +
-      `<text x="${lx.toFixed(1)}" y="${(ly-2).toFixed(1)}" text-anchor="${anchor}" font-size="10.5" fill="var(--ink)">${CAT_NAME[p.c].replace(" / ", "/")}</text>` +
-      `<text x="${lx.toFixed(1)}" y="${(ly+11).toFixed(1)}" text-anchor="${anchor}" font-size="10.5" fill="var(--muted)" font-family="IBM Plex Mono,monospace">${p.ok ? Math.round(p.p*100) + "%" : "n/m"}</text>`;
+      `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anchor}" font-size="10.5" font-weight="600" fill="var(--ink)">${SHORT[p.c]}</text>` +
+      `<text x="${lx.toFixed(1)}" y="${(ly+12).toFixed(1)}" text-anchor="${anchor}" font-size="10.5" fill="var(--muted)" font-family="IBM Plex Mono,monospace">${val}</text>`;
   });
-  return `<div class="radar"><svg viewBox="0 0 260 240" role="img" aria-label="Risk profile across five categories">${g}</svg></div>`;
+  return `<div class="radar"><svg viewBox="0 0 300 236" role="img" aria-label="Risk profile across five categories">${g}</svg><p class="cap">Each corner is its own rate, 0–100%. They are not slices of one whole, so they don't add up to 100%.</p></div>`;
+}
+function formulaText(ix){
+  const used = ix.parts.filter(p => p.ok), eq = used.every(p => p.w === used[0].w);
+  const nums = used.map(p => Math.round(p.p*100)), avg = nums.reduce((a,b) => a + b, 0) / nums.length, shown = Math.round(ix.idx*100);
+  if(!eq) return `Index = weighted average of the corners (your weights) = ${shown}%`;
+  return `Index = average of the ${used.length} corners: (${nums.join(" + ")}) ÷ ${used.length} ${Math.round(avg) === shown ? "=" : "≈"} ${shown}%`;
 }
 function flowRow(t, sub, frac, text, small, cls, color, w){
   const wl = w ? wilson(Math.round(w.k), w.n) : null;
@@ -618,11 +649,11 @@ function outcomesBlock(o, st, ix){
   const rp = st.reply, pc = (c) => c.n ? c.k / c.n : 0;
   if(o.trigger){
     h += flowRow("US does this", "all past cases = 100%", 1, "100%", st.cases + " cases", "", "var(--open)");
-    h += flowRow("Iran replies within ~5 days", "share of past cases", pc(rp), P(rp.k, rp.n), rp.k + " of " + rp.n + " · " + R(rp.k, rp.n), "", "var(--accent)", rp);
+    h += flowRow("Iran or proxy replies within ~5 days", "share of past cases", pc(rp), P(rp.k, rp.n), rp.k + " of " + rp.n + " · " + R(rp.k, rp.n), "", "var(--accent)", rp);
     h += flowRow("…within 2 days", "share of those replies", pc(rp) * pc(st.fast), P(st.fast.k, st.fast.n), st.fast.k + " of " + st.fast.n + " replies", "sub", "var(--accent)");
     h += flowRow("…and hurt people", "share of those replies", pc(rp) * pc(st.hurt), P(st.hurt.k, st.hurt.n), st.hurt.k + " of " + st.hurt.n + " replies", "sub", "var(--k2)");
   }
-  const s7 = st.strike7; h += flowRow("Iran strikes within 7 days", o.trigger ? "timing only, not shown to be a reply" : "timing only, not shown to be a reply", pc(s7), P(s7.k, s7.n), s7.k + " of " + s7.n + " · " + R(s7.k, s7.n), "", "var(--k2)", s7);
+  const s7 = st.strike7; h += flowRow("Iran or proxy strikes within 7 days", "timing only, not shown to be a reply", pc(s7), P(s7.k, s7.n), s7.k + " of " + s7.n + " · " + R(s7.k, s7.n), "", "var(--k2)", s7);
   const tk = st.talks14; h += flowRow("Talks or diplomatic moves follow within 14 days", "share of past cases with a full window or a talk already", pc(tk), P(tk.k, tk.n), tk.k + " of " + tk.n + " · " + R(tk.k, tk.n), "", "var(--k4)", tk);
   const cs = activeCases(o).filter(c => c.ship_a !== null), up = {k: cs.filter(c => c.ship_a > c.ship_b).length, n: cs.length};
   h += flowRow("Attacks on shipping rise the next week", "share of past cases", pc(up), P(up.k, up.n), up.k + " of " + up.n + " · " + R(up.k, up.n), "", "var(--k5)", up);
@@ -653,7 +684,7 @@ function indexPanel(o, cs){
   const ix = riskIndex(o, cs);
   if(!ix) return `<p class="nodata">No past cases of this option match the condition you picked, so there is no index to show. Clear the condition above or pick another.</p>`;
   const thin = ix.n <= 3 ? "Very thin evidence: a rough sketch." : ix.n <= 7 ? "Thin evidence: wide range." : "Fair sample.";
-  let h = `<div class="vis">${gaugeSvg(ix)}${radarSvg(ix)}<div class="stackcol"><div class="nodata" style="margin-bottom:4px">What makes up the ${Math.round(ix.idx*100)}%</div>${stackBar(ix)}<div class="stackaxis"><span>0%</span><span>50%</span><span>100%</span></div>${katLegend()}<p class="nodata">${esc(thin)} ${ix.used} of 5 categories measured.</p></div></div><div style="margin-top:10px">`;
+  let h = `<div class="vis">${gaugeSvg(ix)}${radarSvg(ix)}<div class="stackcol"><div class="nodata" style="margin-bottom:4px">What makes up the ${Math.round(ix.idx*100)}%</div>${stackBar(ix)}<div class="stackaxis"><span>0%</span><span>50%</span><span>100%</span></div><div class="formula">${esc(formulaText(ix))}</div>${katLegend()}<p class="nodata">${esc(thin)} ${ix.used} of 5 categories measured.</p></div></div><div style="margin-top:10px">`;
   ix.parts.forEach((p, i) => {
     const s = p.s;
     h += `<div class="cat"><span class="sw" style="background:var(--k${i+1})"></span><div class="cn">${CAT_NAME[p.c]}</div>`;
@@ -691,11 +722,11 @@ function caseTable(o){
   if(!o.cases.length) return '<p class="nodata">No past cases of this kind are in the log, so there is nothing to count. The notes above are reasoning, not data.</p>';
   const act = new Set(activeCases(o).map(c => c.id));
   const tri = v => v === null || v === undefined ? '<span class="dot open" title="not yet known"></span>' : `<span class="dot ${v ? "" : "no"}" title="${v ? "yes" : "no"}"></span>`;
-  let h = '<div class="tbl"><table><thead><tr><th>Date</th><th>#</th><th>What the US did</th><th>Phase · intensity then</th>' + (o.trigger ? '<th class="c">Iran replied ≤5d</th>' : '') + '<th class="c">Iran struck ≤7d</th><th class="c">Talks ≤14d</th><th>Shipping attacks 7d before → after</th></tr></thead><tbody>';
+  let h = '<div class="tbl"><table><thead><tr><th>Date</th><th>#</th><th>What the US did</th><th>Phase · intensity then</th>' + (o.trigger ? '<th class="c" title="Reply from Iran or an Iran-backed group within about 5 days">Reply ≤5d</th>' : '') + '<th class="c" title="Strike by Iran or an Iran-backed group within 7 days">Strike ≤7d</th><th class="c">Talks ≤14d</th><th>Shipping attacks 7d before → after</th></tr></thead><tbody>';
   for(const c of o.cases)
     h += `<tr class="${act.has(c.id) ? "" : "off"}"><td class="mono">${fmtDate(c.date)}</td><td class="mono">${c.id}</td><td>${esc(c.title.length > 140 ? c.title.slice(0,137) + "…" : c.title)}${c.civ ? `<br><span class="nodata">Civilian harm: ${esc(c.civ)}</span>` : ""}</td><td>${esc(c.phase)} · ${c.band_at} (${c.pts_at})</td>` +
       (o.trigger ? `<td class="c">${tri(c.replied)}</td>` : '') + `<td class="c">${tri(c.strike7)}</td><td class="c">${tri(c.talks14)}</td><td class="c">${tri(c.ship_a === null ? null : c.ship_a > c.ship_b)}</td><td class="mono">${c.ship_b} → ${c.ship_a === null ? "…" : c.ship_a}</td></tr>`;
-  return h + '</tbody></table></div>';
+  return h + '</tbody></table></div><p class="legend">Proxy = a militia Iran arms in Iraq or Syria. ● yes · ○ no · dashed = not known yet.</p>';
 }
 function renderCompare(){
   const keys = ["index"].concat(Object.keys(METRICS));
@@ -760,7 +791,7 @@ function setMode(m){
 $("#tab-explore").onclick = () => setMode("explore"); $("#tab-compare").onclick = () => setMode("compare");
 
 function boot(d){
-  D = d;
+  D = d; setPhases();
   if(!D.options.some(x => x.key === S.sel)) S.sel = "D";
   $("#stamp").textContent = "Updated " + fmtDate(D.generated, true) + " · news through " + fmtDate(D.asof, true) + " · refreshes every Monday";
   renderToolbar(); renderView();

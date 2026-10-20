@@ -68,7 +68,7 @@ def seed_first_forecasts():
         return
     # F001 - reply to the US strike on a blockade runner (#104)
     census, _ = N.filter_census(data.census)
-    ph = [c for c in census if c[2] in ("R-strong", "R-weak", "N") and T.event_phase[c[0]] == T.phase_of(dt.date(2026, 10, 11))]
+    ph = [c for c in census if c[2] in ("R-strong", "R-weak", "R-proxy", "N") and T.event_phase[c[0]] == T.phase_of(dt.date(2026, 10, 11))]
     k = sum(1 for c in ph if c[2] != "N")
     p_phase = (k + 1) / (len(ph) + 2)
     d_row = [r for r in OPT.option_rows() if r["key"] == "D"][0]

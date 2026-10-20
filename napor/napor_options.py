@@ -89,7 +89,7 @@ def option_rows():
                        longer="", patriots="", cases="", credibility="")
         else:
             rows = [c for c in census if us_side(c[0]) and o["match"](c[0])]
-            counted = [c for c in rows if c[2] in ("R-strong", "R-weak", "N")]
+            counted = [c for c in rows if c[2] in ("R-strong", "R-weak", "R-proxy", "N")]
             unclear = [c for c in rows if c[2] == "Unclear"]
             k = sum(1 for c in counted if c[2] != "N")
             n = len(counted)
@@ -168,7 +168,13 @@ def _usable(e):
 
 
 def _ship(e): return _usable(e) and KIND[e[0]] == "Maritime" and not us_side(e[0])
-def _irstrike(e): return _usable(e) and KIND[e[0]] == "Kinetic" and e[2].lower().startswith("iran")
+def _iran_side(actor):
+    """Iran itself, or a group it arms (Iraqi/Syrian militias). Houthis are a separate front and are left out by _usable."""
+    a = actor.lower()
+    return a.startswith("iran") or any(w in a for w in ("iran-backed", "iranian-made", "islamic resistance in iraq", "kataib"))
+
+
+def _irstrike(e): return _usable(e) and KIND[e[0]] == "Kinetic" and _iran_side(e[2])
 def _talks(e): return _usable(e) and KIND[e[0]] == "Diplomatic"
 
 

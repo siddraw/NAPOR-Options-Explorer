@@ -59,3 +59,17 @@ Data updates only; no model rules changed.
 
 ## 2026-10-20 - Explorer layout tidy-up
 - War intensity and conditions moved into pop-up windows opened from two summary buttons; option list stays in view while scrolling; pros, harms and unknowns side by side; past-case table folds away.
+
+## 2026-10-20 - Pre-war record, 2019-2026 (Sidd's request)
+- Added `napor/prewar.py`: 63 events from May 2019 to Feb 27, 2026 (IDs 201-263), each sourced to
+  allowed outlets (AP, Al Jazeera, Stars and Stripes, ABC, CBS, NPR, PBS, The War Zone, official statements).
+  New phases: Maximum-pressure crisis, Shadow conflict, Twelve-day war, Pre-war standoff.
+- New census status "R-proxy": a reply by an Iran-backed militia counts as a reply. "Iran struck within
+  7 days" now also counts Iran-backed militias (not the Houthis, a separate front).
+- Continuous-fighting rule applied to Oct 17, 2023 - Jan 29, 2024 and the twelve-day war (Jun 13-24, 2025).
+- Past cases per option now: B 16, C 11, D 5, E 3, F 12, G 7, H 10 (A has none).
+- Backtest after the change (Test 1, 46 predictions): type-of-act model 0.197, phase model 0.211,
+  overall rate 0.238, always-50% 0.250. Before, the phase model was best; this is a finding, not a rule change.
+- Explorer: scrollable timeline with year buttons, radar labels moved in, formula under the index,
+  "corners don't add to 100%" note, proxy labels. `verify_explorer.py` recounts every rate independently
+  and the weekly export checks it.

@@ -29,7 +29,8 @@ reports in simple, plain language.
    is uncertain, and never rank or recommend an option.
    **Refresh the Options Explorer page.** Run `cd napor && python3 export_explorer.py` (it writes
    `explorer/data.json` and prints whether its counts match the workbook; investigate any
-   mismatch). Then publish with the Artifact tool: first `read` the artifact
+   mismatch) and whether every risk rate matches the independent recount in
+   `verify_explorer.py` (it must say "match"; if not, find the cause before publishing). Then publish with the Artifact tool: first `read` the artifact
    https://claude.ai/artifact/8YQyFjEyHHNv4RA5qqopow, then publish `explorer/index.html` to that
    same `url` with `files` = {"data.json": "explorer/data.json"}. Do not change `index.html`
    unless Sidd asked for a design change. If the Artifact tool is not available, commit the
@@ -39,6 +40,12 @@ reports in simple, plain language.
 9. **Report to Sidd** in plain language: what happened, how the forecasts did, what the US
    picked, any suggested fixes and the evidence for them, and that the Options Explorer was
    refreshed (or why not).
+
+## Older events
+
+Events before the 2026 war (May 2019 - Feb 27, 2026) live in `napor/prewar.py` with IDs 201+.
+If a credible source turns up a missing pre-war US move or reply, add it there (same source
+standard, census status "R-proxy" for replies by Iran-backed groups) and log it in CHANGELOG.md.
 
 ## Rules (do not break)
 

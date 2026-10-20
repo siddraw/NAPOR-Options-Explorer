@@ -41,7 +41,7 @@ def walk_forward(rows, prior_a=1, prior_b=1):
 # ---- Test 1: reply or not (counted census rows only; R-weak counted as a reply = 'BEST' scenario)
 c_rows = []
 for tid, cat, status, note in census:
-    if status in ("R-strong", "R-weak", "N"):
+    if status in ("R-strong", "R-weak", "R-proxy", "N"):
         c_rows.append((ev_date[tid], cat, 1 if status != "N" else 0))
 c_rows.sort()
 m1, a1, h1, log1 = walk_forward(c_rows)

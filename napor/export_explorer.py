@@ -50,7 +50,7 @@ def build():
         if o["match"]:
             for c in [c for c in O.census if O.us_side(c[0]) and o["match"](c[0])]:
                 prs = [p for p in O.pairs if p[1] == c[0]]
-                counted = c[2] in ("R-strong", "R-weak", "N")
+                counted = c[2] in ("R-strong", "R-weak", "R-proxy", "N")
                 cases.append(dict(**ev(c[0]), cls=c[2], replied=(c[2] != "N") if counted else None,
                                   replies=[dict(id=p[2], days=(EV[p[2]][1] - EV[p[1]][1]).days, hurt=p[4] == "Y", kinetic=data.event_kind[p[2]] == "Kinetic", title=EV[p[2]][5]) for p in prs],
                                   civ=O.CIVILIAN_HARM.get(c[0])))
@@ -161,3 +161,14 @@ if __name__ == "__main__":
         json.dump(out["history"], f, indent=1)
     print("wrote", os.path.normpath(dest), "| asof", out["asof"], "| intensity", out["intensity"]["pts"], out["intensity"]["band"])
     print("MISMATCH vs workbook counts:" if bad else "page counts match workbook counts", bad or "")
+    # Independent recount of the five risk-category rates (verify_explorer.py) vs the page's formula.
+    import verify_explorer
+    ver, diff = verify_explorer.recount(), []
+    for o in out["options"]:
+        if not o["cases"]:
+            continue
+        sc = category_scores(o, o["cases"])
+        for c in CATS:
+            if not sc[c].get("assumed") and [sc[c]["k"], sc[c]["n"]] != ver[o["key"]][c]:
+                diff.append((o["key"], c, [sc[c]["k"], sc[c]["n"]], ver[o["key"]][c]))
+    print("MISMATCH vs independent recount:" if diff else "risk rates match the independent recount", diff or "")
