@@ -27,6 +27,9 @@ Scope: the 2026 Iran–US war only, until the method is proven.
    picked and what followed (`napor_decisions.py`, `napor_decisions.json`).
 7. **Backtest** – replays the past without peeking ahead (`backtest.py`).
 
+Options Explorer (interactive page): `explorer/index.html` reads `explorer/data.json`, which
+`napor/export_explorer.py` regenerates every week. Percentages come with 95% (Wilson) ranges.
+
 Build the workbook: `cd napor && python3 build.py` → `NAPOR_iran_war.xlsx`.
 
 ## Known limits

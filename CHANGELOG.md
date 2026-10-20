@@ -34,3 +34,12 @@ Data updates only; no model rules changed.
 - Chains (thread IDs), war phases, war-intensity gauge.
 - Options sheet with no ranking: five-category risk profile plus pros.
 - Forecast log with F001 and F002 (made Oct 14, news through Oct 11).
+
+## 2026-10-20 - Options Explorer v2 (Sidd's request)
+- Added `napor/export_explorer.py` and `explorer/` (index.html + data.json). Page shows percentages
+  with Wilson 95% ranges, a war-intensity scale and timeline, filters by phase and intensity, and a
+  compare view. The weekly agent now refreshes it (AGENT.md step 7).
+- Explorer counts "talks within 14 days" as still open (not "no") when fewer than 14 days have
+  passed; the workbook's Options sheet still counts a partly-open window as "no". This only changes
+  recent cases. Suggestion for Sidd: align the workbook with the page.
+- README now states what NAPOR stands for.
