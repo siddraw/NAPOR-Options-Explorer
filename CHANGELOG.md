@@ -51,3 +51,8 @@ Data updates only; no model rules changed.
 - The phase/intensity filter is now a click-to-select lens that shows how much each condition mattered.
 - Added `napor/napor_now.json` (which options are open now and why) and `explorer/history.json`
   (weekly snapshots, shown as "since last update").
+
+## 2026-10-20 (evening) - Explorer: per-option tabs
+- Removed the top "right now" panel; each option tab now carries its availability, key dates, what we are
+  waiting on, and the situation summary. Added likely-outcome bars, a risk gauge, a five-axis radar and
+  shipping before/after bars to every option, and a weekly shipping chart plus open forecasts for Hold.
