@@ -1,0 +1,26 @@
+{
+  "as_of": "2026-10-18",
+  "note": "Analyst reading of the news, written by the weekly agent from logged events. Not data. Replace every week.",
+  "headline": [
+    "Attacks on shipping are at a record: UKMTO counted 10-12 in the week to Oct 16, and the container ship GFS Pride sank on Oct 13 (#109). The US has not answered them with strikes on Iran.",
+    "Trump pledged on Oct 8 that the US 'will not be attacking Iran at any time prior to' the Nov 3 midterms (#97). CBS reports strike plans are ready (#111) and Trump has said action could resume after the midterms (#82, #88).",
+    "Talks are live: Iran says it is reviewing US 'comments' and that Hormuz would reopen on the sixth day if the US complies (#115). The US counter-offer went through Qatar on Sep 29 (#86).",
+    "Sanctions rounds keep coming roughly weekly (Sep 28, Oct 1, Oct 8, Oct 15), and the US disabled a blockade runner on Oct 10-11 (#104)."
+  ],
+  "key_dates": [
+    {"date": "2026-10-25", "label": "Open window for situation S001 (what the US does Oct 12-25) closes"},
+    {"date": "2026-11-03", "label": "Midterm elections; end of Trump's no-strike pledge"},
+    {"date": "2026-11-17", "label": "Situation S002 window closes (what the US does Nov 4-17)"}
+  ],
+  "pending": ["Iran's formal answer to the US counter-offer (#99, #115)", "Whether the Nov 3 pledge holds"],
+  "options": {
+    "A": {"status": "open", "label": "Open", "reason": "This is the current course: no new US strikes since Sep 9, blockade and sanctions continue.", "events": [97]},
+    "B": {"status": "active", "label": "In use now", "reason": "Talks are running through Qatar and other mediators. Iran is reviewing US comments (#115) and the US sent a counter-offer on Sep 29 (#86).", "events": [86, 95, 115]},
+    "C": {"status": "active", "label": "In use now", "reason": "Treasury added new sanctions on Sep 28, Oct 1, Oct 8 and Oct 15.", "events": [85, 87, 107, 110]},
+    "D": {"status": "active", "label": "In use now", "reason": "The blockade is being enforced: an Iranian-linked dhow was destroyed on Oct 6 (#106) and a blockade runner was disabled on Oct 10-11 (#104).", "events": [104, 106]},
+    "E": {"status": "constrained", "label": "Constrained", "reason": "Trump's pledge covers attacks on Iran before Nov 3 (#97). The Oct 10-11 strike on a ship at sea came after the pledge, so strikes at sea may be treated as outside it (not confirmed).", "events": [97, 104]},
+    "F": {"status": "constrained", "label": "Constrained until Nov 3", "reason": "Ruled out by Trump's pledge before the midterms (#97). Strike plans are reported ready (#111).", "events": [97, 111]},
+    "G": {"status": "constrained", "label": "Constrained until Nov 3", "reason": "Ruled out by Trump's pledge before the midterms (#97). Officials say bombing may resume after them (#82).", "events": [82, 97]},
+    "H": {"status": "open", "label": "Open", "reason": "Posture is already shifting: bombers left RAF Fairford and a carrier left the region (#91, #92), while 3 ships with 7,000+ sailors deployed (#89).", "events": [89, 91, 92]}
+  }
+}

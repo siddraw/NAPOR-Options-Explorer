@@ -2,12 +2,13 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
-/* Layout: status strip, war-intensity panel (gauge + timeline), filters, then option list + detail. Data comes from data.json. */
+/* Layout: right-now panel, war-intensity panel, conditions lens, then option list + detail (availability, risk index, evidence). Data: data.json. */
 :root{
   --bg:#f3f4f6; --panel:#ffffff; --ink:#15202b; --muted:#5b6876; --line:#d8dde3; --soft:#eaedf1;
   --accent:#2a5c8f; --accent-ink:#ffffff; --accent-soft:#dde8f3; --open:#9aa5b1;
   --b0:#dfe5ec; --b1:#f2dba0; --b2:#eba35a; --b3:#c4452f; --needle:#15202b;
   --ph0:#e8ecf1; --ph1:#dbe6f2; --ph2:#f0e3d6; --ph3:#e2ebe3;
+  --k1:#2a5c8f; --k2:#b4553a; --k3:#6b5ba8; --k4:#2f8575; --k5:#a08328;
   --f-sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
 }
@@ -15,12 +16,14 @@
   --bg:#0f151c; --panel:#171f28; --ink:#e6ebf0; --muted:#9aa7b4; --line:#2b3642; --soft:#202a35;
   --accent:#7fb2e5; --accent-ink:#0f151c; --accent-soft:#1f3347; --open:#617080;
   --b0:#2a3541; --b1:#6b5a2c; --b2:#b36d2d; --b3:#e0624a; --needle:#e6ebf0;
-  --ph0:#222c37; --ph1:#1f3347; --ph2:#3a2f26; --ph3:#25332a; color-scheme:dark}}
+  --ph0:#222c37; --ph1:#1f3347; --ph2:#3a2f26; --ph3:#25332a;
+  --k1:#7fb2e5; --k2:#e08a6f; --k3:#a99bdc; --k4:#5cc0ad; --k5:#d4b85a; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0f151c; --panel:#171f28; --ink:#e6ebf0; --muted:#9aa7b4; --line:#2b3642; --soft:#202a35;
   --accent:#7fb2e5; --accent-ink:#0f151c; --accent-soft:#1f3347; --open:#617080;
   --b0:#2a3541; --b1:#6b5a2c; --b2:#b36d2d; --b3:#e0624a; --needle:#e6ebf0;
-  --ph0:#222c37; --ph1:#1f3347; --ph2:#3a2f26; --ph3:#25332a; color-scheme:dark}
+  --ph0:#222c37; --ph1:#1f3347; --ph2:#3a2f26; --ph3:#25332a;
+  --k1:#7fb2e5; --k2:#e08a6f; --k3:#a99bdc; --k4:#5cc0ad; --k5:#d4b85a; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-sans);font-size:15px;line-height:1.5;
   padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
@@ -37,13 +40,27 @@ p{margin:0}
 button{font:inherit;color:inherit}
 .tabs button{font-weight:500;border:0;background:transparent;color:var(--muted);padding:6px 14px;border-radius:6px;cursor:pointer}
 .tabs button[aria-pressed="true"]{background:var(--panel);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
-button:focus-visible,svg:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.strip div{background:var(--panel);padding:10px 12px;min-width:0}
-.strip .k{font-size:12px;color:var(--muted)}
-.strip .v{font-size:16px;font-weight:600}
+button:focus-visible,svg:focus-visible,summary:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;min-width:0}
 .note{font-size:13px;color:var(--muted);border-left:3px solid var(--line);padding:2px 0 2px 10px}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;border:1px solid var(--line);white-space:nowrap}
+.pill.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.pill.open{background:var(--panel);color:var(--ink);border-color:var(--accent)}
+.pill.constrained{background:var(--b1);color:var(--ink);border-style:dashed;border-color:var(--b2)}
+/* right now */
+.now{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px}
+@media(max-width:820px){.now{grid-template-columns:1fr}}
+.now ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.dates{display:flex;flex-direction:column;gap:8px}
+.date{display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:baseline;font-size:13px}
+.date b{font-family:var(--f-mono);font-size:20px;font-weight:500;line-height:1}
+.date small{display:block;color:var(--muted);font-size:11px;font-family:var(--f-mono)}
+.chg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
+.chg span{white-space:nowrap}
+.chg b{font-family:var(--f-mono);font-weight:500}
+details.fold{margin-top:10px;font-size:13px}
+details.fold summary{cursor:pointer;color:var(--accent);font-size:13px}
+details.fold li{margin:3px 0}
 /* intensity */
 .gauge-row{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:20px;align-items:center;margin-bottom:14px}
 @media(max-width:760px){.gauge-row{grid-template-columns:1fr}}
@@ -69,37 +86,27 @@ button:focus-visible,svg:focus-visible{outline:2px solid var(--accent);outline-o
 .evlist ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;max-height:220px;overflow:auto}
 .evlist li{display:grid;grid-template-columns:52px 38px 1fr;gap:8px;font-size:13px;padding:3px 0}
 .evlist .pts{font-family:var(--f-mono);font-weight:500;text-align:right}
-/* filters */
-.filters{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center}
-.fgroup{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.fgroup .fl{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-right:2px}
-.chip{border:1px solid var(--line);background:var(--panel);border-radius:99px;padding:3px 11px;font-size:13px;cursor:pointer}
-.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.chip i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:baseline}
-/* explorer */
-.main{display:grid;grid-template-columns:270px minmax(0,1fr);gap:16px;align-items:start}
-@media(max-width:820px){.main{grid-template-columns:1fr}}
-.list{display:flex;flex-direction:column;gap:6px}
-.list button{text-align:left;display:grid;grid-template-columns:28px 1fr;gap:2px 8px;background:var(--panel);
-  border:1px solid var(--line);border-radius:8px;padding:9px 10px;cursor:pointer}
-.list button[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--accent-soft)}
-.list .key{grid-row:1/3;font-family:var(--f-mono);font-weight:500;font-size:18px;color:var(--accent);align-self:center}
-.list .nm{font-weight:500;line-height:1.3}
-.list .ev{font-size:12px;color:var(--muted)}
-.detail{display:flex;flex-direction:column;gap:22px}
-.head{display:flex;flex-direction:column;gap:6px}
-.head .what{color:var(--muted)}
-.meter{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted);flex-wrap:wrap}
-.meter .bar{width:140px;height:8px;border-radius:99px;background:var(--soft);overflow:hidden}
-.meter .bar i{display:block;height:100%;background:var(--accent);transition:width .3s}
-.metric{display:grid;grid-template-columns:minmax(0,1fr) 92px minmax(120px,1.1fr);gap:4px 14px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
-.metric:first-of-type{border-top:0}
-.metric .lab{min-width:0}
-.metric .lab small{display:block;color:var(--muted);font-size:12px}
-.metric .pct{font-family:var(--f-mono);font-size:24px;font-weight:500;line-height:1;text-align:right}
-.metric .pct small{display:block;font-size:12px;color:var(--muted);font-weight:400;margin-top:3px}
-.metric .na{color:var(--muted);font-size:14px;font-family:var(--f-sans)}
-@media(max-width:560px){.metric{grid-template-columns:1fr auto}.metric .iv{grid-column:1/-1}}
+/* lens */
+.lens-group{margin-bottom:14px}
+.lens-group .gl{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media(max-width:760px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tile{text-align:left;border:1px solid var(--line);border-radius:8px;padding:10px 11px;background:var(--panel);cursor:pointer;display:flex;flex-direction:column;gap:3px;min-width:0;border-top-width:6px}
+.tile:hover{border-color:var(--accent)}
+.tile[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+.tile .tn{font-weight:600}
+.tile .tm{font-size:12px;color:var(--muted)}
+.tile .tbig{font-family:var(--f-mono);font-size:20px;font-weight:500;line-height:1.1}
+.role{border:1px solid var(--line);border-radius:8px;padding:14px;background:var(--bg);margin-bottom:12px}
+.role h3{font-size:16px;margin-bottom:2px}
+.role .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2px 24px;margin-top:8px}
+.lensbar{font-size:13px;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;padding-top:4px}
+/* shared bars */
+.share{display:grid;grid-template-columns:minmax(0,1fr) 62px;gap:2px 10px;align-items:center;padding:7px 0;border-top:1px solid var(--line)}
+.share .lab small{display:block;color:var(--muted);font-size:12px}
+.share .v{font-family:var(--f-mono);font-size:18px;text-align:right}
+.share .bar{grid-column:1/-1;height:6px;border-radius:99px;background:var(--soft);overflow:hidden}
+.share .bar i{display:block;height:100%;background:var(--accent);transition:width .3s}
 .iv{position:relative;height:30px;min-width:0}
 .iv .track{position:absolute;left:0;right:0;top:12px;height:6px;border-radius:99px;background:var(--soft)}
 .iv .whisk{position:absolute;top:10px;height:10px;border-radius:99px;background:var(--accent-soft);border:1.5px solid var(--accent);transition:left .3s,width .3s}
@@ -110,16 +117,59 @@ button:focus-visible,svg:focus-visible{outline:2px solid var(--accent);outline-o
 .dot{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--accent);background:var(--accent);display:inline-block}
 .dot.no{background:transparent}
 .dot.open{border-style:dashed;border-color:var(--open);background:transparent}
+/* explorer */
+.main{display:grid;grid-template-columns:290px minmax(0,1fr);gap:16px;align-items:start}
+@media(max-width:860px){.main{grid-template-columns:1fr}}
+.list{display:flex;flex-direction:column;gap:6px}
+.list button{text-align:left;display:grid;grid-template-columns:28px 1fr;gap:3px 8px;background:var(--panel);
+  border:1px solid var(--line);border-radius:8px;padding:9px 10px;cursor:pointer}
+.list button[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--accent-soft)}
+.list .key{grid-row:1/4;font-family:var(--f-mono);font-weight:500;font-size:18px;color:var(--accent);align-self:center}
+.list .nm{font-weight:500;line-height:1.3}
+.list .ev{font-size:12px;color:var(--muted)}
+.list .row2{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.detail{display:flex;flex-direction:column;gap:22px}
+.head{display:flex;flex-direction:column;gap:8px}
+.head .what{color:var(--muted)}
+.avail{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--bg);font-size:13px;display:flex;flex-direction:column;gap:4px}
+.avail .r{color:var(--muted)}
+.meter{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.meter .bar{width:140px;height:8px;border-radius:99px;background:var(--soft);overflow:hidden}
+.meter .bar i{display:block;height:100%;background:var(--accent);transition:width .3s}
+/* risk index */
+.idx{display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;align-items:center}
+@media(max-width:560px){.idx{grid-template-columns:1fr}}
+.idx .num{font-family:var(--f-mono);font-size:54px;font-weight:500;line-height:1}
+.idx .num small{font-size:24px}
+.idx .rng{font-size:12px;color:var(--muted);margin-top:4px}
+.stack{display:flex;height:22px;border-radius:6px;overflow:hidden;background:var(--soft);border:1px solid var(--line)}
+.stack i{display:block;height:100%;transition:width .3s}
+.stackaxis{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);font-family:var(--f-mono);margin-top:2px}
+.cat{display:grid;grid-template-columns:14px minmax(0,1fr) 78px 88px;gap:4px 12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.cat .sw{width:12px;height:12px;border-radius:3px}
+.cat .cn{font-weight:600}
+.cat .cd{grid-column:2/-1;font-size:12px;color:var(--muted)}
+.cat .cv{font-family:var(--f-mono);font-size:20px;text-align:right;line-height:1.1}
+.cat .cv small{display:block;font-size:11px;color:var(--muted)}
+.cat .cc{font-family:var(--f-mono);font-size:13px;text-align:right}
+.cat .cc small{display:block;font-size:11px;color:var(--muted)}
+.cat .ivw{grid-column:2/-1}
+.cat details{grid-column:2/-1;font-size:13px;color:var(--muted)}
+.cat summary{cursor:pointer;color:var(--accent);font-size:12px}
+@media(max-width:560px){.cat{grid-template-columns:14px minmax(0,1fr) 70px}.cat .cc{display:none}}
+.weights{margin-top:12px;font-size:13px}
+.weights summary{cursor:pointer;color:var(--accent)}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px 18px;margin-top:10px}
+.wgrid label{display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--muted)}
+.wgrid input{width:100%;accent-color:var(--accent)}
+.metric{display:grid;grid-template-columns:minmax(0,1fr) 92px minmax(120px,1.1fr);gap:4px 14px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.metric:first-of-type{border-top:0}
+.metric .lab small{display:block;color:var(--muted);font-size:12px}
+.metric .pct{font-family:var(--f-mono);font-size:24px;font-weight:500;line-height:1;text-align:right}
+.metric .pct small{display:block;font-size:12px;color:var(--muted);font-weight:400;margin-top:3px}
+.metric .na{color:var(--muted);font-size:14px;font-family:var(--f-sans)}
+@media(max-width:560px){.metric{grid-template-columns:1fr auto}.metric .iv{grid-column:1/-1}}
 .legend{font-size:12px;color:var(--muted);margin-top:8px}
-.risks{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
-.risk{border:1px solid var(--line);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:5px;min-width:0;background:var(--bg)}
-.risk .t{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
-.risk .big{font-family:var(--f-mono);font-size:26px;font-weight:500;line-height:1.1;overflow-wrap:anywhere}
-.risk .big.na{font-size:15px;color:var(--muted);font-family:var(--f-sans);line-height:1.3}
-.risk .lbl{font-size:13px;font-weight:500}
-.risk .sub{font-size:12px;color:var(--muted);font-family:var(--f-mono)}
-.risk details{font-size:13px;color:var(--muted)}
-.risk summary{cursor:pointer;font-size:12px;color:var(--accent)}
 .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
 .two .box{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;min-width:0}
 .two .box b{display:block;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
@@ -132,12 +182,18 @@ tr.off td{opacity:.35}
 .nodata{color:var(--muted);font-size:13px}
 .fc{font-size:13px;border:1px dashed var(--line);border-radius:8px;padding:10px 12px;color:var(--muted)}
 .cmpbar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.frow{display:grid;grid-template-columns:minmax(150px,230px) minmax(0,1fr) 150px;gap:6px 14px;align-items:center;padding:9px 6px;border-top:1px solid var(--line);cursor:pointer;border-radius:6px}
+.chip{border:1px solid var(--line);background:var(--panel);border-radius:99px;padding:3px 11px;font-size:13px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.frow{display:grid;grid-template-columns:minmax(150px,240px) minmax(0,1fr) 150px;gap:6px 14px;align-items:center;padding:9px 6px;border-top:1px solid var(--line);cursor:pointer;border-radius:6px}
 .frow:hover{background:var(--soft)}
 .frow .nm b{font-family:var(--f-mono);color:var(--accent);margin-right:6px}
+.frow .nm .pill{margin-top:3px;font-size:11px}
 .frow .val{font-family:var(--f-mono);font-size:15px;text-align:right}
 .frow .val small{color:var(--muted);font-size:12px}
-@media(max-width:620px){.frow{grid-template-columns:1fr auto}.frow .iv{grid-column:1/-1}}
+@media(max-width:620px){.frow{grid-template-columns:1fr auto}.frow .iv,.frow .stack{grid-column:1/-1}}
+.klegend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted);margin:8px 0}
+.klegend span{display:inline-flex;align-items:center;gap:5px}
+.klegend i{width:11px;height:11px;border-radius:3px;display:inline-block}
 footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
 .err{padding:24px;text-align:center;color:var(--muted)}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -147,7 +203,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
   <div class="top">
     <div>
       <h1>NAPOR Options Explorer</h1>
-      <p class="sub">Each option the US has in the Iran war, and what followed the last times the US did something like it, in percentages with the margin of error shown. It lays out the options and their risks. It does not rank them or say which to pick.</p>
+      <p class="sub">The options the US has right now in the Iran war, and what followed the last times the US did something like each one, in percentages with the margin of error shown. It lays out options and their risks. It does not rank them or say which to pick.</p>
       <p class="stamp" id="stamp">Loading the latest NAPOR data…</p>
     </div>
     <div class="tabs" role="group" aria-label="View">
@@ -155,14 +211,15 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
       <button id="tab-compare" aria-pressed="false">Compare all</button>
     </div>
   </div>
-  <div class="strip" id="strip"></div>
+  <section class="panel" id="nowpanel" aria-label="Right now"></section>
   <section class="panel" id="intensity" aria-label="War intensity"></section>
-  <section class="panel" id="filters"></section>
+  <section class="panel" id="lens" aria-label="Conditions lens"></section>
   <div id="view"></div>
   <footer>
-    <p>Percentages are x of n past cases in the NAPOR log. The bar shows the 95% range the true rate could plausibly sit in (Wilson interval). With 2 to 5 cases that range is very wide, so read each number as a hint. "After" is not "because of". Oil prices, strain with allies and harm to ordinary Iranians are not measured.</p>
+    <p>Percentages are x of n past cases in the NAPOR log. The bar shows the 95% range the true rate could plausibly sit in (Wilson interval). With 2 to 7 cases that range is very wide, so read each number as a hint. "After" is not "because of". Oil prices, strain with allies and harm to ordinary Iranians are not measured.</p>
+    <p>The risk index averages five measured rates (equal weights unless you change them). It summarizes how past cases of that kind went. It is not a forecast and not a recommendation, and the options are not ranked.</p>
     <p>War intensity counts logged hostile events in the 14 days before each date (2 points per direct strike, 1 per shipping attack or blockade move, +2 if someone died). Big campaigns are logged as a few rows, so hot weeks are understated.</p>
-    <p>This page reads data.json, which the weekly NAPOR agent regenerates every Monday.</p>
+    <p>This page reads data.json, which the weekly NAPOR agent regenerates every Monday. "Right now" notes are the agent's reading of the news, not data.</p>
   </footer>
 </div>
 
@@ -175,8 +232,11 @@ const fmtDate = (iso, y) => dd(iso).toLocaleDateString("en-US", y ? {month:"shor
 const BAND_NAMES = ["Quiet","Low","Medium","High"];
 const PHASE_ORDER = ["Open war","Fragile ceasefire","Low-intensity war","Holding pattern"];
 const PHASE_VAR = {"Open war":"--ph0","Fragile ceasefire":"--ph1","Low-intensity war":"--ph2","Holding pattern":"--ph3"};
-const S = {sel:"D", mode:"explore", metric:"reply", phases:new Set(PHASE_ORDER), bands:new Set(BAND_NAMES), pin:null};
+const CATS = ["people","escalation","military","economic","political"];
+const CAT_NAME = {people:"Harm to people", escalation:"Escalation", military:"Military cost", economic:"Economic harm", political:"Political / diplomatic"};
+const S = {sel:"D", mode:"explore", metric:"index", phase:null, band:null, pin:null, w:{people:1,escalation:1,military:1,economic:1,political:1}};
 try { S.sel = localStorage.getItem("napor-opt") || S.sel; } catch(e) {}
+const pick = k => { S.sel = k; try { localStorage.setItem("napor-opt", k); } catch(e) {} };
 
 /* ---------- statistics ---------- */
 function wilson(k, n, z=1.96){
@@ -184,12 +244,44 @@ function wilson(k, n, z=1.96){
   const p = k/n, d = 1 + z*z/n, c = p + z*z/(2*n), m = z*Math.sqrt(p*(1-p)/n + z*z/(4*n*n));
   return [Math.max(0,(c-m)/d), Math.min(1,(c+m)/d)];
 }
-const pctS = (k,n) => n ? Math.round(100*k/n) + "%" : "–";
-function activeCases(o){ return o.cases.filter(c => S.phases.has(c.phase) && S.bands.has(c.band_at)); }
+const P = (k,n) => n ? Math.round(100*k/n) + "%" : "–";
+const R = (k,n) => { const w = wilson(k,n); return w ? Math.round(w[0]*100) + "–" + Math.round(w[1]*100) + "%" : ""; };
+const inLens = c => (!S.phase || c.phase === S.phase) && (!S.band || c.band_at === S.band);
+const activeCases = o => o.cases.filter(inLens);
+function rate(cs, base, flag){ const b = cs.filter(base); return {k: b.filter(flag).length, n: b.length}; }
+function catScores(o, cs){
+  const sc = {};
+  sc.people = rate(cs, c => c.strike7 !== null, c => !!c.civ || c.replies.some(r => r.hurt));
+  sc.escalation = o.trigger ? rate(cs, c => c.replied !== null, c => c.replied === true) : rate(cs, c => c.strike7 !== null, c => c.strike7 === true);
+  sc.military = ["D","E","F","G"].includes(o.key) ? rate(cs, c => c.replied !== null, c => c.replies.some(r => r.kinetic)) : {k:0, n:0, assumed:true};
+  sc.economic = rate(cs, c => c.ship_a !== null, c => c.ship_a > c.ship_b);
+  sc.political = rate(cs, c => c.talks14 !== null, c => c.talks14 === false);
+  return sc;
+}
+const CAT_DEF = {
+  people: o => "Share of past cases where someone was reported hurt, in the US action itself or in an Iranian reply.",
+  escalation: o => o.trigger ? "Share of past cases followed by an Iranian reply within about 5 days." : "Share of past cases followed by an Iranian strike within 7 days (timing only, not shown to be a reply).",
+  military: o => ["D","E","F","G"].includes(o.key) ? "Share of past cases whose Iranian reply was a missile or drone strike. Those use up interceptors: about " + D.patriots + " Patriots in one salvo (Sep 8-9)." : "No direct military cost expected from the move itself, so this counts as 0%.",
+  economic: o => "Share of past cases where attacks on shipping rose in the 7 days after, compared with the 7 days before.",
+  political: o => "Share of past cases NOT followed by talks or diplomatic moves within 14 days."
+};
+function riskIndex(o, cs){
+  if(!cs.length) return null;
+  const sc = catScores(o, cs), parts = []; let tot = 0;
+  CATS.forEach(c => { const s = sc[c], ok = s.n > 0 || s.assumed; if(ok) tot += S.w[c]; parts.push({c, s, ok, w:S.w[c]}); });
+  if(!tot) return null;
+  let idx = 0, lo = 0, hi = 0;
+  parts.forEach(p => {
+    if(!p.ok) { p.p = null; p.contrib = 0; return; }
+    p.p = p.s.n ? p.s.k / p.s.n : 0;
+    const w = p.s.n ? wilson(p.s.k, p.s.n) : [0,0];
+    p.contrib = p.w * p.p / tot; idx += p.contrib; lo += p.w * w[0] / tot; hi += p.w * w[1] / tot;
+  });
+  return {idx, lo, hi, parts, n: cs.length, used: parts.filter(p => p.ok && !p.s.assumed).length};
+}
 function stats(o){
   const cs = activeCases(o), rep = cs.flatMap(c => c.replies);
   const cnt = (f, g) => { const base = cs.filter(g); return {k: base.filter(f).length, n: base.length}; };
-  const sb = cs.filter(c => c.ship_a !== null);
   return {
     cases: cs.length, total: o.cases.length,
     reply: cnt(c => c.replied === true, c => c.replied !== null),
@@ -197,8 +289,7 @@ function stats(o){
     hurt: {k: rep.filter(r => r.hurt).length, n: rep.length},
     strike7: cnt(c => c.strike7 === true, c => c.strike7 !== null),
     talks14: cnt(c => c.talks14 === true, c => c.talks14 !== null),
-    civ: cnt(c => !!c.civ, c => c.strike7 !== null),
-    shipB: sb.reduce((a,c) => a + c.ship_b, 0), shipA: sb.reduce((a,c) => a + c.ship_a, 0), shipN: sb.length
+    civ: cnt(c => !!c.civ, c => c.strike7 !== null)
   };
 }
 const METRICS = {
@@ -211,24 +302,51 @@ const METRICS = {
 };
 
 /* ---------- small components ---------- */
-function iv(c, big){
+function iv(c){
   if(!c || !c.n) return '<div class="iv"></div>';
   const w = wilson(c.k, c.n), p = c.k/c.n*100;
-  return '<div class="iv ' + (c.n <= 3 ? "thin" : "") + '" role="img" aria-label="' + Math.round(p) + ' percent, range ' + Math.round(w[0]*100) + ' to ' + Math.round(w[1]*100) + '">' +
-    '<div class="track"></div><div class="whisk" style="left:' + w[0]*100 + '%;width:' + Math.max(1,(w[1]-w[0])*100) + '%"></div><div class="pt" style="left:' + p + '%"></div>' +
-    '<div class="ax"><span>0%</span><span>50%</span><span>100%</span></div></div>';
+  return `<div class="iv ${c.n <= 3 ? "thin" : ""}" role="img" aria-label="${Math.round(p)} percent, range ${Math.round(w[0]*100)} to ${Math.round(w[1]*100)}"><div class="track"></div><div class="whisk" style="left:${w[0]*100}%;width:${Math.max(1,(w[1]-w[0])*100)}%"></div><div class="pt" style="left:${p}%"></div><div class="ax"><span>0%</span><span>50%</span><span>100%</span></div></div>`;
 }
 function dots(c){
   if(!c || !c.n) return "";
   let h = '<div class="dots" aria-hidden="true">';
-  for(let i=0;i<c.n;i++) h += '<span class="dot ' + (i < c.k ? "" : "no") + '"></span>';
+  for(let i=0;i<c.n;i++) h += `<span class="dot ${i < c.k ? "" : "no"}"></span>`;
   return h + '</div>';
 }
 function metricRow(key, c){
   const m = METRICS[key];
-  const w = c && c.n ? wilson(c.k, c.n) : null;
-  return '<div class="metric"><div class="lab">' + esc(m.name) + '<small>' + esc(m.unit) + (c && c.n ? ' · range ' + Math.round(w[0]*100) + '–' + Math.round(w[1]*100) + '%' : '') + '</small>' + dots(c) + '</div>' +
-    '<div class="pct">' + (c && c.n ? pctS(c.k, c.n) + '<small>' + c.k + ' of ' + c.n + '</small>' : '<span class="na">no cases</span>') + '</div>' + iv(c) + '</div>';
+  return `<div class="metric"><div class="lab">${esc(m.name)}<small>${esc(m.unit)}${c && c.n ? " · range " + R(c.k, c.n) : ""}</small>${dots(c)}</div><div class="pct">${c && c.n ? P(c.k, c.n) + `<small>${c.k} of ${c.n}</small>` : '<span class="na">no cases</span>'}</div>${iv(c)}</div>`;
+}
+function shareRow(label, sub, frac, text){
+  return `<div class="share"><div class="lab">${esc(label)}<small>${esc(sub)}</small></div><div class="v">${text}</div><div class="bar"><i style="width:${Math.min(100, frac*100)}%"></i></div></div>`;
+}
+function stackBar(ix){
+  if(!ix) return '<div class="stack"></div>';
+  return '<div class="stack" role="img" aria-label="Risk index ' + Math.round(ix.idx*100) + ' percent">' + ix.parts.filter(p => p.ok && p.contrib > 0).map(p => `<i style="width:${p.contrib*100}%;background:var(--k${CATS.indexOf(p.c)+1})" title="${CAT_NAME[p.c]}: ${(p.contrib*100).toFixed(1)} points"></i>`).join("") + '</div>';
+}
+const katLegend = () => '<div class="klegend">' + CATS.map((c,i) => `<span><i style="background:var(--k${i+1})"></i>${CAT_NAME[c]}</span>`).join("") + '</div>';
+const stPill = (o) => { const n = D.now && D.now.options && D.now.options[o.key]; return n ? `<span class="pill ${esc(n.status)}">${esc(n.label)}</span>` : ""; };
+
+/* ---------- right now ---------- */
+function renderNow(){
+  const n = D.now, days = Math.max(1, 1);
+  let h = '<h2>The US options right now</h2>';
+  if(n){
+    const today = new Date(); today.setHours(12,0,0,0);
+    h += '<div class="now"><div><ul>' + n.headline.map(t => `<li>${esc(t)}</li>`).join("") + '</ul>' +
+      (n.pending && n.pending.length ? `<p class="note" style="margin-top:10px"><b>Waiting on:</b> ${n.pending.map(esc).join(" · ")}</p>` : "") + '</div><div class="dates">' +
+      n.key_dates.map(k => { const d = Math.round((dd(k.date) - today) / 864e5); return `<div class="date"><div><b>${d > 0 ? d : d === 0 ? "0" : "–"}</b><small>${d > 0 ? "days" : d === 0 ? "today" : "passed"} · ${fmtDate(k.date)}</small></div><div>${esc(k.label)}</div></div>`; }).join("") + '</div></div>';
+    h += '<div class="chg" aria-label="Option status now">' + D.options.map(o => { const s = n.options[o.key]; return s ? `<span><b>${o.key}</b> <span class="pill ${esc(s.status)}">${esc(s.label)}</span></span>` : ""; }).join("") + '</div>';
+  }
+  const hist = D.history || [];
+  if(hist.length > 1){
+    const a = hist[hist.length-2], b = hist[hist.length-1];
+    const arrow = (x, y) => x === y ? "no change" : (x === null || y === null ? (y === null ? "–" : Math.round(y*100) + "% (new)") : Math.round(x*100) + "% → " + Math.round(y*100) + "%");
+    h += `<div class="chg"><span><b>Since ${fmtDate(a.asof)}:</b></span><span>intensity <b>${a.intensity} → ${b.intensity} pts</b></span><span>events logged <b>+${b.events - a.events}</b></span>` +
+      D.options.filter(o => b.options[o.key] && b.options[o.key].index !== null).map(o => `<span>${o.key} index <b>${arrow(a.options[o.key] ? a.options[o.key].index : null, b.options[o.key].index)}</b></span>`).join("") + '</div>';
+  }
+  if(D.week_events && D.week_events.length) h += `<details class="fold"><summary>New in the log this week (${D.week_events.length} events)</summary><ul>` + D.week_events.slice().reverse().map(e => `<li><span class="mono">${fmtDate(e.date)}</span> #${e.id} ${esc(e.title.length > 150 ? e.title.slice(0,147) + "…" : e.title)}</li>`).join("") + '</ul></details>';
+  $("#nowpanel").innerHTML = h;
 }
 
 /* ---------- war intensity ---------- */
@@ -244,82 +362,74 @@ function renderIntensity(){
   const frac = b === 0 ? 0.5 : Math.min(1, (pts - lo) / Math.max(1, hi - lo));
   const left = (b + (b === 0 ? 0.5 : Math.min(0.97, Math.max(0.03, frac)))) / 4 * 100;
   const below = D.series.filter(s => s[1] < pts).length / D.series.length;
-  const ph = D.phases.find(p => dt >= p.start && dt <= p.end);
-  const evs = windowEvents(idx);
+  const ph = D.phases.find(p => dt >= p.start && dt <= p.end), evs = windowEvents(idx);
   $("#intensity").innerHTML =
-    '<h2>War intensity</h2><div class="gauge-row"><div class="read"><div class="big mono">' + pts + ' <small>points · ' + (isNow ? "now" : "as of " + fmtDate(dt)) + '</small></div>' +
-    '<span class="bandname" style="background:var(--b' + b + ')">' + BAND_NAMES[b] + '</span>' +
-    '<p class="facts">Hotter than ' + Math.round(below*100) + '% of days since the war began (peak ' + peak + '). Phase: ' + esc(ph ? ph.name : "–") + '.' +
-    (isNow ? '' : ' <button class="linkbtn" id="nowbtn">Back to now</button>') + '</p></div>' +
-    '<div class="scale" aria-label="Intensity scale"><div class="needle" style="left:' + left + '%"></div><div class="segs">' +
-    BAND_NAMES.map((n,i) => '<div style="background:var(--b' + i + ')">' + n + '</div>').join('') + '</div><div class="ticks">' +
-    D.intensity.bands.map(([l]) => '<span>' + l + (l === 12 ? '+' : '') + ' pts</span>').join('') + '</div></div></div>' +
-    '<div class="chartbox" id="chartbox"></div>' +
-    '<div class="chartfoot"><span>Hover or use ← → to read a day. Click to pin it.</span>' +
-    '<span class="lg"><i class="dot"></i> Iran replied</span><span class="lg"><i class="dot no"></i> no reply</span><span class="lg"><i class="dot open"></i> not yet known</span>' +
-    '<span id="chartopt"></span></div>' +
-    '<div class="evlist"><h2>What counted in the 14 days up to ' + fmtDate(dt) + '</h2>' +
-    (evs.length ? '<ul>' + evs.map(e => '<li><span class="mono">' + fmtDate(e.date) + '</span><span class="pts">+' + e.pts + '</span><span>' + esc(e.title.length > 120 ? e.title.slice(0,117) + "…" : e.title) + '</span></li>').join('') + '</ul>' : '<p class="nodata">No hostile events logged in this window.</p>') + '</div>';
+    `<h2>War intensity</h2><div class="gauge-row"><div class="read"><div class="big mono">${pts} <small>points · ${isNow ? "now" : "as of " + fmtDate(dt)}</small></div>` +
+    `<span class="bandname" style="background:var(--b${b})">${BAND_NAMES[b]}</span>` +
+    `<p class="facts">Hotter than ${Math.round(below*100)}% of days since the war began (peak ${peak}). Phase: ${esc(ph ? ph.name : "–")}.${isNow ? "" : ' <button class="linkbtn" id="nowbtn">Back to now</button>'}</p></div>` +
+    `<div class="scale" aria-label="Intensity scale"><div class="needle" style="left:${left}%"></div><div class="segs">${BAND_NAMES.map((n,i) => `<div style="background:var(--b${i})">${n}</div>`).join("")}</div><div class="ticks">${D.intensity.bands.map(([l]) => `<span>${l}${l === 12 ? "+" : ""} pts</span>`).join("")}</div></div></div>` +
+    `<div class="chartbox" id="chartbox"></div>` +
+    `<div class="chartfoot"><span>Hover or use ← → to read a day. Click to pin it.</span><span class="lg"><i class="dot"></i> Iran replied</span><span class="lg"><i class="dot no"></i> no reply</span><span class="lg"><i class="dot open"></i> not yet known</span></div>` +
+    `<div class="evlist"><h2>What counted in the 14 days up to ${fmtDate(dt)}</h2>` +
+    (evs.length ? '<ul>' + evs.map(e => `<li><span class="mono">${fmtDate(e.date)}</span><span class="pts">+${e.pts}</span><span>${esc(e.title.length > 120 ? e.title.slice(0,117) + "…" : e.title)}</span></li>`).join('') + '</ul>' : '<p class="nodata">No hostile events logged in this window.</p>') + '</div>';
   const nb = $("#nowbtn"); if(nb) nb.onclick = () => { S.pin = null; renderIntensity(); };
   drawChart();
 }
 function drawChart(){
   const box = $("#chartbox"); if(!box) return;
-  const W = Math.max(300, box.clientWidth), H = 270, L = 34, R = 8, T = 30, BT = 196, LANE = 214, AX = 250;
-  const n = D.series.length, x = i => L + (W - L - R) * i / (n - 1);
+  const W = Math.max(300, box.clientWidth), H = 270, L = 34, Rr = 8, T = 30, BT = 196, LANE = 214, AX = 250;
+  const n = D.series.length, x = i => L + (W - L - Rr) * i / (n - 1);
   const ymax = Math.ceil(D.intensity.peak / 5) * 5 + 2, y = v => BT - (BT - T) * v / ymax;
   const o = D.options.find(q => q.key === S.sel), cs = o.cases;
   const idxOf = iso => Math.round((dd(iso) - dd(D.series[0][0])) / 864e5);
-  let s = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '" tabindex="0" role="img" aria-label="War intensity over time. Use left and right arrow keys to move through days.">';
-  // band zones
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" tabindex="0" role="img" aria-label="War intensity over time. Use left and right arrow keys to move through days.">`;
   const bl = D.intensity.bands.map(b => b[0]);
-  [[bl[1],bl[2],"var(--b1)"],[bl[2],bl[3],"var(--b2)"],[bl[3],ymax,"var(--b3)"]].forEach(([a,b2,f]) => { s += '<rect x="' + L + '" y="' + y(b2) + '" width="' + (W-L-R) + '" height="' + (y(a) - y(b2)) + '" fill="' + f + '" opacity=".28"/>'; });
-  [bl[1],bl[2],bl[3]].forEach(v => { if(v === 1) { s += '<line x1="' + L + '" x2="' + (W-R) + '" y1="' + y(v) + '" y2="' + y(v) + '" stroke="var(--line)" stroke-dasharray="3 3"/>'; return; } s += '<line x1="' + L + '" x2="' + (W-R) + '" y1="' + y(v) + '" y2="' + y(v) + '" stroke="var(--line)" stroke-dasharray="3 3"/><text x="' + (L-5) + '" y="' + (y(v)+4) + '" text-anchor="end" font-size="10" fill="var(--muted)" font-family="IBM Plex Mono,monospace">' + v + '</text>'; });
-  s += '<text x="' + (L-5) + '" y="' + (y(0)+4) + '" text-anchor="end" font-size="10" fill="var(--muted)" font-family="IBM Plex Mono,monospace">0</text>';
-  // phase ribbon
-  D.phases.forEach(p => { const a = idxOf(p.start), b = idxOf(p.end), w = x(b) - x(a); s += '<rect x="' + x(a) + '" y="4" width="' + Math.max(1,w) + '" height="18" fill="var(' + PHASE_VAR[p.name] + ')" stroke="var(--line)"/>' + (w > 84 ? '<text x="' + (x(a)+6) + '" y="17" font-size="11" fill="var(--ink)">' + esc(p.name) + '</text>' : ''); });
-  // area + line
-  let line = "", area = 'M' + x(0) + ',' + y(0);
+  [[bl[1],bl[2],"var(--b1)"],[bl[2],bl[3],"var(--b2)"],[bl[3],ymax,"var(--b3)"]].forEach(([a,b2,f]) => { s += `<rect x="${L}" y="${y(b2)}" width="${W-L-Rr}" height="${y(a) - y(b2)}" fill="${f}" opacity=".28"/>`; });
+  [bl[1],bl[2],bl[3]].forEach(v => { s += `<line x1="${L}" x2="${W-Rr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-dasharray="3 3"/>`; if(v !== 1) s += `<text x="${L-5}" y="${y(v)+4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="IBM Plex Mono,monospace">${v}</text>`; });
+  s += `<text x="${L-5}" y="${y(0)+4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="IBM Plex Mono,monospace">0</text>`;
+  D.phases.forEach(p => { const a = idxOf(p.start), b = idxOf(p.end), w = x(b) - x(a), sel = S.phase === p.name;
+    s += `<rect x="${x(a)}" y="4" width="${Math.max(1,w)}" height="18" fill="var(${PHASE_VAR[p.name]})" stroke="${sel ? "var(--accent)" : "var(--line)"}" stroke-width="${sel ? 2.5 : 1}"/>` + (w > 84 ? `<text x="${x(a)+6}" y="17" font-size="11" fill="var(--ink)">${esc(p.name)}</text>` : '');
+    if(sel) s += `<rect x="${x(a)}" y="${T}" width="${Math.max(1,w)}" height="${BT-T}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="4 3"/>`; });
+  let line = "", area = `M${x(0)},${y(0)}`;
   D.series.forEach((r, i) => { line += (i ? "L" : "M") + x(i).toFixed(1) + "," + y(r[1]).toFixed(1); area += "L" + x(i).toFixed(1) + "," + y(r[1]).toFixed(1); });
-  area += "L" + x(n-1) + "," + y(0) + "Z";
-  s += '<path d="' + area + '" fill="var(--accent)" opacity=".18"/><path d="' + line + '" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round"/>';
-  // axis dates
+  area += `L${x(n-1)},${y(0)}Z`;
+  s += `<path d="${area}" fill="var(--accent)" opacity=".18"/><path d="${line}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round"/>`;
+  if(S.band){ const bi = BAND_NAMES.indexOf(S.band); let run = null; const segs = [];
+    D.series.forEach((r, i) => { const inb = bandOf(r[1]) === bi; if(inb && run === null) run = i; if((!inb || i === n-1) && run !== null){ segs.push([run, inb ? i : i-1]); run = null; } });
+    segs.forEach(([a,b]) => { s += `<rect x="${x(a)}" y="${BT+2}" width="${Math.max(2, x(b)-x(a))}" height="5" fill="var(--accent)"/>`; }); }
   const first = dd(D.series[0][0]);
   for(let m = 0; m < 12; m++){
     const t = new Date(first.getFullYear(), first.getMonth() + m + (first.getDate() > 1 ? 1 : 0), 1, 12), i = Math.round((t - first) / 864e5);
-    if(i > 0 && i < n - 12) s += '<line x1="' + x(i) + '" x2="' + x(i) + '" y1="' + BT + '" y2="' + (BT+4) + '" stroke="var(--muted)"/><text x="' + x(i) + '" y="' + (AX-18) + '" text-anchor="middle" font-size="10" fill="var(--muted)">' + t.toLocaleDateString("en-US",{month:"short"}) + '</text>';
+    if(i > 0 && i < n - 12) s += `<line x1="${x(i)}" x2="${x(i)}" y1="${BT}" y2="${BT+4}" stroke="var(--muted)"/><text x="${x(i)}" y="${AX-18}" text-anchor="middle" font-size="10" fill="var(--muted)">${t.toLocaleDateString("en-US",{month:"short"})}</text>`;
   }
-  s += '<line x1="' + L + '" x2="' + (W-R) + '" y1="' + BT + '" y2="' + BT + '" stroke="var(--muted)"/>';
-  // case lane for the selected option
-  s += '<text x="' + L + '" y="' + (LANE-10) + '" font-size="10" fill="var(--muted)">Option ' + o.key + ' past cases</text>';
+  s += `<line x1="${L}" x2="${W-Rr}" y1="${BT}" y2="${BT}" stroke="var(--muted)"/>`;
+  s += `<text x="${L}" y="${LANE-10}" font-size="10" fill="var(--muted)">Option ${o.key} past cases${S.phase || S.band ? " (faded = outside the selected condition)" : ""}</text>`;
   const act = new Set(activeCases(o).map(c => c.id));
   cs.forEach(c => {
     const i = idxOf(c.date), on = act.has(c.id), cl = c.replied;
-    const fill = cl === true ? "var(--accent)" : "none", st = cl === null ? "var(--open)" : "var(--accent)";
-    s += '<circle cx="' + x(i) + '" cy="' + (LANE+6) + '" r="6" fill="' + fill + '" stroke="' + st + '" stroke-width="2"' + (cl === null ? ' stroke-dasharray="3 2"' : '') + ' opacity="' + (on ? 1 : .25) + '"/>';
+    s += `<circle cx="${x(i)}" cy="${LANE+6}" r="6" fill="${cl === true ? "var(--accent)" : "none"}" stroke="${cl === null ? "var(--open)" : "var(--accent)"}" stroke-width="2"${cl === null ? ' stroke-dasharray="3 2"' : ''} opacity="${on ? 1 : .25}"/>`;
   });
-  if(!cs.length) s += '<text x="' + (L+130) + '" y="' + (LANE-10) + '" font-size="10" fill="var(--muted)">(none in the log)</text>';
-  s += '<g id="ov"></g></svg><div class="tip" id="tip" hidden></div>';
+  if(!cs.length) s += `<text x="${L+150}" y="${LANE-10}" font-size="10" fill="var(--muted)">(none in the log)</text>`;
+  s += `<g id="ov"></g></svg><div class="tip" id="tip" hidden></div>`;
   box.innerHTML = s;
   const svg = $("svg", box), tip = $("#tip", box), ov = $("#ov", box);
   let hover = null;
   const paint = () => {
-    let g = "";
     const pi = pinIndex();
-    g += '<line x1="' + x(pi) + '" x2="' + x(pi) + '" y1="' + T + '" y2="' + (LANE+16) + '" stroke="var(--needle)" stroke-width="1.5"/><circle cx="' + x(pi) + '" cy="' + y(D.series[pi][1]) + '" r="5" fill="var(--needle)"/>';
-    if(hover !== null && hover !== pi) g += '<line x1="' + x(hover) + '" x2="' + x(hover) + '" y1="' + T + '" y2="' + BT + '" stroke="var(--muted)" stroke-dasharray="2 2"/><circle cx="' + x(hover) + '" cy="' + y(D.series[hover][1]) + '" r="4" fill="var(--panel)" stroke="var(--ink)" stroke-width="1.5"/>';
+    let g = `<line x1="${x(pi)}" x2="${x(pi)}" y1="${T}" y2="${LANE+16}" stroke="var(--needle)" stroke-width="1.5"/><circle cx="${x(pi)}" cy="${y(D.series[pi][1])}" r="5" fill="var(--needle)"/>`;
+    if(hover !== null && hover !== pi) g += `<line x1="${x(hover)}" x2="${x(hover)}" y1="${T}" y2="${BT}" stroke="var(--muted)" stroke-dasharray="2 2"/><circle cx="${x(hover)}" cy="${y(D.series[hover][1])}" r="4" fill="var(--panel)" stroke="var(--ink)" stroke-width="1.5"/>`;
     ov.innerHTML = g;
   };
-  const caseNear = (px) => { let best = null, bd = 12; cs.forEach(c => { const d = Math.abs(x(idxOf(c.date)) - px); if(d < bd){ bd = d; best = c; } }); return best; };
+  const caseNear = px => { let best = null, bd = 12; cs.forEach(c => { const d = Math.abs(x(idxOf(c.date)) - px); if(d < bd){ bd = d; best = c; } }); return best; };
   const show = (i, px) => {
     hover = i; paint();
     const r = D.series[i], b = bandOf(r[1]), ph = D.phases.find(p => r[0] >= p.start && r[0] <= p.end), c = caseNear(px);
-    let h = '<b>' + fmtDate(r[0], true) + '</b><br>' + r[1] + ' pts · ' + BAND_NAMES[b] + '<br>' + esc(ph ? ph.name : "");
-    if(c) h += '<br><br>#' + c.id + ' ' + esc(c.title.slice(0, 90)) + (c.title.length > 90 ? "…" : "") + '<br>' + (c.replied === true ? "Iran replied" : c.replied === false ? "No reply" : "Reply not yet known");
+    let h = `<b>${fmtDate(r[0], true)}</b><br>${r[1]} pts · ${BAND_NAMES[b]}<br>${esc(ph ? ph.name : "")}`;
+    if(c) h += `<br><br>#${c.id} ${esc(c.title.slice(0, 90))}${c.title.length > 90 ? "…" : ""}<br>${c.replied === true ? "Iran replied" : c.replied === false ? "No reply" : "Reply not yet known"}`;
     tip.innerHTML = h; tip.hidden = false;
     const tw = tip.offsetWidth; tip.style.left = Math.min(W - tw - 4, Math.max(4, x(i) + 12)) + "px"; tip.style.top = "36px";
   };
-  const idxFrom = ev => { const r = svg.getBoundingClientRect(), px = (ev.clientX - r.left) * (W / r.width); return [Math.max(0, Math.min(n-1, Math.round((px - L) / (W - L - R) * (n-1)))), px]; };
+  const idxFrom = ev => { const r = svg.getBoundingClientRect(), px = (ev.clientX - r.left) * (W / r.width); return [Math.max(0, Math.min(n-1, Math.round((px - L) / (W - L - Rr) * (n-1)))), px]; };
   svg.addEventListener("pointermove", ev => { const [i, px] = idxFrom(ev); show(i, px); });
   svg.addEventListener("pointerleave", () => { hover = null; tip.hidden = true; paint(); });
   svg.addEventListener("click", ev => { const [i, px] = idxFrom(ev), c = caseNear(px); S.pin = i === n - 1 ? null : (c ? idxOf(c.date) : i); renderIntensity(); });
@@ -331,93 +441,159 @@ function drawChart(){
   paint();
 }
 
-/* ---------- filters ---------- */
-function renderFilters(){
-  const cur = D.phase;
-  const phaseChips = PHASE_ORDER.map(p => '<button class="chip" data-ph="' + p + '" aria-pressed="' + S.phases.has(p) + '"><i style="background:var(' + PHASE_VAR[p] + ');border:1px solid var(--line)"></i>' + p + '</button>').join('');
-  const bandChips = BAND_NAMES.map((b,i) => '<button class="chip" data-bd="' + b + '" aria-pressed="' + S.bands.has(b) + '"><i style="background:var(--b' + i + ')"></i>' + b + '</button>').join('');
-  $("#filters").innerHTML = '<h2>Which past cases count?</h2><div class="filters"><div class="fgroup"><span class="fl">War phase</span>' + phaseChips + '</div>' +
-    '<div class="fgroup"><span class="fl">Intensity at the time</span>' + bandChips + '</div>' +
-    '<div class="fgroup"><button class="linkbtn" id="f-now">Conditions like now (' + esc(cur) + ')</button><button class="linkbtn" id="f-all">All past cases</button></div></div>' +
-    '<p class="note" style="margin-top:10px">Turn phases or intensity levels off to see how the percentages change. The numbers below recalculate right away. Fewer cases means a wider margin of error.</p>';
-  document.querySelectorAll("[data-ph]").forEach(b => b.onclick = () => { const p = b.dataset.ph; S.phases.has(p) ? S.phases.delete(p) : S.phases.add(p); refresh(); });
-  document.querySelectorAll("[data-bd]").forEach(b => b.onclick = () => { const p = b.dataset.bd; S.bands.has(p) ? S.bands.delete(p) : S.bands.add(p); refresh(); });
-  $("#f-now").onclick = () => { S.phases = new Set([cur]); S.bands = new Set(BAND_NAMES); refresh(); };
-  $("#f-all").onclick = () => { S.phases = new Set(PHASE_ORDER); S.bands = new Set(BAND_NAMES); refresh(); };
+/* ---------- conditions lens ---------- */
+let LENS = null;
+function buildLens(){
+  const phaseOfDate = iso => { const p = D.phases.find(p => iso >= p.start && iso <= p.end); return p ? p.name : null; };
+  const bandOfDate = iso => { const r = D.series.find(s => s[0] === iso); return r ? BAND_NAMES[bandOf(r[1])] : null; };
+  const allCases = D.options.flatMap(o => o.cases.map(c => ({...c, opt:o.key})));
+  const out = {phase:{}, band:{}};
+  const mk = (days, evs, cases, avg, peak) => {
+    const rep = cases.filter(c => c.replied !== null);
+    return {days: days.length, shareDays: days.length / D.series.length,
+      events: evs.length, pts: evs.reduce((a,e) => a + e.pts, 0), deadly: evs.filter(e => e.deadly).length,
+      ship: evs.filter(e => e.kind === "Maritime").length, kinetic: evs.filter(e => e.kind === "Kinetic").length,
+      avg, peak, cases: cases.length,
+      reply: {k: rep.filter(c => c.replied).length, n: rep.length},
+      hurt: {k: cases.filter(c => c.strike7 !== null && (!!c.civ || c.replies.some(r => r.hurt))).length, n: cases.filter(c => c.strike7 !== null).length},
+      talks: {k: cases.filter(c => c.talks14 === true).length, n: cases.filter(c => c.talks14 !== null).length}};
+  };
+  const totPts = D.hostile.reduce((a,e) => a + e.pts, 0);
+  PHASE_ORDER.forEach(name => {
+    const days = D.series.filter(s => phaseOfDate(s[0]) === name);
+    const evs = D.hostile.filter(e => phaseOfDate(e.date) === name);
+    out.phase[name] = mk(days, evs, allCases.filter(c => c.phase === name), days.length ? days.reduce((a,s) => a + s[1], 0) / days.length : 0, days.reduce((a,s) => Math.max(a, s[1]), 0));
+  });
+  BAND_NAMES.forEach(name => {
+    const days = D.series.filter(s => BAND_NAMES[bandOf(s[1])] === name);
+    const evs = D.hostile.filter(e => bandOfDate(e.date) === name);
+    out.band[name] = mk(days, evs, allCases.filter(c => c.band_at === name), days.length ? days.reduce((a,s) => a + s[1], 0) / days.length : 0, days.reduce((a,s) => Math.max(a, s[1]), 0));
+  });
+  out.totPts = totPts; out.totEvents = D.hostile.length; out.totCases = allCases.length; out.totDeadly = D.hostile.filter(e => e.deadly).length;
+  LENS = out;
 }
+function lensDetail(kind, name){
+  const m = LENS[kind][name], plain = kind === "phase" ? "the " + name.toLowerCase() + " phase" : "days rated " + name;
+  const rateRow = (lab, sub, c) => c.n ? `<div class="metric" style="grid-template-columns:minmax(0,1fr) 80px minmax(120px,1fr)"><div class="lab">${lab}<small>${sub} · range ${R(c.k, c.n)}</small></div><div class="pct" style="font-size:20px">${P(c.k, c.n)}<small>${c.k} of ${c.n}</small></div>${iv(c)}</div>` : `<div class="share"><div class="lab">${lab}<small>${sub}</small></div><div class="v nodata">no cases</div></div>`;
+  return `<div class="role"><h3>How much ${esc(plain)} mattered</h3><p class="nodata">Everything below is measured from the log. Percentages compare this condition with the whole war. The options below now count only past cases from ${esc(plain)}.</p><div class="grid"><div>` +
+    shareRow("Share of all days since the war began", m.days + " days", m.shareDays, Math.round(m.shareDays*100) + "%") +
+    shareRow("Share of all hostile points scored", m.pts + " of " + LENS.totPts + " points · average " + m.avg.toFixed(1) + " a day · peak " + m.peak, m.pts / LENS.totPts, Math.round(m.pts / LENS.totPts * 100) + "%") +
+    shareRow("Share of hostile events that killed someone", m.deadly + " of " + m.events + " logged hostile events here", m.events ? m.deadly / m.events : 0, m.events ? Math.round(m.deadly / m.events * 100) + "%" : "–") +
+    shareRow("Shipping attacks per week", m.ship + " shipping events logged in " + m.days + " days", Math.min(1, (m.days ? m.ship / m.days * 7 : 0) / 5), (m.days ? (m.ship / m.days * 7).toFixed(1) : "–")) +
+    `</div><div>` +
+    shareRow("Share of all past US actions that happened here", m.cases + " of " + LENS.totCases + " past cases behind the options", LENS.totCases ? m.cases / LENS.totCases : 0, LENS.totCases ? Math.round(m.cases / LENS.totCases * 100) + "%" : "–") +
+    rateRow("Iran replied to a US action", "past cases here, all options pooled", m.reply) +
+    rateRow("Someone was hurt (US action or reply)", "past cases here", m.hurt) +
+    rateRow("Talks followed within 14 days", "past cases here", m.talks) + `</div></div></div>`;
+}
+function tileHtml(kind, name, i){
+  const m = LENS[kind][name], pressed = (kind === "phase" ? S.phase : S.band) === name, col = kind === "phase" ? PHASE_VAR[name] : "--b" + i;
+  return `<button class="tile" data-kind="${kind}" data-name="${esc(name)}" aria-pressed="${pressed}" style="border-top-color:var(${col})"><span class="tn">${esc(name)}</span>` +
+    `<span class="tbig">${m.reply.n ? P(m.reply.k, m.reply.n) : "–"}</span><span class="tm">Iran replied to US actions${m.reply.n ? " (" + m.reply.k + " of " + m.reply.n + ")" : ""}</span>` +
+    `<span class="tm">${m.days} days · ${Math.round(m.shareDays*100)}% of the war · ${m.cases} US actions</span></button>`;
+}
+function renderLens(){
+  if(!LENS) buildLens();
+  const sel = S.phase ? ["phase", S.phase] : S.band ? ["band", S.band] : null;
+  const total = D.options.reduce((a,o) => a + o.cases.length, 0), shown = D.options.reduce((a,o) => a + activeCases(o).length, 0);
+  let h = `<h2>How much did the conditions matter?</h2><p class="note" style="margin-bottom:12px">Click a war phase or an intensity level. You see how much it played a role in the past, and every option below recalculates using only cases from that condition. Click it again to clear.</p>`;
+  h += `<div class="lens-group"><div class="gl"><span>War phase</span></div><div class="tiles">${PHASE_ORDER.map((p,i) => tileHtml("phase", p, i)).join("")}</div></div>`;
+  h += `<div class="lens-group"><div class="gl"><span>Intensity at the time of the US action</span></div><div class="tiles">${BAND_NAMES.map((b,i) => tileHtml("band", b, i)).join("")}</div></div>`;
+  if(S.phase) h += lensDetail("phase", S.phase);
+  if(S.band) h += lensDetail("band", S.band);
+  h += `<div class="lensbar"><span><b>Now showing:</b> ${sel ? esc(sel[1]) : "all past cases"} · ${shown} of ${total} past cases</span>${sel ? '<button class="linkbtn" id="lens-clear">Clear</button>' : ""}<button class="linkbtn" id="lens-now">Conditions like now (${esc(D.phase)})</button></div>`;
+  $("#lens").innerHTML = h;
+}
+document.addEventListener("click", ev => {
+  const t = ev.target.closest(".tile");
+  if(t){ const k = t.dataset.kind, nm = t.dataset.name;
+    if(k === "phase"){ S.phase = S.phase === nm ? null : nm; S.band = null; } else { S.band = S.band === nm ? null : nm; S.phase = null; }
+    refresh(); return; }
+  if(ev.target.id === "lens-clear"){ S.phase = S.band = null; refresh(); }
+  if(ev.target.id === "lens-now"){ S.phase = D.phase; S.band = null; refresh(); }
+});
 
 /* ---------- explorer ---------- */
-function riskCards(o, st){
-  const trig = o.trigger, k = o.key, P = D.patriots, cards = [];
-  const hurtW = st.hurt.n ? wilson(st.hurt.k, st.hurt.n) : null;
-  // 1 people
-  if(["D","E","F","G"].includes(k)) cards.push([st.hurt.n ? pctS(st.hurt.k, st.hurt.n) : "No replies", st.hurt.n ? "of Iranian replies hurt people" : "to measure", st.hurt.n ? st.hurt.k + " of " + st.hurt.n + " replies · civilian harm in the US act: " + pctS(st.civ.k, st.civ.n) + " (" + st.civ.k + " of " + st.civ.n + ")" : "", st.hurt.n ? "" : "na"]);
-  else if(k === "A") cards.push(["~" + D.baseline.per_week + " / wk", "attacks on shipping continue; crews at risk", D.baseline.n + " logged in " + D.baseline.weeks + " weeks", ""]);
-  else cards.push(["0%", "direct casualties from the move itself", st.civ.n ? "civilian harm reported: " + st.civ.k + " of " + st.civ.n : "", ""]);
-  // 2 escalation
-  if(trig) cards.push([st.reply.n ? pctS(st.reply.k, st.reply.n) : "No cases", "Iran replied within ~5 days", st.reply.n ? st.reply.k + " of " + st.reply.n + " · range " + Math.round(wilson(st.reply.k,st.reply.n)[0]*100) + "–" + Math.round(wilson(st.reply.k,st.reply.n)[1]*100) + "% · " + (D.chain.longer != null ? Math.round(D.chain.longer*100) + "% of back-and-forths ran past one reply" : "") : "", st.reply.n ? "" : "na"]);
-  else if(k === "A") cards.push(["No trigger", "baseline attacks continue anyway", "effect of holding back: not measured", "na"]);
-  else cards.push([st.strike7.n ? pctS(st.strike7.k, st.strike7.n) : "No cases", "Iran struck within 7 days (timing only)", st.strike7.n ? st.strike7.k + " of " + st.strike7.n + " past cases" : "", st.strike7.n ? "" : "na"]);
-  // 3 military
-  if(["D","E","F","G"].includes(k) && st.reply.n){ const e = Math.round(st.reply.k / st.reply.n * P); cards.push(["≈" + e, "Patriot interceptors expected", "reply rate " + pctS(st.reply.k, st.reply.n) + " × ~" + P + " per missile salvo (Sep 8–9)", ""]); }
-  else cards.push(["None", "expected from the move itself", "", "na"]);
-  // 4 economic
-  if(st.shipN){ const ch = st.shipB ? Math.round((st.shipA - st.shipB) / st.shipB * 100) : null;
-    cards.push([st.shipB + " → " + st.shipA, "shipping attacks, 7 days before → after", (ch === null ? "no baseline to compare (0 before)" : (ch >= 0 ? "+" : "") + ch + "% change") + " · " + st.shipN + " cases · oil prices not measured", ""]); }
-  else cards.push(["~" + D.baseline.per_week + " / wk", "shipping attacks, current baseline", "oil prices not measured", ""]);
-  // 5 political
-  if(st.talks14.n) cards.push([pctS(st.talks14.k, st.talks14.n), "followed by talks within 14 days", st.talks14.k + " of " + st.talks14.n + " · range " + Math.round(wilson(st.talks14.k,st.talks14.n)[0]*100) + "–" + Math.round(wilson(st.talks14.k,st.talks14.n)[1]*100) + "% · allies' strain not measured", ""]);
-  else cards.push(["Not measured", "Iran's answer to the counter-offer is pending", "allies' strain not measured", "na"]);
-  const names = ["Harm to people","Escalation","Military cost","Economic harm","Political / diplomatic"];
-  return cards.map((c, i) => '<div class="risk"><div class="t">' + (i+1) + ". " + names[i] + '</div><div class="big ' + (c[3] || "") + '">' + esc(c[0]) + '</div><div class="lbl">' + esc(c[1]) + '</div>' +
-    (c[2] ? '<div class="sub">' + esc(c[2]) + '</div>' : '') + '<details><summary>Details</summary>' + esc(o.risks[i]) + '</details></div>').join("");
+function indexPanel(o, cs){
+  if(!o.cases.length) return `<p class="nodata">No past cases of "${esc(o.name)}" are in the log, so NAPOR cannot compute a risk index for it. What is measured instead: attacks on shipping are running at about ${D.baseline.per_week} a week without any new US move (${D.baseline.n} logged in ${D.baseline.weeks} weeks).</p>`;
+  const ix = riskIndex(o, cs);
+  if(!ix) return `<p class="nodata">No past cases of this option match the condition you picked, so there is no index to show. Clear the condition above or pick another.</p>`;
+  const thin = ix.n <= 3 ? "Very thin evidence: treat as a rough sketch." : ix.n <= 7 ? "Thin evidence: wide range." : "Fair sample.";
+  let h = `<div class="idx"><div><div class="num">${Math.round(ix.idx*100)}<small>%</small></div><div class="rng">range ${Math.round(ix.lo*100)}–${Math.round(ix.hi*100)}%<br>${ix.n} past case${ix.n === 1 ? "" : "s"} · ${ix.used} of 5 categories measured<br>${thin}</div></div><div>${stackBar(ix)}<div class="stackaxis"><span>0%</span><span>50%</span><span>100%</span></div>${katLegend()}</div></div>`;
+  h += `<div style="margin-top:6px">`;
+  ix.parts.forEach((p, i) => {
+    const s = p.s, k = `var(--k${i+1})`;
+    h += `<div class="cat"><span class="sw" style="background:${k}"></span><div class="cn">${CAT_NAME[p.c]}</div>`;
+    if(!p.ok) h += `<div class="cv"><span class="nodata">not measured</span></div><div class="cc"></div>`;
+    else h += `<div class="cv">${s.assumed ? "0%" : P(s.k, s.n)}<small>${s.assumed ? "assumed" : s.k + " of " + s.n}</small></div><div class="cc">+${(p.contrib*100).toFixed(1)}<small>points of index</small></div>`;
+    h += `<div class="cd">${esc(CAT_DEF[p.c](o))}${s.n ? " Range " + R(s.k, s.n) + "." : ""}</div>`;
+    if(s.n) h += `<div class="ivw">${iv(s)}</div>`;
+    h += `<details><summary>What the log says</summary>${esc(o.risks[i])}</details></div>`;
+  });
+  h += `</div><details class="weights"><summary>Change how much each category counts</summary><p class="nodata" style="margin-top:6px">Equal by default. NAPOR does not decide how much each kind of harm matters, so the weights are yours to set.</p><div class="wgrid">` +
+    CATS.map((c,i) => `<label for="w-${c}"><span style="color:var(--k${i+1});font-weight:600">${CAT_NAME[c]}: <span class="mono">${S.w[c]}</span></span><input type="range" id="w-${c}" data-w="${c}" min="0" max="5" step="1" value="${S.w[c]}"></label>`).join("") +
+    `</div><button class="linkbtn" id="w-reset" style="margin-top:10px">Reset to equal</button></details>`;
+  return h;
+}
+function renderExplore(){
+  const o = D.options.find(x => x.key === S.sel) || D.options[0], st = stats(o), cs = activeCases(o);
+  const rows = (o.trigger ? ["reply","fast","hurt"] : []).concat(o.cases.length ? ["strike7","talks14","civ"] : []);
+  const nowInfo = D.now && D.now.options && D.now.options[o.key];
+  const lastUsed = o.last_used ? `Last time the US did this: ${fmtDate(o.last_used, true)} (${Math.round((dd(D.asof) - dd(o.last_used)) / 864e5)} days before the latest news).` : "No past case of this kind in the log.";
+  let h = '<div class="main"><div class="list" role="group" aria-label="Options">';
+  for(const x of D.options){
+    const c2 = activeCases(x), ix = riskIndex(x, c2);
+    h += `<button data-k="${x.key}" aria-pressed="${x.key === S.sel}"><span class="key">${x.key}</span><span class="nm">${esc(x.name)}</span><span class="row2">${stPill(x)}</span><span class="ev">${ix ? "Risk index " + Math.round(ix.idx*100) + "% · " : ""}${c2.length} of ${x.cases.length} past cases${S.phase || S.band ? " in this condition" : ""}</span></button>`;
+  }
+  h += `</div><div class="panel detail"><div class="head"><h3>${o.key}. ${esc(o.name)}</h3><p class="what">${esc(o.what)}</p>` +
+    (nowInfo ? `<div class="avail"><div><span class="pill ${esc(nowInfo.status)}">${esc(nowInfo.label)}</span> <b>Availability right now</b> <span class="nodata">(agent's reading of the news as of ${fmtDate(D.now.as_of)})</span></div><div class="r">${esc(nowInfo.reason)}</div><div class="r">${esc(lastUsed)}</div></div>` : "") +
+    `<div class="meter"><span>${st.cases} of ${st.total} past cases ${S.phase || S.band ? "match the condition you picked" : "in the log"}</span><span class="bar"><i style="width:${Math.min(100, st.cases / 8 * 100)}%"></i></span><span>8+ cases is a fair sample</span></div></div>`;
+  h += `<section><h2>NAPOR risk assessment</h2>${indexPanel(o, cs)}</section>`;
+  h += `<section><h2>What followed past cases</h2>` + (rows.length ? rows.map(r => metricRow(r, st[r])).join("") + '<p class="legend">The dot is the percentage in the past cases. The bar is the 95% range the true rate could sit in; dashed means 3 cases or fewer.</p>' : `<p class="nodata">No past cases to count for this option. ${esc(o.unknown)}</p>`) + `</section>`;
+  h += `<section><h2>Pros and other harms (analyst notes, not data)</h2><div class="two"><div class="box"><b>Pros</b>${esc(o.pros)}</div><div class="box"><b>Other harms</b>${esc(o.harms)}</div></div></section>`;
+  h += `<section><h2>What the data cannot tell us</h2><p>${esc(o.unknown)}</p></section>`;
+  h += `<section><h2>Past cases behind these numbers</h2>${caseTable(o)}</section>`;
+  o.forecasts.forEach(f => { h += `<div class="fc">Open locked forecast ${esc(f.id)} (made before the outcome, due ${fmtDate(f.deadline)}): ${esc(f.question)} NAPOR put it at ${Math.round(f.p * 100)}%.</div>`; });
+  h += '</div></div>';
+  $("#view").innerHTML = h;
+  document.querySelectorAll(".list button").forEach(b => b.onclick = () => { pick(b.dataset.k); refresh(); });
+  document.querySelectorAll("input[data-w]").forEach(i => i.oninput = () => { S.w[i.dataset.w] = +i.value; const open = $(".weights") && $(".weights").open; renderExplore(); const w = $(".weights"); if(w && open) w.open = true; const f = $("#w-" + i.dataset.w); if(f) f.focus(); });
+  const wr = $("#w-reset"); if(wr) wr.onclick = () => { CATS.forEach(c => S.w[c] = 1); renderExplore(); const w = $(".weights"); if(w) w.open = true; };
 }
 function caseTable(o){
   if(!o.cases.length) return '<p class="nodata">No past cases of this kind are in the log, so there is nothing to count. The notes above are reasoning, not data.</p>';
   const act = new Set(activeCases(o).map(c => c.id));
-  const tri = v => v === null || v === undefined ? '<span class="dot open" title="not yet known"></span>' : '<span class="dot ' + (v ? "" : "no") + '" title="' + (v ? "yes" : "no") + '"></span>';
-  let h = '<div class="tbl"><table><thead><tr><th>Date</th><th>#</th><th>What the US did</th><th>Phase · intensity then</th>' + (o.trigger ? '<th class="c">Iran replied ≤5d</th>' : '') +
-    '<th class="c">Iran struck ≤7d</th><th class="c">Talks ≤14d</th><th>Shipping attacks 7d before → after</th></tr></thead><tbody>';
+  const tri = v => v === null || v === undefined ? '<span class="dot open" title="not yet known"></span>' : `<span class="dot ${v ? "" : "no"}" title="${v ? "yes" : "no"}"></span>`;
+  let h = '<div class="tbl"><table><thead><tr><th>Date</th><th>#</th><th>What the US did</th><th>Phase · intensity then</th>' + (o.trigger ? '<th class="c">Iran replied ≤5d</th>' : '') + '<th class="c">Iran struck ≤7d</th><th class="c">Talks ≤14d</th><th>Shipping attacks 7d before → after</th></tr></thead><tbody>';
   for(const c of o.cases)
-    h += '<tr class="' + (act.has(c.id) ? "" : "off") + '"><td class="mono">' + fmtDate(c.date) + '</td><td class="mono">' + c.id + '</td><td>' + esc(c.title.length > 140 ? c.title.slice(0,137) + "…" : c.title) +
-      (c.civ ? '<br><span class="nodata">Civilian harm: ' + esc(c.civ) + '</span>' : '') + '</td><td>' + esc(c.phase) + ' · ' + c.band_at + ' (' + c.pts_at + ')</td>' +
-      (o.trigger ? '<td class="c">' + tri(c.replied) + '</td>' : '') + '<td class="c">' + tri(c.strike7) + '</td><td class="c">' + tri(c.talks14) + '</td><td class="mono">' + c.ship_b + " → " + (c.ship_a === null ? "…" : c.ship_a) + '</td></tr>';
+    h += `<tr class="${act.has(c.id) ? "" : "off"}"><td class="mono">${fmtDate(c.date)}</td><td class="mono">${c.id}</td><td>${esc(c.title.length > 140 ? c.title.slice(0,137) + "…" : c.title)}${c.civ ? `<br><span class="nodata">Civilian harm: ${esc(c.civ)}</span>` : ""}</td><td>${esc(c.phase)} · ${c.band_at} (${c.pts_at})</td>` +
+      (o.trigger ? `<td class="c">${tri(c.replied)}</td>` : '') + `<td class="c">${tri(c.strike7)}</td><td class="c">${tri(c.talks14)}</td><td class="mono">${c.ship_b} → ${c.ship_a === null ? "…" : c.ship_a}</td></tr>`;
   return h + '</tbody></table></div>';
 }
-function renderExplore(){
-  const o = D.options.find(x => x.key === S.sel) || D.options[0], st = stats(o);
-  const rows = (o.trigger ? ["reply","fast","hurt"] : []).concat(o.cases.length ? ["strike7","talks14","civ"] : []);
-  let h = '<div class="main"><div class="list" role="group" aria-label="Options">';
-  for(const x of D.options){ const s2 = stats(x); h += '<button data-k="' + x.key + '" aria-pressed="' + (x.key === S.sel) + '"><span class="key">' + x.key + '</span><span class="nm">' + esc(x.name) + '</span><span class="ev">' + s2.cases + ' of ' + s2.total + ' past cases shown · ' + esc(x.evidence) + '</span></button>'; }
-  h += '</div><div class="panel detail"><div class="head"><h3>' + o.key + ". " + esc(o.name) + '</h3><p class="what">' + esc(o.what) + '</p>' +
-    '<div class="meter"><span>Evidence: ' + st.cases + ' of ' + st.total + ' past cases match your filters</span><span class="bar"><i style="width:' + Math.min(100, st.cases / 8 * 100) + '%"></i></span><span>8+ cases is a fair sample</span></div>' + (st.cases || !st.total ? '' : '<p class="note">No past cases match these filters. Turn some back on above.</p>') + '</div>';
-  h += '<section><h2>What followed past cases</h2>';
-  h += rows.length ? rows.map(r => metricRow(r, st[r])).join("") + '<p class="legend">The dot is the percentage in the past cases. The bar is the 95% range the true rate could sit in; dashed means 3 cases or fewer.</p>' : '<p class="nodata">No past cases to count for this option. ' + esc(o.unknown) + '</p>';
-  h += '</section><section><h2>Risk breakdown</h2><div class="risks">' + riskCards(o, st) + '</div></section>';
-  h += '<section><h2>Pros and other harms (analyst notes, not data)</h2><div class="two"><div class="box"><b>Pros</b>' + esc(o.pros) + '</div><div class="box"><b>Other harms</b>' + esc(o.harms) + '</div></div></section>';
-  h += '<section><h2>What the data cannot tell us</h2><p>' + esc(o.unknown) + '</p></section>';
-  h += '<section><h2>Past cases behind these numbers</h2>' + caseTable(o) + '</section>';
-  o.forecasts.forEach(f => { h += '<div class="fc">Open locked forecast ' + esc(f.id) + ' (made before the outcome, due ' + fmtDate(f.deadline) + '): ' + esc(f.question) + ' NAPOR put it at ' + Math.round(f.p * 100) + '%.</div>'; });
-  h += '</div></div>';
-  $("#view").innerHTML = h;
-  document.querySelectorAll(".list button").forEach(b => b.onclick = () => { S.sel = b.dataset.k; try { localStorage.setItem("napor-opt", S.sel); } catch(e) {} refresh(); });
-}
 function renderCompare(){
-  const keys = Object.keys(METRICS);
-  let h = '<div class="panel"><h2>All options, same measure, fixed order A to H</h2><div class="cmpbar">' +
-    keys.map(k => '<button class="chip" data-m="' + k + '" aria-pressed="' + (S.metric === k) + '">' + esc(METRICS[k].name) + '</button>').join("") + '</div>' +
-    '<p class="note" style="margin-bottom:8px">Not sorted or scored. Long bars mean little data. Click a row to open that option. Your filters above apply.</p>';
+  const keys = ["index"].concat(Object.keys(METRICS));
+  const name = k => k === "index" ? "Risk index" : METRICS[k].name;
+  let h = `<div class="panel"><h2>All options, same measure, fixed order A to H</h2><div class="cmpbar">${keys.map(k => `<button class="chip" data-m="${k}" aria-pressed="${S.metric === k}">${esc(name(k))}</button>`).join("")}</div>` +
+    `<p class="note" style="margin-bottom:8px">Not sorted or scored against each other. Long bars mean little data. Click a row to open that option.${S.phase || S.band ? " Your condition (" + esc(S.phase || S.band) + ") applies." : ""}</p>${S.metric === "index" ? katLegend() : ""}`;
   for(const o of D.options){
-    const c = stats(o)[S.metric], has = c && c.n;
-    h += '<div class="frow" data-k="' + o.key + '"><div class="nm"><b>' + o.key + '</b>' + esc(o.name) + '</div>' + (has ? iv(c) : '<div class="nodata">' + (METRICS[S.metric].trig && !o.trigger ? "not measured for this option" : "no past cases") + '</div>') +
-      '<div class="val">' + (has ? pctS(c.k, c.n) + ' <small>' + c.k + ' of ' + c.n + '</small>' : '–') + '</div></div>';
+    let mid, val;
+    if(S.metric === "index"){
+      const ix = riskIndex(o, activeCases(o));
+      mid = ix ? stackBar(ix) : `<div class="nodata">${o.cases.length ? "no cases in this condition" : "no past cases, so no index"}</div>`;
+      val = ix ? Math.round(ix.idx*100) + "% <small>range " + Math.round(ix.lo*100) + "–" + Math.round(ix.hi*100) + "%</small>" : "–";
+    } else {
+      const c = stats(o)[S.metric], has = c && c.n;
+      mid = has ? iv(c) : `<div class="nodata">${METRICS[S.metric].trig && !o.trigger ? "not measured for this option" : "no past cases"}</div>`;
+      val = has ? P(c.k, c.n) + ` <small>${c.k} of ${c.n}</small>` : "–";
+    }
+    h += `<div class="frow" data-k="${o.key}"><div class="nm"><b>${o.key}</b>${esc(o.name)}<br>${stPill(o)}</div>${mid}<div class="val">${val}</div></div>`;
   }
   $("#view").innerHTML = h + '</div>';
   document.querySelectorAll("[data-m]").forEach(b => b.onclick = () => { S.metric = b.dataset.m; renderCompare(); });
-  document.querySelectorAll(".frow").forEach(r => r.onclick = () => { S.sel = r.dataset.k; try { localStorage.setItem("napor-opt", S.sel); } catch(e) {} setMode("explore"); });
+  document.querySelectorAll(".frow").forEach(r => r.onclick = () => { pick(r.dataset.k); setMode("explore"); });
 }
 function renderView(){ S.mode === "explore" ? renderExplore() : renderCompare(); }
-function refresh(){ renderFilters(); renderView(); drawChart(); }
+function refresh(){ renderLens(); renderView(); drawChart(); }
 function setMode(m){
   S.mode = m;
   $("#tab-explore").setAttribute("aria-pressed", m === "explore"); $("#tab-compare").setAttribute("aria-pressed", m === "compare");
@@ -429,13 +605,7 @@ function boot(d){
   D = d;
   if(!D.options.some(x => x.key === S.sel)) S.sel = "D";
   $("#stamp").textContent = "Updated " + fmtDate(D.generated, true) + " · news through " + fmtDate(D.asof, true) + " · refreshes every Monday";
-  $("#strip").innerHTML =
-    '<div><div class="k">War phase</div><div class="v">' + esc(D.phase) + '</div></div>' +
-    '<div><div class="k">War intensity now</div><div class="v">' + esc(D.intensity.band) + ' <span class="mono" style="font-weight:400;color:var(--muted)">' + D.intensity.pts + ' pts</span></div></div>' +
-    '<div><div class="k">Shipping attacks now</div><div class="v">~' + D.baseline.per_week + ' a week</div></div>' +
-    '<div><div class="k">Events in the log</div><div class="v">' + D.n_events + '</div></div>' +
-    '<div><div class="k">Past cases behind options</div><div class="v">' + D.options.reduce((a,o) => a + o.cases.length, 0) + '</div></div>';
-  renderIntensity(); renderFilters(); renderView();
+  renderNow(); renderIntensity(); renderLens(); renderView();
   let t; window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(drawChart, 80); });
 }
 fetch("data.json", {cache:"no-store"}).then(r => { if(!r.ok) throw 0; return r.json(); }).then(boot)

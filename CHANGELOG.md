@@ -43,3 +43,11 @@ Data updates only; no model rules changed.
   passed; the workbook's Options sheet still counts a partly-open window as "no". This only changes
   recent cases. Suggestion for Sidd: align the workbook with the page.
 - README now states what NAPOR stands for.
+
+## 2026-10-20 (later) - Explorer: risk index, conditions lens, "right now" (Sidd's request)
+- Each option now shows a NAPOR risk index (0-100%): the average of five measured rates (people hurt,
+  Iranian reply, missile/drone replies, shipping attacks rising, no talks followed), equal weights by
+  default and adjustable on the page. It summarizes past cases only and is not a ranking.
+- The phase/intensity filter is now a click-to-select lens that shows how much each condition mattered.
+- Added `napor/napor_now.json` (which options are open now and why) and `explorer/history.json`
+  (weekly snapshots, shown as "since last update").

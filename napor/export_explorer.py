@@ -34,11 +34,15 @@ def build():
         intensity=dict(pts=cur, band=INT.band(cur), bands=[[lo, nm] for lo, nm in INT.BANDS], peak=peak,
                        share_days_below=round(sum(1 for _, p in series if p < cur) / len(series), 3), window_days=INT.WINDOW_DAYS),
         series=series,
-        hostile=[dict(id=e[0], date=e[1].isoformat(), actor=e[2], kind=data.event_kind[e[0]], pts=INT.points_for(e), title=e[5]) for e in INT.HOSTILE],
+        hostile=[dict(id=e[0], date=e[1].isoformat(), actor=e[2], kind=data.event_kind[e[0]], pts=INT.points_for(e), deadly=bool(INT._deadly(e)), title=e[5]) for e in INT.HOSTILE],
         phases=[dict(name=p[0], start=p[1].isoformat(), end=min(p[2], last).isoformat()) for p in T.PHASES if p[1] <= last],
         baseline=O.baseline_hold(), n_events=len([e for e in data.events if e[0] not in data.MERGED]),
         chain=dict(n=chain.get("chains"), longer=round(1 - chain["share_stopped_after_one_reply"], 3) if chain else None),
         patriots=O.PATRIOTS_PER_SALVO, options=[])
+    out["week_events"] = [ev(e[0]) | dict(actor=e[2]) for e in sorted(data.events, key=lambda e: e[1])
+                          if e[0] not in data.MERGED and (last - e[1]).days <= 6 and N.counts(e[0])]
+    now_file = os.path.join(HERE, "napor_now.json")
+    out["now"] = json.load(open(now_file)) if os.path.exists(now_file) else None
     open_fc = [f for f in F.load() if f["outcome"] is None]
     for o in O.OPTIONS:
         k = o["key"]; r = rows[k]; m = O.measured_signals(k); rp = O.risk_profile(k)
@@ -48,7 +52,7 @@ def build():
                 prs = [p for p in O.pairs if p[1] == c[0]]
                 counted = c[2] in ("R-strong", "R-weak", "N")
                 cases.append(dict(**ev(c[0]), cls=c[2], replied=(c[2] != "N") if counted else None,
-                                  replies=[dict(id=p[2], days=(EV[p[2]][1] - EV[p[1]][1]).days, hurt=p[4] == "Y", title=EV[p[2]][5]) for p in prs],
+                                  replies=[dict(id=p[2], days=(EV[p[2]][1] - EV[p[1]][1]).days, hurt=p[4] == "Y", kinetic=data.event_kind[p[2]] == "Kinetic", title=EV[p[2]][5]) for p in prs],
                                   civ=O.CIVILIAN_HARM.get(c[0])))
         elif k in ("B", "H"):
             for i in O.option_cases(k):
@@ -73,7 +77,59 @@ def build():
             official=dict(reply=r["reply"], fast=r["fast"], casualties=r["casualties"], strikes=m.get("strikes_after"), talks=m.get("talks"), shipping=m.get("shipping")),
             cases=cases, risks=[rp[c] for c in O.RISK_CATEGORIES], pros=O.PROS[k], harms=O.HARMS[k], unknown=O.UNKNOWNS[k],
             forecasts=[dict(id=f["id"], question=f["question"], p=f["probability"], deadline=f["deadline"]) for f in open_fc if f["option"] == k]))
+    for o in out["options"]:
+        o["last_used"] = max((c["date"] for c in o["cases"]), default=None)
+    out["history"] = update_history(out)
     return out
+
+
+# ---- NAPOR risk index (equal weights): same formula as the page, used here only for the weekly history ----
+CATS = ["people", "escalation", "military", "economic", "political"]
+
+
+def wilson(k, n, z=1.96):
+    if not n: return None
+    p = k / n; d = 1 + z * z / n; c = p + z * z / (2 * n); m = z * (p * (1 - p) / n + z * z / (4 * n * n)) ** 0.5
+    return max(0, (c - m) / d), min(1, (c + m) / d)
+
+
+def category_scores(o, cases):
+    def rate(base, flag):
+        b = [c for c in cases if base(c)]
+        return dict(k=sum(1 for c in b if flag(c)), n=len(b))
+    sc = {}
+    sc["people"] = rate(lambda c: c["strike7"] is not None, lambda c: bool(c["civ"]) or any(r["hurt"] for r in c["replies"]))
+    sc["escalation"] = (rate(lambda c: c["replied"] is not None, lambda c: c["replied"] is True) if o["trigger"]
+                        else rate(lambda c: c["strike7"] is not None, lambda c: c["strike7"] is True))
+    if o["key"] in ("D", "E", "F", "G"):
+        sc["military"] = rate(lambda c: c["replied"] is not None, lambda c: any(r["kinetic"] for r in c["replies"]))
+    else:
+        sc["military"] = dict(k=0, n=0, assumed=True)
+    sc["economic"] = rate(lambda c: c["ship_a"] is not None, lambda c: c["ship_a"] > c["ship_b"])
+    sc["political"] = rate(lambda c: c["talks14"] is not None, lambda c: c["talks14"] is False)
+    return sc
+
+
+def risk_index(o, cases, w=None):
+    if not cases: return None
+    sc = category_scores(o, cases); w = w or {c: 1 for c in CATS}
+    num = tot = 0
+    for c in CATS:
+        s = sc[c]
+        if s["n"] or s.get("assumed"):
+            p = s["k"] / s["n"] if s["n"] else 0
+            num += w[c] * p; tot += w[c]
+    return round(num / tot, 3) if tot else None
+
+
+def update_history(out):
+    path = os.path.join(HERE, "..", "explorer", "history.json")
+    hist = json.load(open(path)) if os.path.exists(path) else []
+    snap = dict(asof=out["asof"], intensity=out["intensity"]["pts"], band=out["intensity"]["band"], events=out["n_events"],
+                options={o["key"]: dict(n=len(o["cases"]), index=risk_index(o, o["cases"])) for o in out["options"]})
+    hist = [h for h in hist if h["asof"] != snap["asof"]] + [snap]
+    hist.sort(key=lambda h: h["asof"])
+    return hist[-60:]
 
 
 def check(out):
@@ -101,5 +157,7 @@ if __name__ == "__main__":
     os.makedirs(os.path.dirname(dest), exist_ok=True)
     with open(dest, "w") as f:
         json.dump(out, f, separators=(",", ":"), default=str)
+    with open(os.path.join(os.path.dirname(dest), "history.json"), "w") as f:
+        json.dump(out["history"], f, indent=1)
     print("wrote", os.path.normpath(dest), "| asof", out["asof"], "| intensity", out["intensity"]["pts"], out["intensity"]["band"])
     print("MISMATCH vs workbook counts:" if bad else "page counts match workbook counts", bad or "")

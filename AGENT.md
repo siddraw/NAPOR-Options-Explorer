@@ -21,13 +21,19 @@ reports in simple, plain language.
    outcome is known.
 6. **Re-run checks.** `python3 build.py`, recalculate the workbook (0 formula errors),
    `python3 backtest.py`, `python3 test_resolver.py`.
-7. **Refresh the Options Explorer page.** Run `cd napor && python3 export_explorer.py` (it writes
+7. **Update "right now".** Edit `napor/napor_now.json` from the week's news: `as_of`, `headline`
+   (3-5 plain-language bullets), `key_dates`, `pending`, and for every option A-H a `status`
+   (`active` = the US is doing it now, `open` = available, `constrained` = ruled out or limited,
+   for example by a pledge) with a one-sentence `reason` and the event IDs it rests on. This is
+   an analyst reading of the news, not data: only use logged events, say "not confirmed" where it
+   is uncertain, and never rank or recommend an option.
+   **Refresh the Options Explorer page.** Run `cd napor && python3 export_explorer.py` (it writes
    `explorer/data.json` and prints whether its counts match the workbook; investigate any
    mismatch). Then publish with the Artifact tool: first `read` the artifact
    https://claude.ai/artifact/8YQyFjEyHHNv4RA5qqopow, then publish `explorer/index.html` to that
    same `url` with `files` = {"data.json": "explorer/data.json"}. Do not change `index.html`
    unless Sidd asked for a design change. If the Artifact tool is not available, commit the
-   new `explorer/data.json` anyway and say in the report that the page was not republished.
+   new `explorer/data.json` and `explorer/history.json` anyway and say in the report that the page was not republished.
 8. **Look for what is not working.** Repeated misses, a phase that seems to have changed, numbers
    that drift from what is happening, a US choice the options did not cover.
 9. **Report to Sidd** in plain language: what happened, how the forecasts did, what the US
