@@ -174,7 +174,7 @@ details.fold li{margin:3px 0}
 .two .box{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;min-width:0}
 .two .box b{display:block;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .tbl{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:13px;min-width:680px}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:740px}
 th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-size:12px;color:var(--muted);font-weight:600;white-space:nowrap}
 td.c{text-align:center;white-space:nowrap}
@@ -194,6 +194,47 @@ tr.off td{opacity:.35}
 .klegend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted);margin:8px 0}
 .klegend span{display:inline-flex;align-items:center;gap:5px}
 .klegend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+/* visuals */
+.vis{display:grid;grid-template-columns:minmax(0,230px) minmax(0,1fr) minmax(0,270px);gap:18px;align-items:center}
+@media(max-width:900px){.vis{grid-template-columns:1fr 1fr}.vis .stackcol{grid-column:1/-1}}
+@media(max-width:560px){.vis{grid-template-columns:1fr}}
+.gauge{text-align:center}
+.gauge svg,.radar svg{width:100%;height:auto;display:block;overflow:visible}
+.gauge .rng{font-size:12px;color:var(--muted)}
+.flow{display:flex;flex-direction:column;gap:9px}
+.fl{display:grid;grid-template-columns:minmax(120px,210px) minmax(0,1fr) 112px;gap:4px 12px;align-items:center}
+.fl .t{font-size:13px;line-height:1.3}
+.fl .t small{display:block;color:var(--muted);font-size:11px}
+.fl .bar{position:relative;height:22px;border-radius:5px;background:var(--soft);overflow:hidden}
+.fl .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:5px 0 0 5px;transition:width .35s}
+.fl .bar b{position:absolute;top:0;bottom:0;border-left:2px solid var(--ink);opacity:.35}
+.fl .bar em{position:absolute;top:0;bottom:0;background:var(--accent-soft);opacity:.9}
+.fl .v{font-family:var(--f-mono);font-size:15px;text-align:right}
+.fl .v small{display:block;font-size:11px;color:var(--muted)}
+.fl.sub{padding-left:16px}
+.fl.sub .bar i{opacity:.75}
+@media(max-width:620px){.fl{grid-template-columns:1fr 92px}.fl .bar{grid-column:1/-1;order:3}}
+.pair{display:flex;gap:10px;align-items:flex-end;height:64px}
+.pair div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;font-size:11px;color:var(--muted);height:100%}
+.pair i{display:block;width:100%;border-radius:4px 4px 0 0;background:var(--accent);min-height:2px}
+.pair div:first-child i{background:var(--open)}
+.fgauge{display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:4px 12px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.fgauge .q{font-size:13px}
+.fgauge .q small{display:block;color:var(--muted);font-size:11px}
+.fgauge .big{font-family:var(--f-mono);font-size:24px;text-align:right}
+.fgauge .bar{grid-column:1/-1;height:10px;border-radius:99px;background:var(--soft);overflow:hidden}
+.fgauge .bar i{display:block;height:100%;background:var(--accent)}
+.wk{display:flex;align-items:flex-end;gap:6px;height:120px;padding-top:8px}
+.wk div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px;height:100%;font-size:11px;color:var(--muted);min-width:0}
+.wk i{display:block;width:100%;background:var(--accent);border-radius:4px 4px 0 0;min-height:2px}
+.wk b{font-family:var(--f-mono);font-weight:500;color:var(--ink);font-size:12px}
+.chips2{display:flex;flex-wrap:wrap;gap:6px 10px;font-size:12px;color:var(--muted)}
+.chips2 span{border:1px solid var(--line);border-radius:6px;padding:2px 8px;background:var(--panel)}
+.chips2 b{font-family:var(--f-mono);color:var(--ink);font-weight:500}
+details.sit{font-size:13px}
+details.sit summary{cursor:pointer;color:var(--accent)}
+details.sit ul{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
 footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
 .err{padding:24px;text-align:center;color:var(--muted)}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -211,7 +252,6 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
       <button id="tab-compare" aria-pressed="false">Compare all</button>
     </div>
   </div>
-  <section class="panel" id="nowpanel" aria-label="Right now"></section>
   <section class="panel" id="intensity" aria-label="War intensity"></section>
   <section class="panel" id="lens" aria-label="Conditions lens"></section>
   <div id="view"></div>
@@ -326,28 +366,6 @@ function stackBar(ix){
 }
 const katLegend = () => '<div class="klegend">' + CATS.map((c,i) => `<span><i style="background:var(--k${i+1})"></i>${CAT_NAME[c]}</span>`).join("") + '</div>';
 const stPill = (o) => { const n = D.now && D.now.options && D.now.options[o.key]; return n ? `<span class="pill ${esc(n.status)}">${esc(n.label)}</span>` : ""; };
-
-/* ---------- right now ---------- */
-function renderNow(){
-  const n = D.now, days = Math.max(1, 1);
-  let h = '<h2>The US options right now</h2>';
-  if(n){
-    const today = new Date(); today.setHours(12,0,0,0);
-    h += '<div class="now"><div><ul>' + n.headline.map(t => `<li>${esc(t)}</li>`).join("") + '</ul>' +
-      (n.pending && n.pending.length ? `<p class="note" style="margin-top:10px"><b>Waiting on:</b> ${n.pending.map(esc).join(" · ")}</p>` : "") + '</div><div class="dates">' +
-      n.key_dates.map(k => { const d = Math.round((dd(k.date) - today) / 864e5); return `<div class="date"><div><b>${d > 0 ? d : d === 0 ? "0" : "–"}</b><small>${d > 0 ? "days" : d === 0 ? "today" : "passed"} · ${fmtDate(k.date)}</small></div><div>${esc(k.label)}</div></div>`; }).join("") + '</div></div>';
-    h += '<div class="chg" aria-label="Option status now">' + D.options.map(o => { const s = n.options[o.key]; return s ? `<span><b>${o.key}</b> <span class="pill ${esc(s.status)}">${esc(s.label)}</span></span>` : ""; }).join("") + '</div>';
-  }
-  const hist = D.history || [];
-  if(hist.length > 1){
-    const a = hist[hist.length-2], b = hist[hist.length-1];
-    const arrow = (x, y) => x === y ? "no change" : (x === null || y === null ? (y === null ? "–" : Math.round(y*100) + "% (new)") : Math.round(x*100) + "% → " + Math.round(y*100) + "%");
-    h += `<div class="chg"><span><b>Since ${fmtDate(a.asof)}:</b></span><span>intensity <b>${a.intensity} → ${b.intensity} pts</b></span><span>events logged <b>+${b.events - a.events}</b></span>` +
-      D.options.filter(o => b.options[o.key] && b.options[o.key].index !== null).map(o => `<span>${o.key} index <b>${arrow(a.options[o.key] ? a.options[o.key].index : null, b.options[o.key].index)}</b></span>`).join("") + '</div>';
-  }
-  if(D.week_events && D.week_events.length) h += `<details class="fold"><summary>New in the log this week (${D.week_events.length} events)</summary><ul>` + D.week_events.slice().reverse().map(e => `<li><span class="mono">${fmtDate(e.date)}</span> #${e.id} ${esc(e.title.length > 150 ? e.title.slice(0,147) + "…" : e.title)}</li>`).join("") + '</ul></details>';
-  $("#nowpanel").innerHTML = h;
-}
 
 /* ---------- war intensity ---------- */
 function pinIndex(){ return S.pin === null ? D.series.length - 1 : S.pin; }
@@ -514,16 +532,100 @@ document.addEventListener("click", ev => {
 });
 
 /* ---------- explorer ---------- */
+/* ---------- visuals ---------- */
+function arc(cx, cy, r, a0, a1){ // angles in degrees, 180 = left, 0 = right, drawn over the top
+  const p = a => [cx + r*Math.cos(a*Math.PI/180), cy - r*Math.sin(a*Math.PI/180)];
+  const [x0,y0] = p(a0), [x1,y1] = p(a1);
+  return `M${x0.toFixed(1)},${y0.toFixed(1)} A${r},${r} 0 ${Math.abs(a0-a1) > 180 ? 1 : 0} 1 ${x1.toFixed(1)},${y1.toFixed(1)}`;
+}
+function gaugeSvg(ix){
+  const a = f => 180 - 180*f;
+  return `<div class="gauge"><svg viewBox="0 0 200 118" role="img" aria-label="Risk index ${Math.round(ix.idx*100)} percent, range ${Math.round(ix.lo*100)} to ${Math.round(ix.hi*100)}">` +
+    `<path d="${arc(100,100,78,180,0)}" fill="none" stroke="var(--soft)" stroke-width="16" stroke-linecap="round"/>` +
+    `<path d="${arc(100,100,78,a(ix.lo),a(Math.max(ix.hi, ix.lo+0.01)))}" fill="none" stroke="var(--accent-soft)" stroke-width="16"/>` +
+    (ix.idx > 0.005 ? `<path d="${arc(100,100,78,180,a(ix.idx))}" fill="none" stroke="var(--accent)" stroke-width="16" stroke-linecap="round"/>` : '') +
+    `<text x="100" y="92" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="38" font-weight="500" fill="var(--ink)">${Math.round(ix.idx*100)}%</text>` +
+    `<text x="22" y="116" font-size="10" fill="var(--muted)" font-family="IBM Plex Mono,monospace">0</text><text x="178" y="116" font-size="10" fill="var(--muted)" font-family="IBM Plex Mono,monospace" text-anchor="end">100%</text></svg>` +
+    `<div class="rng">NAPOR risk index<br>range ${Math.round(ix.lo*100)}–${Math.round(ix.hi*100)}% · ${ix.n} past case${ix.n === 1 ? "" : "s"}</div></div>`;
+}
+function radarSvg(ix){
+  const cx = 130, cy = 120, r = 78, ang = i => (-90 + i*72) * Math.PI/180, pt = (i, f) => [cx + r*f*Math.cos(ang(i)), cy + r*f*Math.sin(ang(i))];
+  let g = '';
+  [.25,.5,.75,1].forEach(f => { g += `<polygon points="${CATS.map((c,i) => pt(i,f).map(v => v.toFixed(1)).join(",")).join(" ")}" fill="none" stroke="var(--line)"/>`; });
+  CATS.forEach((c,i) => { const [x,y] = pt(i,1); g += `<line x1="${cx}" y1="${cy}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="var(--line)"/>`; });
+  const vals = ix.parts.map(p => p.ok ? p.p : 0);
+  g += `<polygon points="${vals.map((v,i) => pt(i,v).map(q => q.toFixed(1)).join(",")).join(" ")}" fill="var(--accent)" fill-opacity=".22" stroke="var(--accent)" stroke-width="2"/>`;
+  ix.parts.forEach((p, i) => {
+    const [x,y] = pt(i, vals[i]), [lx,ly] = pt(i, 1.3), anchor = Math.abs(lx - cx) < 8 ? "middle" : lx > cx ? "start" : "end";
+    g += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5" fill="var(--k${i+1})" stroke="var(--panel)" stroke-width="1.5"/>` +
+      `<text x="${lx.toFixed(1)}" y="${(ly-2).toFixed(1)}" text-anchor="${anchor}" font-size="10.5" fill="var(--ink)">${CAT_NAME[p.c].replace(" / ", "/")}</text>` +
+      `<text x="${lx.toFixed(1)}" y="${(ly+11).toFixed(1)}" text-anchor="${anchor}" font-size="10.5" fill="var(--muted)" font-family="IBM Plex Mono,monospace">${p.ok ? Math.round(p.p*100) + "%" : "n/m"}</text>`;
+  });
+  return `<div class="radar"><svg viewBox="0 0 260 240" role="img" aria-label="Risk profile across five categories">${g}</svg></div>`;
+}
+function flowRow(t, sub, frac, text, small, cls, color, w){
+  const wl = w ? wilson(Math.round(w.k), w.n) : null;
+  return `<div class="fl ${cls||""}"><div class="t">${esc(t)}${sub ? `<small>${esc(sub)}</small>` : ""}</div><div class="bar" role="img" aria-label="${esc(t)} ${text}"><i style="width:${Math.max(0,Math.min(1,frac))*100}%;background:${color || "var(--accent)"}"></i>${wl ? `<em style="left:${wl[0]*100}%;width:${Math.max(.5,(wl[1]-wl[0])*100)}%;opacity:.22;background:var(--ink)"></em>` : ""}</div><div class="v">${text}${small ? `<small>${esc(small)}</small>` : ""}</div></div>`;
+}
+function weeklyShipping(){
+  const last = dd(D.asof), mon = d => { const x = new Date(d); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); x.setHours(12,0,0,0); return x; };
+  const cur = mon(last), weeks = [];
+  for(let i = 9; i >= 0; i--) { const w = new Date(cur); w.setDate(w.getDate() - 7*i); weeks.push(w); }
+  const ev = D.hostile.filter(e => e.kind === "Maritime" && !e.actor.toLowerCase().startsWith("us"));
+  const counts = weeks.map(w => { const e2 = new Date(w); e2.setDate(e2.getDate() + 6); return ev.filter(e => { const t = dd(e.date); return t >= new Date(w.getTime() - 43200000) && t <= new Date(e2.getTime() + 43200000); }).length; });
+  const mx = Math.max(1, ...counts);
+  return `<div class="wk" role="img" aria-label="Logged attacks on shipping per week">` + counts.map((c, i) => `<div><b>${c}</b><i style="height:${Math.max(2, c/mx*80)}px"></i><span>${weeks[i].toLocaleDateString("en-US",{month:"short",day:"numeric"})}</span></div>`).join("") + `</div>`;
+}
+function outcomesBlock(o, st, ix){
+  if(!o.cases.length){
+    let h = `<p class="nodata" style="margin-bottom:10px">No past case of "${esc(o.name)}" is in the log, so there is no measured outcome. What is measured is what happens anyway: attacks on shipping, logged per week (the real count is higher, because big clusters are logged as one row).</p>` + weeklyShipping() +
+      `<p class="legend">Now about ${D.baseline.per_week} logged attacks a week (${D.baseline.n} in ${D.baseline.weeks} weeks) with no new US move.</p>`;
+    if(o.forecasts.length) h += `<h2 style="margin-top:16px">NAPOR's open forecasts (locked before the outcome)</h2>` + o.forecasts.map(f => `<div class="fgauge"><div class="q">${esc(f.question)}<small>${esc(f.id)} · resolves by ${fmtDate(f.deadline)}</small></div><div class="big">${Math.round(f.p*100)}%</div><div class="bar"><i style="width:${f.p*100}%"></i></div></div>`).join("");
+    return h;
+  }
+  let h = '<div class="flow">';
+  const rp = st.reply, pc = (c) => c.n ? c.k / c.n : 0;
+  if(o.trigger){
+    h += flowRow("US does this", "all past cases = 100%", 1, "100%", st.cases + " cases", "", "var(--open)");
+    h += flowRow("Iran replies within ~5 days", "share of past cases", pc(rp), P(rp.k, rp.n), rp.k + " of " + rp.n + " · " + R(rp.k, rp.n), "", "var(--accent)", rp);
+    h += flowRow("…within 2 days", "share of those replies", pc(rp) * pc(st.fast), P(st.fast.k, st.fast.n), st.fast.k + " of " + st.fast.n + " replies", "sub", "var(--accent)");
+    h += flowRow("…and hurt people", "share of those replies", pc(rp) * pc(st.hurt), P(st.hurt.k, st.hurt.n), st.hurt.k + " of " + st.hurt.n + " replies", "sub", "var(--k2)");
+  }
+  const s7 = st.strike7; h += flowRow("Iran strikes within 7 days", o.trigger ? "timing only, not shown to be a reply" : "timing only, not shown to be a reply", pc(s7), P(s7.k, s7.n), s7.k + " of " + s7.n + " · " + R(s7.k, s7.n), "", "var(--k2)", s7);
+  const tk = st.talks14; h += flowRow("Talks or diplomatic moves follow within 14 days", "share of past cases with a full window or a talk already", pc(tk), P(tk.k, tk.n), tk.k + " of " + tk.n + " · " + R(tk.k, tk.n), "", "var(--k4)", tk);
+  const cs = activeCases(o).filter(c => c.ship_a !== null), up = {k: cs.filter(c => c.ship_a > c.ship_b).length, n: cs.length};
+  h += flowRow("Attacks on shipping rise the next week", "share of past cases", pc(up), P(up.k, up.n), up.k + " of " + up.n + " · " + R(up.k, up.n), "", "var(--k5)", up);
+  const cv = st.civ; h += flowRow("Civilians reported hurt in the US action itself", "share of past cases", pc(cv), P(cv.k, cv.n), cv.k + " of " + cv.n, "", "var(--k2)");
+  h += '</div>';
+  const sb = cs.reduce((a,c) => a + c.ship_b, 0), sa = cs.reduce((a,c) => a + c.ship_a, 0), mx = Math.max(1, sb, sa);
+  h += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:16px"><div><h2>Shipping attacks, 7 days before vs after</h2><div class="pair"><div><i style="height:${sb/mx*100}%"></i>before ${sb}</div><div><i style="height:${sa/mx*100}%"></i>after ${sa}</div></div><p class="legend">Total across ${cs.length} past cases${sb ? " (" + (sa >= sb ? "+" : "") + Math.round((sa-sb)/sb*100) + "%)" : ""}. Not shown to be caused by the US action.</p></div>`;
+  if(["D","E","F","G"].includes(o.key) && rp.n){ const e = rp.k / rp.n * D.patriots; h += `<div><h2>Patriot interceptors expected</h2><div class="fgauge" style="border:0;padding-top:0"><div class="q">reply rate ${P(rp.k, rp.n)} × ~${D.patriots} per salvo<small>${D.patriots} was used in the Sep 8–9 salvo</small></div><div class="big">≈${Math.round(e)}</div><div class="bar"><i style="width:${e/D.patriots*100}%"></i></div></div></div>`; }
+  if(o.forecasts.length) h += `<div><h2>NAPOR's open forecasts</h2>` + o.forecasts.map(f => `<div class="fgauge"><div class="q">${esc(f.question)}<small>${esc(f.id)} · by ${fmtDate(f.deadline)}</small></div><div class="big">${Math.round(f.p*100)}%</div><div class="bar"><i style="width:${f.p*100}%"></i></div></div>`).join("") + `</div>`;
+  return h + '</div>';
+}
+function situationBlock(o){
+  const n = D.now, i = n && n.options && n.options[o.key];
+  if(!n || !i) return "";
+  const today = new Date(); today.setHours(12,0,0,0);
+  const hist = D.history || [], a = hist.length > 1 ? hist[hist.length-2] : null, b = hist.length ? hist[hist.length-1] : null;
+  const ai = a && a.options[o.key] ? a.options[o.key].index : null, bi = b && b.options[o.key] ? b.options[o.key].index : null;
+  const lastUsed = o.last_used ? `Last time the US did this: ${fmtDate(o.last_used, true)} (${Math.round((dd(D.asof) - dd(o.last_used)) / 864e5)} days before the latest news).` : "No past case of this kind in the log.";
+  return `<div class="avail"><div><span class="pill ${esc(i.status)}">${esc(i.label)}</span> <b>Available right now?</b> <span class="nodata">(agent's reading of the news as of ${fmtDate(n.as_of)})</span></div><div class="r">${esc(i.reason)}</div><div class="r">${esc(lastUsed)}</div>` +
+    `<div class="chips2">${n.key_dates.map(k => { const d = Math.round((dd(k.date) - today) / 864e5); return `<span><b>${d > 0 ? d + " days" : d === 0 ? "today" : "passed"}</b> · ${fmtDate(k.date)}: ${esc(k.label)}</span>`; }).join("")}</div>` +
+    (n.pending && n.pending.length ? `<div class="r"><b>Waiting on:</b> ${n.pending.map(esc).join(" · ")}</div>` : "") +
+    (a && b && bi !== null ? `<div class="r"><b>Since ${fmtDate(a.asof)}:</b> this option's risk index ${ai === null ? "is new at " + Math.round(bi*100) + "%" : Math.round(ai*100) + "% → " + Math.round(bi*100) + "%"} · war intensity ${a.intensity} → ${b.intensity} pts · ${b.events - a.events} new events logged</div>` : "") +
+    `<details class="sit"><summary>The situation right now (applies to every option)</summary><ul>${n.headline.map(t => `<li>${esc(t)}</li>`).join("")}</ul>` +
+    (D.week_events && D.week_events.length ? `<p class="nodata" style="margin-top:8px">New in the log this week:</p><ul>${D.week_events.slice().reverse().map(e => `<li><span class="mono">${fmtDate(e.date)}</span> #${e.id} ${esc(e.title.length > 130 ? e.title.slice(0,127) + "…" : e.title)}</li>`).join("")}</ul>` : "") + `</details></div>`;
+}
 function indexPanel(o, cs){
-  if(!o.cases.length) return `<p class="nodata">No past cases of "${esc(o.name)}" are in the log, so NAPOR cannot compute a risk index for it. What is measured instead: attacks on shipping are running at about ${D.baseline.per_week} a week without any new US move (${D.baseline.n} logged in ${D.baseline.weeks} weeks).</p>`;
+  if(!o.cases.length) return `<p class="nodata">No past cases of "${esc(o.name)}" are in the log, so NAPOR cannot compute a risk index for it. The visuals above show what is measured instead.</p>`;
   const ix = riskIndex(o, cs);
   if(!ix) return `<p class="nodata">No past cases of this option match the condition you picked, so there is no index to show. Clear the condition above or pick another.</p>`;
-  const thin = ix.n <= 3 ? "Very thin evidence: treat as a rough sketch." : ix.n <= 7 ? "Thin evidence: wide range." : "Fair sample.";
-  let h = `<div class="idx"><div><div class="num">${Math.round(ix.idx*100)}<small>%</small></div><div class="rng">range ${Math.round(ix.lo*100)}–${Math.round(ix.hi*100)}%<br>${ix.n} past case${ix.n === 1 ? "" : "s"} · ${ix.used} of 5 categories measured<br>${thin}</div></div><div>${stackBar(ix)}<div class="stackaxis"><span>0%</span><span>50%</span><span>100%</span></div>${katLegend()}</div></div>`;
-  h += `<div style="margin-top:6px">`;
+  const thin = ix.n <= 3 ? "Very thin evidence: a rough sketch." : ix.n <= 7 ? "Thin evidence: wide range." : "Fair sample.";
+  let h = `<div class="vis">${gaugeSvg(ix)}${radarSvg(ix)}<div class="stackcol"><div class="nodata" style="margin-bottom:4px">What makes up the ${Math.round(ix.idx*100)}%</div>${stackBar(ix)}<div class="stackaxis"><span>0%</span><span>50%</span><span>100%</span></div>${katLegend()}<p class="nodata">${esc(thin)} ${ix.used} of 5 categories measured.</p></div></div><div style="margin-top:10px">`;
   ix.parts.forEach((p, i) => {
-    const s = p.s, k = `var(--k${i+1})`;
-    h += `<div class="cat"><span class="sw" style="background:${k}"></span><div class="cn">${CAT_NAME[p.c]}</div>`;
+    const s = p.s;
+    h += `<div class="cat"><span class="sw" style="background:var(--k${i+1})"></span><div class="cn">${CAT_NAME[p.c]}</div>`;
     if(!p.ok) h += `<div class="cv"><span class="nodata">not measured</span></div><div class="cc"></div>`;
     else h += `<div class="cv">${s.assumed ? "0%" : P(s.k, s.n)}<small>${s.assumed ? "assumed" : s.k + " of " + s.n}</small></div><div class="cc">+${(p.contrib*100).toFixed(1)}<small>points of index</small></div>`;
     h += `<div class="cd">${esc(CAT_DEF[p.c](o))}${s.n ? " Range " + R(s.k, s.n) + "." : ""}</div>`;
@@ -536,28 +638,23 @@ function indexPanel(o, cs){
   return h;
 }
 function renderExplore(){
-  const o = D.options.find(x => x.key === S.sel) || D.options[0], st = stats(o), cs = activeCases(o);
-  const rows = (o.trigger ? ["reply","fast","hurt"] : []).concat(o.cases.length ? ["strike7","talks14","civ"] : []);
-  const nowInfo = D.now && D.now.options && D.now.options[o.key];
-  const lastUsed = o.last_used ? `Last time the US did this: ${fmtDate(o.last_used, true)} (${Math.round((dd(D.asof) - dd(o.last_used)) / 864e5)} days before the latest news).` : "No past case of this kind in the log.";
+  const o = D.options.find(x => x.key === S.sel) || D.options[0], st = stats(o), cs = activeCases(o), ix = riskIndex(o, cs);
   let h = '<div class="main"><div class="list" role="group" aria-label="Options">';
   for(const x of D.options){
-    const c2 = activeCases(x), ix = riskIndex(x, c2);
-    h += `<button data-k="${x.key}" aria-pressed="${x.key === S.sel}"><span class="key">${x.key}</span><span class="nm">${esc(x.name)}</span><span class="row2">${stPill(x)}</span><span class="ev">${ix ? "Risk index " + Math.round(ix.idx*100) + "% · " : ""}${c2.length} of ${x.cases.length} past cases${S.phase || S.band ? " in this condition" : ""}</span></button>`;
+    const c2 = activeCases(x), xi = riskIndex(x, c2);
+    h += `<button data-k="${x.key}" aria-pressed="${x.key === S.sel}"><span class="key">${x.key}</span><span class="nm">${esc(x.name)}</span><span class="row2">${stPill(x)}</span><span class="ev">${xi ? "Risk index " + Math.round(xi.idx*100) + "% · " : ""}${c2.length} of ${x.cases.length} past cases${S.phase || S.band ? " in this condition" : ""}</span></button>`;
   }
-  h += `</div><div class="panel detail"><div class="head"><h3>${o.key}. ${esc(o.name)}</h3><p class="what">${esc(o.what)}</p>` +
-    (nowInfo ? `<div class="avail"><div><span class="pill ${esc(nowInfo.status)}">${esc(nowInfo.label)}</span> <b>Availability right now</b> <span class="nodata">(agent's reading of the news as of ${fmtDate(D.now.as_of)})</span></div><div class="r">${esc(nowInfo.reason)}</div><div class="r">${esc(lastUsed)}</div></div>` : "") +
+  h += `</div><div class="panel detail"><div class="head"><h3>${o.key}. ${esc(o.name)}</h3><p class="what">${esc(o.what)}</p>${situationBlock(o)}` +
     `<div class="meter"><span>${st.cases} of ${st.total} past cases ${S.phase || S.band ? "match the condition you picked" : "in the log"}</span><span class="bar"><i style="width:${Math.min(100, st.cases / 8 * 100)}%"></i></span><span>8+ cases is a fair sample</span></div></div>`;
+  h += `<section><h2>Likely outcomes if the US does this</h2>${outcomesBlock(o, st, ix)}</section>`;
   h += `<section><h2>NAPOR risk assessment</h2>${indexPanel(o, cs)}</section>`;
-  h += `<section><h2>What followed past cases</h2>` + (rows.length ? rows.map(r => metricRow(r, st[r])).join("") + '<p class="legend">The dot is the percentage in the past cases. The bar is the 95% range the true rate could sit in; dashed means 3 cases or fewer.</p>' : `<p class="nodata">No past cases to count for this option. ${esc(o.unknown)}</p>`) + `</section>`;
   h += `<section><h2>Pros and other harms (analyst notes, not data)</h2><div class="two"><div class="box"><b>Pros</b>${esc(o.pros)}</div><div class="box"><b>Other harms</b>${esc(o.harms)}</div></div></section>`;
   h += `<section><h2>What the data cannot tell us</h2><p>${esc(o.unknown)}</p></section>`;
   h += `<section><h2>Past cases behind these numbers</h2>${caseTable(o)}</section>`;
-  o.forecasts.forEach(f => { h += `<div class="fc">Open locked forecast ${esc(f.id)} (made before the outcome, due ${fmtDate(f.deadline)}): ${esc(f.question)} NAPOR put it at ${Math.round(f.p * 100)}%.</div>`; });
   h += '</div></div>';
   $("#view").innerHTML = h;
   document.querySelectorAll(".list button").forEach(b => b.onclick = () => { pick(b.dataset.k); refresh(); });
-  document.querySelectorAll("input[data-w]").forEach(i => i.oninput = () => { S.w[i.dataset.w] = +i.value; const open = $(".weights") && $(".weights").open; renderExplore(); const w = $(".weights"); if(w && open) w.open = true; const f = $("#w-" + i.dataset.w); if(f) f.focus(); });
+  document.querySelectorAll("input[data-w]").forEach(i => i.oninput = () => { S.w[i.dataset.w] = +i.value; renderExplore(); const w = $(".weights"); if(w) w.open = true; const f = $("#w-" + i.dataset.w); if(f) f.focus(); });
   const wr = $("#w-reset"); if(wr) wr.onclick = () => { CATS.forEach(c => S.w[c] = 1); renderExplore(); const w = $(".weights"); if(w) w.open = true; };
 }
 function caseTable(o){
@@ -567,7 +664,7 @@ function caseTable(o){
   let h = '<div class="tbl"><table><thead><tr><th>Date</th><th>#</th><th>What the US did</th><th>Phase · intensity then</th>' + (o.trigger ? '<th class="c">Iran replied ≤5d</th>' : '') + '<th class="c">Iran struck ≤7d</th><th class="c">Talks ≤14d</th><th>Shipping attacks 7d before → after</th></tr></thead><tbody>';
   for(const c of o.cases)
     h += `<tr class="${act.has(c.id) ? "" : "off"}"><td class="mono">${fmtDate(c.date)}</td><td class="mono">${c.id}</td><td>${esc(c.title.length > 140 ? c.title.slice(0,137) + "…" : c.title)}${c.civ ? `<br><span class="nodata">Civilian harm: ${esc(c.civ)}</span>` : ""}</td><td>${esc(c.phase)} · ${c.band_at} (${c.pts_at})</td>` +
-      (o.trigger ? `<td class="c">${tri(c.replied)}</td>` : '') + `<td class="c">${tri(c.strike7)}</td><td class="c">${tri(c.talks14)}</td><td class="mono">${c.ship_b} → ${c.ship_a === null ? "…" : c.ship_a}</td></tr>`;
+      (o.trigger ? `<td class="c">${tri(c.replied)}</td>` : '') + `<td class="c">${tri(c.strike7)}</td><td class="c">${tri(c.talks14)}</td><td class="c">${tri(c.ship_a === null ? null : c.ship_a > c.ship_b)}</td><td class="mono">${c.ship_b} → ${c.ship_a === null ? "…" : c.ship_a}</td></tr>`;
   return h + '</tbody></table></div>';
 }
 function renderCompare(){
@@ -605,7 +702,7 @@ function boot(d){
   D = d;
   if(!D.options.some(x => x.key === S.sel)) S.sel = "D";
   $("#stamp").textContent = "Updated " + fmtDate(D.generated, true) + " · news through " + fmtDate(D.asof, true) + " · refreshes every Monday";
-  renderNow(); renderIntensity(); renderLens(); renderView();
+  renderIntensity(); renderLens(); renderView();
   let t; window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(drawChart, 80); });
 }
 fetch("data.json", {cache:"no-store"}).then(r => { if(!r.ok) throw 0; return r.json(); }).then(boot)
