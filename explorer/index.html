@@ -273,6 +273,28 @@ body.locked{overflow:hidden}
 .three .box b{display:block;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 details.cases summary{cursor:pointer;color:var(--accent);font-size:14px;font-weight:500}
 details.cases[open] summary{margin-bottom:10px}
+/* category breakdown */
+.catbtn{border:0;background:none;color:var(--accent);font-size:12.5px;cursor:pointer;padding:0;text-align:left;grid-column:2/-1}
+.catbtn:hover{text-decoration:underline}
+[data-cat]{cursor:pointer}
+.ch{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;margin:6px 0 12px;padding-right:40px}
+.ch .bigp{font-family:var(--f-mono);font-size:44px;font-weight:500;line-height:1}
+.ch .bigp small{display:block;font-size:12px;color:var(--muted);font-family:var(--f-sans);font-weight:400;margin-top:4px}
+.rule{background:var(--bg);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:9px 12px;font-size:13.5px;margin-bottom:12px}
+.rule b{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.tally{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.tally span{border:1px solid var(--line);border-radius:6px;padding:4px 10px;font-size:13px;background:var(--panel)}
+.tally b{font-family:var(--f-mono)}
+.ccase{display:grid;grid-template-columns:96px minmax(0,1fr);gap:4px 14px;padding:11px 0;border-top:1px solid var(--line)}
+.ccase .vd{font-size:12px;font-weight:600;border-radius:99px;padding:2px 9px;height:fit-content;text-align:center;white-space:nowrap}
+.ccase .vd.yes{background:var(--accent);color:var(--accent-ink)}
+.ccase .vd.no{border:1px solid var(--line);color:var(--muted)}
+.ccase .vd.na{border:1px dashed var(--open);color:var(--muted)}
+.ccase .ct{font-weight:500;font-size:14px}
+.ccase .ct .mono{color:var(--muted);font-weight:400;font-size:12px;margin-right:6px}
+.ccase ul{margin:4px 0 0;padding-left:16px;font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:3px}
+.ccase li b{color:var(--ink);font-weight:500}
+@media(max-width:560px){.ccase{grid-template-columns:1fr}}
 footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
 .err{padding:24px;text-align:center;color:var(--muted)}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -294,6 +316,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
   <div id="view"></div>
   <div class="modal" id="m-int" hidden><div class="sheet" role="dialog" aria-modal="true" aria-label="War intensity" tabindex="-1"><button class="x" data-close aria-label="Close">×</button><section id="intensity"></section></div></div>
   <div class="modal" id="m-lens" hidden><div class="sheet" role="dialog" aria-modal="true" aria-label="How much did the conditions matter?" tabindex="-1"><button class="x" data-close aria-label="Close">×</button><section id="lens"></section></div></div>
+  <div class="modal" id="m-cat" hidden><div class="sheet" role="dialog" aria-modal="true" aria-label="Why this percentage" tabindex="-1"><button class="x" data-close aria-label="Close">×</button><section id="catview"></section></div></div>
   <footer>
     <p>Percentages are x of n past cases in the NAPOR log. The bar shows the 95% range the true rate could plausibly sit in (Wilson interval). With small samples that range is wide, so read each number as a hint. Before 2026, Iran mostly answered through militias it arms in Iraq and Syria; those replies count and are labelled "proxy". "After" is not "because of". Oil prices, strain with allies and harm to ordinary Iranians are not measured.</p>
     <p>The risk index averages five measured rates (equal weights unless you change them). It summarizes how past cases of that kind went. It is not a forecast and not a recommendation, and the options are not ranked.</p>
@@ -401,7 +424,7 @@ function shareRow(label, sub, frac, text){
 }
 function stackBar(ix){
   if(!ix) return '<div class="stack"></div>';
-  return '<div class="stack" role="img" aria-label="Risk index ' + Math.round(ix.idx*100) + ' percent">' + ix.parts.filter(p => p.ok && p.contrib > 0).map(p => `<i style="width:${p.contrib*100}%;background:var(--k${CATS.indexOf(p.c)+1})" title="${CAT_NAME[p.c]}: ${(p.contrib*100).toFixed(1)} points"></i>`).join("") + '</div>';
+  return '<div class="stack" role="img" aria-label="Risk index ' + Math.round(ix.idx*100) + ' percent">' + ix.parts.filter(p => p.ok && p.contrib > 0).map(p => `<i data-cat="${p.s.assumed ? "" : p.c}" style="width:${p.contrib*100}%;background:var(--k${CATS.indexOf(p.c)+1})" title="${CAT_NAME[p.c]}: ${(p.contrib*100).toFixed(1)} points (click for cases)"></i>`).join("") + '</div>';
 }
 const katLegend = () => '<div class="klegend">' + CATS.map((c,i) => `<span><i style="background:var(--k${i+1})"></i>${CAT_NAME[c]}</span>`).join("") + '</div>';
 const stPill = (o) => { const n = D.now && D.now.options && D.now.options[o.key]; return n ? `<span class="pill ${esc(n.status)}">${esc(n.label)}</span>` : ""; };
@@ -613,11 +636,12 @@ function radarSvg(ix){
     const anchor = Math.abs(cs) < .2 ? "middle" : cs > 0 ? "start" : "end";
     const ly = sn < -.9 ? ly0 - 14 : sn > .5 ? ly0 + 8 : ly0 - 2;
     const val = !p.ok ? "no data" : p.s.assumed ? "0% (assumed)" : Math.round(p.p*100) + "%";
-    g += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5" fill="var(--k${i+1})" stroke="var(--panel)" stroke-width="1.5"/>` +
+    const clk = p.ok && !p.s.assumed ? ` data-cat="${p.c}"` : "";
+    g += `<g${clk}><title>${CAT_NAME[p.c]}: click to see the cases</title><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6" fill="var(--k${i+1})" stroke="var(--panel)" stroke-width="1.5"/>` +
       `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anchor}" font-size="10.5" font-weight="600" fill="var(--ink)">${SHORT[p.c]}</text>` +
-      `<text x="${lx.toFixed(1)}" y="${(ly+12).toFixed(1)}" text-anchor="${anchor}" font-size="10.5" fill="var(--muted)" font-family="IBM Plex Mono,monospace">${val}</text>`;
+      `<text x="${lx.toFixed(1)}" y="${(ly+12).toFixed(1)}" text-anchor="${anchor}" font-size="10.5" fill="var(--muted)" font-family="IBM Plex Mono,monospace">${val}</text></g>`;
   });
-  return `<div class="radar"><svg viewBox="0 0 300 236" role="img" aria-label="Risk profile across five categories">${g}</svg><p class="cap">Each corner is its own rate, 0–100%. They are not slices of one whole, so they don't add up to 100%.</p></div>`;
+  return `<div class="radar"><svg viewBox="0 0 300 236" role="img" aria-label="Risk profile across five categories">${g}</svg><p class="cap">Each corner is its own rate, 0–100%, so they don't add up to 100%. Click a corner to see its cases.</p></div>`;
 }
 function formulaText(ix){
   const used = ix.parts.filter(p => p.ok), eq = used.every(p => p.w === used[0].w);
@@ -692,12 +716,79 @@ function indexPanel(o, cs){
     else h += `<div class="cv">${s.assumed ? "0%" : P(s.k, s.n)}<small>${s.assumed ? "assumed" : s.k + " of " + s.n}</small></div><div class="cc">+${(p.contrib*100).toFixed(1)}<small>points of index</small></div>`;
     h += `<div class="cd">${esc(CAT_DEF[p.c](o))}${s.n ? " Range " + R(s.k, s.n) + "." : ""}</div>`;
     if(s.n) h += `<div class="ivw">${iv(s)}</div>`;
+    if(p.ok && !s.assumed) h += `<button class="catbtn" data-cat="${p.c}">See the ${s.n} case${s.n === 1 ? "" : "s"} behind this ${P(s.k, s.n)} ›</button>`;
     h += `<details><summary>What the log says</summary>${esc(o.risks[i])}</details></div>`;
   });
   h += `</div><details class="weights"><summary>Change how much each category counts</summary><p class="nodata" style="margin-top:6px">Equal by default. NAPOR does not decide how much each kind of harm matters, so the weights are yours to set.</p><div class="wgrid">` +
     CATS.map((c,i) => `<label for="w-${c}"><span style="color:var(--k${i+1});font-weight:600">${CAT_NAME[c]}: <span class="mono">${S.w[c]}</span></span><input type="range" id="w-${c}" data-w="${c}" min="0" max="5" step="1" value="${S.w[c]}"></label>`).join("") +
     `</div><button class="linkbtn" id="w-reset" style="margin-top:10px">Reset to equal</button></details>`;
   return h;
+}
+const RULE = {
+  people: o => "Counts when civilians were reported hurt in the US action itself, or when a reply from Iran or a proxy within about 5 days hurt anyone (troops or civilians).",
+  escalation: o => o.trigger ? "Counts when Iran or an Iran-backed group replied within about 5 days." : "Counts when Iran or an Iran-backed group struck anywhere within 7 days (timing only, not shown to be a reply).",
+  military: o => "Counts when the reply was a missile, rocket or drone strike, the kind that uses up interceptors (about " + D.patriots + " Patriots in the Sep 8-9 salvo).",
+  economic: o => "Counts when logged attacks on shipping in the 7 days after were higher than in the 7 days before.",
+  political: o => "Counts when no talks or diplomatic move followed within 14 days."
+};
+const short = (t, n=140) => t.length > n ? t.slice(0, n-1) + "…" : t;
+const evLine = e => `<b>#${e.id}</b> ${fmtDate(e.date)} · ${esc(short(e.title, 120))}${e.dmg && e.dmg !== "n/a" ? " — <i>" + esc(short(e.dmg, 120)) + "</i>" : ""}`;
+function judge(o, c, cat){
+  const rp = c.replies, L = [];
+  const repLines = (onlyKin) => rp.length ? rp.map(r => `<li>${r.hurt || (onlyKin && r.kinetic) ? "<b>Reply</b>" : "Reply"} <b>#${r.id}</b>, ${r.days} day${r.days === 1 ? "" : "s"} later (${esc(short(r.actor, 50))}): ${esc(short(r.title, 110))}${r.dmg && r.dmg !== "n/a" ? " — <i>" + esc(short(r.dmg, 120)) + "</i>" : ""}${onlyKin ? (r.kinetic ? " · <b>missile/rocket/drone</b>" : " · not a missile or drone strike") : ""}</li>`) : [];
+  if(cat === "people"){
+    if(c.strike7 === null) return {base:false, why:["<li>Less than 7 days of news after this case; not counted yet.</li>"]};
+    const flag = !!c.civ || rp.some(r => r.hurt);
+    L.push(c.civ ? `<li><b>Civilian harm in the US action:</b> ${esc(c.civ)}</li>` : `<li>Civilian harm in the US action: none reported${c.dmg && c.dmg !== "n/a" ? " (other reported effects: " + esc(short(c.dmg, 120)) + ")" : ""}</li>`);
+    L.push(...(rp.length ? repLines(false) : ["<li>No linked reply.</li>"]));
+    return {base:true, flag, why:L};
+  }
+  if(cat === "escalation"){
+    if(o.trigger){
+      if(c.replied === null) return {base:false, why:[`<li>Reply status unclear, so not counted: ${esc(short(c.note || "", 200))}</li>`]};
+      L.push(...(rp.length ? repLines(false) : []));
+      if(c.note) L.push(`<li>NAPOR's check: ${esc(short(c.note, 220))}</li>`);
+      return {base:true, flag:c.replied, why:L};
+    }
+    if(c.strike7 === null) return {base:false, why:["<li>Less than 7 days of news after this case; not counted yet.</li>"]};
+    return {base:true, flag:c.strike7, why: c.strike_ev.length ? c.strike_ev.map(e => `<li>${evLine(e)}</li>`) : ["<li>No strike by Iran or a proxy in the 7 days after.</li>"]};
+  }
+  if(cat === "military"){
+    if(c.replied === null) return {base:false, why:["<li>Reply status unclear, so not counted.</li>"]};
+    const flag = rp.some(r => r.kinetic);
+    return {base:true, flag, why: rp.length ? repLines(true) : ["<li>No reply, so no interceptors needed.</li>"]};
+  }
+  if(cat === "economic"){
+    if(c.ship_a === null) return {base:false, why:["<li>Less than 7 days of news after this case; not counted yet.</li>"]};
+    L.push(`<li><b>7 days before: ${c.ship_b}</b> · <b>7 days after: ${c.ship_a}</b> logged attacks on shipping</li>`);
+    c.ship_a_ev.forEach(e => L.push(`<li>After: ${evLine(e)}</li>`));
+    return {base:true, flag:c.ship_a > c.ship_b, why:L};
+  }
+  if(cat === "political"){
+    if(c.talks14 === null) return {base:false, why:["<li>Less than 14 days of news after this case and no talks yet; not counted yet.</li>"]};
+    return {base:true, flag:c.talks14 === false, why: c.talk_ev.length ? c.talk_ev.map(e => `<li>Talks: ${evLine(e)}</li>`) : ["<li>No talks or diplomatic move logged in the 14 days after.</li>"]};
+  }
+}
+function renderCat(){
+  const o = D.options.find(x => x.key === S.sel), cat = S.cat, cs = activeCases(o);
+  const rows = cs.map(c => ({c, j: judge(o, c, cat)}));
+  const base = rows.filter(r => r.j.base), k = base.filter(r => r.j.flag).length, n = base.length;
+  const f = S.catFilter || "all";
+  let h = `<h2 style="padding-right:44px">Why ${o.key}. ${esc(o.name)} scores this on ${CAT_NAME[cat].toLowerCase()}</h2>` +
+    `<div class="ch"><div class="bigp">${P(k, n)}<small>${k} of ${n} past cases count as risk${n ? " · 95% range " + R(k, n) : ""}</small></div><div style="flex:1;min-width:200px">${iv({k, n})}${dots({k, n})}</div></div>` +
+    `<div class="rule"><b>What counts as risk here</b>${esc(RULE[cat](o))}</div>`;
+  if(cat === "people"){
+    const civ = base.filter(r => !!r.c.civ).length, rh = base.filter(r => r.c.replies.some(x => x.hurt)).length;
+    h += `<div class="tally"><span>Civilians hurt in the US action: <b>${civ}</b> case${civ === 1 ? "" : "s"}</span><span>A reply hurt people: <b>${rh}</b> case${rh === 1 ? "" : "s"}</span><span>No one hurt: <b>${n - k}</b></span></div>`;
+  }
+  if(cat === "military" && n){ h += `<div class="tally"><span>Expected interceptors if the US does this: <b>≈${Math.round(k / n * D.patriots)}</b> Patriots (${P(k, n)} × ~${D.patriots})</span></div>`; }
+  if(cat === "economic"){ const sb = base.reduce((a,r) => a + r.c.ship_b, 0), sa = base.reduce((a,r) => a + r.c.ship_a, 0); h += `<div class="tally"><span>Attacks on shipping, all cases: <b>${sb} before → ${sa} after</b></span><span>Oil prices: not measured</span></div>`; }
+  h += `<div class="cmpbar">${[["all","All " + rows.length],["yes","Counts " + k],["no","Doesn't count " + (n - k)],["na","Not counted yet " + (rows.length - n)]].map(([v,l]) => `<button class="chip" data-cf="${v}" aria-pressed="${f === v}">${l}</button>`).join("")}</div>`;
+  const shown = rows.filter(r => f === "all" || (f === "yes" && r.j.base && r.j.flag) || (f === "no" && r.j.base && !r.j.flag) || (f === "na" && !r.j.base));
+  h += shown.map(({c, j}) => `<div class="ccase"><span class="vd ${!j.base ? "na" : j.flag ? "yes" : "no"}">${!j.base ? "Not counted" : j.flag ? "Counts ✓" : "Doesn't count"}</span><div><div class="ct"><span class="mono">${fmtDate(c.date, true)} · #${c.id}</span>${esc(short(c.title, 160))}</div><ul>${j.why.join("")}</ul></div></div>`).join("") || '<p class="nodata">No cases in this group.</p>';
+  h += `<p class="legend" style="margin-top:12px">Proxy = a militia Iran arms in Iraq or Syria. Harm figures are as the source reported them; NAPOR does not add them up because sources count differently.${S.phase || S.band ? " Only cases from your condition (" + esc(S.phase || S.band) + ") are shown." : ""}</p>`;
+  $("#catview").innerHTML = h;
+  document.querySelectorAll("[data-cf]").forEach(b => b.onclick = () => { S.catFilter = b.dataset.cf; renderCat(); });
 }
 function renderExplore(){
   const o = D.options.find(x => x.key === S.sel) || D.options[0], st = stats(o), cs = activeCases(o), ix = riskIndex(o, cs);
@@ -778,6 +869,7 @@ function closeModal(){
 }
 document.addEventListener("click", ev => {
   const op = ev.target.closest("[data-open]"); if(op){ openModal(op.dataset.open, op); return; }
+  const ct = ev.target.closest("[data-cat]"); if(ct && ct.dataset.cat){ S.cat = ct.dataset.cat; S.catFilter = "all"; lastOpener = ct; const m = $("#m-cat"); m.hidden = false; document.body.classList.add("locked"); renderCat(); $(".sheet", m).focus(); return; }
   if(ev.target.closest("[data-close]") || ev.target.classList.contains("modal")){ closeModal(); return; }
   if(ev.target.id === "tb-clear"){ S.phase = S.band = null; refresh(); }
 });

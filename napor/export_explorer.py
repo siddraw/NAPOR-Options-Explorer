@@ -52,11 +52,11 @@ def build():
                 prs = [p for p in O.pairs if p[1] == c[0]]
                 counted = c[2] in ("R-strong", "R-weak", "R-proxy", "N")
                 cases.append(dict(**ev(c[0]), cls=c[2], replied=(c[2] != "N") if counted else None,
-                                  replies=[dict(id=p[2], days=(EV[p[2]][1] - EV[p[1]][1]).days, hurt=p[4] == "Y", kinetic=data.event_kind[p[2]] == "Kinetic", title=EV[p[2]][5]) for p in prs],
+                                  replies=[dict(id=p[2], days=(EV[p[2]][1] - EV[p[1]][1]).days, hurt=p[4] == "Y", kinetic=data.event_kind[p[2]] == "Kinetic", title=EV[p[2]][5], actor=EV[p[2]][2], date=EV[p[2]][1].isoformat(), dmg=EV[p[2]][7] or "") for p in prs], note=c[3],
                                   civ=O.CIVILIAN_HARM.get(c[0])))
         elif k in ("B", "H"):
             for i in O.option_cases(k):
-                cases.append(dict(**ev(i), cls=None, replied=None, replies=[], civ=None))
+                cases.append(dict(**ev(i), cls=None, replied=None, replies=[], civ=None, note=None))
         for c in cases:
             day = EV[c["id"]][1]
             full7 = (last - day).days >= 7
@@ -65,6 +65,12 @@ def build():
             # (The workbook counts a partly-open window as "no", which undercounts recent cases.)
             talks = bool(O._window(O._talks, day, 1, 14))
             c["talks14"] = True if talks else (False if (last - day).days >= 14 else None)
+            brief = lambda ids: [dict(id=j, date=EV[j][1].isoformat(), title=EV[j][5], actor=EV[j][2], dmg=EV[j][7] or "") for j in ids]
+            c["dmg"] = EV[c["id"]][7] or ""
+            c["strike_ev"] = brief(O._window(O._irstrike, day, 1, 7))
+            c["talk_ev"] = brief(O._window(O._talks, day, 1, 14))
+            c["ship_b_ev"] = brief(O._window(O._ship, day, -7, -1))
+            c["ship_a_ev"] = brief(O._window(O._ship, day, 1, 7))
             c["ship_b"] = len(O._window(O._ship, day, -7, -1))
             c["ship_a"] = len(O._window(O._ship, day, 1, 7)) if full7 else None
             c["civ"] = c["civ"] if c["id"] in O.CIVILIAN_HARM else None

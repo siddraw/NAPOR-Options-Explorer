@@ -73,3 +73,6 @@ Data updates only; no model rules changed.
 - Explorer: scrollable timeline with year buttons, radar labels moved in, formula under the index,
   "corners don't add to 100%" note, proxy labels. `verify_explorer.py` recounts every rate independently
   and the weekly export checks it.
+
+## 2026-10-21 - Click-through risk breakdowns
+- Every risk percentage (category rows, pentagon corners, stacked-bar segments) opens a pop-up with the rule for what counts as risk and every past case marked Counts / Doesn't count / Not counted yet, with the harm, replies, strikes, talks or shipping counts behind it. The exporter now includes that evidence per case. Pop-up counts are checked to equal the index.
