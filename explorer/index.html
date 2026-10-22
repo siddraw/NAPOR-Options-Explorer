@@ -445,8 +445,29 @@ function stackBar(ix){
   return '<div class="stack" role="img" aria-label="Risk index ' + Math.round(ix.idx*100) + ' percent">' + ix.parts.filter(p => p.ok && p.contrib > 0).map(p => `<i data-cat="${p.s.assumed ? "" : p.c}" style="width:${p.contrib*100}%;background:var(--k${CATS.indexOf(p.c)+1})" title="${CAT_NAME[p.c]}: ${(p.contrib*100).toFixed(1)} points (click for cases)"></i>`).join("") + '</div>';
 }
 const katLegend = () => '<div class="klegend">' + CATS.map((c,i) => `<span><i style="background:var(--k${i+1})"></i>${CAT_NAME[c]}</span>`).join("") + '</div>';
+function ruleStatus(o, iso){
+  const from = addDays(iso, -14), win = u => u.date <= iso && u.date >= from;
+  const lim = (D.context || []).filter(p => p.start <= iso && (!p.end || iso < p.end) && p.notes[o.key]);
+  if(o.key === "A"){
+    const moves = D.options.filter(x => "CDEFG".includes(x.key)).flatMap(x => (x.uses || []).filter(win));
+    const ids = [...new Set(moves.map(u => u.id))];
+    return ids.length ? {status:"open", label:"Open", reason:`The US made ${ids.length} other move${ids.length === 1 ? "" : "s"} (strikes, sanctions or naval) in the 14 days before, e.g. #${ids[0]}.`}
+                      : {status:"active", label:"Current course", reason:"No US strike, sanctions or naval move is logged in the 14 days before."};
+  }
+  const used = (o.uses || []).filter(win);
+  const lastUse = used.length ? used[used.length - 1].date : null, newLim = lim.filter(p => lastUse && p.start >= lastUse);
+  if(newLim.length) return {status:"constrained", label:"Constrained", reason:newLim.map(p => p.notes[o.key]).join(" ") + ` The US last did this on ${fmtDate(lastUse, true)}, before that began.`};
+  if(used.length) return {status:"active", label:"In use", reason:`The US did this in the 14 days before: ${used.map(u => "#" + u.id + " " + fmtDate(u.date)).join(", ")}.` + (lim.length ? " At the time: " + lim[0].notes[o.key] : "")};
+  if(lim.length) return {status:"constrained", label:"Constrained", reason:lim.map(p => p.notes[o.key]).join(" ")};
+  return {status:"open", label:"Open", reason:"Nothing in the log ruled it out on this date."};
+}
+function statusAt(o, iso){
+  const snap = (D.history || []).filter(h => h.status_as_of && h.status_as_of <= iso && addDays(h.status_as_of, 7) > iso && h.status && h.status[o.key]).pop();
+  if(snap) return {...snap.status[o.key], reason:null, src:"agent", as_of:snap.status_as_of};
+  return {...ruleStatus(o, iso), src:"rule"};
+}
 const stPill = (o) => {
-  if(S.asof){ const snap = (D.history || []).filter(h => h.status_as_of && h.status_as_of <= S.asof && h.status && h.status[o.key]).pop(); return snap ? `<span class="pill ${esc(snap.status[o.key].status)}">${esc(snap.status[o.key].label)}</span>` : ""; }
+  if(S.asof){ const st = statusAt(o, S.asof); return `<span class="pill ${esc(st.status)}">${esc(st.label)}</span>`; }
   const n = D.now && D.now.options && D.now.options[o.key]; return n ? `<span class="pill ${esc(n.status)}">${esc(n.label)}</span>` : ""; };
 
 /* ---------- war intensity ---------- */
@@ -718,9 +739,9 @@ function nextMoves(o, from, days){
 }
 function situationBlock(o){
   if(S.asof){
-    const snap = (D.history || []).filter(h => h.status_as_of && h.status_as_of <= S.asof && h.status && h.status[o.key]).pop();
+    const st = statusAt(o, S.asof);
     const prior = (o.uses || []).filter(c => c.date <= S.asof).pop(), nxt = nextMoves(o, S.asof, 14);
-    return `<div class="avail"><div>${snap ? `<span class="pill ${esc(snap.status[o.key].status)}">${esc(snap.status[o.key].label)}</span> <b>Availability that week</b> <span class="nodata">(agent's reading as of ${fmtDate(snap.status_as_of)})</span>` : `<b>Availability on ${fmtDate(S.asof, true)}</b> <span class="nodata">(weekly availability notes start Oct 18, 2026; before that every option is shown, without a status)</span>`}</div>` +
+    return `<div class="avail"><div><span class="pill ${esc(st.status)}">${esc(st.label)}</span> <b>Available on ${fmtDate(S.asof, true)}?</b> <span class="nodata">${st.src === "agent" ? "(agent's weekly reading of the news, " + fmtDate(st.as_of) + ")" : "(worked out from the log: what the US had done in the 14 days before, and any ceasefire or pledge in force)"}</span></div>` + (st.reason ? `<div class="r">${esc(st.reason)}</div>` : "") +
       `<div class="r">${prior ? `Last time the US had done this: ${fmtDate(prior.date, true)} (#${prior.id}).` : "The US had not done this yet in the record."}</div>` +
       `<div class="r"><b>Logged US moves of this kind in the next 14 days:</b> ${nxt.length ? nxt.map(c => `#${c.id} ${fmtDate(c.date)}: ${esc(short(c.title, 90))}${c.unsorted ? " (a US strike not sorted into F or G)" : ""}`).join(" · ") : addDays(S.asof, 1) > D.asof ? "not known yet" : "none logged"}</div></div>`;
   }
@@ -851,15 +872,16 @@ function renderTime(){
     `<div class="lensbar" style="margin-bottom:10px"><label for="asof-input"><b>Date</b></label><input type="date" id="asof-input" min="${D.series[0][0]}" max="${D.asof}" value="${v}" style="font:inherit;padding:4px 8px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink)">` +
     `<button class="linkbtn" id="asof-today">Today</button></div><div class="cmpbar">${PRESETS.map(([d, l]) => `<button class="chip" data-asof="${d}" aria-pressed="${S.asof === d}">${fmtDate(d, true)} · ${l}</button>`).join("")}</div>` +
     `<div class="tally"><span>Phase: <b>${esc(ph ? ph.name : "–")}</b></span><span>War intensity: <b>${r[1]} pts · ${BAND_NAMES[bandOf(r[1])]}</b></span><span>Past cases known then: <b>${D.options.reduce((a,o) => a + allKnown(o).length, 0)}</b></span></div>`;
-  h += `<div class="tbl"><table style="min-width:720px"><thead><tr><th>Option</th><th>Risk index ${S.asof ? "then" : "now"}</th><th>Today</th><th>Risk over time (dot line = 50%)</th><th>Logged US move of this kind in the next 14 days</th></tr></thead><tbody>`;
+  h += `<div class="tbl"><table style="min-width:720px"><thead><tr><th>Option</th><th>Status ${S.asof ? "then" : "now"}</th><th>Risk index ${S.asof ? "then" : "now"}</th><th>Today</th><th>Risk over time (dot line = 50%)</th><th>Logged US move of this kind in the next 14 days</th></tr></thead><tbody>`;
   for(const o of D.options){
     const then = riskIndex(o, allKnown(o)), now = indexAt(o, D.asof), nxt = S.asof ? nextMoves(o, S.asof, 14) : [];
-    h += `<tr data-k="${o.key}"><td><b class="mono" style="color:var(--accent)">${o.key}</b> ${esc(o.name)}</td>` +
+    const stt = S.asof ? statusAt(o, S.asof) : null;
+    h += `<tr data-k="${o.key}"><td><b class="mono" style="color:var(--accent)">${o.key}</b> ${esc(o.name)}</td><td>${stt ? `<span class="pill ${esc(stt.status)}" title="${esc(stt.reason || "")}">${esc(stt.label)}</span>` : stPill(o)}</td>` +
       `<td class="mono">${then ? Math.round(then.idx*100) + "% <span class=\"nodata\">(" + then.n + " cases)</span>" : "<span class=\"nodata\">no cases yet</span>"}</td>` +
       `<td class="mono">${now ? Math.round(now.idx*100) + "%" : "–"}</td><td>${o.cases.length ? spark(o) : '<span class="nodata">no cases</span>'}</td>` +
       `<td>${!S.asof ? '<span class="nodata">pick a past date</span>' : nxt.length ? "Yes: " + nxt.map(c => `#${c.id} ${fmtDate(c.date)}`).join(", ") : (addDays(S.asof, 1) > D.asof ? "not known yet" : "None logged")}</td></tr>`;
   }
-  h += `</tbody></table></div><p class="legend">Before 2026 the record is thinner, so early indexes rest on few cases. War phases were named with hindsight; the risk numbers use only what was known on the date. Some stretches are logged as one row (for example the nightly US strikes of Jul 9-25, 2026), so "none logged" is not proof nothing happened.</p>` +
+  h += `</tbody></table></div><p class="legend">Status on past dates is worked out from the log: "In use" if the US did it in the 14 days before, "Constrained" if a ceasefire or pledge in force ruled it out, otherwise "Open". The option list stays the same so risk can be compared across dates. Before 2026 the record is thinner, so early indexes rest on few cases. War phases were named with hindsight; the risk numbers use only what was known on the date. Some stretches are logged as one row (for example the nightly US strikes of Jul 9-25, 2026), so "none logged" is not proof nothing happened.</p>` +
     `<div class="lensbar"><button class="linkbtn" data-close style="margin-left:auto;background:var(--accent);color:var(--accent-ink);border-color:var(--accent)">Done</button></div>`;
   $("#timeview").innerHTML = h;
   const inp = $("#asof-input"); inp.onchange = () => { if(inp.value) setAsof(inp.value); };
