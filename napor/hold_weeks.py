@@ -115,7 +115,7 @@ def cases(last=None):
         flag = PEOPLE_HURT.get(iso)
         out.append(dict(
             id="W" + iso, week=True, date=iso, actor="US (no new move)", kind="Hold", cred=None,
-            title=f"Week of {m.strftime('%b')} {m.day}: no new US sanctions, naval, strike or posture move logged ({len(w['logged'])} events logged that week)",
+            title=f"Week of {m.strftime('%b')} {m.day}: no new US sanctions, naval, strike or posture move logged ({len(w['logged'])} event{'' if len(w['logged']) == 1 else 's'} logged that week)",
             cls=None, replied=None, replies=[], note=None, civ=None,
             strike7=bool(st), mil7=bool(st),
             hurt7=(flag[0] if flag else None), hurt_ev=brief(flag[1]) if flag else brief(hos), hurt_note=(flag[2] if flag else "Not set by hand yet."),

@@ -1,5 +1,32 @@
 # Changelog
 
+## 2026-10-22 - Improvement round 1: Hold data, backtest of the risk numbers, Report card, one-command weekly build, theater-ready page
+- **Option A (Hold) now has real cases** (`napor/hold_weeks.py`): weeks of the 2026 war (Mondays) with no logged US
+  sanctions, naval, strike or posture move in the Monday-to-Monday window. Left out: Feb 28-Apr 7 and Jul 7-25 (US
+  activity continuous but logged as a few rows), pre-war weeks (too sparsely logged) and the week of Aug 17 (AP reports
+  an "economic D-Day" sanctions push that is not in the log). 11 hold weeks. "People hurt" is set by hand per week with
+  evidence event IDs. A's numbers (raw): people 0 of 11, escalation 1 of 11, military 1 of 11, economic 1 of 11,
+  political 6 of 11. Caveat on the page: most hold weeks have few or no logged events.
+- New catch-up event #116 (Jun 6-7: Iran and Israel trade fire, the first exchange since the April ceasefire; NPR),
+  found while building the hold weeks. No other option's rates changed.
+- **Backtest of the risk assessment itself** (`napor/backtest_risk.py`): walk-forward over every past case and category,
+  using only cases whose outcome window had closed before the case's date. Brier (lower is better, 0.25 = always 50%),
+  293 predictions (47 skipped, no history): raw x of n 0.191; shrunk toward the all-options rate m=1 0.181, m=2 0.181,
+  m=4 0.182; pooled 0.212; 50% 0.250. Shrinkage (m=2) beats raw in every category, so by the pre-agreed rule the page
+  now shows a "NAPOR estimate" ((k + 2 x pooled rate) / (n + 2)) with the raw x of n beside it. Out of sample (fit
+  2019-2025, score 2026) every method is worse than 50% (best 0.275): the pre-war record alone does not predict this war.
+  Also calibration bins, a learning curve and a robustness table for reply rules. A test proves no hindsight.
+- `napor/napor_cases.py`: one shared definition of the cases and the five categories (export + backtest). Options now
+  carry flags (trigger, military = reply/strike/none, us_move, is_hold, salvo); the page no longer hard-codes letters.
+- **One-command weekly build** (`napor/weekly_build.py`): build, recalc, both backtests, resolver test, export with its
+  self-checks, independent recount, and a page-data validator; PASS/FAIL checklist, non-zero exit on failure. AGENT.md
+  now says to publish only on PASS and lists the files to publish.
+- **Page**: tab bar from `explorer/theaters.json` (Iran only; `#iran` deep link), data moved to `explorer/data/iran.json`
+  (fallback `explorer/data.json`; history now `explorer/data/iran-history.json`), theater wording in the data file,
+  new Report card view (locked forecasts, backtest charts with plain takeaways, robustness table), "How this works"
+  pop-up with a live worked example, outlet links and credibility scores in the why-pop-ups and the past-case table,
+  and a "data may be out of date" notice when the data is over 9 days old.
+
 ## 2026-10-22 - Re-sourcing and two pre-war naval cases (improvement round 1)
 - Re-sourced 8 low-credibility 2026 rows with allowed outlets read in full (URLs from search/fetch results only):
   #43 (NPR), #46 (NPR, CENTCOM), #54 (Al Jazeera), #57 (Axios, Reuters), #58 (Reuters), #59 (NPR), #60 (CENTCOM, Bloomberg),

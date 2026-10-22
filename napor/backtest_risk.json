@@ -200,6 +200,14 @@
    "Reply within 3 days (logged reply dates)",
    "Within 7 days: also any Iran/proxy strike (timing only)"
   ],
+  "short": [
+   "As published",
+   "No proxy",
+   "No weak",
+   "Strong only",
+   "Within 3 days",
+   "Within 7 days, any strike"
+  ],
   "rows": [
    {
     "key": "C",

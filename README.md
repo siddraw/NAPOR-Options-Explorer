@@ -27,14 +27,22 @@ Scope: the 2026 Iran–US war only, until the method is proven.
    picked and what followed (`napor_decisions.py`, `napor_decisions.json`).
 7. **Backtest** – replays the past without peeking ahead (`backtest.py`).
 
-Options Explorer (interactive page): `explorer/index.html` reads `explorer/data.json`, which
-`napor/export_explorer.py` regenerates every week. Percentages come with 95% (Wilson) ranges.
+Options Explorer (interactive page): `explorer/index.html` loads `explorer/theaters.json` (one tab per
+conflict; only Iran today) and the theater's data file `explorer/data/iran.json` (fallback: `explorer/data.json`),
+which `napor/export_explorer.py` regenerates every week. Percentages come with 95% (Wilson) ranges; each corner
+is shown as a NAPOR estimate (the x of n pulled toward the all-options rate, chosen by `napor/backtest_risk.py`)
+with the raw x of n beside it. Option A (Hold) uses hold weeks (`napor/hold_weeks.py`). The Report card view
+shows locked forecasts and the backtest of the page's own numbers.
+
+Weekly check, one command: `cd napor && python3 weekly_build.py` (PASS/FAIL checklist; publish only on PASS).
 
 Build the workbook: `cd napor && python3 build.py` → `NAPOR_iran_war.xlsx`.
 
 ## Known limits
 
 - Small samples: options rest on 3–16 past cases (2019 onward; pre-war record in `napor/prewar.py`).
+- Hold weeks (option A) are mostly quiet weeks with few logged events; they show what the log records, and an unlogged event would change them.
+- Fitted on 2019-2025 only, every method does worse on 2026 cases than always saying 50% (Report card): the pre-war record alone does not predict this war well.
 - Before 2026 most replies came from Iran-backed militias; they count as replies and are labelled "proxy".
 - Pre-war years are logged less densely than 2026, so war intensity before 2026 is understated.
 - The phase boundaries were drawn with hindsight.

@@ -152,7 +152,8 @@ def robustness():
                 k += 1 if f(st, lags, day) else 0
             res["cells"].append(dict(variant=label, k=k, n=n))
         out.append(res)
-    return dict(variants=[v[0] for v in variants], rows=out)
+    short = ["As published", "No proxy", "No weak", "Strong only", "Within 3 days", "Within 7 days, any strike"]
+    return dict(variants=[v[0] for v in variants], short=short, rows=out)
 
 
 def decide(tab):
