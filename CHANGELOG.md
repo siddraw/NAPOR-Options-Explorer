@@ -26,6 +26,8 @@
   new Report card view (locked forecasts, backtest charts with plain takeaways, robustness table), "How this works"
   pop-up with a live worked example, outlet links and credibility scores in the why-pop-ups and the past-case table,
   and a "data may be out of date" notice when the data is over 9 days old.
+- `docs/THEATERS.md`: research memo on the next tabs (Houthis/Red Sea, North Korea, China, Caribbean/Venezuela,
+  Mexico, Russia-Ukraine, Gaza, Iraq/Syria militias) with dated allowed-outlet sources and a suggested build order.
 
 ## 2026-10-22 - Re-sourcing and two pre-war naval cases (improvement round 1)
 - Re-sourced 8 low-credibility 2026 rows with allowed outlets read in full (URLs from search/fetch results only):
