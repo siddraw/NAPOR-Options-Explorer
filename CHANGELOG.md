@@ -129,3 +129,6 @@ Data updates only; no model rules changed.
 
 ## 2026-10-22 - Availability changes with the date
 - Added `napor/napor_context.py`: ceasefires and the no-strike pledge, each bounded by logged events. On past dates each option is "In use" (US did it in the 14 days before), "Constrained" (a ceasefire or pledge in force ruled it out, including when it began after the last use) or "Open". Hold shows "Current course" when no US strike, sanctions or naval move is logged in the 14 days before. Only the US's own moves count (not Israel alone). The weekly hand-written status still applies to its own week.
+
+## 2026-10-22 - Mastermind review of round 1
+- Reviewed round 1 (weekly build PASS, page test 73/73, numbers and sources spot-checked). Corrected #59 to Jul 7 (NPR dates the remark to Tuesday). Merged to main.
