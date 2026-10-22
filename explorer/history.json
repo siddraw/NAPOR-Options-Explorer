@@ -43,7 +43,7 @@
   "asof": "2026-10-18",
   "intensity": 12,
   "band": "High",
-  "events": 175,
+  "events": 177,
   "options": {
    "A": {
     "n": 0,
@@ -58,8 +58,8 @@
     "index": 0.187
    },
    "D": {
-    "n": 5,
-    "index": 0.26
+    "n": 7,
+    "index": 0.238
    },
    "E": {
     "n": 3,

@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-10-22 - Re-sourcing and two pre-war naval cases (improvement round 1)
+- Re-sourced 8 low-credibility 2026 rows with allowed outlets read in full (URLs from search/fetch results only):
+  #43 (NPR), #46 (NPR, CENTCOM), #54 (Al Jazeera), #57 (Axios, Reuters), #58 (Reuters), #59 (NPR), #60 (CENTCOM, Bloomberg),
+  #85 (Al Jazeera, AP). Credibility rose from 0.52 to 0.80-0.96 each.
+- Corrections found while checking: #43 Iran and Israel traded fire Jun 6-7 before Iran agreed to stop (the old text said
+  they had not); #46 targets were air-defense, ground-control and radar sites (the named towns were not in the Jun 9 reports);
+  #57 the "49 to 25 vessels a day" figure was dropped (not found in an allowed outlet); #60 bridges were NOT among the Jul 8
+  targets (the bridge strikes were Jul 16-17, AFP), so #60 was removed from the "civilian harm in the US act" list
+  (option F's people-hurt rate is unchanged at 5 of 12 because #60's replies hurt people); #85 date is Sep 29, not Sep 28.
+- Not re-confirmed this round (no allowed outlet found in the time available; rows unchanged): #22, #62, #63, #64, #67,
+  #77, #81, #84, #87, #89, #101. #64, #67 and #101 remain IRGC claims.
+- Pre-war naval pressure (option D): added #264 (USS Normandy seizes Iranian-made missiles bound for the Houthis, announced
+  Feb 13, 2020) and #265 (2,116 rifles shipped from Iran seized in the Gulf of Oman, announced Jan 10, 2023). Both are
+  logged on the announcement date (when a reply became possible) and scored N with evidence notes. Option D now has 7 cases
+  (escalation 2 of 6). The Suez Rajan cargo seizure was left out: no allowed outlet gives its date. No US strike on Iranian
+  vessels (option E) was found outside the Oct 2023 - Jan 2024 continuous-fighting window.
+- NAVCENT added to the list of official sources in `napor_ids.py`.
+
 ## 2026-10-19 (Sidd)
 - Project renamed to NAPOR: Risk Assessment. NAPOR is the underlying engine; this project applies it to risk
   assessment. Updated README, AGENT.md and the workbook title. Repository renamed on GitHub to `siddraw/NAPOR-risk-assessment`.

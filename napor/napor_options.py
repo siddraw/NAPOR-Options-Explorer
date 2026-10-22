@@ -133,7 +133,7 @@ UNKNOWNS = {
     "A": "Shipping attacks have kept coming without any new US move (see the baseline line). Trump has said there will be no US strikes before Nov 3; what Iran does if that holds is not in the data.",
     "B": "Diplomatic moves are not in the census, so there is no reply rate. The last rounds (Sep 23 - Oct 9) drew rejections and counter-offers, not attacks. Iran called the US answer 'insufficient' (Oct 11) and on Oct 18 said it was still reviewing US 'comments'.",
     "C": "Both past cases are from the current quiet phase, and neither drew a linked attack. Tanker attacks continued that week, but no outlet tied them to the sanctions.",
-    "D": "Small sample. Iran answered the blockade start and a ship seizure, but not a warship transit. The Oct 10-11 strike on a blockade runner drew no Iranian attack on US forces within 5 days (F001: NO), but attacks on commercial shipping surged; how to score it is waiting for Sidd (census row #104 is 'Unclear').",
+    "D": "Small sample. The pre-war cases (a 2020 fuel-cargo seizure and two seizures of Iranian arms bound for the Houthis, 2020 and 2023) drew no reply. In 2026, Iran answered the blockade start and a ship seizure, but not a warship transit. The Oct 10-11 strike on a blockade runner drew no Iranian attack on US forces within 5 days (F001: NO), but attacks on commercial shipping surged; how to score it is waiting for Sidd (census row #104 is 'Unclear').",
     "E": "Only 2 cases, both in early September; both drew Iranian missile fire (at a US warship, then at a Jordan base).",
     "F": "Every past case drew a reply, but all were before the current quiet phase. One logged reply caused casualties (Qatar, Jul 12: 3 wounded, including a child).",
     "G": "Every past case drew a fast reply, mostly the same day. One logged reply caused casualties (Tel Aviv, Feb 28: 1 killed, 27 injured). None in the current quiet phase.",
@@ -186,7 +186,6 @@ def _window(f, day, a, b):
 CIVILIAN_HARM = {
     2: "Minab girls' school: Iranian authorities say 168-175 killed; no country has claimed the strike (AP, NBC)",
     74: "Kuhestak wedding: Iranian figures 4-5 killed incl. children, 50+ wounded; the US said it was investigating",
-    60: "Two bridges among the 90 targets (civilian infrastructure); no casualty figure in the log",
 }
 
 
@@ -237,9 +236,9 @@ HARMS = {
     "A": "Attacks on shipping continue at about 1-2 a week (baseline), injuring crews (On Peace: 12 hurt) and raising shipping risk. Whether holding back weakens deterrence cannot be measured from this log.",
     "B": "Past deals did not hold: the April ceasefire was violated the same day, and the June deal collapsed on Jul 7 (Iran later said it never took effect). Shipping attacks continued during talks. Political costs of concessions are not measured here.",
     "C": "No measured effect on shipping attacks (they rose in the following week, during the record week, so this may be coincidence). Possible economic harm to ordinary Iranians is not measured. Iran's president called talks 'futile' days later (no causal link shown).",
-    "D": "Iran answered 2 of 3 past cases at sea (re-closing the Strait, seizing ships), so pressure at sea can spread at sea. Risk to the crews of disabled ships. The Oct 10-11 case drew no attack on US forces (forecast F001: NO), but shipping attacks surged the same week; whether that counts as a reply is not settled.",
+    "D": "In 2026, Iran answered 2 of 3 counted cases at sea (re-closing the Strait, seizing ships), so pressure at sea can spread at sea. Risk to the crews of disabled ships. The Oct 10-11 case drew no attack on US forces (forecast F001: NO), but shipping attacks surged the same week; whether that counts as a reply is not settled.",
     "E": "Both cases drew Iranian missile fire within days (at a US warship, then at a Jordan base, where an A-10 was badly damaged, ~8 F-15s were lightly damaged and ~30 Patriots were used). Possible environmental damage from destroyed laden tankers is not measured.",
-    "F": "Every past case drew a reply; Iranian strikes followed within 7 days in most. One logged reply wounded civilians in Qatar. One past wave hit bridges (civilian infrastructure). Untested in the current quiet phase: it could restart the cycle.",
+    "F": "Every past case drew a reply; Iranian strikes followed within 7 days in most. One logged reply wounded civilians in Qatar. Bridges were hit later in the July campaign (two in Hormozgan, Jul 16-17, 3 killed per Iranian state TV via AFP), outside the counted cases. Untested in the current quiet phase: it could restart the cycle.",
     "G": "Every past case drew a fast reply, mostly the same day. Civilians were reported killed in 2 of 4 past cases (Iranian figures). One logged reply killed a civilian in Tel Aviv. Highest risk of a longer back-and-forth.",
     "H": "Deployments in early October were followed by more shipping attacks, but that was the record week anyway. No data on how Iran reads deployments or withdrawals.",
 }

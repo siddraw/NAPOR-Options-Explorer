@@ -1416,6 +1416,47 @@ SOURCES.update({
 })
 
 
+# ---------------------------------------------------------------------------
+# Re-sourcing round, 2026-10-22 (organizer session). Every URL below came back from a WebSearch or
+# WebFetch in that session; seen="full text" = the page was fetched and read.
+# ---------------------------------------------------------------------------
+_NPR_JUN8 = _s('Iran and Israel trade attacks for the first time since April ceasefire', 'NPR (via KGOU)', '2026-06-08',
+               'https://www.kgou.org/2026-06-08/iran-and-israel-trade-attacks-for-the-first-time-since-april-ceasefire')
+_NPR_JUN9 = _s('U.S. and Iran exchange strikes after Apache helicopter is downed', 'NPR (via Michigan Public)', '2026-06-09',
+               'https://www.michiganpublic.org/2026-06-09/u-s-and-iran-exchange-strikes-after-apache-helicopter-is-downed')
+_CC_APACHE = _s("U.S. Completes Strikes in Response to Iran's Attack on Apache", 'CENTCOM (press release)', '2026-06-09',
+                'https://www.centcom.mil/MEDIA/PUBLIC-RELEASES/Article/4512968/us-completes-strikes-in-response-to-irans-attack-on-apache/', 'snippet')
+_AJ_JUN26 = _s('US strikes Iran in response to drone strike on commercial ship', 'Al Jazeera', '2026-06-26',
+               'https://aljazeera.com/news/2026/6/26/us-strikes-iran-in-response-to-drone-strike-on-commercial-ship')
+_AX_JUL7 = _s('Iran resumes Hormuz attacks, U.S. officials say', 'Axios', '2026-07-07',
+              'https://axios.com/2026/07/07/iran-resumes-hormuz-attacks-us-officials')
+_RTR_JUL7 = _s('U.S. revokes license authorizing Iranian oil sales after tanker attacks', 'Reuters (via Honolulu Star-Advertiser)', '2026-07-07',
+               'https://www.staradvertiser.com/2026/07/07/breaking-news/u-s-revokes-license-authorizing-iranian-oil-sales-after-tanker-attacks/')
+_NPR_JUL8 = _s('At the NATO summit, Trump declares Iran ceasefire is over', 'NPR', '2026-07-08',
+               'https://www.npr.org/2026/07/08/nx-s1-5886111/at-the-nato-summit-trump-declares-iran-ceasefire-is-over')
+_CC_JUL8 = _s('U.S. Forces Complete Another Round of Strikes Against Iran', 'CENTCOM (press release)', '2026-07-08',
+              'https://www.centcom.mil/MEDIA/PUBLIC-RELEASES/Article/4538814/us-forces-complete-another-round-of-strikes-against-iran/')
+_BBG_JUL9 = _s('US Military Launches Strikes on Iran for Second Straight Day', 'Bloomberg (via Bloomberg Government)', '2026-07-09',
+               'https://news.bgov.com/bloomberg-government-news/us-military-launches-strikes-on-iran-for-second-straight-day')
+_AJ_SEP29 = _s("US sanctions 10 entities for allegedly supporting Iran's military", 'Al Jazeera', '2026-09-29',
+               'https://www.aljazeera.com/news/2026/9/29/us-sanctions-10-entities-for-allegedly-supporting-irans-military')
+_AP_SEP29 = _s("U.S. targets Iran's military supply chain as diplomatic talks remain uncertain", 'AP (via PBS NewsHour)', '2026-09-29',
+               'https://pbs.org/newshour/world/u-s-targets-irans-military-supply-chain-as-diplomatic-talks-remain-uncertain')
+
+VERDICT.update({43: 'corrected', 46: 'corrected', 54: 'confirmed', 57: 'corrected', 58: 'confirmed', 59: 'confirmed',
+                60: 'corrected', 85: 'corrected'})
+SOURCES.update({
+ 43: [_NPR_JUN8],
+ 46: [_NPR_JUN9, _CC_APACHE],
+ 54: [_AJ_JUN26],
+ 57: [_AX_JUL7, _RTR_JUL7],
+ 58: [_RTR_JUL7],
+ 59: [_NPR_JUL8],
+ 60: [_CC_JUL8, _BBG_JUL9],
+ 85: [_AJ_SEP29, _AP_SEP29],
+})
+
+
 # Pre-war record (prewar.py)
 from prewar import SOURCES as _PRE_SOURCES, VERDICT as _PRE_VERDICT
 SOURCES.update(_PRE_SOURCES)

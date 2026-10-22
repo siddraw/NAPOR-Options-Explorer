@@ -35,7 +35,7 @@ SUGGEST = {
 }
 
 STATE_MEDIA = {"Tasnim", "IRNA", "Press TV", "Fars", "Mehr"}
-OFFICIAL = {"CENTCOM", "DoD", "Pentagon", "White House", "Treasury", "OFAC", "UKMTO", "IAEA", "UN", "State Department", "Petra", "Army.mil"}
+OFFICIAL = {"CENTCOM", "NAVCENT", "DoD", "Pentagon", "White House", "Treasury", "OFAC", "UKMTO", "IAEA", "UN", "State Department", "Petra", "Army.mil"}
 
 
 def outlet_name(raw):

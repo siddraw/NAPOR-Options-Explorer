@@ -220,7 +220,7 @@ census = [
 (78, "Military/Property",  "R-strong",  "Iran fires at US warship -> US destroys 5 tankers (pair 22)."),
 (79, "Economic/Blockade",  "R-strong",  "US destroys 5 tankers -> Iran hits Jordan base (pair 23)."),
 (80, "Military/Property",  "N",         "Iran hits Muwaffaq Salti AB, Sep 9 (aircraft damaged, ~30 interceptors used). No US strikes on Iran found Sep 10-Oct 6; Trump said bombing may resume after the midterms."),
-(85, "Economic/Blockade",  "N",         "US sanctions, Sep 28. About 12 tankers were hit Sep 29-Oct 5, but no source ties them to the sanctions. Window overlaps #87."),
+(85, "Economic/Blockade",  "N",         "US sanctions, Sep 29 (date corrected from Sep 28). About 12 tankers were hit Sep 29-Oct 5, but no source ties them to the sanctions. Window overlaps #87."),
 (87, "Economic/Blockade",  "N",         "US sanctions on auto/rail/shadow banking, Oct 1. Only rhetoric found through Oct 6. Window overlaps #85."),
 ]
 
@@ -468,6 +468,23 @@ _EDITS.update({
 _DATE_CONFLICT = set()
 _NOT_SUPPORTED = {22, 29, 67, 76}
 _PARTLY = {5, 6, 9, 10, 32, 64, 66, 101, 103, 113}
+# Re-sourcing round, 2026-10-22: corrections found while re-checking low-credibility rows (see CHANGELOG).
+_EDITS.update({
+ 43: dict(atype="Ceasefire (restored)", detail="Iran agrees to halt attacks on Israel after the two traded fire on Jun 6-7, the first exchange since the April ceasefire",
+          note="Corrected (NPR, Jun 8): the old text said Israel and Iran 'had not exchanged fire since'; in fact they traded fire Jun 6-7 and Iran then agreed to stop."),
+ 46: dict(detail="US strikes Iranian air-defense, ground-control and surveillance radar sites near the Strait after Iran downs a US Apache (CENTCOM: 'proportional response')",
+          note="Corrected (NPR, CENTCOM): the named towns (Qeshm, Sirik, Jask, Bandar Abbas) are not in the Jun 9 reports; Al Jazeera's Jun 10 live page puts the next day's strikes at Sirik, Bandar Abbas and Qeshm."),
+ 54: dict(detail="Iranian drones attack the container ship Ever Lovely near Oman in the Strait; Trump calls it a 'foolish violation' of the Jun 17 memorandum",
+          note="Confirmed (Al Jazeera, Jun 26): four one-way attack drones per Trump, one hit the upper deck; no crew hurt."),
+ 57: dict(severity="Significant damage, no casualties (US official via Axios); no one claimed the attacks (Reuters)",
+          note="Confirmed (Axios, Reuters): at least three commercial ships hit Jul 6-7. The old '49 to 25 vessels a day' traffic figure was not found in an allowed outlet and was dropped."),
+ 58: dict(detail="Treasury withdraws the general license allowing Iranian oil sales (wind-down to Jul 17) after the tanker attacks",
+          note="Confirmed (Reuters via Honolulu Star-Advertiser, Jul 7)."),
+ 59: dict(note="Confirmed (NPR, Jul 8)."),
+ 60: dict(detail="About 90 targets along Iran's coast (air defenses, coastal surveillance, missile and drone storage, naval and logistics sites), the second night in a row after ~80 on Jul 7 (CENTCOM)",
+          note="Corrected (CENTCOM, Bloomberg): no allowed outlet puts bridges among the Jul 8 targets. The bridge strikes (two bridges in Hormozgan, 3 killed per Iranian state TV) were on Jul 16-17 (AFP), inside the nightly campaign that is excluded from the census."),
+ 85: dict(date=d(2026, 9, 29), note="Date corrected to Sep 29 (Al Jazeera; AP via PBS): Treasury announced the sanctions on Tuesday, Sep 29, not Sep 28."),
+})
 
 _PENDING_TEXT = "PENDING - no credible source confirmed yet"
 

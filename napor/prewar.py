@@ -92,6 +92,8 @@ EVENTS = [
 (261, d(2026,2,13), "US", "Force posture (deployment)", "Middle East", "Trump orders a second aircraft carrier to the Middle East", None, "n/a", "Medium", "see audit"),
 (262, d(2026,2,26), "US/Iran", "Diplomatic talks", "-", "US-Iran nuclear talks resume in Geneva", None, "n/a", "Medium", "see audit"),
 (263, d(2021,3,3), "Unknown (Iran-backed militia suspected)", "Strike (rockets)", "Ain al-Asad air base (Iraq)", "Rockets hit Ain al-Asad air base, which hosts US troops; a US civilian contractor dies during the attack", None, "1 US civilian contractor died (NPR)", "Medium", "see audit"),
+(264, d(2020,2,13), "US", "Seizure (weapons shipment)", "Iranian arms bound for the Houthis (Arabian Sea)", "USS Normandy's boarding team seizes 150 Iranian-made Dehlavieh anti-tank missiles, 3 Iranian-made surface-to-air missiles and other parts from a dhow (seized Feb 9, announced Feb 13; logged on the announcement date)", None, "n/a", "Medium", "see audit"),
+(265, d(2023,1,10), "US", "Seizure (weapons shipment)", "Iranian arms bound for the Houthis (Gulf of Oman)", "US Navy patrol ships intercept a fishing vessel carrying 2,116 AK-47s on a route from Iran to Yemen (seized Jan 6, announced Jan 10; logged on the announcement date)", None, "n/a", "Medium", "see audit"),
 ]
 
 _AJ_K1 = _s('US targets pro-Iran militia bases in Iraq, Syria raids', 'Al Jazeera', '2019-12-29', 'https://www.aljazeera.com/news/2019/12/29/us-targets-pro-iran-militia-bases-in-iraq-syria-raids')
@@ -188,6 +190,10 @@ SOURCES = {
  260: [_s('US-Iran talks live: Critical negotiations set to begin in Oman', 'Al Jazeera', '2026-02-06', 'https://www.aljazeera.com/amp/news/liveblog/2026/2/6/us-iran-talks-live-critical-negotiations-set-to-begin-in-oman')],
  261: [_s('Trump orders second aircraft carrier to Middle East', 'Al Jazeera', '2026-02-13', 'https://www.aljazeera.com/video/newsfeed/2026/2/13/trump-orders-second-aircraft-carrier-to-middle-east')],
  262: [_s('Iran-US Nuclear Talks Set to Resume in Geneva on Feb. 26', 'Bloomberg Government', '2026-02', 'https://news.bgov.com/states-of-play/iran-us-nuclear-talks-set-to-resume-in-geneva-on-feb-26-1')],
+ 264: [_s('VIDEO: USS Normandy Seizes Cache Of Iranian-Made Weapons in Arabian Sea', 'USNI News', '2020-02-13', 'https://news.usni.org/2020/02/13/video-uss-normandy-seizes-cache-of-iranian-made-weapons-in-arabian-sea', 'full text'),
+       _s('US warship in Arabian Sea seizes suspected Iranian weapons', 'Al Jazeera', '2020-02-13', 'https://www.aljazeera.com/news/2020/02/warship-arabian-sea-seizes-suspected-iranian-weapons-200213201018624.html')],
+ 265: [_s('U.S. Navy Intercepts More Than 2,000 Assault Rifles Shipped from Iran', 'NAVCENT (official release)', '2023-01-10', 'https://www.cusnc.navy.mil/Media/News/Display/Article/3263172/us-navy-intercepts-more-than-2000-assault-rifles-shipped-from-iran/', 'full text'),
+       _s('U.S. Navy seizes more than 2,000 AK-47s likely bound for Iranian-backed rebels in Yemen', 'NBC News', '2023-01', 'https://www.nbcnews.com/news/world/us-navy-seizes-ak-47-assault-rifles-iran-houthis-yemen-rcna65027', 'full text')],
 }
 VERDICT = {k: 'confirmed' for k in SOURCES}
 # Rows where an allowed outlet confirms the event but not every detail in the row.
@@ -214,6 +220,8 @@ CENSUS = [
  (247, "Economic/Blockade", "N", "'Maximum pressure' restored, Feb 4, 2025. No Iranian attack found Feb 5-9."),
  (255, "Military/Property", "R-strong", "Operation Midnight Hammer, Jun 22, 2025 -> Iran fires 19 missiles at Al Udeid, Jun 23; one hit, no casualties; Trump said Iran gave 'early notice' (Al Jazeera)."),
  (258, "Economic/Blockade", "N", "Shipping-network sanctions, Jul 30, 2025. No Iranian attack found Jul 31-Aug 4."),
+ (264, "Economic/Blockade", "N", "Seizure of Iranian-made missiles bound for the Houthis, announced Feb 13, 2020. Rockets hit a coalition base in Baghdad's Green Zone on Feb 16 with no injuries and no group named (Axios, https://www.axios.com/2020/02/16/iraq-us-coalition-base-baghdad-rockets); no outlet ties them to the seizure, so not counted as a reply (same call as #85/#87)."),
+ (265, "Economic/Blockade", "N", "Seizure of 2,116 rifles shipped from Iran, announced Jan 10, 2023. No attack by Iran or an Iran-backed group on US forces found Jan 11-15; the next was a drone attack on the al-Tanf base on Jan 20 (Al Jazeera, https://www.aljazeera.com/news/2023/1/20/drone-attack-hits-us-led-coalition-base-in-southern-syria), outside the window."),
 ]
 
 # Reply pairs (pair id, trigger, reply, category, reply caused casualties Y/N, note)
