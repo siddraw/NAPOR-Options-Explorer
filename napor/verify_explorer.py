@@ -26,7 +26,8 @@ def recount():
       elif k in ("B", "H"):
           rows = [(i, None, None, None) for i in O.option_cases(k)]
       else:
-          rows = []
+          out[k] = recount_hold()
+          continue
       ppl = esc = mil = eco = pol = [0, 0]
       ppl, esc, mil, eco, pol = [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]
       for tid, _, st, _ in rows:
@@ -50,6 +51,38 @@ def recount():
               pol[1] += 1; pol[0] += not talks
       out[k] = dict(people=ppl, escalation=esc, military=mil, economic=eco, political=pol, n=len(rows))
   return out
+
+
+def recount_hold():
+    """Option A: weeks of the 2026 war with no logged US move of kinds C-H, recounted from data.py.
+    Only the hand-set inputs (excluded stretches, uncertain weeks, people-hurt flags) come from hold_weeks.py."""
+    import hold_weeks as HW
+    us_kinds = ("Sanctions", "Maritime", "Kinetic", "Posture")
+    usable = lambda e: e[0] not in data.MERGED and O.N.counts(e[0]) and not e[2].lower().startswith("houthi")
+    m = dt.date(2026, 3, 2)          # first Monday after the war began (Feb 28, 2026)
+    assert m.weekday() == 0 and m - HW.START < dt.timedelta(days=7)
+    ppl, esc, mil, eco, pol = [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]
+    n = 0
+    while m <= LAST - dt.timedelta(days=7):
+        a, b = m, m + dt.timedelta(days=7)
+        skip = any(not (b < x or a > y) for x, y, _ in HW.EXCLUDED) or m.isoformat() in HW.UNCERTAIN
+        skip = skip or any(a <= e[1] <= b and e[2].lower().startswith("us") and usable(e) and data.event_kind[e[0]] in us_kinds for e in data.events)
+        if not skip:
+            n += 1
+            struck = within(m, 1, 7, O._irstrike)
+            esc[1] += 1; esc[0] += struck
+            mil[1] += 1; mil[0] += struck
+            flag = HW.PEOPLE_HURT.get(m.isoformat())
+            if flag is not None:
+                ppl[1] += 1; ppl[0] += bool(flag[0])
+            bb = sum(1 for e in data.events if O._ship(e) and m - dt.timedelta(days=7) <= e[1] <= m - dt.timedelta(days=1))
+            aa = sum(1 for e in data.events if O._ship(e) and m + dt.timedelta(days=1) <= e[1] <= m + dt.timedelta(days=7))
+            eco[1] += 1; eco[0] += aa > bb
+            talks = within(m, 1, 14, O._talks)
+            if talks or (LAST - m).days >= 14:
+                pol[1] += 1; pol[0] += not talks
+        m += dt.timedelta(days=7)
+    return dict(people=ppl, escalation=esc, military=mil, economic=eco, political=pol, n=n)
 
 
 if __name__ == "__main__":

@@ -1444,7 +1444,7 @@ _AP_SEP29 = _s("U.S. targets Iran's military supply chain as diplomatic talks re
                'https://pbs.org/newshour/world/u-s-targets-irans-military-supply-chain-as-diplomatic-talks-remain-uncertain')
 
 VERDICT.update({43: 'corrected', 46: 'corrected', 54: 'confirmed', 57: 'corrected', 58: 'confirmed', 59: 'confirmed',
-                60: 'corrected', 85: 'corrected'})
+                60: 'corrected', 85: 'corrected', 116: 'confirmed'})
 SOURCES.update({
  43: [_NPR_JUN8],
  46: [_NPR_JUN9, _CC_APACHE],
@@ -1454,6 +1454,7 @@ SOURCES.update({
  59: [_NPR_JUL8],
  60: [_CC_JUL8, _BBG_JUL9],
  85: [_AJ_SEP29, _AP_SEP29],
+ 116: [_NPR_JUN8],
 })
 
 

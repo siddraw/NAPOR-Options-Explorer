@@ -1,0 +1,399 @@
+{
+ "generated": "2026-10-22",
+ "rows": 340,
+ "predictions": 293,
+ "skipped_no_history": 47,
+ "brier": {
+  "overall": {
+   "raw": 0.1907,
+   "shrunk1": 0.1815,
+   "shrunk2": 0.1806,
+   "shrunk4": 0.1825,
+   "pooled": 0.2119,
+   "half": 0.25,
+   "n": 293
+  },
+  "people": {
+   "raw": 0.0823,
+   "shrunk1": 0.0702,
+   "shrunk2": 0.0682,
+   "shrunk4": 0.0685,
+   "pooled": 0.0856,
+   "half": 0.25,
+   "n": 66
+  },
+  "escalation": {
+   "raw": 0.1564,
+   "shrunk1": 0.148,
+   "shrunk2": 0.1514,
+   "shrunk4": 0.1613,
+   "pooled": 0.2409,
+   "half": 0.25,
+   "n": 63
+  },
+  "military": {
+   "raw": 0.1816,
+   "shrunk1": 0.1724,
+   "shrunk2": 0.1786,
+   "shrunk4": 0.1925,
+   "pooled": 0.2781,
+   "half": 0.25,
+   "n": 31
+  },
+  "economic": {
+   "raw": 0.1999,
+   "shrunk1": 0.1972,
+   "shrunk2": 0.1963,
+   "shrunk4": 0.1957,
+   "pooled": 0.2005,
+   "half": 0.25,
+   "n": 66
+  },
+  "political": {
+   "raw": 0.325,
+   "shrunk1": 0.3113,
+   "shrunk2": 0.3044,
+   "shrunk4": 0.2973,
+   "pooled": 0.2896,
+   "half": 0.25,
+   "n": 67
+  }
+ },
+ "calibration": {
+  "raw": [
+   {
+    "lo": 0,
+    "hi": 0.2,
+    "n": 159,
+    "predicted": 0.023,
+    "observed": 0.119
+   },
+   {
+    "lo": 0.2,
+    "hi": 0.4,
+    "n": 19,
+    "predicted": 0.249,
+    "observed": 0.316
+   },
+   {
+    "lo": 0.4,
+    "hi": 0.6,
+    "n": 28,
+    "predicted": 0.499,
+    "observed": 0.429
+   },
+   {
+    "lo": 0.6,
+    "hi": 0.8,
+    "n": 20,
+    "predicted": 0.686,
+    "observed": 0.6
+   },
+   {
+    "lo": 0.8,
+    "hi": 1,
+    "n": 67,
+    "predicted": 0.942,
+    "observed": 0.642
+   }
+  ],
+  "shrunk2": [
+   {
+    "lo": 0,
+    "hi": 0.2,
+    "n": 142,
+    "predicted": 0.066,
+    "observed": 0.141
+   },
+   {
+    "lo": 0.2,
+    "hi": 0.4,
+    "n": 45,
+    "predicted": 0.272,
+    "observed": 0.156
+   },
+   {
+    "lo": 0.4,
+    "hi": 0.6,
+    "n": 20,
+    "predicted": 0.519,
+    "observed": 0.55
+   },
+   {
+    "lo": 0.6,
+    "hi": 0.8,
+    "n": 40,
+    "predicted": 0.694,
+    "observed": 0.625
+   },
+   {
+    "lo": 0.8,
+    "hi": 1,
+    "n": 46,
+    "predicted": 0.942,
+    "observed": 0.63
+   }
+  ]
+ },
+ "learning": [
+  {
+   "period": "2019-20",
+   "n": 25,
+   "raw": 0.1,
+   "shrunk2": 0.1106,
+   "pooled": 0.1348,
+   "half": 0.25
+  },
+  {
+   "period": "2021-23",
+   "n": 29,
+   "raw": 0.1729,
+   "shrunk2": 0.1244,
+   "pooled": 0.1613,
+   "half": 0.25
+  },
+  {
+   "period": "2024-25",
+   "n": 55,
+   "raw": 0.1248,
+   "shrunk2": 0.1114,
+   "pooled": 0.1386,
+   "half": 0.25
+  },
+  {
+   "period": "2026 H1",
+   "n": 106,
+   "raw": 0.201,
+   "shrunk2": 0.193,
+   "pooled": 0.2166,
+   "half": 0.25
+  },
+  {
+   "period": "2026 H2",
+   "n": 78,
+   "raw": 0.2589,
+   "shrunk2": 0.2561,
+   "pooled": 0.3006,
+   "half": 0.25
+  }
+ ],
+ "out_of_sample": {
+  "train_rows": 141,
+  "test_rows": 199,
+  "scored": 131,
+  "skipped": 68,
+  "brier": {
+   "raw": 0.2776,
+   "shrunk1": 0.2752,
+   "shrunk2": 0.2753,
+   "shrunk4": 0.2774,
+   "pooled": 0.3059,
+   "half": 0.25
+  }
+ },
+ "robustness": {
+  "variants": [
+   "As published (R-strong, R-weak, R-proxy count; ~5 days)",
+   "Proxy replies do not count",
+   "Weak replies do not count",
+   "Only strong replies count",
+   "Reply within 3 days (logged reply dates)",
+   "Within 7 days: also any Iran/proxy strike (timing only)"
+  ],
+  "rows": [
+   {
+    "key": "C",
+    "name": "New sanctions",
+    "cells": [
+     {
+      "variant": "As published (R-strong, R-weak, R-proxy count; ~5 days)",
+      "k": 0,
+      "n": 9
+     },
+     {
+      "variant": "Proxy replies do not count",
+      "k": 0,
+      "n": 9
+     },
+     {
+      "variant": "Weak replies do not count",
+      "k": 0,
+      "n": 9
+     },
+     {
+      "variant": "Only strong replies count",
+      "k": 0,
+      "n": 9
+     },
+     {
+      "variant": "Reply within 3 days (logged reply dates)",
+      "k": 0,
+      "n": 9
+     },
+     {
+      "variant": "Within 7 days: also any Iran/proxy strike (timing only)",
+      "k": 0,
+      "n": 9
+     }
+    ]
+   },
+   {
+    "key": "D",
+    "name": "Naval pressure (blockade enforcement, transits, seizures)",
+    "cells": [
+     {
+      "variant": "As published (R-strong, R-weak, R-proxy count; ~5 days)",
+      "k": 2,
+      "n": 6
+     },
+     {
+      "variant": "Proxy replies do not count",
+      "k": 2,
+      "n": 6
+     },
+     {
+      "variant": "Weak replies do not count",
+      "k": 2,
+      "n": 6
+     },
+     {
+      "variant": "Only strong replies count",
+      "k": 2,
+      "n": 6
+     },
+     {
+      "variant": "Reply within 3 days (logged reply dates)",
+      "k": 1,
+      "n": 6
+     },
+     {
+      "variant": "Within 7 days: also any Iran/proxy strike (timing only)",
+      "k": 2,
+      "n": 6
+     }
+    ]
+   },
+   {
+    "key": "E",
+    "name": "Strike Iranian shipping (e.g. tankers)",
+    "cells": [
+     {
+      "variant": "As published (R-strong, R-weak, R-proxy count; ~5 days)",
+      "k": 2,
+      "n": 2
+     },
+     {
+      "variant": "Proxy replies do not count",
+      "k": 2,
+      "n": 2
+     },
+     {
+      "variant": "Weak replies do not count",
+      "k": 1,
+      "n": 2
+     },
+     {
+      "variant": "Only strong replies count",
+      "k": 1,
+      "n": 2
+     },
+     {
+      "variant": "Reply within 3 days (logged reply dates)",
+      "k": 1,
+      "n": 1
+     },
+     {
+      "variant": "Within 7 days: also any Iran/proxy strike (timing only)",
+      "k": 2,
+      "n": 2
+     }
+    ]
+   },
+   {
+    "key": "F",
+    "name": "Strike military sites (equipment, not people)",
+    "cells": [
+     {
+      "variant": "As published (R-strong, R-weak, R-proxy count; ~5 days)",
+      "k": 11,
+      "n": 12
+     },
+     {
+      "variant": "Proxy replies do not count",
+      "k": 6,
+      "n": 12
+     },
+     {
+      "variant": "Weak replies do not count",
+      "k": 9,
+      "n": 12
+     },
+     {
+      "variant": "Only strong replies count",
+      "k": 4,
+      "n": 12
+     },
+     {
+      "variant": "Reply within 3 days (logged reply dates)",
+      "k": 9,
+      "n": 10
+     },
+     {
+      "variant": "Within 7 days: also any Iran/proxy strike (timing only)",
+      "k": 12,
+      "n": 12
+     }
+    ]
+   },
+   {
+    "key": "G",
+    "name": "Strike that risks killing personnel",
+    "cells": [
+     {
+      "variant": "As published (R-strong, R-weak, R-proxy count; ~5 days)",
+      "k": 6,
+      "n": 7
+     },
+     {
+      "variant": "Proxy replies do not count",
+      "k": 5,
+      "n": 7
+     },
+     {
+      "variant": "Weak replies do not count",
+      "k": 6,
+      "n": 7
+     },
+     {
+      "variant": "Only strong replies count",
+      "k": 5,
+      "n": 7
+     },
+     {
+      "variant": "Reply within 3 days (logged reply dates)",
+      "k": 5,
+      "n": 7
+     },
+     {
+      "variant": "Within 7 days: also any Iran/proxy strike (timing only)",
+      "k": 6,
+      "n": 7
+     }
+    ]
+   }
+  ]
+ },
+ "decision": {
+  "adopt": true,
+  "m": 2,
+  "gain": 0.0101,
+  "worse_by_cat": {
+   "people": -0.0141,
+   "escalation": -0.005,
+   "military": -0.003,
+   "economic": -0.0036,
+   "political": -0.0206
+  },
+  "rule": "Show the shrunk value if it beats raw by at least 0.005 overall and is not worse by more than 0.01 in any category."
+ }
+}

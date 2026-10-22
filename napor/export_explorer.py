@@ -1,22 +1,60 @@
-"""NAPOR: export everything the Options Explorer page needs to explorer/data.json.
+"""NAPOR: export everything the Options Explorer page needs.
 
-Run weekly by the maintenance agent after build.py (see AGENT.md). Safe to run any time.
-The page (explorer/index.html) never hard-codes numbers; it reads data.json.
+Writes (paths relative to the repo):
+  explorer/theaters.json          - the list of theaters (one tab each; only Iran today)
+  explorer/data/iran.json         - the Iran theater's data (the page loads this)
+  explorer/data/iran-history.json - weekly snapshots (also embedded in iran.json)
+  explorer/data.json              - same as data/iran.json, kept as a fallback during the move to theaters
+Run weekly by the maintenance agent (see AGENT.md; weekly_build.py runs it). Safe to run any time.
+The page (explorer/index.html) never hard-codes numbers or option letters; it reads these files.
 """
-import json, os, sys, datetime as dt
+import json, os, re, sys, datetime as dt
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import data, napor_options as O, napor_ids as N, napor_threads as T, napor_intensity as INT, napor_forecasts as F
+import napor_cases as NC, backtest_risk as BR
 
 EV = O.EV
 last = max(e[1] for e in data.events)
 first = min(e[1] for e in data.events)
-TRIG = ("C", "D", "E", "F", "G")
+EXPLORER = os.path.join(HERE, "..", "explorer")
+THEATER_ID = "iran"
+DATA_FILE = os.path.join(EXPLORER, "data", THEATER_ID + ".json")
+HISTORY_FILE = os.path.join(EXPLORER, "data", THEATER_ID + "-history.json")
+
+# Words the page uses for this theater, so a future theater renders with its own wording.
+THEATER = dict(
+    id=THEATER_ID, name="Iran", status="active", title="Iran war",
+    sub="The options the US has right now in the Iran war, and what followed the last times the US did something like each one.",
+    adversary="Iran", actor="Iran or an Iran-backed group", actor_short="Iran or proxy",
+    proxy_note="Proxy = a militia Iran arms in Iraq or Syria. Before 2026, Iran mostly answered the US through these groups; those replies count and are labelled \"proxy\".",
+    salvo=dict(count=O.PATRIOTS_PER_SALVO, weapon="Patriots", when="Sep 8-9"),
+    hold_note="Hold cases are weeks of the 2026 war with no logged US sanctions, naval, strike or posture move (Feb 28-Apr 7 and Jul 7-25 left out: US activity there was continuous but logged as a few rows; pre-war weeks left out: too sparsely logged). Most hold weeks have few or no logged events, so they show what the log records in quiet weeks.",
+    not_measured="Oil prices, strain with allies and harm to ordinary Iranians are not measured.",
+    presets=[["2020-01-03", "Soleimani strike"], ["2025-06-22", "US strikes nuclear sites"], ["2026-02-28", "2026 war starts"],
+             ["2026-04-08", "First ceasefire"], ["2026-06-17", "Interim deal"], ["2026-07-08", "July campaign"], ["2026-09-10", "Holding pattern"]],
+    under_logged="Some stretches are logged as one row (for example the nightly US strikes of Jul 9-25, 2026), so \"none logged\" is not proof nothing happened.",
+)
 
 
 def ev(i):
-    e = EV[i]
-    return dict(id=i, date=e[1].isoformat(), actor=e[2], kind=e[3], title=e[5], cred=round(N.event_credibility(i), 2))
+    return NC.ev(i)
+
+
+def sources_for(ids):
+    """Outlet links and credibility for every event the page mentions (Iranian state media marked as claims)."""
+    out = {}
+    for i in sorted(ids):
+        if i not in EV or i in data.MERGED:
+            continue
+        seen, links = set(), []
+        for r in N.reports_for(i):
+            if not r["url"] or r["outlet"] in seen:
+                continue
+            seen.add(r["outlet"])
+            links.append(dict(o=r["outlet"], u=r["url"], claim=r["kind"].startswith("Iranian state media")))
+        out[str(i)] = dict(cred=N.event_credibility(i), links=links)
+    return out
 
 
 def build():
@@ -30,6 +68,7 @@ def build():
     cur = series[-1][1]
     peak = max(p for _, p in series)
     out = dict(
+        theater=THEATER,
         asof=last.isoformat(), generated=dt.date.today().isoformat(), phase=O.CURRENT_PHASE,
         intensity=dict(pts=cur, band=INT.band(cur), bands=[[lo, nm] for lo, nm in INT.BANDS], peak=peak,
                        share_days_below=round(sum(1 for _, p in series if p < cur) / len(series), 3), window_days=INT.WINDOW_DAYS),
@@ -43,43 +82,17 @@ def build():
                           if e[0] not in data.MERGED and (last - e[1]).days <= 6 and N.counts(e[0])]
     now_file = os.path.join(HERE, "napor_now.json")
     out["now"] = json.load(open(now_file)) if os.path.exists(now_file) else None
-    open_fc = [f for f in F.load() if f["outcome"] is None]
+    fcs = F.load()
+    open_fc = [f for f in fcs if f["outcome"] is None]
+    cases_by_key = {}
     for o in O.OPTIONS:
         k = o["key"]; r = rows[k]; m = O.measured_signals(k); rp = O.risk_profile(k)
-        cases = []
-        if o["match"]:
-            for c in [c for c in O.census if O.us_side(c[0]) and o["match"](c[0])]:
-                prs = [p for p in O.pairs if p[1] == c[0]]
-                counted = c[2] in ("R-strong", "R-weak", "R-proxy", "N")
-                cases.append(dict(**ev(c[0]), cls=c[2], replied=(c[2] != "N") if counted else None,
-                                  replies=[dict(id=p[2], days=(EV[p[2]][1] - EV[p[1]][1]).days, hurt=p[4] == "Y", kinetic=data.event_kind[p[2]] == "Kinetic", title=EV[p[2]][5], actor=EV[p[2]][2], date=EV[p[2]][1].isoformat(), dmg=EV[p[2]][7] or "") for p in prs], note=c[3],
-                                  civ=O.CIVILIAN_HARM.get(c[0])))
-        elif k in ("B", "H"):
-            for i in O.option_cases(k):
-                cases.append(dict(**ev(i), cls=None, replied=None, replies=[], civ=None, note=None))
-        for c in cases:
-            day = EV[c["id"]][1]
-            full7 = (last - day).days >= 7
-            c["strike7"] = bool(O._window(O._irstrike, day, 1, 7)) if full7 else None
-            # Talks: yes as soon as one is logged; "no" only once the full 14 days have passed (otherwise still open).
-            # (The workbook counts a partly-open window as "no", which undercounts recent cases.)
-            talks = bool(O._window(O._talks, day, 1, 14))
-            c["talks14"] = True if talks else (False if (last - day).days >= 14 else None)
-            brief = lambda ids: [dict(id=j, date=EV[j][1].isoformat(), title=EV[j][5], actor=EV[j][2], dmg=EV[j][7] or "") for j in ids]
-            c["dmg"] = EV[c["id"]][7] or ""
-            c["strike_ev"] = brief(O._window(O._irstrike, day, 1, 7))
-            c["talk_ev"] = brief(O._window(O._talks, day, 1, 14))
-            c["ship_b_ev"] = brief(O._window(O._ship, day, -7, -1))
-            c["ship_a_ev"] = brief(O._window(O._ship, day, 1, 7))
-            c["ship_b"] = len(O._window(O._ship, day, -7, -1))
-            c["ship_a"] = len(O._window(O._ship, day, 1, 7)) if full7 else None
-            c["civ"] = c["civ"] if c["id"] in O.CIVILIAN_HARM else None
-            c["phase"] = T.event_phase[c["id"]]
-            c["pts_at"] = INT.intensity_before(day)
-            c["band_at"] = INT.band(c["pts_at"])
-        cases.sort(key=lambda x: x["date"])
+        cases = NC.option_cases(k, last)
+        cases_by_key[k] = cases
+        fl = NC.FLAGS[k]
         out["options"].append(dict(
-            key=k, name=o["name"], what=o["what"], evidence=rp["Evidence strength"], trigger=k in TRIG,
+            key=k, name=o["name"], what=o["what"], evidence=rp["Evidence strength"] if not fl["is_hold"] else f"{len(cases)} hold weeks",
+            **fl,
             official=dict(reply=r["reply"], fast=r["fast"], casualties=r["casualties"], strikes=m.get("strikes_after"), talks=m.get("talks"), shipping=m.get("shipping")),
             cases=cases, risks=[rp[c] for c in O.RISK_CATEGORIES], pros=O.PROS[k], harms=O.HARMS[k], unknown=O.UNKNOWNS[k],
             forecasts=[dict(id=f["id"], question=f["question"], p=f["probability"], deadline=f["deadline"], made_on=f["made_on"]) for f in open_fc if f["option"] == k]))
@@ -109,15 +122,30 @@ def build():
         for k in ks:
             byk[k]["uses"].append(dict(id=e[0], date=e[1].isoformat(), title=e[5], unsorted=len(ks) > 1))
     for o in out["options"]:
-        o["last_used"] = max([c["date"] for c in o["cases"]] + [u["date"] for u in o["uses"]], default=None)
+        o["last_used"] = max([c["date"] for c in o["cases"] if not c.get("week")] + [u["date"] for u in o["uses"]], default=None)
     import napor_context
     out["context"] = napor_context.export()
+    # Report card: locked forecasts (open and resolved) and the backtest of the page's own method.
+    out["report_card"] = dict(
+        forecasts=[dict(id=f["id"], question=f["question"], p=f["probability"], made_on=f["made_on"], deadline=f["deadline"], option=f["option"],
+                        outcome=f["outcome"], brier=f["brier"], note=f["resolution_note"], basis=f["basis"]) for f in fcs],
+        backtest=BR.run(cases_by_key))
+    out["estimate"] = dict(shrink=out["report_card"]["backtest"]["decision"]["adopt"], m=BR.M_MAIN)
+    ids = set()
+    for o in out["options"]:
+        for c in o["cases"]:
+            if not c.get("week"): ids.add(c["id"])
+            for key in ("replies", "strike_ev", "talk_ev", "ship_a_ev", "ship_b_ev", "hurt_ev"):
+                ids.update(x["id"] for x in c.get(key) or [])
+        ids.update(u["id"] for u in o["uses"])
+    ids.update(e["id"] for e in out["week_events"])
+    out["sources"] = sources_for(ids)
     out["history"] = update_history(out)
     return out
 
 
-# ---- NAPOR risk index (equal weights): same formula as the page, used here only for the weekly history ----
-CATS = ["people", "escalation", "military", "economic", "political"]
+# ---- NAPOR risk index (equal weights): same formula as the page, used here for the weekly history ----
+CATS = NC.CATS
 
 
 def wilson(k, n, z=1.96):
@@ -127,39 +155,44 @@ def wilson(k, n, z=1.96):
 
 
 def category_scores(o, cases):
-    def rate(base, flag):
-        b = [c for c in cases if base(c)]
-        return dict(k=sum(1 for c in b if flag(c)), n=len(b))
-    sc = {}
-    sc["people"] = rate(lambda c: c["strike7"] is not None, lambda c: bool(c["civ"]) or any(r["hurt"] for r in c["replies"]))
-    sc["escalation"] = (rate(lambda c: c["replied"] is not None, lambda c: c["replied"] is True) if o["trigger"]
-                        else rate(lambda c: c["strike7"] is not None, lambda c: c["strike7"] is True))
-    if o["key"] in ("D", "E", "F", "G"):
-        sc["military"] = rate(lambda c: c["replied"] is not None, lambda c: any(r["kinetic"] for r in c["replies"]))
-    else:
-        sc["military"] = dict(k=0, n=0, assumed=True)
-    sc["economic"] = rate(lambda c: c["ship_a"] is not None, lambda c: c["ship_a"] > c["ship_b"])
-    sc["political"] = rate(lambda c: c["talks14"] is not None, lambda c: c["talks14"] is False)
-    return sc
+    return NC.category_scores({k: o[k] for k in ("trigger", "military", "is_hold")}, cases)
 
 
-def risk_index(o, cases, w=None):
+def risk_index(o, cases, w=None, pool=None):
+    """Average of the measured corners. With pool (category -> pooled rate), corners are shrunk: (k + m p)/(n + m)."""
     if not cases: return None
     sc = category_scores(o, cases); w = w or {c: 1 for c in CATS}
     num = tot = 0
     for c in CATS:
         s = sc[c]
         if s["n"] or s.get("assumed"):
-            p = s["k"] / s["n"] if s["n"] else 0
+            if s.get("assumed"):
+                p = 0
+            elif pool is not None and pool.get(c) is not None:
+                p = (s["k"] + BR.M_MAIN * pool[c]) / (s["n"] + BR.M_MAIN)
+            else:
+                p = s["k"] / s["n"]
             num += w[c] * p; tot += w[c]
     return round(num / tot, 3) if tot else None
 
 
+def pooled_rates(options):
+    tot = {c: [0, 0] for c in CATS}
+    for o in options:
+        sc = category_scores(o, o["cases"])
+        for c in CATS:
+            if not sc[c].get("assumed"):
+                tot[c][0] += sc[c]["k"]; tot[c][1] += sc[c]["n"]
+    return {c: (k / n if n else None) for c, (k, n) in tot.items()}
+
+
 def update_history(out):
-    path = os.path.join(HERE, "..", "explorer", "history.json")
+    path = HISTORY_FILE if os.path.exists(HISTORY_FILE) else os.path.join(EXPLORER, "history.json")
     hist = json.load(open(path)) if os.path.exists(path) else []
+    pool = pooled_rates(out["options"])
     snap = dict(asof=out["asof"], intensity=out["intensity"]["pts"], band=out["intensity"]["band"], events=out["n_events"],
-                options={o["key"]: dict(n=len(o["cases"]), index=risk_index(o, o["cases"])) for o in out["options"]},
+                options={o["key"]: dict(n=len(o["cases"]), index=risk_index(o, o["cases"]),
+                                        estimate=risk_index(o, o["cases"], pool=pool) if out["estimate"]["shrink"] else None) for o in out["options"]},
                 status={k: dict(status=v["status"], label=v["label"]) for k, v in ((out.get("now") or {}).get("options") or {}).items()},
                 status_as_of=(out.get("now") or {}).get("as_of"))
     hist = [h for h in hist if h["asof"] != snap["asof"]] + [snap]
@@ -170,11 +203,12 @@ def update_history(out):
 def check(out):
     """The page recomputes every number from the cases; make sure it agrees with the workbook's own counts."""
     bad = []
+    def kn(s):
+        m = re.search(r"(\d+) of (\d+)", s or ""); return (int(m[1]), int(m[2])) if m else None
     for o in out["options"]:
         cs, off = o["cases"], o["official"]
-        def kn(s):
-            import re
-            m = re.search(r"(\d+) of (\d+)", s or ""); return (int(m[1]), int(m[2])) if m else None
+        if o["is_hold"]:
+            continue                      # hold weeks are not in the workbook
         if o["trigger"]:
             got = (sum(1 for c in cs if c["replied"] is True), sum(1 for c in cs if c["replied"] is not None))
             if got != kn(off["reply"]): bad.append((o["key"], "reply", got, off["reply"]))
@@ -185,18 +219,21 @@ def check(out):
     return bad
 
 
-if __name__ == "__main__":
-    out = build()
-    bad = check(out)
-    dest = os.path.join(HERE, "..", "explorer", "data.json")
-    os.makedirs(os.path.dirname(dest), exist_ok=True)
-    with open(dest, "w") as f:
-        json.dump(out, f, separators=(",", ":"), default=str)
-    with open(os.path.join(os.path.dirname(dest), "history.json"), "w") as f:
+def write(out):
+    os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
+    blob = json.dumps(out, separators=(",", ":"), default=str)
+    for dest in (DATA_FILE, os.path.join(EXPLORER, "data.json")):
+        with open(dest, "w") as f:
+            f.write(blob)
+    with open(HISTORY_FILE, "w") as f:
         json.dump(out["history"], f, indent=1)
-    print("wrote", os.path.normpath(dest), "| asof", out["asof"], "| intensity", out["intensity"]["pts"], out["intensity"]["band"])
-    print("MISMATCH vs workbook counts:" if bad else "page counts match workbook counts", bad or "")
-    # Independent recount of the five risk-category rates (verify_explorer.py) vs the page's formula.
+    theaters = dict(generated=out["generated"], default=THEATER_ID,
+                    theaters=[dict(id=THEATER_ID, name=THEATER["name"], status=THEATER["status"], data="data/" + THEATER_ID + ".json", asof=out["asof"])])
+    with open(os.path.join(EXPLORER, "theaters.json"), "w") as f:
+        json.dump(theaters, f, indent=1)
+
+
+def recount_diff(out):
     import verify_explorer
     ver, diff = verify_explorer.recount(), []
     for o in out["options"]:
@@ -206,4 +243,15 @@ if __name__ == "__main__":
         for c in CATS:
             if not sc[c].get("assumed") and [sc[c]["k"], sc[c]["n"]] != ver[o["key"]][c]:
                 diff.append((o["key"], c, [sc[c]["k"], sc[c]["n"]], ver[o["key"]][c]))
+    return diff
+
+
+if __name__ == "__main__":
+    out = build()
+    bad = check(out)
+    write(out)
+    print("wrote", os.path.normpath(DATA_FILE), "(+ data.json, theaters.json, history) | asof", out["asof"], "| intensity", out["intensity"]["pts"], out["intensity"]["band"])
+    print("MISMATCH vs workbook counts:" if bad else "page counts match workbook counts", bad or "")
+    diff = recount_diff(out)
     print("MISMATCH vs independent recount:" if diff else "risk rates match the independent recount", diff or "")
+    sys.exit(1 if bad or diff else 0)

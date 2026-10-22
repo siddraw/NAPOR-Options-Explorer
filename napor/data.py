@@ -295,6 +295,8 @@ events.extend([
 (113, d(2026,10,17), 'Iran (IRGC claim)', 'Strike (shipping, claimed mine)', 'Strait of Hormuz', "IRGC CLAIMS two supertankers, each carrying about 2 million barrels, hit naval mines on an 'unauthorised' route and caught fire (Oct 17-18); CENTCOM says the strait is cleared of mines and ships are being hit by projectiles", None, 'Fires (IRGC claim via IRNA/Press TV; unverified). No names or casualties given', 'Medium', 'see audit'),
 (114, d(2026,10,18), 'Unknown', 'Strike (shipping)', 'UAE', 'UKMTO: a tug is struck by two unknown projectiles off the UAE; damaged but continuing its route', None, 'Damage; no casualties reported (CBS citing UKMTO)', 'Medium', 'see audit'),
 (115, d(2026,10,18), 'Iran', 'Diplomatic response pending', 'US', "FM Araghchi says Tehran is reviewing US 'comments' on its proposal; if the US complies, 'the Strait of Hormuz will reopen on the sixth day' and negotiations start on the seventh", 86, 'n/a', 'Medium', 'see audit'),
+# Catch-up row (2026-10-22): found while building the Hold weeks; sourced in audit_sources.py.
+(116, d(2026,6,7), 'Iran', 'Strike (exchange with Israel)', 'Israel', 'Iran and Israel trade fire over the weekend of Jun 6-7, the first exchange since the April ceasefire; Iran then agrees to halt attacks (see #43)', None, 'No casualty figures in the source read', 'Medium', 'see audit'),
 ])
 
 # ---------------------------------------------------------------------------
