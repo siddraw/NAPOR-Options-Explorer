@@ -82,9 +82,34 @@ def build():
             key=k, name=o["name"], what=o["what"], evidence=rp["Evidence strength"], trigger=k in TRIG,
             official=dict(reply=r["reply"], fast=r["fast"], casualties=r["casualties"], strikes=m.get("strikes_after"), talks=m.get("talks"), shipping=m.get("shipping")),
             cases=cases, risks=[rp[c] for c in O.RISK_CATEGORIES], pros=O.PROS[k], harms=O.HARMS[k], unknown=O.UNKNOWNS[k],
-            forecasts=[dict(id=f["id"], question=f["question"], p=f["probability"], deadline=f["deadline"]) for f in open_fc if f["option"] == k]))
+            forecasts=[dict(id=f["id"], question=f["question"], p=f["probability"], deadline=f["deadline"], made_on=f["made_on"]) for f in open_fc if f["option"] == k]))
+    # Every logged US move of each kind (not only the census cases), for "what did the US do next" on past dates.
+    _CONC = ("proposal", "talks", "ceasefire announcement", "ceasefire (", "ceasefire statement")
+    census_ids = {c[0] for c in O.census}
+    def kind_of(e):
+        t = e[0]; k = data.event_kind[t]
+        if k == "Sanctions": return ["C"]
+        if k == "Maritime": return ["D"]
+        if k == "Posture": return ["H"]
+        if k == "Diplomatic": return ["B"] if any(w in e[3].lower() for w in _CONC) else []
+        if k == "Kinetic":
+            if O.is_shipping_strike(t): return ["E"]
+            if t in census_ids:
+                cat = [c[1] for c in O.census if c[0] == t][0]
+                return ["G"] if cat == "Personnel/Casualty" else ["F"]
+            return ["F", "G"]
+        return []
     for o in out["options"]:
-        o["last_used"] = max((c["date"] for c in o["cases"]), default=None)
+        o["uses"] = []
+    byk = {o["key"]: o for o in out["options"]}
+    for e in sorted(data.events, key=lambda e: e[1]):
+        if not O.us_side(e[0]) or not O._usable(e):
+            continue
+        ks = kind_of(e)
+        for k in ks:
+            byk[k]["uses"].append(dict(id=e[0], date=e[1].isoformat(), title=e[5], unsorted=len(ks) > 1))
+    for o in out["options"]:
+        o["last_used"] = max([c["date"] for c in o["cases"]] + [u["date"] for u in o["uses"]], default=None)
     out["history"] = update_history(out)
     return out
 
@@ -132,7 +157,9 @@ def update_history(out):
     path = os.path.join(HERE, "..", "explorer", "history.json")
     hist = json.load(open(path)) if os.path.exists(path) else []
     snap = dict(asof=out["asof"], intensity=out["intensity"]["pts"], band=out["intensity"]["band"], events=out["n_events"],
-                options={o["key"]: dict(n=len(o["cases"]), index=risk_index(o, o["cases"])) for o in out["options"]})
+                options={o["key"]: dict(n=len(o["cases"]), index=risk_index(o, o["cases"])) for o in out["options"]},
+                status={k: dict(status=v["status"], label=v["label"]) for k, v in ((out.get("now") or {}).get("options") or {}).items()},
+                status_as_of=(out.get("now") or {}).get("as_of"))
     hist = [h for h in hist if h["asof"] != snap["asof"]] + [snap]
     hist.sort(key=lambda h: h["asof"])
     return hist[-60:]

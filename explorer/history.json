@@ -77,6 +77,41 @@
     "n": 10,
     "index": 0.2
    }
-  }
+  },
+  "status": {
+   "A": {
+    "status": "open",
+    "label": "Open"
+   },
+   "B": {
+    "status": "active",
+    "label": "In use now"
+   },
+   "C": {
+    "status": "active",
+    "label": "In use now"
+   },
+   "D": {
+    "status": "active",
+    "label": "In use now"
+   },
+   "E": {
+    "status": "constrained",
+    "label": "Constrained"
+   },
+   "F": {
+    "status": "constrained",
+    "label": "Constrained until Nov 3"
+   },
+   "G": {
+    "status": "constrained",
+    "label": "Constrained until Nov 3"
+   },
+   "H": {
+    "status": "open",
+    "label": "Open"
+   }
+  },
+  "status_as_of": "2026-10-18"
  }
 ]
