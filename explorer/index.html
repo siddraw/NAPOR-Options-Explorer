@@ -244,8 +244,9 @@ details.sit{font-size:13px}
 details.sit summary{cursor:pointer;color:var(--accent)}
 details.sit ul{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
 /* toolbar + modals */
-.toolbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-@media(max-width:700px){.toolbar{grid-template-columns:1fr}}
+.toolbar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media(max-width:900px){.toolbar{grid-template-columns:1fr}}
+.asofbanner{background:var(--b1);border:1px solid var(--b2);border-radius:8px;padding:8px 12px;font-size:13.5px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .tb{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;align-items:center;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;min-width:0}
 .tb:hover{border-color:var(--accent)}
 .tb .tl{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
@@ -313,9 +314,11 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
     </div>
   </div>
   <div class="toolbar" id="toolbar"></div>
+  <div class="asofbanner" id="asofbanner" hidden></div>
   <div id="view"></div>
   <div class="modal" id="m-int" hidden><div class="sheet" role="dialog" aria-modal="true" aria-label="War intensity" tabindex="-1"><button class="x" data-close aria-label="Close">×</button><section id="intensity"></section></div></div>
   <div class="modal" id="m-lens" hidden><div class="sheet" role="dialog" aria-modal="true" aria-label="How much did the conditions matter?" tabindex="-1"><button class="x" data-close aria-label="Close">×</button><section id="lens"></section></div></div>
+  <div class="modal" id="m-time" hidden><div class="sheet" role="dialog" aria-modal="true" aria-label="Look back to a past date" tabindex="-1"><button class="x" data-close aria-label="Close">×</button><section id="timeview"></section></div></div>
   <div class="modal" id="m-cat" hidden><div class="sheet" role="dialog" aria-modal="true" aria-label="Why this percentage" tabindex="-1"><button class="x" data-close aria-label="Close">×</button><section id="catview"></section></div></div>
   <footer>
     <p>Percentages are x of n past cases in the NAPOR log. The bar shows the 95% range the true rate could plausibly sit in (Wilson interval). With small samples that range is wide, so read each number as a hint. Before 2026, Iran mostly answered through militias it arms in Iraq and Syria; those replies count and are labelled "proxy". "After" is not "because of". Oil prices, strain with allies and harm to ordinary Iranians are not measured.</p>
@@ -336,7 +339,7 @@ let PHASE_ORDER = [], PHASE_VAR = {};
 function setPhases(){ PHASE_ORDER = [...new Set(D.phases.map(p => p.name))]; PHASE_ORDER.forEach((p, i) => PHASE_VAR[p] = "--ph" + (i % 8)); }
 const CATS = ["people","escalation","military","economic","political"];
 const CAT_NAME = {people:"Harm to people", escalation:"Escalation", military:"Military cost", economic:"Economic harm", political:"Political / diplomatic"};
-const S = {sel:"D", mode:"explore", metric:"index", phase:null, band:null, pin:null, w:{people:1,escalation:1,military:1,economic:1,political:1}};
+const S = {asof:null, sel:"D", mode:"explore", metric:"index", phase:null, band:null, pin:null, w:{people:1,escalation:1,military:1,economic:1,political:1}};
 try { S.sel = localStorage.getItem("napor-opt") || S.sel; } catch(e) {}
 const pick = k => { S.sel = k; try { localStorage.setItem("napor-opt", k); } catch(e) {} };
 
@@ -349,7 +352,22 @@ function wilson(k, n, z=1.96){
 const P = (k,n) => n ? Math.round(100*k/n) + "%" : "–";
 const R = (k,n) => { const w = wilson(k,n); return w ? Math.round(w[0]*100) + "–" + Math.round(w[1]*100) + "%" : ""; };
 const inLens = c => (!S.phase || c.phase === S.phase) && (!S.band || c.band_at === S.band);
-const activeCases = o => o.cases.filter(inLens);
+const addDays = (iso, n) => { const t = dd(iso); t.setDate(t.getDate() + n); return t.toISOString().slice(0,10); };
+let MASK = {key:null, map:new Map()};
+function asofCase(c){
+  const Dt = S.asof; if(!Dt) return c;
+  if(c.date > Dt) return null;
+  const k = Dt + "|" + c.id + "|" + c.date; if(MASK.key !== Dt){ MASK = {key:Dt, map:new Map()}; } if(MASK.map.has(k)) return MASK.map.get(k);
+  const known = e => e.date <= Dt, reps = c.replies.filter(known), done = n => addDays(c.date, n) <= Dt;
+  const m = {...c, replies: reps, strike_ev: c.strike_ev.filter(known), talk_ev: c.talk_ev.filter(known), ship_a_ev: done(7) ? c.ship_a_ev : []};
+  m.replied = c.replied === null ? null : done(5) ? c.replied : (reps.length ? true : null);
+  m.strike7 = c.strike7 === null ? (m.strike_ev.length ? true : null) : done(7) ? c.strike7 : (m.strike_ev.length ? true : null);
+  m.talks14 = m.talk_ev.length ? true : (done(14) && c.talks14 !== null ? false : null);
+  m.ship_a = done(7) ? c.ship_a : null;
+  MASK.map.set(k, m); return m;
+}
+const activeCases = o => o.cases.map(asofCase).filter(c => c && inLens(c));
+const allKnown = o => o.cases.map(asofCase).filter(Boolean);
 function rate(cs, base, flag){ const b = cs.filter(base); return {k: b.filter(flag).length, n: b.length}; }
 function catScores(o, cs){
   const sc = {};
@@ -427,10 +445,13 @@ function stackBar(ix){
   return '<div class="stack" role="img" aria-label="Risk index ' + Math.round(ix.idx*100) + ' percent">' + ix.parts.filter(p => p.ok && p.contrib > 0).map(p => `<i data-cat="${p.s.assumed ? "" : p.c}" style="width:${p.contrib*100}%;background:var(--k${CATS.indexOf(p.c)+1})" title="${CAT_NAME[p.c]}: ${(p.contrib*100).toFixed(1)} points (click for cases)"></i>`).join("") + '</div>';
 }
 const katLegend = () => '<div class="klegend">' + CATS.map((c,i) => `<span><i style="background:var(--k${i+1})"></i>${CAT_NAME[c]}</span>`).join("") + '</div>';
-const stPill = (o) => { const n = D.now && D.now.options && D.now.options[o.key]; return n ? `<span class="pill ${esc(n.status)}">${esc(n.label)}</span>` : ""; };
+const stPill = (o) => {
+  if(S.asof){ const snap = (D.history || []).filter(h => h.status_as_of && h.status_as_of <= S.asof && h.status && h.status[o.key]).pop(); return snap ? `<span class="pill ${esc(snap.status[o.key].status)}">${esc(snap.status[o.key].label)}</span>` : ""; }
+  const n = D.now && D.now.options && D.now.options[o.key]; return n ? `<span class="pill ${esc(n.status)}">${esc(n.label)}</span>` : ""; };
 
 /* ---------- war intensity ---------- */
-function pinIndex(){ return S.pin === null ? D.series.length - 1 : S.pin; }
+function asofIndex(){ return S.asof ? Math.max(0, D.series.findIndex(r => r[0] === S.asof)) : D.series.length - 1; }
+function pinIndex(){ return S.pin === null ? asofIndex() : S.pin; }
 function bandOf(p){ let b = 0; D.intensity.bands.forEach(([lo], i) => { if(p >= lo) b = i; }); return b; }
 function windowEvents(idx){
   const end = dd(D.series[idx][0]), start = new Date(end.getTime() - 13*864e5);
@@ -537,12 +558,13 @@ function drawChart(){
 let LENS = null;
 function buildLens(){
   const phaseOfDate = iso => { const p = D.phases.find(p => iso >= p.start && iso <= p.end); return p ? p.name : null; };
-  const bandOfDate = iso => { const r = D.series.find(s => s[0] === iso); return r ? BAND_NAMES[bandOf(r[1])] : null; };
-  const allCases = D.options.flatMap(o => o.cases.map(c => ({...c, opt:o.key})));
+  const bandOfDate = iso => { const r = SER.find(s => s[0] === iso); return r ? BAND_NAMES[bandOf(r[1])] : null; };
+  const allCases = D.options.flatMap(o => allKnown(o).map(c => ({...c, opt:o.key})));
+  const SER = D.series.slice(0, asofIndex() + 1), HOS = D.hostile.filter(e => !S.asof || e.date <= S.asof);
   const out = {phase:{}, band:{}};
   const mk = (days, evs, cases, avg, peak) => {
     const rep = cases.filter(c => c.replied !== null);
-    return {days: days.length, shareDays: days.length / D.series.length,
+    return {days: days.length, shareDays: days.length / SER.length,
       events: evs.length, pts: evs.reduce((a,e) => a + e.pts, 0), deadly: evs.filter(e => e.deadly).length,
       ship: evs.filter(e => e.kind === "Maritime").length, kinetic: evs.filter(e => e.kind === "Kinetic").length,
       avg, peak, cases: cases.length,
@@ -550,18 +572,18 @@ function buildLens(){
       hurt: {k: cases.filter(c => c.strike7 !== null && (!!c.civ || c.replies.some(r => r.hurt))).length, n: cases.filter(c => c.strike7 !== null).length},
       talks: {k: cases.filter(c => c.talks14 === true).length, n: cases.filter(c => c.talks14 !== null).length}};
   };
-  const totPts = D.hostile.reduce((a,e) => a + e.pts, 0);
+  const totPts = HOS.reduce((a,e) => a + e.pts, 0);
   PHASE_ORDER.forEach(name => {
-    const days = D.series.filter(s => phaseOfDate(s[0]) === name);
-    const evs = D.hostile.filter(e => phaseOfDate(e.date) === name);
+    const days = SER.filter(s => phaseOfDate(s[0]) === name);
+    const evs = HOS.filter(e => phaseOfDate(e.date) === name);
     out.phase[name] = mk(days, evs, allCases.filter(c => c.phase === name), days.length ? days.reduce((a,s) => a + s[1], 0) / days.length : 0, days.reduce((a,s) => Math.max(a, s[1]), 0));
   });
   BAND_NAMES.forEach(name => {
-    const days = D.series.filter(s => BAND_NAMES[bandOf(s[1])] === name);
-    const evs = D.hostile.filter(e => bandOfDate(e.date) === name);
+    const days = SER.filter(s => BAND_NAMES[bandOf(s[1])] === name);
+    const evs = HOS.filter(e => bandOfDate(e.date) === name);
     out.band[name] = mk(days, evs, allCases.filter(c => c.band_at === name), days.length ? days.reduce((a,s) => a + s[1], 0) / days.length : 0, days.reduce((a,s) => Math.max(a, s[1]), 0));
   });
-  out.totPts = totPts; out.totEvents = D.hostile.length; out.totCases = allCases.length; out.totDeadly = D.hostile.filter(e => e.deadly).length;
+  out.totPts = totPts; out.totEvents = HOS.length; out.totCases = allCases.length; out.totDeadly = HOS.filter(e => e.deadly).length;
   LENS = out;
 }
 function lensDetail(kind, name){
@@ -653,8 +675,9 @@ function flowRow(t, sub, frac, text, small, cls, color, w){
   const wl = w ? wilson(Math.round(w.k), w.n) : null;
   return `<div class="fl ${cls||""}"><div class="t">${esc(t)}${sub ? `<small>${esc(sub)}</small>` : ""}</div><div class="bar" role="img" aria-label="${esc(t)} ${text}"><i style="width:${Math.max(0,Math.min(1,frac))*100}%;background:${color || "var(--accent)"}"></i>${wl ? `<em style="left:${wl[0]*100}%;width:${Math.max(.5,(wl[1]-wl[0])*100)}%;opacity:.22;background:var(--ink)"></em>` : ""}</div><div class="v">${text}${small ? `<small>${esc(small)}</small>` : ""}</div></div>`;
 }
+const fcs = o => S.asof ? [] : o.forecasts;
 function weeklyShipping(){
-  const last = dd(D.asof), mon = d => { const x = new Date(d); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); x.setHours(12,0,0,0); return x; };
+  const last = dd(S.asof || D.asof), mon = d => { const x = new Date(d); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); x.setHours(12,0,0,0); return x; };
   const cur = mon(last), weeks = [];
   for(let i = 9; i >= 0; i--) { const w = new Date(cur); w.setDate(w.getDate() - 7*i); weeks.push(w); }
   const ev = D.hostile.filter(e => e.kind === "Maritime" && !e.actor.toLowerCase().startsWith("us"));
@@ -666,7 +689,7 @@ function outcomesBlock(o, st, ix){
   if(!o.cases.length){
     let h = `<p class="nodata" style="margin-bottom:10px">No past case of "${esc(o.name)}" is in the log, so there is no measured outcome. What is measured is what happens anyway: attacks on shipping, logged per week (the real count is higher, because big clusters are logged as one row).</p>` + weeklyShipping() +
       `<p class="legend">Now about ${D.baseline.per_week} logged attacks a week (${D.baseline.n} in ${D.baseline.weeks} weeks) with no new US move.</p>`;
-    if(o.forecasts.length) h += `<h2 style="margin-top:16px">NAPOR's open forecasts (locked before the outcome)</h2>` + o.forecasts.map(f => `<div class="fgauge"><div class="q">${esc(f.question)}<small>${esc(f.id)} · resolves by ${fmtDate(f.deadline)}</small></div><div class="big">${Math.round(f.p*100)}%</div><div class="bar"><i style="width:${f.p*100}%"></i></div></div>`).join("");
+    if(fcs(o).length) h += `<h2 style="margin-top:16px">NAPOR's open forecasts (locked before the outcome)</h2>` + fcs(o).map(f => `<div class="fgauge"><div class="q">${esc(f.question)}<small>${esc(f.id)} · resolves by ${fmtDate(f.deadline)}</small></div><div class="big">${Math.round(f.p*100)}%</div><div class="bar"><i style="width:${f.p*100}%"></i></div></div>`).join("");
     return h;
   }
   let h = '<div class="flow">';
@@ -686,10 +709,21 @@ function outcomesBlock(o, st, ix){
   const sb = cs.reduce((a,c) => a + c.ship_b, 0), sa = cs.reduce((a,c) => a + c.ship_a, 0), mx = Math.max(1, sb, sa);
   h += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:16px"><div><h2>Shipping attacks, 7 days before vs after</h2><div class="pair"><div><i style="height:${sb/mx*100}%"></i>before ${sb}</div><div><i style="height:${sa/mx*100}%"></i>after ${sa}</div></div><p class="legend">Total across ${cs.length} past cases${sb ? " (" + (sa >= sb ? "+" : "") + Math.round((sa-sb)/sb*100) + "%)" : ""}. Not shown to be caused by the US action.</p></div>`;
   if(["D","E","F","G"].includes(o.key) && rp.n){ const e = rp.k / rp.n * D.patriots; h += `<div><h2>Patriot interceptors expected</h2><div class="fgauge" style="border:0;padding-top:0"><div class="q">reply rate ${P(rp.k, rp.n)} × ~${D.patriots} per salvo<small>${D.patriots} was used in the Sep 8–9 salvo</small></div><div class="big">≈${Math.round(e)}</div><div class="bar"><i style="width:${e/D.patriots*100}%"></i></div></div></div>`; }
-  if(o.forecasts.length) h += `<div><h2>NAPOR's open forecasts</h2>` + o.forecasts.map(f => `<div class="fgauge"><div class="q">${esc(f.question)}<small>${esc(f.id)} · by ${fmtDate(f.deadline)}</small></div><div class="big">${Math.round(f.p*100)}%</div><div class="bar"><i style="width:${f.p*100}%"></i></div></div>`).join("") + `</div>`;
+  if(fcs(o).length) h += `<div><h2>NAPOR's open forecasts</h2>` + fcs(o).map(f => `<div class="fgauge"><div class="q">${esc(f.question)}<small>${esc(f.id)} · by ${fmtDate(f.deadline)}</small></div><div class="big">${Math.round(f.p*100)}%</div><div class="bar"><i style="width:${f.p*100}%"></i></div></div>`).join("") + `</div>`;
   return h + '</div>';
 }
+function nextMoves(o, from, days){
+  const to = addDays(from, days);
+  return (o.uses || []).filter(c => c.date > from && c.date <= to);
+}
 function situationBlock(o){
+  if(S.asof){
+    const snap = (D.history || []).filter(h => h.status_as_of && h.status_as_of <= S.asof && h.status && h.status[o.key]).pop();
+    const prior = (o.uses || []).filter(c => c.date <= S.asof).pop(), nxt = nextMoves(o, S.asof, 14);
+    return `<div class="avail"><div>${snap ? `<span class="pill ${esc(snap.status[o.key].status)}">${esc(snap.status[o.key].label)}</span> <b>Availability that week</b> <span class="nodata">(agent's reading as of ${fmtDate(snap.status_as_of)})</span>` : `<b>Availability on ${fmtDate(S.asof, true)}</b> <span class="nodata">(weekly availability notes start Oct 18, 2026; before that every option is shown, without a status)</span>`}</div>` +
+      `<div class="r">${prior ? `Last time the US had done this: ${fmtDate(prior.date, true)} (#${prior.id}).` : "The US had not done this yet in the record."}</div>` +
+      `<div class="r"><b>Logged US moves of this kind in the next 14 days:</b> ${nxt.length ? nxt.map(c => `#${c.id} ${fmtDate(c.date)}: ${esc(short(c.title, 90))}${c.unsorted ? " (a US strike not sorted into F or G)" : ""}`).join(" · ") : addDays(S.asof, 1) > D.asof ? "not known yet" : "none logged"}</div></div>`;
+  }
   const n = D.now, i = n && n.options && n.options[o.key];
   if(!n || !i) return "";
   const today = new Date(); today.setHours(12,0,0,0);
@@ -790,6 +824,48 @@ function renderCat(){
   $("#catview").innerHTML = h;
   document.querySelectorAll("[data-cf]").forEach(b => b.onclick = () => { S.catFilter = b.dataset.cf; renderCat(); });
 }
+function setAsof(v){
+  S.asof = v && v < D.asof ? v : null; S.pin = null; LENS = null; MASK = {key:null, map:new Map()};
+  refresh(); if(!$("#m-int").hidden) renderIntensity();
+}
+const PRESETS = [["2020-01-03","Soleimani strike"],["2025-06-22","US strikes nuclear sites"],["2026-02-28","2026 war starts"],["2026-04-08","First ceasefire"],["2026-06-17","Interim deal"],["2026-07-08","July campaign"],["2026-09-10","Holding pattern"]];
+function indexAt(o, iso){
+  const keep = S.asof; S.asof = iso; MASK = {key:null, map:new Map()};
+  const cs = o.cases.map(asofCase).filter(Boolean), ix = riskIndex(o, cs);
+  S.asof = keep; MASK = {key:null, map:new Map()};
+  return ix;
+}
+function spark(o){
+  const pts = []; let t = dd("2026-02-01"), end = dd(D.asof);
+  const first = dd(D.series[0][0]); t = new Date(Math.max(first, dd("2019-06-01")));
+  const step = 30; while(t <= end){ const iso = t.toISOString().slice(0,10); const ix = indexAt(o, iso); pts.push([iso, ix ? ix.idx : null]); t = new Date(t.getTime() + step*864e5); }
+  pts.push([D.asof, (indexAt(o, D.asof) || {}).idx ?? null]);
+  const W = 220, H = 34, n = pts.length, x = i => 2 + (W-4) * i / (n-1), y = v => H - 3 - (H-6) * v;
+  let d = "", on = false; pts.forEach(([_, v], i) => { if(v === null){ on = false; return; } d += (on ? "L" : "M") + x(i).toFixed(1) + "," + y(v).toFixed(1); on = true; });
+  const sel = S.asof ? pts.findIndex(p => p[0] >= S.asof) : n-1;
+  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Risk index over time"><line x1="2" x2="${W-2}" y1="${y(.5)}" y2="${y(.5)}" stroke="var(--line)" stroke-dasharray="2 3"/><path d="${d}" fill="none" stroke="var(--accent)" stroke-width="1.6"/>${sel >= 0 ? `<line x1="${x(sel)}" x2="${x(sel)}" y1="2" y2="${H-2}" stroke="var(--needle)"/>` : ""}</svg>`;
+}
+function renderTime(){
+  const v = S.asof || D.asof, idx = asofIndex(), r = D.series[idx], ph = D.phases.find(p => r[0] >= p.start && r[0] <= p.end);
+  let h = `<h2 style="padding-right:44px">Look back: risk on a past date</h2><p class="note" style="margin-bottom:12px">Pick a date. Every option's risk is recomputed using only the cases and outcomes known on that day, so you see the risk as it looked then. The page below switches to that date too.</p>` +
+    `<div class="lensbar" style="margin-bottom:10px"><label for="asof-input"><b>Date</b></label><input type="date" id="asof-input" min="${D.series[0][0]}" max="${D.asof}" value="${v}" style="font:inherit;padding:4px 8px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink)">` +
+    `<button class="linkbtn" id="asof-today">Today</button></div><div class="cmpbar">${PRESETS.map(([d, l]) => `<button class="chip" data-asof="${d}" aria-pressed="${S.asof === d}">${fmtDate(d, true)} · ${l}</button>`).join("")}</div>` +
+    `<div class="tally"><span>Phase: <b>${esc(ph ? ph.name : "–")}</b></span><span>War intensity: <b>${r[1]} pts · ${BAND_NAMES[bandOf(r[1])]}</b></span><span>Past cases known then: <b>${D.options.reduce((a,o) => a + allKnown(o).length, 0)}</b></span></div>`;
+  h += `<div class="tbl"><table style="min-width:720px"><thead><tr><th>Option</th><th>Risk index ${S.asof ? "then" : "now"}</th><th>Today</th><th>Risk over time (dot line = 50%)</th><th>Logged US move of this kind in the next 14 days</th></tr></thead><tbody>`;
+  for(const o of D.options){
+    const then = riskIndex(o, allKnown(o)), now = indexAt(o, D.asof), nxt = S.asof ? nextMoves(o, S.asof, 14) : [];
+    h += `<tr data-k="${o.key}"><td><b class="mono" style="color:var(--accent)">${o.key}</b> ${esc(o.name)}</td>` +
+      `<td class="mono">${then ? Math.round(then.idx*100) + "% <span class=\"nodata\">(" + then.n + " cases)</span>" : "<span class=\"nodata\">no cases yet</span>"}</td>` +
+      `<td class="mono">${now ? Math.round(now.idx*100) + "%" : "–"}</td><td>${o.cases.length ? spark(o) : '<span class="nodata">no cases</span>'}</td>` +
+      `<td>${!S.asof ? '<span class="nodata">pick a past date</span>' : nxt.length ? "Yes: " + nxt.map(c => `#${c.id} ${fmtDate(c.date)}`).join(", ") : (addDays(S.asof, 1) > D.asof ? "not known yet" : "None logged")}</td></tr>`;
+  }
+  h += `</tbody></table></div><p class="legend">Before 2026 the record is thinner, so early indexes rest on few cases. War phases were named with hindsight; the risk numbers use only what was known on the date. Some stretches are logged as one row (for example the nightly US strikes of Jul 9-25, 2026), so "none logged" is not proof nothing happened.</p>` +
+    `<div class="lensbar"><button class="linkbtn" data-close style="margin-left:auto;background:var(--accent);color:var(--accent-ink);border-color:var(--accent)">Done</button></div>`;
+  $("#timeview").innerHTML = h;
+  const inp = $("#asof-input"); inp.onchange = () => { if(inp.value) setAsof(inp.value); };
+  $("#asof-today").onclick = () => setAsof(null);
+  document.querySelectorAll("[data-asof]").forEach(b => b.onclick = () => setAsof(b.dataset.asof));
+}
 function renderExplore(){
   const o = D.options.find(x => x.key === S.sel) || D.options[0], st = stats(o), cs = activeCases(o), ix = riskIndex(o, cs);
   let h = '<div class="main"><div class="list" role="group" aria-label="Options">';
@@ -843,24 +919,29 @@ function renderCompare(){
 }
 function renderView(){ S.mode === "explore" ? renderExplore() : renderCompare(); }
 function renderToolbar(){
-  const pts = D.intensity.pts, b = bandOf(pts), peak = D.intensity.peak;
+  const ai = asofIndex(), pts = D.series[ai][1], b = bandOf(pts), peak = D.intensity.peak, phNow = (D.phases.find(p => D.series[ai][0] >= p.start && D.series[ai][0] <= p.end) || {}).name || D.phase;
   const lo = D.intensity.bands[b][0], hi = b < 3 ? D.intensity.bands[b+1][0] : peak;
   const left = (b + (b === 0 ? .5 : Math.min(.95, Math.max(.05, (pts - lo) / Math.max(1, hi - lo))))) / 4 * 100;
   const sel = S.phase || S.band, total = D.options.reduce((a,o) => a + o.cases.length, 0), shown = D.options.reduce((a,o) => a + activeCases(o).length, 0);
   $("#toolbar").innerHTML =
     `<button class="tb" data-open="m-int"><span class="tl">War intensity</span><span class="go">Open timeline ›</span>` +
-    `<span class="tv"><span class="pill" style="background:var(--b${b});color:var(--ink);border-color:var(--line)">${BAND_NAMES[b]}</span><span class="mono">${pts} pts · ${esc(D.phase)}</span></span>` +
+    `<span class="tv"><span class="pill" style="background:var(--b${b});color:var(--ink);border-color:var(--line)">${BAND_NAMES[b]}</span><span class="mono">${pts} pts · ${esc(phNow)}</span></span>` +
     `<span class="mini" aria-hidden="true">${BAND_NAMES.map((n,i) => `<i style="background:var(--b${i})"></i>`).join("")}<u style="left:${left}%"></u></span></button>` +
     `<div class="tbwrap"><button class="tb" data-open="m-lens" style="width:100%"><span class="tl">Which past cases count</span><span class="go">${sel ? "Change ›" : "Explore conditions ›"}</span>` +
     `<span class="tv">${sel ? esc(sel) : "All past cases"} <span class="mono">${shown} of ${total}</span></span>` +
     `<span class="sub">${sel ? "Every number below uses only cases from this condition." : "See how much each war phase and intensity level mattered."}</span></button>` +
-    (sel ? `<button class="tbclear" id="tb-clear" aria-label="Clear condition">Clear ×</button>` : "") + `</div>`;
+    (sel ? `<button class="tbclear" id="tb-clear" aria-label="Clear condition">Clear ×</button>` : "") + `</div>` +
+    `<div class="tbwrap"><button class="tb" data-open="m-time" style="width:100%"><span class="tl">Viewing</span><span class="go">${S.asof ? "Change date ›" : "Look back ›"}</span>` +
+    `<span class="tv">${S.asof ? "As of " + fmtDate(S.asof, true) : "Today"} <span class="mono">${S.asof ? "known then only" : "news through " + fmtDate(D.asof)}</span></span>` +
+    `<span class="sub">${S.asof ? "Risk shown as it looked on that date, no hindsight." : "See each option's risk on any past date."}</span></button>` +
+    (S.asof ? `<button class="tbclear" id="tb-today" aria-label="Back to today">Today ×</button>` : "") + `</div>`;
+  const banner = $("#asofbanner"); if(banner){ banner.hidden = !S.asof; if(S.asof) banner.innerHTML = `<b>Viewing ${fmtDate(S.asof, true)}.</b> Every number uses only what was known that day. <button class="linkbtn" id="tb-today2">Back to today</button>`; }
 }
 let lastOpener = null;
 function openModal(id, opener){
   const m = $("#" + id); lastOpener = opener || document.activeElement;
   m.hidden = false; document.body.classList.add("locked");
-  if(id === "m-int") { renderIntensity(); } else { renderLens(); }
+  if(id === "m-int") { renderIntensity(); } else if(id === "m-time") { renderTime(); } else { renderLens(); }
   $(".sheet", m).focus();
 }
 function closeModal(){
@@ -872,9 +953,10 @@ document.addEventListener("click", ev => {
   const ct = ev.target.closest("[data-cat]"); if(ct && ct.dataset.cat){ S.cat = ct.dataset.cat; S.catFilter = "all"; lastOpener = ct; const m = $("#m-cat"); m.hidden = false; document.body.classList.add("locked"); renderCat(); $(".sheet", m).focus(); return; }
   if(ev.target.closest("[data-close]") || ev.target.classList.contains("modal")){ closeModal(); return; }
   if(ev.target.id === "tb-clear"){ S.phase = S.band = null; refresh(); }
+  if(ev.target.id === "tb-today" || ev.target.id === "tb-today2"){ setAsof(null); }
 });
 document.addEventListener("keydown", ev => { if(ev.key === "Escape" && document.querySelector(".modal:not([hidden])")) closeModal(); });
-function refresh(){ renderToolbar(); if(!$("#m-lens").hidden) renderLens(); renderView(); if(!$("#m-int").hidden) drawChart(); }
+function refresh(){ renderToolbar(); if(!$("#m-time").hidden) renderTime(); if(!$("#m-lens").hidden) renderLens(); renderView(); if(!$("#m-int").hidden) drawChart(); }
 function setMode(m){
   S.mode = m;
   $("#tab-explore").setAttribute("aria-pressed", m === "explore"); $("#tab-compare").setAttribute("aria-pressed", m === "compare");
