@@ -79,3 +79,6 @@ Data updates only; no model rules changed.
 
 ## 2026-10-22 - Look back to a past date
 - New "Viewing" button: pick any date since May 2019 (or a preset). Every option's risk index, outcome bars and breakdowns are recomputed using only the cases and outcomes known on that day (outcome windows still open then are left out). Shows each option's risk over time and the logged US moves of each kind in the following 14 days. Weekly availability statuses are now archived in history.json so past weeks can show them.
+
+## 2026-10-22 - Availability changes with the date
+- Added `napor/napor_context.py`: ceasefires and the no-strike pledge, each bounded by logged events. On past dates each option is "In use" (US did it in the 14 days before), "Constrained" (a ceasefire or pledge in force ruled it out, including when it began after the last use) or "Open". Hold shows "Current course" when no US strike, sanctions or naval move is logged in the 14 days before. Only the US's own moves count (not Israel alone). The weekly hand-written status still applies to its own week.

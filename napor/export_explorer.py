@@ -103,13 +103,15 @@ def build():
         o["uses"] = []
     byk = {o["key"]: o for o in out["options"]}
     for e in sorted(data.events, key=lambda e: e[1]):
-        if not O.us_side(e[0]) or not O._usable(e):
+        if not e[2].lower().startswith("us") or not O._usable(e):   # the US itself (not Israel alone)
             continue
         ks = kind_of(e)
         for k in ks:
             byk[k]["uses"].append(dict(id=e[0], date=e[1].isoformat(), title=e[5], unsorted=len(ks) > 1))
     for o in out["options"]:
         o["last_used"] = max([c["date"] for c in o["cases"]] + [u["date"] for u in o["uses"]], default=None)
+    import napor_context
+    out["context"] = napor_context.export()
     out["history"] = update_history(out)
     return out
 
