@@ -6,19 +6,19 @@
   "events": 85,
   "options": {
    "A": {
-    "n": 78,
-    "index": 0.236,
-    "estimate": null
+    "n": 76,
+    "index": 0.224,
+    "estimate": 0.224
    },
    "B": {
     "n": 4,
     "index": 0.3,
-    "estimate": null
+    "estimate": 0.273
    },
    "C": {
     "n": 7,
     "index": 0.2,
-    "estimate": null
+    "estimate": 0.204
    },
    "D": {
     "n": 0,
@@ -28,12 +28,12 @@
    "E": {
     "n": 2,
     "index": 0.2,
-    "estimate": null
+    "estimate": 0.219
    },
    "F": {
     "n": 3,
     "index": 0.667,
-    "estimate": null
+    "estimate": 0.496
    },
    "G": {
     "n": 0,
@@ -43,7 +43,7 @@
    "H": {
     "n": 2,
     "index": 0.1,
-    "estimate": null
+    "estimate": 0.16
    }
   },
   "status": {

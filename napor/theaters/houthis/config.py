@@ -20,7 +20,7 @@ THEATER = dict(
     adversary="the Houthis", actor="the Houthis or another Iran-backed group", actor_short="Houthis or proxy",
     proxy_note="Iran arms the Houthis, so seizures of Iranian arms bound for them are option E. A reply by another Iran-backed group would be labelled \"proxy\"; none is logged here.",
     salvo=None,
-    hold_note="Hold cases are weeks, from Nov 20, 2023 on, with no logged US sanctions, naval, strike or posture move. Weeks inside the long stretches of fighting (Jan 12, 2024 - Jan 19, 2025 and Mar 15 - May 6, 2025) are left out, because US activity there was continuous. Most hold weeks have few or no logged events, so they show what the log records in quiet weeks; the 2025-2026 stretch is logged much more thinly than 2024.",
+    hold_note="Hold cases are weeks, from Nov 20, 2023 on, with no logged US sanctions, naval, strike or posture move. Weeks inside the long stretches of fighting (Jan 12, 2024 - Jan 19, 2025 and Mar 15 - May 6, 2025) are left out, because US activity there was continuous. Most hold weeks fall in 2025-2026 and most have no logged event at all. The log for 2025-2026 records only major events, so a week where \"nothing happened\" may only be a week where nothing was logged. Read option A as a rough sketch, and do not compare it number-for-number with options that rest on a few well-reported cases.",
     not_measured="Oil and freight prices, ship insurance costs, harm to ordinary Yemenis and strain with Saudi Arabia are not measured.",
     presets=[["2016-10-13", "First US strikes (radar sites)"], ["2023-11-19", "Galaxy Leader seized"], ["2024-01-12", "First US-UK strikes"],
              ["2025-03-15", "Operation Rough Rider"], ["2025-05-06", "US-Houthi ceasefire"], ["2026-10-10", "Riyadh airport attack"]],
@@ -82,6 +82,16 @@ def adversary_side(actor):
 
 
 ATTACK_KINDS = ("Kinetic", "Maritime")                  # a hostile act by the other side: a strike, or an attack/seizure at sea
+# Houthi missile/drone strikes on commercial ships that the action-type words file as "Kinetic" (no "shipping" in the
+# type). They count as attacks on shipping for the economic measure and stay "Kinetic" for the military measure.
+# Attacks aimed only at US warships (#1001, #1002, #1004, #1022, #1308) are not attacks on shipping.
+SHIP_ATTACK_EXTRA = {
+    1013,   # ballistic missile at USS Mason and the tanker Central Park (CENTCOM)
+    1017,   # Maersk Hangzhou hit (USNI)
+    1019,   # 21 drones and missiles fired toward Red Sea shipping lanes (USNI)
+    1023,   # US-owned Gibraltar Eagle hit (CENTCOM)
+    1029,   # tanker Marlin Luanda hit (CENTCOM)
+}
 
 # The log's action-type words put a few rows in the wrong kind. Fixed by event ID, with the reason.
 KIND_OVERRIDE = {
@@ -94,7 +104,10 @@ KIND_OVERRIDE = {
 # ---- hold weeks (option A) -------------------------------------------------------------------------------
 HOLD_START = d(2023, 11, 20)                             # first Monday after the Galaxy Leader seizure (Nov 19, 2023)
 MIN_HOLD_WEEKS = 3                                       # fewer than this: option A shows "too few cases", no weeks are invented
-UNCERTAIN = {}                                           # Monday ISO date -> reason (an allowed outlet reports a US move missing from the log)
+UNCERTAIN = {                                            # Monday ISO date -> reason (an allowed outlet reports a US move missing from the log)
+    "2023-11-20": "USS Mason and coalition ships answered the Central Park distress call and detained the hijackers on Nov 26 (CENTCOM, cited for #1013); a US naval-defense move that is not logged as its own row.",
+    "2023-11-27": "USS Carney shot down three Houthi drones on Dec 3 while defending commercial ships (USNI, cited for #1014); a US naval-defense move that is not logged as its own row.",
+}
 # Set by hand from the logged damage text of every hostile act in the 7 days after the Monday (see hold_hurt_candidates()).
 # monday: (anyone hurt?, evidence event IDs, note)
 # A hold week with no Houthi attack logged in the 7 days after needs no entry: it is set to (False, [], "No hostile act logged.") automatically.

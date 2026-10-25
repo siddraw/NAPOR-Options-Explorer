@@ -88,7 +88,7 @@ def recount(weighting=None, asof=None):
     def win(day, a, b, test):
         return [e for e in known if day + a * DAY <= e[1] <= day + b * DAY and test(e[0])]
     attack = lambda i: hou(i) and kind(i) in ("Kinetic", "Maritime")
-    ship = lambda i: hou(i) and kind(i) == "Maritime"
+    ship = lambda i: hou(i) and (kind(i) == "Maritime" or i in C.SHIP_ATTACK_EXTRA)
     talk = lambda i: kind(i) == "Diplomatic"
     done = lambda day, n: day + n * DAY <= T
     strike7 = lambda day: True if win(day, 1, 7, attack) else (False if done(day, 7) else None)

@@ -99,7 +99,7 @@ def _attack(e):
 
 def _ship(e):
     """An attack on shipping by the Houthis (Houthi actors only)."""
-    return usable(e) and C.adversary_side(e[2]) and KIND[e[0]] == "Maritime"
+    return usable(e) and C.adversary_side(e[2]) and (KIND[e[0]] == "Maritime" or e[0] in C.SHIP_ATTACK_EXTRA)
 
 
 def _talks(e):
