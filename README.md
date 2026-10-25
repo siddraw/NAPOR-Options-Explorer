@@ -7,7 +7,7 @@ cause-and-reply chains, war phases, a forecast log and a decision log.
 in the Iran–US war, and the risks and pros of each one.
 **It does not pick an option.** That is the decision-maker's job.
 
-Scope: the 2026 Iran–US war only, until the method is proven.
+Scope: four theaters: the 2026 Iran–US war, the Houthis / Red Sea, North Korea, and China / Taiwan. Iran is the main one.
 
 ## How it works
 
@@ -28,7 +28,7 @@ Scope: the 2026 Iran–US war only, until the method is proven.
 7. **Backtest** – replays the past without peeking ahead (`backtest.py`).
 
 Options Explorer (interactive page): `explorer/index.html` loads `explorer/theaters.json` (one tab per
-conflict; only Iran today) and the theater's data file `explorer/data/iran.json` (fallback: `explorer/data.json`),
+conflict; four today) and the theater's data file `explorer/data/iran.json` (fallback: `explorer/data.json`),
 which `napor/export_explorer.py` regenerates every week. Percentages come with 95% (Wilson) ranges; each corner
 is shown as a NAPOR estimate (the x of n pulled toward the all-options rate, chosen by `napor/backtest_risk.py`)
 with the raw x of n beside it. Option A (Hold) uses hold weeks (`napor/hold_weeks.py`). The Report card view
@@ -38,7 +38,19 @@ Weekly check, one command: `cd napor && python3 weekly_build.py` (PASS/FAIL chec
 
 Build the workbook: `cd napor && python3 build.py` → `NAPOR_iran_war.xlsx`.
 
+## Theaters
+
+- **Iran** (2019 on, mostly the 2026 war): the main tab, with forecasts and a decision log.
+- **Houthis / Red Sea**: US moves and Houthi replies. Caveat: 2024 was continuous fighting, so few cases count, and the 2025–26 log is thin.
+- **North Korea**: US/South Korea moves and DPRK launches. Caveat: the launch log is a sample; economic harm is not measured.
+- **China / Taiwan**: Taiwan Strait and South China Sea. Caveat: small n; Option A has no cases.
+
+Each non-Iran theater is a package in `napor/theaters/<id>/`; data goes to `explorer/data/<id>.json`.
+
 ## Known limits
+
+The limits below are for Iran unless a theater is named.
+
 
 - Small samples: options rest on 3–16 past cases (2019 onward; pre-war record in `napor/prewar.py`).
 - Hold weeks (option A) are mostly quiet weeks with few logged events; they show what the log records, and an unlogged event would change them.
