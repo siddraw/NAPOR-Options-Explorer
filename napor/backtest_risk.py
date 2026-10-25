@@ -10,7 +10,9 @@ Methods compared:
   shrunk   - (k + m * p_pool) / (n + m): the option's rate pulled toward the pooled rate, m = 2 (also 1, 4)
   pooled   - the same category's rate across ALL options known at the time (ignores option type)
   half     - always 50%
-A prediction is skipped when the option had no closed past case for that category yet ("no history").
+  w_<name> - recency weights (see napor_cases.CANDIDATES): the same shrunk estimate (m=2) but every past
+             case counts w = weight(T - case date), T = the date being predicted. w_none equals shrunk2.
+Rows dated on/after 2026-01-01 are also scored on their own ("2026-only"). A prediction is skipped when the option had no closed past case for that category yet ("no history").
 
 Also: calibration bins, a learning curve (Brier by period), an out-of-sample split (fit on 2019-2025,
 score 2026) and a robustness table for the escalation rate under rule variants.
@@ -46,8 +48,10 @@ def rows_from_cases(cases_by_key):
 
 def predict(train, r, ms=MS):
     """Forecasts for row r from the training rows (all must have closed before r's date)."""
-    same = [t["y"] for t in train if t["opt"] == r["opt"] and t["cat"] == r["cat"]]
-    pool = [t["y"] for t in train if t["cat"] == r["cat"]]
+    same_rows = [t for t in train if t["opt"] == r["opt"] and t["cat"] == r["cat"]]
+    pool_rows = [t for t in train if t["cat"] == r["cat"]]
+    same = [t["y"] for t in same_rows]
+    pool = [t["y"] for t in pool_rows]
     if not same or not pool:
         return None
     k, n = sum(same), len(same)
@@ -55,6 +59,13 @@ def predict(train, r, ms=MS):
     out = dict(raw=k / n, pooled=pp, half=0.5, n=n, k=k, p_pool=pp)
     for m in ms:
         out[f"shrunk{m}"] = (k + m * pp) / (n + m)
+    T = r["date"]
+    for name, (scheme, param) in NC.CANDIDATES.items():
+        ws = [NC.case_weight(scheme, param, T, t["date"]) for t in same_rows]
+        wp = [NC.case_weight(scheme, param, T, t["date"]) for t in pool_rows]
+        swy = sum(w * t["y"] for w, t in zip(ws, same_rows))
+        ppw = sum(w * t["y"] for w, t in zip(wp, pool_rows)) / sum(wp)
+        out["w_" + name] = (swy + M_MAIN * ppw) / (sum(ws) + M_MAIN)
     return out
 
 
@@ -71,6 +82,9 @@ def walk_forward(rows):
 
 
 METHODS = ["raw", "shrunk1", "shrunk2", "shrunk4", "pooled", "half"]
+WMETHODS = ["w_" + c for c in NC.CANDIDATES]
+ALLM = METHODS + WMETHODS
+Y2026 = dt.date(2026, 1, 1)
 
 
 def brier(ps, m):
@@ -78,10 +92,10 @@ def brier(ps, m):
 
 
 def table(ps):
-    out = {"overall": {m: brier(ps, m) for m in METHODS} | {"n": len(ps)}}
+    out = {"overall": {m: brier(ps, m) for m in ALLM} | {"n": len(ps)}}
     for cat in CATS:
         sub = [p for p in ps if p["cat"] == cat]
-        out[cat] = {m: brier(sub, m) for m in METHODS} | {"n": len(sub)}
+        out[cat] = {m: brier(sub, m) for m in ALLM} | {"n": len(sub)}
     return out
 
 
@@ -164,15 +178,92 @@ def decide(tab):
                 rule="Show the shrunk value if it beats raw by at least 0.005 overall and is not worse by more than 0.01 in any category.")
 
 
+def decide_weighting(tab):
+    """Adopt the recency weight with the lowest overall Brier only if it beats w_none by >= 0.003 overall AND is not
+    worse than w_none by more than 0.01 in any category; otherwise keep none. Ties go to the milder weight."""
+    ov = {c: tab["overall"]["w_" + c] for c in NC.CANDIDATES}
+    best = min(NC.CANDIDATES, key=lambda c: (ov[c], NC.MILDNESS.index(c)))
+    gain = round(ov["none"] - ov[best], 4)
+    worse = {cat: round(tab[cat]["w_" + best] - tab[cat]["w_none"], 4) for cat in CATS
+             if tab[cat]["n"] and tab[cat]["w_" + best] is not None}
+    adopt = best != "none" and gain >= 0.003 - 1e-9 and all(v <= 0.01 + 1e-9 for v in worse.values())
+    name = best if adopt else "none"
+    scheme, param = NC.CANDIDATES[name]
+    return dict(scheme=scheme, param=param, name=name, adopt=adopt, best_candidate=best, gain=gain, worse_by_cat=worse,
+                rule="Adopt the recency weight with the lowest overall Brier only if it beats no weighting by at least 0.003 overall "
+                     "and is not worse by more than 0.01 in any category; otherwise keep no recency weighting.")
+
+
+def weighting_report(ps, tab, dec):
+    t26 = table([p for p in ps if p["date"] >= Y2026])
+    cands = []
+    for name, (scheme, param) in NC.CANDIDATES.items():
+        m = "w_" + name
+        cands.append(dict(name=name, scheme=scheme, param=param, overall=tab["overall"][m], y2026=t26["overall"][m],
+                          by_cat={c: tab[c][m] for c in CATS}, by_cat_2026={c: t26[c][m] for c in CATS}))
+    return dict(candidates=cands, n=tab["overall"]["n"], n_2026=t26["overall"]["n"], decision=dec), t26
+
+
+# ---- Stage 2: proposal for the political corner (NOT live; the page rule is unchanged) ----
+CONC = ("proposal", "talks", "ceasefire announcement", "ceasefire (", "ceasefire statement")   # same words as the "B" move in the export
+
+
+def political_rows(cases_by_key, window, words=None):
+    """Political-corner rows under an alternative rule: risk = no matching event within `window` days after the case.
+    words=None: any Diplomatic event (the live rule). Otherwise only talks/proposal/ceasefire/deal events (CONC words)."""
+    last = NC.LAST
+    match = lambda e: O._talks(e) and (words is None or any(w in e[3].lower() for w in words))
+    evs = [e[1] for e in data.events if match(e)]
+    rows = []
+    for k, cases in cases_by_key.items():
+        for c in cases:
+            d = dt.date.fromisoformat(c["date"])
+            found = any(d + dt.timedelta(days=1) <= x <= d + dt.timedelta(days=window) for x in evs)
+            if found or (last - d).days >= window:
+                rows.append(dict(date=d, closes=d + dt.timedelta(days=window), opt=k, cat="political", y=0 if found else 1, id=c["id"]))
+    rows.sort(key=lambda r: (r["date"], r["opt"], str(r["id"]), r["cat"]))
+    return rows
+
+
+def political_proposal(cases_by_key, tab, dec):
+    est = "w_" + dec["name"]                                 # the estimate the page shows (shrunk2 when no weighting)
+    others = [c for c in CATS if c != "political"]
+    cur = tab["political"][est]
+    base_all = sum(tab[c][est] for c in CATS) / len(CATS)
+    out = []
+    for label, window, words in (("Current rule: no Diplomatic event (any side, incl. statements) within 14 days", 14, None),
+                                 ("P1: no talks/proposal/ceasefire/deal event within 30 days", 30, CONC),
+                                 ("P2: no talks/proposal/ceasefire/deal event within 14 days", 14, CONC)):
+        rows = political_rows(cases_by_key, window, words)
+        ps, skipped = walk_forward(rows)
+        t = {m: brier(ps, m) for m in ("raw", "shrunk2", est, "pooled", "half")}
+        t26 = [p for p in ps if p["date"] >= Y2026]
+        out.append(dict(label=label, window=window, rows=len(rows), predictions=len(ps), risk_cases=sum(r["y"] for r in rows),
+                        brier=t, est=t[est], est_2026=brier(t26, est), n_2026=len(t26),
+                        vs_current=round(t[est] - cur, 4), vs_coin=round(t[est] - 0.25, 4),
+                        index_brier=round((sum(tab[c][est] for c in others) + t[est]) / 5, 4)))
+    p3 = dict(label="P3: political left out of the index (average of the other four corners)",
+              est=None, index_brier=round(sum(tab[c][est] for c in others) / 4, 4))
+    p3["vs_current"] = round(p3["index_brier"] - round(base_all, 4), 4)
+    p3["vs_coin"] = round(p3["index_brier"] - 0.25, 4)
+    return dict(method=est, note="Brier of the estimate the page shows, same walk-forward (only rows closed before each date). "
+                "Index-level Brier = average of the five (or four) category Brier scores. These are different outcome definitions, "
+                "so a lower Brier means the new rule is easier to predict, not that it is a better measure.",
+                current_index_brier=round(base_all, 4), rules=out, p3=p3)
+
+
 def run(cases_by_key):
     rows = rows_from_cases(cases_by_key)
     ps, skipped = walk_forward(rows)
     tab = table(ps)
     oos, _ = out_of_sample(rows)
+    dec_w = decide_weighting(tab)
+    wrep, t26 = weighting_report(ps, tab, dec_w)
     return dict(
         generated=dt.date.today().isoformat(), rows=len(rows), predictions=len(ps), skipped_no_history=skipped,
-        brier=tab, calibration=dict(raw=calibration(ps, "raw"), shrunk2=calibration(ps, "shrunk2")),
-        learning=learning_curve(ps), out_of_sample=oos, robustness=robustness(), decision=decide(tab))
+        brier=tab, brier_2026=t26, calibration=dict(raw=calibration(ps, "raw"), shrunk2=calibration(ps, "shrunk2")),
+        learning=learning_curve(ps), out_of_sample=oos, robustness=robustness(), decision=decide(tab),
+        weighting=wrep, political_proposal=political_proposal(cases_by_key, tab, dec_w))
 
 
 def all_cases():
@@ -189,8 +280,8 @@ def no_hindsight_check(cases_by_key):
     again, _ = walk_forward(sorted(rows + extra, key=lambda r: (r["date"], r["opt"], str(r["id"]), r["cat"])))
     again = [p for p in again if p["id"] != "FAKE"]
     key = lambda p: (p["date"], p["opt"], str(p["id"]), p["cat"])
-    a = {key(p): tuple(p[m] for m in METHODS) for p in base}
-    b = {key(p): tuple(p[m] for m in METHODS) for p in again}
+    a = {key(p): tuple(p[m] for m in ALLM) for p in base}
+    b = {key(p): tuple(p[m] for m in ALLM) for p in again}
     return a == b, len(a)
 
 
@@ -208,6 +299,20 @@ if __name__ == "__main__":
     d = res["decision"]
     print(f"\nDecision (m={d['m']}): shrinkage gain {d['gain']:+.4f}; worse by category {d['worse_by_cat']} -> "
           f"{'ADOPT shrunk value as NAPOR estimate' if d['adopt'] else 'KEEP raw x of n'}")
+    w = res["weighting"]
+    print(f"\nRecency weights (Brier of the NAPOR estimate; {w['n']} predictions, {w['n_2026']} dated 2026 or later)")
+    print("  " + "candidate".ljust(8) + "overall".rjust(9) + "2026-only".rjust(11) + "".join(c.rjust(11) for c in CATS))
+    for c in w["candidates"]:
+        print("  " + c["name"].ljust(8) + f"{c['overall']:.4f}".rjust(9) + f"{c['y2026']:.4f}".rjust(11) + "".join(f"{c['by_cat'][k]:.4f}".rjust(11) for k in CATS))
+    dw = w["decision"]
+    print(f"Weighting decision: best by overall Brier = {dw['best_candidate']}; gain over no weighting {dw['gain']:+.4f}; worse by category {dw['worse_by_cat']} -> " +
+          (f"ADOPT recency weight {dw['name']}" if dw["adopt"] else "KEEP no recency weighting"))
+    pp = res["political_proposal"]
+    print(f"\nPolitical-corner proposal (NOT live; Brier of '{pp['method']}'; 0.25 = coin flip)")
+    for r in pp["rules"]:
+        print(f"  {r['label']}: {r['predictions']} predictions, risk in {r['risk_cases']} of {r['rows']} cases; Brier {r['est']:.4f} "
+              f"(vs current {r['vs_current']:+.4f}, vs 0.25 {r['vs_coin']:+.4f}); 2026-only {r['est_2026']:.4f}; index-level {r['index_brier']:.4f} (current {pp['current_index_brier']:.4f})")
+    print(f"  {pp['p3']['label']}: index-level Brier {pp['p3']['index_brier']:.4f} (vs current {pp['p3']['vs_current']:+.4f}, vs 0.25 {pp['p3']['vs_coin']:+.4f})")
     print("\nCalibration (raw): " + "; ".join(f"{b['lo']:.1f}-{b['hi']:.1f}: said {b['predicted']:.0%}, happened {b['observed']:.0%} (n={b['n']})" for b in res["calibration"]["raw"]))
     print("Calibration (shrunk m=2): " + "; ".join(f"{b['lo']:.1f}-{b['hi']:.1f}: said {b['predicted']:.0%}, happened {b['observed']:.0%} (n={b['n']})" for b in res["calibration"]["shrunk2"]))
     print("\nLearning curve: " + "; ".join(f"{l['period']} raw {l['raw']:.3f} / shrunk {l['shrunk2']:.3f} / pooled {l['pooled']:.3f} (n={l['n']})" for l in res["learning"]))
