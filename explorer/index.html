@@ -303,6 +303,7 @@ details.cases[open] summary{margin-bottom:10px}
 .theaters a[aria-current="page"]{background:var(--panel);color:var(--ink);border-color:var(--line);margin-bottom:-1px}
 .theaters a .st{font-weight:400;font-size:11px;color:var(--muted);margin-left:6px}
 .headbtns{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.smalln{background:var(--b1);border:1px solid var(--b2);border-radius:8px;padding:8px 12px;font-size:13.5px;margin-bottom:12px}
 .stale{background:var(--b1);border:1px solid var(--b2);border-radius:8px;padding:8px 12px;font-size:13.5px}
 .src{font-size:11.5px;color:var(--muted);margin-left:4px;white-space:normal}
 .src a{color:var(--accent);text-decoration:none}
@@ -363,7 +364,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
   <footer id="footer">
     <p>Percentages are x of n past cases in the NAPOR log, with the 95% range the true rate could plausibly sit in. Small samples give wide ranges, so read each number as a hint. "After" is not "because of".</p>
     <p>The risk index summarizes how past cases of that kind went. It is not a forecast and not a recommendation, and the options are not ranked. See "How this works".</p>
-    <p>War intensity counts logged hostile events in the 14 days before each date (2 points per direct strike, 1 per shipping attack or blockade move, +2 if someone died). Big campaigns are logged as a few rows, so hot weeks are understated.</p>
+    <p id="intnote">War intensity counts logged hostile events in the 14 days before each date (2 points per direct strike, 1 per shipping attack or blockade move, +2 if someone died). Big campaigns are logged as a few rows, so hot weeks are understated.</p>
     <p>The weekly NAPOR agent regenerates the data every Monday. "Right now" notes are the agent's reading of the news, not data.</p>
   </footer>
 </div>
@@ -399,11 +400,11 @@ function asofCase(c){
   if(c.date > Dt) return null;
   const k = Dt + "|" + c.id + "|" + c.date; if(MASK.key !== Dt){ MASK = {key:Dt, map:new Map()}; } if(MASK.map.has(k)) return MASK.map.get(k);
   const known = e => e.date <= Dt, reps = c.replies.filter(known), done = n => addDays(c.date, n) <= Dt;
-  const m = {...c, replies: reps, strike_ev: c.strike_ev.filter(known), talk_ev: c.talk_ev.filter(known), ship_a_ev: done(7) ? c.ship_a_ev : []};
-  m.replied = c.replied === null ? null : done(5) ? c.replied : (reps.length ? true : null);
+  const m = {...c, replies: reps, strike_ev: c.strike_ev.filter(known), talk_ev: c.talk_ev.filter(known), ship_a_ev: done(EDAYS()) ? c.ship_a_ev : []};
+  m.replied = c.replied === null ? null : done(RD()) ? c.replied : (reps.length ? true : null);
   m.strike7 = c.strike7 === null ? (m.strike_ev.length ? true : null) : done(7) ? c.strike7 : (m.strike_ev.length ? true : null);
   m.talks14 = m.talk_ev.length ? true : (done(14) && c.talks14 !== null ? false : null);
-  m.ship_a = done(7) ? c.ship_a : null;
+  m.ship_a = done(EDAYS()) ? c.ship_a : null;
   if(isWeek(c)){ m.mil7 = done(7) ? c.mil7 : (m.strike_ev.length ? true : null); m.hurt7 = done(7) ? c.hurt7 : null; }
   MASK.map.set(k, m); return m;
 }
@@ -426,6 +427,13 @@ function rate(cs, base, flag){ // k of n as shown (unweighted) plus sw = sum of 
 }
 /* Theater wording (set from the data file, so a future theater renders with its own words) */
 let TH = {actor:"the adversary or a proxy", actor_short:"adversary or proxy", adversary:"the adversary", proxy_note:"", salvo:null, presets:[]};
+/* Per-theater words and rules from the data file (theater.reply_days, .act, .econ, .base, .intensity, .cats, .small_n). A theater that sets none of them gets the Iran / Houthi words. */
+const RD = () => TH.reply_days || 5;                                              // days a reply is looked for
+const ECONM = () => TH.econ || {mode:"ships", days:7};                            // economic corner: ships (attacks on shipping), events (counter-measures within N days) or none (not measured)
+const EDAYS = () => ECONM().days || 7;
+const ACT = () => Object.assign({verb:"struck within 7 days", row:"strikes within 7 days", col:"Strike ≤7d", none:"No strike"}, TH.act || {});
+const BASEN = () => (TH.base && TH.base.noun) || "attacks on shipping";
+const INTN = () => (TH.intensity && TH.intensity.name) || "War intensity";
 const isWeek = c => !!c.week;
 const caseRef = c => isWeek(c) ? "Week" : "#" + c.id;
 function catScores(o, cs){
@@ -434,7 +442,7 @@ function catScores(o, cs){
   sc.escalation = o.trigger ? rate(cs, c => c.replied !== null, c => c.replied === true) : rate(cs, c => c.strike7 !== null, c => c.strike7 === true);
   sc.military = o.military === "reply" ? rate(cs, c => c.replied !== null, c => c.replies.some(r => r.kinetic))
               : o.military === "strike" ? rate(cs, c => c.strike7 !== null, c => c.mil7 === true) : {k:0, n:0, assumed:true};
-  sc.economic = rate(cs, c => c.ship_a !== null, c => c.ship_a > c.ship_b);
+  sc.economic = ECONM().mode === "none" ? {k:0, n:0, sw:0, swy:0, nm:true} : rate(cs, c => c.ship_a !== null, c => c.ship_a > c.ship_b);   // nm = not measured for this theater
   sc.political = rate(cs, c => c.talks14 !== null, c => c.talks14 === false);
   return sc;
 }
@@ -498,10 +506,10 @@ function stats(o){
 }
 let METRICS = {};
 function setMetrics(){ METRICS = {
-  reply: {name:`${TH.actor_cap} replied within ~5 days`, unit:"past cases", trig:true},
+  reply: {name:`${TH.actor_cap} replied within ~${RD()} days`, unit:"past cases", trig:true},
   fast: {name:"Reply came within 2 days", unit:"replies logged", trig:true},
   hurt: {name:"Reply hurt people", unit:"replies logged", trig:true},
-  strike7: {name:`${TH.actor_cap} struck within 7 days`, unit:"past cases, timing only"},
+  strike7: {name:`${TH.actor_cap} ${ACT().verb}`, unit:"past cases, timing only"},
   talks14: {name:"Talks or diplomatic moves within 14 days", unit:"past cases"},
   civ: {name:"Civilian harm reported in the US act itself", unit:"past cases"}
 }; }
@@ -571,12 +579,12 @@ function renderIntensity(){
   const below = D.series.filter(s => s[1] < pts).length / D.series.length;
   const ph = D.phases.find(p => dt >= p.start && dt <= p.end), evs = windowEvents(idx), o0 = D.options.find(q => q.key === S.sel) || D.options[0];
   $("#intensity").innerHTML =
-    `<h2 style="padding-right:44px">War intensity</h2><div class="gauge-row"><div class="read"><div class="big mono">${pts} <small>points · ${isNow ? "now" : "as of " + fmtDate(dt)}</small></div>` +
+    `<h2 style="padding-right:44px">${esc(INTN())}</h2><div class="gauge-row"><div class="read"><div class="big mono">${pts} <small>points · ${isNow ? "now" : "as of " + fmtDate(dt)}</small></div>` +
     `<span class="bandname" style="background:var(--b${b})">${BAND_NAMES[b]}</span>` +
     `<p class="facts">Hotter than ${Math.round(below*100)}% of days since the record starts (${fmtDate(D.series[0][0], true)}; peak ${peak}). Phase: ${esc(ph ? ph.name : "–")}.${isNow ? "" : ' <button class="linkbtn" id="nowbtn">Back to now</button>'}</p></div>` +
     `<div class="scale" aria-label="Intensity scale"><div class="needle" style="left:${left}%"></div><div class="segs">${BAND_NAMES.map((n,i) => `<div style="background:var(--b${i})">${n}</div>`).join("")}</div><div class="ticks">${D.intensity.bands.map(([l]) => `<span>${l}${l === 12 ? "+" : ""} pts</span>`).join("")}</div></div></div>` +
     `<div class="chartbox" id="chartbox"></div>` +
-    `<div class="chartfoot"><span>Scroll sideways for earlier years. Hover or use ← → to read a day; click to pin it.</span><span class="lg"><i class="dot"></i> ${esc(TH.actor_short)} ${o0.trigger ? "replied" : "struck within 7 days"}</span><span class="lg"><i class="dot no"></i> ${o0.trigger ? "no reply" : "no strike"}</span><span class="lg"><i class="dot open"></i> not yet known</span></div>` +
+    `<div class="chartfoot"><span>Scroll sideways for earlier years. Hover or use ← → to read a day; click to pin it.</span><span class="lg"><i class="dot"></i> ${esc(TH.actor_short)} ${o0.trigger ? "replied" : esc(ACT().verb)}</span><span class="lg"><i class="dot no"></i> ${o0.trigger ? "no reply" : esc(ACT().none.toLowerCase())}</span><span class="lg"><i class="dot open"></i> not yet known</span></div>` +
     `<div class="evlist"><h2>What counted in the 14 days up to ${fmtDate(dt)}</h2>` +
     (evs.length ? '<ul>' + evs.map(e => `<li><span class="mono">${fmtDate(e.date)}</span><span class="pts">+${e.pts}</span><span>${esc(e.title.length > 120 ? e.title.slice(0,117) + "…" : e.title)}</span></li>`).join('') + '</ul>' : '<p class="nodata">No hostile events logged in this window.</p>') + '</div>';
   const nb = $("#nowbtn"); if(nb) nb.onclick = () => { S.pin = null; renderIntensity(); };
@@ -640,8 +648,8 @@ function drawChart(){
     hover = i; paint();
     const r = D.series[i], b = bandOf(r[1]), ph = D.phases.find(p => r[0] >= p.start && r[0] <= p.end), c = caseNear(px);
     let h = `<b>${fmtDate(r[0], true)}</b><br>${r[1]} points · ${BAND_NAMES[b]}<br>${esc(ph ? ph.name : "")}`;
-    if(c){ const v = o.trigger ? c.replied : c.strike7, verb = o.trigger ? "replied" : "struck within 7 days";
-      h += `<br><br>${caseRef(c)} ${esc(c.title.slice(0, 90))}${c.title.length > 90 ? "…" : ""}<br>${v === true ? esc(TH.actor_short) + " " + verb : v === false ? (o.trigger ? "No reply" : "No strike within 7 days") : "Not yet known"}`; }
+    if(c){ const v = o.trigger ? c.replied : c.strike7, verb = o.trigger ? "replied" : ACT().verb;
+      h += `<br><br>${caseRef(c)} ${esc(c.title.slice(0, 90))}${c.title.length > 90 ? "…" : ""}<br>${v === true ? esc(TH.actor_short) + " " + verb : v === false ? (o.trigger ? "No reply" : ACT().none + " within 7 days") : "Not yet known"}`; }
     tip.innerHTML = h; tip.hidden = false;
     const vx = AXW + x(i) - sc.scrollLeft, tw = tip.offsetWidth, bw = box.clientWidth;
     tip.style.left = Math.min(bw - tw - 4, Math.max(4, vx + 12)) + "px"; tip.style.top = (sc.offsetTop + 36) + "px";
@@ -764,7 +772,7 @@ function radarSvg(ix){
     const [x,y] = pt(i, vals[i]), [lx,ly0] = pt(i, 1.1), sn = Math.sin(ang(i)), cs = Math.cos(ang(i));
     const anchor = Math.abs(cs) < .2 ? "middle" : cs > 0 ? "start" : "end";
     const ly = sn < -.9 ? ly0 - 14 : sn > .5 ? ly0 + 8 : ly0 - 2;
-    const val = !p.ok ? "no data" : p.s.assumed ? "0% (assumed)" : Math.round(p.p*100) + "% · " + p.s.k + "/" + p.s.n;
+    const val = !p.ok ? (p.s.nm ? "not measured" : "no data") : p.s.assumed ? "0% (assumed)" : Math.round(p.p*100) + "% · " + p.s.k + "/" + p.s.n;
     const clk = p.ok && !p.s.assumed ? ` data-cat="${p.c}"` : "";
     g += `<g${clk}><title>${CAT_NAME[p.c]}: click to see the cases</title><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6" fill="var(--k${i+1})" stroke="var(--panel)" stroke-width="1.5"/>` +
       `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anchor}" font-size="10.5" font-weight="600" fill="var(--ink)">${SHORT[p.c]}</text>` +
@@ -787,15 +795,15 @@ function weeklyShipping(){
   const last = dd(S.asof || D.asof), mon = d => { const x = new Date(d); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); x.setHours(12,0,0,0); return x; };
   const cur = mon(last), weeks = [];
   for(let i = 9; i >= 0; i--) { const w = new Date(cur); w.setDate(w.getDate() - 7*i); weeks.push(w); }
-  const ev = D.hostile.filter(e => e.kind === "Maritime" && !e.actor.toLowerCase().startsWith("us"));
+  const kinds = (TH.base && TH.base.kinds) || ["Maritime"], ev = D.hostile.filter(e => kinds.includes(e.kind) && !e.actor.toLowerCase().startsWith("us"));
   const counts = weeks.map(w => { const e2 = new Date(w); e2.setDate(e2.getDate() + 6); return ev.filter(e => { const t = dd(e.date); return t >= new Date(w.getTime() - 43200000) && t <= new Date(e2.getTime() + 43200000); }).length; });
   const mx = Math.max(1, ...counts);
-  return `<div class="wk" role="img" aria-label="Logged attacks on shipping per week">` + counts.map((c, i) => `<div><b>${c}</b><i style="height:${Math.max(2, c/mx*80)}px"></i><span>${weeks[i].toLocaleDateString("en-US",{month:"short",day:"numeric"})}</span></div>`).join("") + `</div>`;
+  return `<div class="wk" role="img" aria-label="Logged ${esc(BASEN())} per week">` + counts.map((c, i) => `<div><b>${c}</b><i style="height:${Math.max(2, c/mx*80)}px"></i><span>${weeks[i].toLocaleDateString("en-US",{month:"short",day:"numeric"})}</span></div>`).join("") + `</div>`;
 }
 function outcomesBlock(o, st, ix){
   if(!o.cases.length || o.too_few){
-    let h = `<p class="nodata" style="margin-bottom:10px">${o.cases.length ? "Too few cases: only " + o.cases.length + " past case" + (o.cases.length === 1 ? "" : "s") + " of" : "No past case of"} "${esc(o.name)}" ${o.cases.length ? "are" : "is"} in the log, so there is no measured outcome${o.cases.length ? " worth a percentage (the cases are listed below)" : ""}. What is measured is what happens anyway: attacks on shipping, logged per week (the real count is higher, because big clusters are logged as one row).</p>` + weeklyShipping() +
-      `<p class="legend">Now about ${D.baseline.per_week} logged attacks a week (${D.baseline.n} in ${D.baseline.weeks} weeks) with no new US move.</p>`;
+    let h = `<p class="nodata" style="margin-bottom:10px">${o.cases.length ? "Too few cases: only " + o.cases.length + " past case" + (o.cases.length === 1 ? "" : "s") + " of" : "No past case of"} "${esc(o.name)}" ${o.cases.length ? "are" : "is"} in the log, so there is no measured outcome${o.cases.length ? " worth a percentage (the cases are listed below)" : ""}. What is measured is what happens anyway: ${esc(BASEN())}, logged per week (the real count is higher, because big clusters are logged as one row).</p>` + (o.is_hold && TH.hold_note ? `<p class="note" style="margin-bottom:10px">${esc(TH.hold_note)}</p>` : "") + weeklyShipping() +
+      `<p class="legend">Now about ${D.baseline.per_week} logged ${esc(BASEN())} a week (${D.baseline.n} in ${D.baseline.weeks} weeks) with no new US move.</p>`;
     if(fcs(o).length) h += `<h2 style="margin-top:16px">NAPOR's open forecasts (locked before the outcome)</h2>` + fcs(o).map(f => `<div class="fgauge"><div class="q">${esc(f.question)}<small>${esc(f.id)} · resolves by ${fmtDate(f.deadline)}</small></div><div class="big">${Math.round(f.p*100)}%</div><div class="bar"><i style="width:${f.p*100}%"></i></div></div>`).join("");
     return h;
   }
@@ -803,22 +811,23 @@ function outcomesBlock(o, st, ix){
   const rp = st.reply, pc = (c) => c.n ? c.k / c.n : 0;
   if(o.trigger){
     h += flowRow("US does this", "all past cases = 100%", 1, "100%", st.cases + " cases", "", "var(--open)");
-    h += flowRow(TH.actor_short + " replies within ~5 days", "share of past cases", pc(rp), P(rp.k, rp.n), rp.k + " of " + rp.n + " · " + R(rp.k, rp.n), "", "var(--accent)", rp);
+    h += flowRow(TH.actor_short + " replies within ~" + RD() + " days", "share of past cases", pc(rp), P(rp.k, rp.n), rp.k + " of " + rp.n + " · " + R(rp.k, rp.n), "", "var(--accent)", rp);
     h += flowRow("…within 2 days", "share of those replies", pc(rp) * pc(st.fast), P(st.fast.k, st.fast.n), st.fast.k + " of " + st.fast.n + " replies", "sub", "var(--accent)");
     h += flowRow("…and hurt people", "share of those replies", pc(rp) * pc(st.hurt), P(st.hurt.k, st.hurt.n), st.hurt.k + " of " + st.hurt.n + " replies", "sub", "var(--k2)");
   }
   if(o.is_hold) h += flowRow("US holds (no new move that week)", "all hold weeks = 100%", 1, "100%", st.cases + " weeks", "", "var(--open)");
-  const s7 = st.strike7; h += flowRow(TH.actor_short + " strikes within 7 days", o.is_hold ? "share of hold weeks" : "timing only, not shown to be a reply", pc(s7), P(s7.k, s7.n), s7.k + " of " + s7.n + " · " + R(s7.k, s7.n), "", "var(--k2)", s7);
+  const s7 = st.strike7; h += flowRow(TH.actor_short + " " + ACT().row, o.is_hold ? "share of hold weeks" : "timing only, not shown to be a reply", pc(s7), P(s7.k, s7.n), s7.k + " of " + s7.n + " · " + R(s7.k, s7.n), "", "var(--k2)", s7);
   const tk = st.talks14; h += flowRow("Talks or diplomatic moves follow within 14 days", "share of past cases with a full window or a talk already", pc(tk), P(tk.k, tk.n), tk.k + " of " + tk.n + " · " + R(tk.k, tk.n), "", "var(--k4)", tk);
-  const cs = activeCases(o).filter(c => c.ship_a !== null), up = {k: cs.filter(c => c.ship_a > c.ship_b).length, n: cs.length};
-  h += flowRow("Attacks on shipping rise the next week", "share of past cases", pc(up), P(up.k, up.n), up.k + " of " + up.n + " · " + R(up.k, up.n), "", "var(--k5)", up);
+  const em = ECONM(), cs = activeCases(o).filter(c => c.ship_a !== null), up = {k: cs.filter(c => c.ship_a > c.ship_b).length, n: cs.length};
+  if(em.mode === "none") h += flowRow((em.name || "Economic") + " harm", "no clear measure in the log", 0, "not measured", "", "", "var(--k5)");
+  else h += flowRow(em.mode === "events" ? (em.label || "Counter-measures follow within " + em.days + " days") : "Attacks on shipping rise the next week", "share of past cases", pc(up), P(up.k, up.n), up.k + " of " + up.n + " · " + R(up.k, up.n), "", "var(--k5)", up);
   if(o.is_hold){ const hu = rate(activeCases(o), c => c.strike7 !== null && c.hurt7 !== null, c => c.hurt7 === true); h += flowRow("Someone hurt in a hostile act that week", "share of hold weeks (checked by hand)", pc(hu), P(hu.k, hu.n), hu.k + " of " + hu.n, "", "var(--k2)"); }
   else { const cv = st.civ; h += flowRow("Civilians reported hurt in the US action itself", "share of past cases", pc(cv), P(cv.k, cv.n), cv.k + " of " + cv.n, "", "var(--k2)"); }
   h += '</div>';
   const sb = cs.reduce((a,c) => a + c.ship_b, 0), sa = cs.reduce((a,c) => a + c.ship_a, 0), mx = Math.max(1, sb, sa);
-  h += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:16px"><div><h2>Shipping attacks, 7 days before vs after</h2><div class="pair"><div><i style="height:${sb/mx*100}%"></i>before ${sb}</div><div><i style="height:${sa/mx*100}%"></i>after ${sa}</div></div><p class="legend">Total across ${cs.length} past cases${sb ? " (" + (sa >= sb ? "+" : "") + Math.round((sa-sb)/sb*100) + "%)" : ""}. Not shown to be caused by the US action.</p></div>`;
+  h += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:16px">` + (em.mode !== "ships" ? "" : `<div><h2>Shipping attacks, 7 days before vs after</h2><div class="pair"><div><i style="height:${sb/mx*100}%"></i>before ${sb}</div><div><i style="height:${sa/mx*100}%"></i>after ${sa}</div></div><p class="legend">Total across ${cs.length} past cases${sb ? " (" + (sa >= sb ? "+" : "") + Math.round((sa-sb)/sb*100) + "%)" : ""}. Not shown to be caused by the US action.</p></div>`);
   if(o.salvo && TH.salvo && rp.n){ const sv = TH.salvo, e = rp.k / rp.n * sv.count; h += `<div><h2>${esc(sv.weapon)} interceptors expected</h2><div class="fgauge" style="border:0;padding-top:0"><div class="q">reply rate ${P(rp.k, rp.n)} × ~${sv.count} per salvo<small>${sv.count} was used in the ${esc(sv.when)} salvo</small></div><div class="big">≈${Math.round(e)}</div><div class="bar"><i style="width:${e/sv.count*100}%"></i></div></div></div>`; }
-  if(o.is_hold) h += `<div><h2>Attacks on shipping per week (logged)</h2>${weeklyShipping()}<p class="legend">The real count is higher: big clusters are logged as one row.</p></div>`;
+  if(o.is_hold) h += `<div><h2>${esc(BASEN())} per week (logged)</h2>${weeklyShipping()}<p class="legend">The real count is higher: big clusters are logged as one row.</p></div>`;
   if(fcs(o).length) h += `<div><h2>NAPOR's open forecasts</h2>` + fcs(o).map(f => `<div class="fgauge"><div class="q">${esc(f.question)}<small>${esc(f.id)} · by ${fmtDate(f.deadline)}</small></div><div class="big">${Math.round(f.p*100)}%</div><div class="bar"><i style="width:${f.p*100}%"></i></div></div>`).join("") + `</div>`;
   return h + '</div>';
 }
@@ -845,7 +854,7 @@ function situationBlock(o){
   return `<div class="avail"><div><span class="pill ${esc(i.status)}">${esc(i.label)}</span> <b>Available right now?</b> <span class="nodata">(agent's reading of the news as of ${fmtDate(n.as_of)})</span></div><div class="r">${esc(i.reason)}</div><div class="r">${esc(lastUsed)}</div>` +
     `<div class="chips2">${n.key_dates.map(k => { const d = Math.round((dd(k.date) - today) / 864e5); return `<span><b>${d > 0 ? d + " days" : d === 0 ? "today" : "passed"}</b> · ${fmtDate(k.date)}: ${esc(k.label)}</span>`; }).join("")}</div>` +
     (n.pending && n.pending.length ? `<div class="r"><b>Waiting on:</b> ${n.pending.map(esc).join(" · ")}</div>` : "") +
-    (a && b && bi !== null ? `<div class="r"><b>Since ${fmtDate(a.asof)}:</b> this option's risk index ${ai === null ? "is new at " + Math.round(bi*100) + "%" : Math.round(ai*100) + "% → " + Math.round(bi*100) + "%"} · war intensity ${a.intensity} → ${b.intensity} pts · ${b.events - a.events} new events logged</div>` : "") +
+    (a && b && bi !== null ? `<div class="r"><b>Since ${fmtDate(a.asof)}:</b> this option's risk index ${ai === null ? "is new at " + Math.round(bi*100) + "%" : Math.round(ai*100) + "% → " + Math.round(bi*100) + "%"} · ${esc(INTN().toLowerCase())} ${a.intensity} → ${b.intensity} pts · ${b.events - a.events} new events logged</div>` : "") +
     `<details class="sit"><summary>The situation right now (applies to every option)</summary><ul>${n.headline.map(t => `<li>${esc(t)}</li>`).join("")}</ul>` +
     (D.week_events && D.week_events.length ? `<p class="nodata" style="margin-top:8px">New in the log this week:</p><ul>${D.week_events.slice().reverse().map(e => `<li><span class="mono">${fmtDate(e.date)}</span> #${e.id} ${esc(e.title.length > 130 ? e.title.slice(0,127) + "…" : e.title)}</li>`).join("")}</ul>` : "") + `</details></div>`;
 }
@@ -895,7 +904,7 @@ function judge(o, c, cat){
   }
   if(cat === "military" && o.military === "strike"){
     if(c.strike7 === null) return {base:false, why:["<li>Less than 7 days of news after this week; not counted yet.</li>"]};
-    return {base:true, flag:c.mil7 === true, why: c.strike_ev.length ? c.strike_ev.map(e => `<li>${evLine(e)}</li>`) : [`<li>No strike by ${esc(TH.actor)} in the 7 days after.</li>`]};
+    return {base:true, flag:c.mil7 === true, why: c.strike_ev.length ? c.strike_ev.map(e => `<li>${evLine(e)}</li>`) : [`<li>${esc(ACT().none)} by ${esc(TH.actor)} in the 7 days after.</li>`]};
   }
   if(cat === "people"){
     if(c.strike7 === null) return {base:false, why:["<li>Less than 7 days of news after this case; not counted yet.</li>"]};
@@ -912,7 +921,7 @@ function judge(o, c, cat){
       return {base:true, flag:c.replied, why:L};
     }
     if(c.strike7 === null) return {base:false, why:["<li>Less than 7 days of news after this case; not counted yet.</li>"]};
-    return {base:true, flag:c.strike7, why: c.strike_ev.length ? c.strike_ev.map(e => `<li>${evLine(e)}</li>`) : [`<li>No strike by ${esc(TH.actor)} in the 7 days after.</li>`]};
+    return {base:true, flag:c.strike7, why: c.strike_ev.length ? c.strike_ev.map(e => `<li>${evLine(e)}</li>`) : [`<li>${esc(ACT().none)} by ${esc(TH.actor)} in the 7 days after.</li>`]};
   }
   if(cat === "military"){
     if(c.replied === null) return {base:false, why:["<li>Reply status unclear, so not counted.</li>"]};
@@ -920,7 +929,13 @@ function judge(o, c, cat){
     return {base:true, flag, why: rp.length ? repLines(true) : ["<li>No reply, so no interceptors needed.</li>"]};
   }
   if(cat === "economic"){
-    if(c.ship_a === null) return {base:false, why:["<li>Less than 7 days of news after this case; not counted yet.</li>"]};
+    const em = ECONM();
+    if(c.ship_a === null) return {base:false, why:[`<li>Less than ${em.days || 7} days of news after this case; not counted yet.</li>`]};
+    if(em.mode === "events"){
+      L.push(`<li><b>${c.ship_a} counter-sanction or trade measure${c.ship_a === 1 ? "" : "s"}</b> logged in the ${em.days} days after</li>`);
+      c.ship_a_ev.forEach(e => L.push(`<li>After: ${evLine(e)}</li>`));
+      return {base:true, flag:c.ship_a > 0, why:L};
+    }
     L.push(`<li><b>7 days before: ${c.ship_b}</b> · <b>7 days after: ${c.ship_a}</b> logged attacks on shipping</li>`);
     (c.ship_b_ev || []).forEach(e => L.push(`<li>Before: ${evLine(e)}</li>`));
     c.ship_a_ev.forEach(e => L.push(`<li>After: ${evLine(e)}</li>`));
@@ -950,7 +965,8 @@ function renderCat(){
     h += `<div class="tally"><span>Civilians hurt in the US action: <b>${civ}</b> case${civ === 1 ? "" : "s"}</span><span>A reply hurt people: <b>${rh}</b> case${rh === 1 ? "" : "s"}</span><span>No one hurt: <b>${n - k}</b></span></div>`;
   }
   if(cat === "military" && n && o.salvo && TH.salvo){ h += `<div class="tally"><span>Expected interceptors if the US does this: <b>≈${Math.round(k / n * TH.salvo.count)}</b> ${esc(TH.salvo.weapon)} (${P(k, n)} × ~${TH.salvo.count})</span></div>`; }
-  if(cat === "economic"){ const sb = base.reduce((a,r) => a + r.c.ship_b, 0), sa = base.reduce((a,r) => a + r.c.ship_a, 0); h += `<div class="tally"><span>Attacks on shipping, all cases: <b>${sb} before → ${sa} after</b></span><span>Oil prices: not measured</span></div>`; }
+  if(cat === "economic" && ECONM().mode === "events"){ const sa = base.reduce((a,r) => a + r.c.ship_a, 0); h += `<div class="tally"><span>Counter-sanctions or trade measures, all cases: <b>${sa}</b></span><span>Prices: not measured</span></div>`; }
+  else if(cat === "economic"){ const sb = base.reduce((a,r) => a + r.c.ship_b, 0), sa = base.reduce((a,r) => a + r.c.ship_a, 0); h += `<div class="tally"><span>Attacks on shipping, all cases: <b>${sb} before → ${sa} after</b></span><span>Oil prices: not measured</span></div>`; }
   h += `<div class="cmpbar">${[["all","All " + rows.length],["yes","Counts " + k],["no","Doesn't count " + (n - k)],["na","Not counted yet " + (rows.length - n)]].map(([v,l]) => `<button class="chip" data-cf="${v}" aria-pressed="${f === v}">${l}</button>`).join("")}</div>`;
   const shown = rows.filter(r => f === "all" || (f === "yes" && r.j.base && r.j.flag) || (f === "no" && r.j.base && !r.j.flag) || (f === "na" && !r.j.base));
   h += shown.map(({c, j}) => `<div class="ccase"><span class="vd ${!j.base ? "na" : j.flag ? "yes" : "no"}">${!j.base ? "Not counted" : j.flag ? "Counts ✓" : "Doesn't count"}</span><div><div class="ct"><span class="mono">${fmtDate(c.date, true)} · ${caseRef(c)}</span>${esc(short(c.title, 160))}${isWeek(c) ? "" : srcLinks(c.id)}</div>${weightLine(c)}<ul>${j.why.join("")}</ul></div></div>`).join("") || '<p class="nodata">No cases in this group.</p>';
@@ -984,7 +1000,7 @@ function renderTime(){
   let h = `<h2 style="padding-right:44px">Look back: risk on a past date</h2><p class="note" style="margin-bottom:12px">Pick a date. Every option's risk is recomputed using only the cases and outcomes known on that day, so you see the risk as it looked then. The page below switches to that date too.</p>` +
     `<div class="lensbar" style="margin-bottom:10px"><label for="asof-input"><b>Date</b></label><input type="date" id="asof-input" min="${D.series[0][0]}" max="${D.asof}" value="${v}" style="font:inherit;padding:4px 8px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink)">` +
     `<button class="linkbtn" id="asof-today">Today</button></div><div class="cmpbar">${PRESETS().map(([d, l]) => `<button class="chip" data-asof="${d}" aria-pressed="${S.asof === d}">${fmtDate(d, true)} · ${l}</button>`).join("")}</div>` +
-    `<div class="tally"><span>Phase: <b>${esc(ph ? ph.name : "–")}</b></span><span>War intensity: <b>${r[1]} pts · ${BAND_NAMES[bandOf(r[1])]}</b></span><span>Past cases known then: <b>${D.options.reduce((a,o) => a + allKnown(o).length, 0)}</b></span></div>`;
+    `<div class="tally"><span>Phase: <b>${esc(ph ? ph.name : "–")}</b></span><span>${esc(INTN())}: <b>${r[1]} pts · ${BAND_NAMES[bandOf(r[1])]}</b></span><span>Past cases known then: <b>${D.options.reduce((a,o) => a + allKnown(o).length, 0)}</b></span></div>`;
   h += `<div class="tbl"><table style="min-width:720px"><thead><tr><th>Option</th><th>Status ${S.asof ? "then" : "now"}</th><th>Risk index ${S.asof ? "then" : "now"}</th><th>Today</th><th>Risk over time (dot line = 50%)</th><th>Logged US move of this kind in the next 14 days</th></tr></thead><tbody>`;
   for(const o of D.options){
     const then = riskIndex(o, allKnown(o)), now = indexAt(o, D.asof), nxt = S.asof ? nextMoves(o, S.asof, 14) : [];
@@ -1003,7 +1019,7 @@ function renderTime(){
 }
 function renderExplore(){
   const o = D.options.find(x => x.key === S.sel) || D.options[0], st = stats(o), cs = activeCases(o), ix = riskIndex(o, cs);
-  let h = '<div class="main"><div class="list" role="group" aria-label="Options">';
+  let h = smallNote() + '<div class="main"><div class="list" role="group" aria-label="Options">';
   for(const x of D.options){
     const c2 = activeCases(x), xi = riskIndex(x, c2);
     h += `<button data-k="${x.key}" aria-pressed="${x.key === S.sel}"><span class="key">${x.key}</span><span class="nm">${esc(x.name)}</span><span class="row2">${stPill(x)}</span><span class="ev">${xi ? "Risk index " + Math.round(xi.idx*100) + "% · " : x.too_few ? "Too few cases · " : ""}${c2.length} of ${x.cases.length} ${x.is_hold ? "hold weeks" : "past cases"}${S.phase || S.band ? " in this condition" : ""}</span></button>`;
@@ -1020,20 +1036,22 @@ function renderExplore(){
   document.querySelectorAll("input[data-w]").forEach(i => i.oninput = () => { S.w[i.dataset.w] = +i.value; renderExplore(); const w = $(".weights"); if(w) w.open = true; const f = $("#w-" + i.dataset.w); if(f) f.focus(); });
   const wr = $("#w-reset"); if(wr) wr.onclick = () => { CATS.forEach(c => S.w[c] = 1); renderExplore(); const w = $(".weights"); if(w) w.open = true; };
 }
+const econHead = () => { const em = ECONM(); return em.mode === "none" ? "" : em.mode === "events" ? `<th class="c">Counter-measure ≤${em.days}d</th><th>Counter-measures logged</th>` : '<th class="c">Shipping up</th><th>Shipping attacks 7d before → after</th>'; };
+const econCells = (c, tri) => { const em = ECONM(); return em.mode === "none" ? "" : em.mode === "events" ? `<td class="c">${tri(c.ship_a === null ? null : c.ship_a > 0)}</td><td class="mono">${c.ship_a === null ? "…" : c.ship_a}</td>` : `<td class="c">${tri(c.ship_a === null ? null : c.ship_a > c.ship_b)}</td><td class="mono">${c.ship_b} → ${c.ship_a === null ? "…" : c.ship_a}</td>`; };
 function caseTable(o){
   if(!o.cases.length) return '<p class="nodata">No past cases of this kind are in the log, so there is nothing to count. The notes above are reasoning, not data.</p>';
   const act = new Set(activeCases(o).map(c => c.id));
   const tri = v => v === null || v === undefined ? '<span class="dot open" title="not yet known"></span>' : `<span class="dot ${v ? "" : "no"}" title="${v ? "yes" : "no"}"></span>`;
-  let h = `<div class="tbl"><table><thead><tr><th>Date</th><th>#</th><th>${o.is_hold ? "Hold week" : "What the US did"}</th><th>Phase · intensity then</th>` + (o.trigger ? `<th class="c" title="Reply from ${esc(TH.actor)} within about 5 days">Reply ≤5d</th>` : '') + `<th class="c" title="Strike by ${esc(TH.actor)} within 7 days">Strike ≤7d</th>` + (o.is_hold ? '<th class="c" title="A hostile act in the 7 days hurt anyone (checked by hand)">Hurt ≤7d</th>' : '') + '<th class="c">Talks ≤14d</th><th class="c">Shipping up</th><th>Shipping attacks 7d before → after</th></tr></thead><tbody>';
+  let h = `<div class="tbl"><table><thead><tr><th>Date</th><th>#</th><th>${o.is_hold ? "Hold week" : "What the US did"}</th><th>Phase · intensity then</th>` + (o.trigger ? `<th class="c" title="Reply from ${esc(TH.actor)} within about ${RD()} days">Reply ≤${RD()}d</th>` : '') + `<th class="c" title="${esc(ACT().col)}: ${esc(TH.actor)} within 7 days (timing only)">${esc(ACT().col)}</th>` + (o.is_hold ? '<th class="c" title="A hostile act in the 7 days hurt anyone (checked by hand)">Hurt ≤7d</th>' : '') + '<th class="c">Talks ≤14d</th>' + econHead() + '</tr></thead><tbody>';
   for(const c of o.cases)
     h += `<tr class="${act.has(c.id) ? "" : "off"}"><td class="mono">${fmtDate(c.date)}</td><td class="mono">${isWeek(c) ? "wk" : c.id}</td><td>${esc(c.title.length > 140 ? c.title.slice(0,137) + "…" : c.title)}${c.civ ? `<br><span class="nodata">Civilian harm: ${esc(c.civ)}</span>` : ""}${isWeek(c) ? "" : "<br>" + srcLinks(c.id)}</td><td>${esc(c.phase)} · ${c.band_at} (${c.pts_at})</td>` +
-      (o.trigger ? `<td class="c">${tri(c.replied)}</td>` : '') + `<td class="c">${tri(c.strike7)}</td>` + (o.is_hold ? `<td class="c">${tri(c.hurt7)}</td>` : '') + `<td class="c">${tri(c.talks14)}</td><td class="c">${tri(c.ship_a === null ? null : c.ship_a > c.ship_b)}</td><td class="mono">${c.ship_b} → ${c.ship_a === null ? "…" : c.ship_a}</td></tr>`;
+      (o.trigger ? `<td class="c">${tri(c.replied)}</td>` : '') + `<td class="c">${tri(c.strike7)}</td>` + (o.is_hold ? `<td class="c">${tri(c.hurt7)}</td>` : '') + `<td class="c">${tri(c.talks14)}</td>${econCells(c, tri)}</tr>`;
   return h + `</tbody></table></div><p class="legend">${esc(TH.proxy_note)} ● yes · ○ no · dashed = not known yet. Source links: allowed outlets; "cred" = credibility 0-1.</p>`;
 }
 function renderCompare(){
   const keys = ["index"].concat(Object.keys(METRICS));
   const name = k => k === "index" ? "Risk index" : METRICS[k].name;
-  let h = `<div class="panel"><h2>All options, same measure, fixed order A to H</h2><div class="cmpbar">${keys.map(k => `<button class="chip" data-m="${k}" aria-pressed="${S.metric === k}">${esc(name(k))}</button>`).join("")}</div>` +
+  let h = smallNote() + `<div class="panel"><h2>All options, same measure, fixed order A to H</h2><div class="cmpbar">${keys.map(k => `<button class="chip" data-m="${k}" aria-pressed="${S.metric === k}">${esc(name(k))}</button>`).join("")}</div>` +
     `<p class="note" style="margin-bottom:8px">Not sorted or scored against each other. Long bars mean little data. Click a row to open that option.${S.metric === "index" && useEst() ? " Index values are NAPOR estimates (see How this works)." : ""}${S.phase || S.band ? " Your condition (" + esc(S.phase || S.band) + ") applies." : ""}</p>${S.metric === "index" ? katLegend() : ""}`;
   for(const o of D.options){
     let mid, val;
@@ -1059,7 +1077,7 @@ function renderToolbar(){
   const left = (b + (b === 0 ? .5 : Math.min(.95, Math.max(.05, (pts - lo) / Math.max(1, hi - lo))))) / 4 * 100;
   const sel = S.phase || S.band, total = D.options.reduce((a,o) => a + o.cases.length, 0), shown = D.options.reduce((a,o) => a + activeCases(o).length, 0);
   $("#toolbar").innerHTML =
-    `<button class="tb" data-open="m-int"><span class="tl">War intensity</span><span class="go">Open timeline ›</span>` +
+    `<button class="tb" data-open="m-int"><span class="tl">${esc(INTN())}</span><span class="go">Open timeline ›</span>` +
     `<span class="tv"><span class="pill" style="background:var(--b${b});color:var(--ink);border-color:var(--line)">${BAND_NAMES[b]}</span><span class="mono">${pts} pts · ${esc(phNow)}</span></span>` +
     `<span class="mini" aria-hidden="true">${BAND_NAMES.map((n,i) => `<i style="background:var(--b${i})"></i>`).join("")}<u style="left:${left}%"></u></span></button>` +
     `<div class="tbwrap"><button class="tb" data-open="m-lens" style="width:100%"><span class="tl">Which past cases count</span><span class="go">${sel ? "Change ›" : "Explore conditions ›"}</span>` +
@@ -1134,7 +1152,7 @@ function learnSvg(lc){
 }
 function renderReport(){
   const rc = D.report_card || {}, bt = rc.backtest, fc = rc.forecasts || [];
-  let h = `<div class="panel"><h2>Report card: does NAPOR's method hold up?</h2><p class="note" style="margin-bottom:14px">Forecasts are written down and locked before the outcome, then graded. The backtest replays every past case in date order and checks the page's own numbers using only what was known before each case. Scores use the Brier score: 0 is perfect, 0.25 is what always saying 50% gets, lower is better.</p>`;
+  let h = smallNote() + `<div class="panel"><h2>Report card: does NAPOR's method hold up?</h2><p class="note" style="margin-bottom:14px">Forecasts are written down and locked before the outcome, then graded. The backtest replays every past case in date order and checks the page's own numbers using only what was known before each case. Scores use the Brier score: 0 is perfect, 0.25 is what always saying 50% gets, lower is better.</p>`;
   const res = fc.filter(f => f.outcome), avg = res.length ? res.reduce((a, f) => a + f.brier, 0) / res.length : null;
   h += `<h3 style="font-size:16px;margin:4px 0">Locked forecasts</h3><p class="take">${res.length ? `${res.length} resolved, average Brier ${f3(avg)} (${avg < 0.25 ? "better" : "worse"} than a coin flip). ` : "None resolved yet. "}${fc.length - res.length} still open.</p>`;
   h += fc.map(f => { const o = f.outcome, b = f.brier;
@@ -1212,6 +1230,20 @@ function renderHow(){
   <h3>Weekly update</h3><p>An agent adds the week's events every Monday, grades forecasts and rebuilds this page after a full check. This data: ${fmtDate(D.generated, true)}, news through ${fmtDate(D.asof, true)}.</p>
   <h3>Known limits</h3><ul><li>Small samples: read numbers as hints.</li><li>"After" is not "because of".</li><li>Big campaigns are logged as a few rows; quiet weeks may be under-logged.</li><li>Phase names were drawn with hindsight.</li><li>${esc(TH.not_measured || "")}</li></ul>`;
 }
+/* ---------- per-theater words (category names and definitions come from the data file; the defaults are the Iran / Houthi words) ---------- */
+const WORDS0 = {name: {...CAT_NAME}, short: {...SHORT}, def: {...CAT_DEF}, rule: {...RULE}};
+function applyWords(){
+  Object.assign(CAT_NAME, WORDS0.name); Object.assign(SHORT, WORDS0.short); Object.assign(CAT_DEF, WORDS0.def); Object.assign(RULE, WORDS0.rule);
+  const pickWord = (spec, c, o) => { if(spec === undefined) return null; if(typeof spec === "string") return spec;
+    if(c === "military") return spec[o.military] || spec.other || ""; return (o.is_hold && spec.hold) || (o.trigger && spec.trigger) || spec.other || ""; };
+  CATS.forEach(c => { const s = (TH.cats || {})[c]; if(!s) return;
+    if(s.name) CAT_NAME[c] = s.name; if(s.short) SHORT[c] = s.short;
+    const d0 = WORDS0.def[c], r0 = WORDS0.rule[c];
+    CAT_DEF[c] = o => { const w = pickWord(s, c, o); return w === null ? d0(o) : w; };
+    RULE[c] = o => { const w = pickWord(s.rule, c, o); return w === null ? (pickWord(s, c, o) || r0(o)) : w; }; });
+  const nt = $("#intnote"); if(nt) nt.textContent = (TH.intensity && TH.intensity.note) || "War intensity counts logged hostile events in the 14 days before each date (2 points per direct strike, 1 per shipping attack or blockade move, +2 if someone died). Big campaigns are logged as a few rows, so hot weeks are understated.";
+}
+const smallNote = () => TH.small_n ? `<div class="smalln" role="note"><b>Small numbers.</b> ${esc(TH.small_n)}<br><span class="mono">Counted cases:</span> ${D.options.map(x => `<span class="mono">${x.key} ${x.is_hold && !x.cases.length ? "not built" : x.cases.length}</span>`).join(" · ")}</div>` : "";
 /* ---------- theaters and boot ---------- */
 let THEATERS = null, RESIZE = false;
 function renderTheaterTabs(){
@@ -1234,6 +1266,7 @@ window.addEventListener("hashchange", () => {
 function boot(d){
   D = d; TH = Object.assign({actor:"the adversary or a proxy", actor_short:"adversary or proxy", adversary:"the adversary", proxy_note:"", salvo:null, presets:[]}, d.theater || {});
   TH.actor_cap = TH.actor.charAt(0).toUpperCase() + TH.actor.slice(1);
+  applyWords();
   if(!S.theater) S.theater = TH.id || "main";
   setMetrics(); setPhases();
   S.asof = null; S.phase = S.band = null; S.pin = null; LENS = null; MASK = {key:null, map:new Map()}; POOL = {key:null, val:null};

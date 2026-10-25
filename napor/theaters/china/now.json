@@ -1,0 +1,82 @@
+{
+ "as_of": "2026-07-23",
+ "note": "Analyst reading of the news, written from logged events. Not data. The weekly agent replaces it every week. The log is a sample of named events and nothing is logged after Jul 23, 2026.",
+ "headline": [
+  "On Jul 22 Secretary of State Rubio and Foreign Minister Wang Yi talked to prepare for Xi's planned Sep 24 visit; Taiwan was on the agenda and Reuters reports no outcome (#3061).",
+  "On Jul 23 China announced two days of live-fire drills near Dongshan Island, Fujian, within about 7 miles of the Chinese coast (#3062), and the Philippines accused China of using water cannon at Scarborough Shoal (#3063). Reuters gives no stated reason for the drills, so they are treated as background.",
+  "Trump and Xi met in Beijing on May 14 (#3060). The last Taiwan arms sale in the log is the $11.1 billion package of Dec 18, 2025 (#3056); China answered with counter-sanctions and the Justice Mission 2025 drills (#3057, #3058).",
+  "Small numbers: most options have only a handful of counted cases. Option A (hold) is not built for China because the log is a sample of named events."
+ ],
+ "key_dates": [],
+ "pending": [
+  "Whether Xi's Sep 24 visit to the US goes ahead (#3060, #3061)",
+  "Whether the Jul 23 drills and coast-guard actions continue (#3062, #3063)"
+ ],
+ "options": {
+  "A": {
+   "status": "open",
+   "label": "Open",
+   "reason": "Not measured for China: no hold weeks are built. No US transit, sale, visit or sanction is logged in the 14 days before Jul 23; the Jul 22 talks (#3061) are option B.",
+   "events": [
+    3061
+   ]
+  },
+  "B": {
+   "status": "active",
+   "label": "In use now",
+   "reason": "Rubio and Wang Yi talked on Jul 22 (#3061) and Trump and Xi met in Beijing on May 14 (#3060).",
+   "events": [
+    3061,
+    3060
+   ]
+  },
+  "C": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last counted round in the log is the Oct 7, 2022 chip controls (#3030). A Dec 2024 round could not be dated from an allowed outlet.",
+   "events": [
+    3030
+   ]
+  },
+  "D": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last transit in the log is the Jan 16-17, 2026 Taiwan Strait transit (#3059).",
+   "events": [
+    3059
+   ]
+  },
+  "E": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last sale in the log is the $11.1 billion package announced Dec 18, 2025 (#3056).",
+   "events": [
+    3056
+   ]
+  },
+  "F": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last high-level contact in the log is Lai's Hawaii and Guam transit of Nov 30, 2024 (#3046).",
+   "events": [
+    3046
+   ]
+  },
+  "G": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last allied exercise in the log is the first multilateral maritime activity of Apr 7, 2024 (#3040).",
+   "events": [
+    3040
+   ]
+  },
+  "H": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last posture move in the log is the two-carrier operations from Jul 4, 2020 (#3011).",
+   "events": [
+    3011
+   ]
+  }
+ }
+}

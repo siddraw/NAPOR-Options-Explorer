@@ -1,0 +1,83 @@
+{
+ "as_of": "2026-10-12",
+ "note": "Analyst reading of the news, written from logged events. Not data. The weekly agent replaces it every week. The log is a sample: it ends with the Oct 12, 2026 launch (#2076) and many launches are missing.",
+ "headline": [
+  "North Korea has launched or provoked five times since Sep 12: ballistic missiles on Sep 12 (#2072) and Sep 20 (#2073), mine blasts at the DMZ that wounded three South Korean soldiers on Sep 21 (#2074), a hypersonic missile on Oct 3 (#2075) and multiple ballistic missiles on Oct 12 (#2076).",
+  "In August the US scaled down Ulchi Freedom Shield after Trump cited his relationship with Kim (#2068). On Aug 19 Trump said he will meet Kim, and Kim Yo Jong denied any communication (#2069). About 10 short-range missiles were fired the next day (#2070).",
+  "Freedom Edge 26, the trilateral exercise, began Sep 7 (#2071). The last Treasury sanctions round in the log is Mar 12, 2026 (#2066).",
+  "Hold-week caveat for option A: hold weeks are weeks since Jan 20, 2025 with no logged US move. The log is a sample, so a quiet-looking week may only be an unlogged one."
+ ],
+ "key_dates": [],
+ "pending": [
+  "Whether Trump and Kim meet (#2069)",
+  "Whether the run of launches continues after Oct 12 (#2076)"
+ ],
+ "options": {
+  "A": {
+   "status": "open",
+   "label": "Open",
+   "reason": "No US sanctions, drill, deployment or posture move is logged in the 14 days before Oct 12; the last was Freedom Edge 26 on Sep 7 (#2071). The hold-week numbers are a rough sketch: the log is a sample.",
+   "events": [
+    2071
+   ]
+  },
+  "B": {
+   "status": "open",
+   "label": "Open",
+   "reason": "Trump said on Aug 19 he will meet Kim (#2069); Kim Yo Jong denied any communication. No talks are logged.",
+   "events": [
+    2069
+   ]
+  },
+  "C": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last Treasury round in the log is Mar 12, 2026 (#2066).",
+   "events": [
+    2066
+   ]
+  },
+  "D": {
+   "status": "open",
+   "label": "Open",
+   "reason": "Freedom Edge 26 began Sep 7 (#2071); the Aug 2026 Ulchi Freedom Shield was scaled down (#2068).",
+   "events": [
+    2071,
+    2068
+   ]
+  },
+  "E": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last seizure in the log was announced on Jul 30, 2021 (#2015).",
+   "events": [
+    2015
+   ]
+  },
+  "F": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The Mar 2026 report of THAAD parts moving to the Middle East (#2065) is not confirmed. The last confirmed move in the log is the missile-warning data link of Dec 19, 2023 (#2037).",
+   "events": [
+    2065,
+    2037
+   ]
+  },
+  "G": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last deployment in the log is the carrier USS George Washington at Busan on Nov 5, 2025 (#2061).",
+   "events": [
+    2061
+   ]
+  },
+  "H": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last posture move in the log is Defense Secretary Hegseth's DMZ visit on Nov 3, 2025 (#2058).",
+   "events": [
+    2058
+   ]
+  }
+ }
+}

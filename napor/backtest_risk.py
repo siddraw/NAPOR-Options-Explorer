@@ -238,9 +238,10 @@ def political_rows(cases_by_key, window, words=None, ctx=None):
 
 def political_proposal(cases_by_key, tab, dec, ctx=None):
     est = "w_" + dec["name"]                                 # the estimate the page shows (shrunk2 when no weighting)
-    others = [c for c in CATS if c != "political"]
+    meas = [c for c in CATS if tab[c][est] is not None]          # a category a theater does not measure (no predictions) is left out of the index
+    others = [c for c in meas if c != "political"]
     cur = tab["political"][est]
-    base_all = sum(tab[c][est] for c in CATS) / len(CATS)
+    base_all = sum(tab[c][est] for c in meas) / len(meas)
     out = []
     for label, window, words in (("Current rule: no Diplomatic event (any side, incl. statements) within 14 days", 14, None),
                                  ("P1: no talks/proposal/ceasefire/deal event within 30 days", 30, CONC),
@@ -252,9 +253,9 @@ def political_proposal(cases_by_key, tab, dec, ctx=None):
         out.append(dict(label=label, window=window, rows=len(rows), predictions=len(ps), risk_cases=sum(r["y"] for r in rows),
                         brier=t, est=t[est], est_2026=brier(t26, est), n_2026=len(t26),
                         vs_current=round(t[est] - cur, 4), vs_coin=round(t[est] - 0.25, 4),
-                        index_brier=round((sum(tab[c][est] for c in others) + t[est]) / 5, 4)))
+                        index_brier=round((sum(tab[c][est] for c in others) + t[est]) / (len(others) + 1), 4)))
     p3 = dict(label="P3: political left out of the index (average of the other four corners)",
-              est=None, index_brier=round(sum(tab[c][est] for c in others) / 4, 4))
+              est=None, index_brier=round(sum(tab[c][est] for c in others) / len(others), 4))
     p3["vs_current"] = round(p3["index_brier"] - round(base_all, 4), 4)
     p3["vs_coin"] = round(p3["index_brier"] - 0.25, 4)
     return dict(method=est, note="Brier of the estimate the page shows, same walk-forward (only rows closed before each date). "
@@ -313,7 +314,7 @@ def report(res, cb, flags=None, tag=""):
     print(f"\nRecency weights (Brier of the NAPOR estimate; {w['n']} predictions, {w['n_2026']} dated 2026 or later)")
     print("  " + "candidate".ljust(8) + "overall".rjust(9) + "2026-only".rjust(11) + "".join(c.rjust(11) for c in CATS))
     for c in w["candidates"]:
-        print("  " + c["name"].ljust(8) + f"{c['overall']:.4f}".rjust(9) + f"{c['y2026']:.4f}".rjust(11) + "".join(f"{c['by_cat'][k]:.4f}".rjust(11) for k in CATS))
+        print("  " + c["name"].ljust(8) + f"{c['overall']:.4f}".rjust(9) + f"{c['y2026']:.4f}".rjust(11) + "".join((f"{c['by_cat'][k]:.4f}" if c['by_cat'][k] is not None else "-").rjust(11) for k in CATS))
     dw = w["decision"]
     print(f"Weighting decision: best by overall Brier = {dw['best_candidate']}; gain over no weighting {dw['gain']:+.4f}; worse by category {dw['worse_by_cat']} -> " +
           (f"ADOPT recency weight {dw['name']}" if dw["adopt"] else "KEEP no recency weighting"))
