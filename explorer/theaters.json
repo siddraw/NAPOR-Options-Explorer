@@ -15,6 +15,20 @@
    "status": "active",
    "data": "data/houthis.json",
    "asof": "2026-10-13"
+  },
+  {
+   "id": "northkorea",
+   "name": "North Korea",
+   "status": "active",
+   "data": "data/northkorea.json",
+   "asof": "2026-10-12"
+  },
+  {
+   "id": "china",
+   "name": "China / Taiwan",
+   "status": "active",
+   "data": "data/china.json",
+   "asof": "2026-07-23"
   }
  ]
 }
