@@ -51,7 +51,7 @@ EVENTS = [
 (1320, d(2025,7,6), "Houthis (claimed)", "Strike (shipping)", "Magic Seas (Greek-operated, Liberian flag), Red Sea", "Small boats, then missiles and drones hit the bulk carrier Magic Seas; the crew abandons ship and is rescued; the ship sinks; the Houthis claimed it", None, "Ship sunk; crew rescued", "Medium", "see audit"),
 (1321, d(2025,7,7), "Houthis (claimed)", "Strike (shipping)", "Eternity C (Greek-owned, Liberian flag), Red Sea", "Eternity C is attacked for hours and sinks on Jul 9; Reuters reports at least 4 killed and 15 missing early on, with 6 rescued; USNI later counts at least 9 dead, the Houthis' deadliest attack; the Houthis claimed it", None, "At least 4 killed early; at least 9 per USNI", "Medium", "see audit"),
 (1322, d(2025,7,9), "US", "Diplomatic statement", "Houthis", "State Dept spokesperson Tammy Bruce says the attacks show the threat from the Iran-backed Houthis; the US Mission to Yemen accuses the Houthis of holding surviving crew and demands their release", 1321, "n/a", "Medium", "see audit"),
-(1323, d(2025,7,16), "US (CENTCOM announcement)", "Seizure (Iranian arms, Yemeni partners)", "Iranian arms bound for the Houthis", "CENTCOM announces Yemen's National Resistance Forces seized 750+ tons of Iranian weapons bound for the Houthis (hundreds of missiles, drone engines, radar); the release describes no direct US military role; also relevant to the Iran log's arms-seizure rows (#264, #265)", None, "Cargo seized", "Medium", "see audit"),
+(1323, d(2025,7,16), "Yemeni National Resistance Forces (CENTCOM announcement)", "Seizure (Iranian arms, Yemeni partners)", "Iranian arms bound for the Houthis", "CENTCOM announces Yemen's National Resistance Forces seized 750+ tons of Iranian weapons bound for the Houthis (hundreds of missiles, drone engines, radar); the release describes no direct US military role; also relevant to the Iran log's arms-seizure rows (#264, #265)", None, "Cargo seized", "Medium", "see audit"),
 (1324, d(2025,7,22), "US", "Sanctions (designation)", "Houthi petroleum smuggling network", "Treasury (OFAC) sanctions 2 people and 5 companies for Houthi-linked petroleum smuggling and money laundering", None, "n/a", "Medium", "see audit"),
 (1325, d(2025,8,31), "Houthis (claimed)", "Strike (shipping, missed)", "Scarlet Ray (Liberian flag), Red Sea", "UKMTO reports an unknown projectile splashing close to the ship on Aug 31; the Houthis announce the attack on Sep 1; the missile missed and all crew are safe", None, "No damage", "Medium", "see audit"),
 (1326, d(2025,9,11), "US", "Sanctions (designation)", "Houthi revenue and procurement networks", "Treasury (OFAC) designates 32 people and companies and identifies 4 ships, its largest action against the Houthis so far", None, "n/a", "Medium", "see audit"),
@@ -59,8 +59,8 @@ EVENTS = [
 (1328, d(2025,11,11), "Houthis", "Pause signal", "Israel and Red Sea shipping", "In a letter to Hamas the Houthi chief of staff signals attacks have stopped since the Gaza ceasefire of Oct 10 and warns they will return if Israel resumes the war; last attack was Sep 29", None, "n/a", "Medium", "see audit"),
 (1329, d(2026,1,16), "US", "Sanctions (designation)", "Houthi smuggling and revenue networks", "Treasury (OFAC) sanctions 21 people and companies and identifies one ship over Houthi oil sales, weapons buying and finance", None, "n/a", "Medium", "see audit"),
 (1330, d(2026,2,28), "Houthis", "Threat (shipping and Israel)", "Red Sea and Israel", "Two senior Houthi officials tell Reuters the group will restart missile and drone attacks on main shipping routes and on Israel in support of Iran, as soon as that night; no formal announcement", None, "n/a", "Medium", "see audit"),
-(1331, d(2026,7,20), "Houthis", "Declared blockade (Saudi ports)", "Saudi Arabia, Red Sea / Bab al-Mandab", "Houthis declare a naval blockade of Saudi Arabia, enforced at Bab al-Mandab; AFP says they declared it earlier in the week of Jul 23 (the exact day is from Gray and Business Today, outlets not on the allowed list)", None, "n/a", "Medium", "see audit"),
-(1332, d(2026,7,21), "US", "Diplomatic statement (threat)", "Houthis", "Asked about the blockade threat, Trump says the US would 'take care of' the Houthis if they carry it out and that the US has 'done that with the Houthis before'; the day is from Gray; AFP gives no date", 1331, "n/a", "Medium", "see audit"),
+(1331, d(2026,7,20), "Houthis", "Threat (declared Saudi port embargo)", "Saudi Arabia, Red Sea / Bab al-Mandab", "Houthi military spokesman Yahya Saree declares a 'maritime embargo' (naval blockade) of Saudi Arabia, effective immediately, in a televised statement on Monday Jul 20 (Reuters, AAP); a declaration, not an attack on a ship", None, "n/a", "Medium", "see audit"),
+(1332, d(2026,7,21), "US", "Diplomatic statement (threat)", "Houthis", "Asked on Tuesday Jul 21 about the blockade threat, Trump says 'If something like that happens, we take care of it' (AFP, Jul 21)", 1331, "n/a", "Medium", "see audit"),
 (1333, d(2026,7,22), "Houthis (claimed)", "Strike (shipping)", "Saudi tanker Encelia, Red Sea", "Saudi Arabia confirms the Encelia was hit; the Houthis CLAIM missile and drone strikes on it and the tanker Layla; UKMTO reports another tanker hit by an unknown projectile 70 nm southwest of Al Shuqaiq", 1331, "Fire on a tanker; no deaths reported", "Medium", "see audit"),
 (1334, d(2026,7,23), "US", "Diplomatic statement (threat)", "Houthis and Iran", "Trump posts that 'major military punishment will be inflicted upon Iran and, of course, the Houthis themselves' if the attacks go on, and says he is 'very disappointed' in them", 1333, "n/a", "Medium", "see audit"),
 (1335, d(2026,9,10), "US", "Force posture (advisers)", "Saudi Arabia", "CNN, from five sources, reports 100+ US military advisers (a US official says about 200 troops) in Saudi Arabia giving intelligence and targeting support against the Houthis; they do not join strikes or refuel jets; DoD does not comment on intelligence", None, "n/a", "Medium", "see audit"),
@@ -81,7 +81,6 @@ US_OPTION = {
     1307: "F", 1313: "F", 1315: "F",
     1314: "G",
     1309: "D",
-    1323: "E",
     1310: "H", 1335: "H",
     1319: "B", 1337: "B",
 }
@@ -101,7 +100,7 @@ _NPR_OCT10 = _s('Trump weighs joining the fight against Houthis after Riyadh air
 _TREAS = lambda h, dt_, n: _s(h, 'Treasury (OFAC)', dt_, f'https://home.treasury.gov/news/press-releases/{n}', 'full text')
 
 SOURCES = {
- 1301: [_s('Treasury Increases Financial Pressure on the Houthis', 'Treasury (via GlobalSecurity)', '2025-01-17', 'https://www.globalsecurity.org/military/library/news/2025/01/mil-250117-treasury02.htm', 'full text')],
+ 1301: [_TREAS('Treasury Increases Financial Pressure on the Houthis', '2025-01-17', 'jy2794')],
  1302: [_USNI_JAN22],
  1303: [_s("Yemen's Houthis say they'll limit their attacks in the Red Sea corridor", 'AP (via ClickOnDetroit)', '2025-01-20', 'https://www.clickondetroit.com/news/world/2025/01/20/yemens-houthis-say-theyll-limit-their-attacks-in-the-red-sea-corridor/', 'full text'),
         _s("With Gaza ceasefire, Yemen's Houthi rebels halt attacks on ships in the Red Sea", 'NPR (via KUNC)', '2025-01-29', 'https://www.kunc.org/2025-01-29/with-gaza-ceasefire-yemens-houthi-rebels-halt-attacks-on-ships-in-the-red-sea')],
@@ -134,10 +133,12 @@ SOURCES = {
  1327: [_s('Houthis Attack Dutch Ship in the Red Sea', 'USNI News', '2025-10-02', 'https://news.usni.org/2025/10/02/houthis-attack-dutch-ship-in-the-red-sea', 'full text'),
         _s("Yemen's Houthi rebels signal that they've stopped attacks on Israel and ships in the Red Sea", 'AP (via ClickOnDetroit)', '2025-11-11', 'https://www.clickondetroit.com/news/world/2025/11/11/yemens-houthi-rebels-signal-that-theyve-stopped-attacks-on-israel-and-ships-in-the-red-sea/', 'full text')],
  1328: [_s("Yemen's Houthi rebels signal that they've stopped attacks on Israel and ships in the Red Sea", 'AP (via ClickOnDetroit)', '2025-11-11', 'https://www.clickondetroit.com/news/world/2025/11/11/yemens-houthi-rebels-signal-that-theyve-stopped-attacks-on-israel-and-ships-in-the-red-sea/', 'full text'), _USNI_2025],
- 1329: [_s('Treasury Increases Pressure on Houthi Smuggling and Illicit Revenue Generation Networks', 'Treasury (via GlobalSecurity)', '2026-01-16', 'https://www.globalsecurity.org/military/library/news/2026/01/mil-260116-treasury01.htm', 'full text')],
+ 1329: [_TREAS('Treasury Increases Pressure on Houthi Smuggling and Illicit Revenue Generation Networks', '2026-01-16', 'sb0366')],
  1330: [_s('US-Israel strike on Iran: Houthis warn of imminent missile and drone attacks in Red Sea corridor', 'Reuters (via Business Today)', '2026-02-28', 'https://www.businesstoday.in/amp/world/middle-east/story/us-israel-strike-on-iran-houthis-warn-of-imminent-missile-and-drone-attacks-in-red-sea-corridor-518464-2026-02-28', 'full text')],
- 1331: [_AFP_AHRAM_0723A, _AFP_AHRAM_0723B],
- 1332: [_AFP_AHRAM_0723A],
+ 1331: [_s("Yemen's Houthis say they will impose naval blockade against Saudi Arabia", 'Reuters (via The Star)', '2026-07-20', 'https://www.thestar.com.my/news/world/2026/07/20/yemen039s-houthis-declare-naval-blockade-against-saudi-arabia---statement', 'full text'),
+        _s('Houthis declare naval blockade against Saudi Arabia', 'AAP (via Newcastle Herald)', '2026-07-20', 'https://www.newcastleherald.com.au/story/9314342/houthis-declare-naval-blockade-against-saudi-arabia/', 'full text'),
+        _AFP_AHRAM_0723A],
+ 1332: [_s("Trump says will 'take care of' Houthis if they blockade Saudi ports", 'AFP (via Ahram Online)', '2026-07-21', 'https://english.ahram.org.eg/News/573280.aspx', 'full text')],
  1333: [_AFP_AHRAM_0723A, _AFP_AHRAM_0723B],
  1334: [_AFP_AHRAM_0723B],
  1335: [_s('Exclusive: US expands intel, targeting support for Saudi campaign against Iranian ally', 'CNN (via KEYT)', '2026-09-10', 'https://keyt.com/politics/cnn-us-politics/2026/09/10/exclusive-us-expands-intel-targeting-support-for-saudi-campaign-against-iranian-ally/', 'full text')],
@@ -154,7 +155,7 @@ SOURCES = {
 VERDICT = {k: 'confirmed' for k in SOURCES}
 VERDICT[1302] = 'not_confirmed'   # only a Houthi claim, relayed by USNI; CENTCOM did not respond
 # Rows where an allowed outlet confirms the event but not every detail in the row.
-PARTLY = {1315, 1316, 1331, 1332}
+PARTLY = {1315, 1316}   # 1331/1332 re-sourced 2026-10-25 (Reuters, AAP, AFP give the dates)
 
 # Trigger Census rows for US moves of kinds C-H.
 # Category = what the move cost the other side; status as in data.py (R-strong, R-weak, R-proxy, N, Unclear, Unverified).
@@ -172,7 +173,6 @@ CENSUS = [
  (1313, "Military/Property", "Unclear", "Ras Isa strike, Apr 17, 2025. Inside the window: a US strike there is context, not counted."),
  (1314, "Personnel/Casualty", "Unclear", "CENTCOM statement on hitting Houthi leaders, Apr 27, 2025. Inside the window; context only."),
  (1315, "Personnel/Casualty", "Unclear", "Reported Saada strike, Apr 28, 2025. Inside the window; the strike itself is a Houthi claim that AFP could not confirm."),
- (1323, "Economic/Blockade", "N", "Seizure of 750+ tons of Iranian arms by Yemeni partners, announced Jul 16, 2025 (US role not described). No Houthi attack on US forces or shipping found Jul 17-21: the July attacks were Jul 6-7 and the next found was Aug 31 (USNI 2025 review; Times of Israel)."),
  (1324, "Economic/Blockade", "N", "Petroleum-network sanctions, Jul 22, 2025. No Houthi attack found Jul 23-27; next found Aug 31 (Scarlet Ray)."),
  (1326, "Economic/Blockade", "N", "32-target sanctions, Sep 11, 2025. No Houthi attack found Sep 12-16; the next found was Minervagracht on Sep 29 (AP, USNI), 18 days later."),
  (1329, "Economic/Blockade", "N", "21-target sanctions, Jan 16, 2026. No Houthi attack on US forces or shipping found Jan 17-21; AFP says the Houthis were relatively restrained until the Iran war began."),
@@ -194,8 +194,8 @@ WINDOWS = [(d(2025, 1, 1), d(2025, 1, 19)), (d(2025, 3, 15), d(2025, 5, 6))]
 START_ACTS = {1307}
 
 # Periods when an option was limited: (start, end, text, [event ids])
+# (The Jan 19 - Mar 14, 2025 Houthi pause is a phase, not a US constraint: strikes stayed available.)
 CONSTRAINTS = [
- (d(2025, 1, 19), d(2025, 3, 14), "Houthi pause after the Gaza ceasefire: no Houthi attacks on shipping were logged and the first US strikes since Jan 19 came on Mar 15 (USNI), so strikes (F/G) were not in use.", [1303, 1307]),
  (d(2025, 5, 6), d(2026, 10, 24), "Oman-brokered US-Houthi ceasefire: the US stopped striking the Houthis and the Houthis said they would not target US ships, so strikes (F/G) were limited. No US strike on the Houthis was found after May 6, 2025 in the searches for this file; the Houthis told US officials in Sep 2026 they still keep the ceasefire (Reuters).", [1319, 1337]),
  (d(2026, 9, 10), d(2026, 10, 24), "Saudi-Houthi war: Trump declined Saudi requests for US strikes (Axios via AFP, Sep 10) and US help was limited to intelligence and targeting advice, with no US strikes or refuelling (CNN). CNN also says US forces are stretched by the Iran conflict. Trump said on Oct 10 'We may' join; no decision found by Oct 24.", [1335, 1336, 1341]),
 ]
