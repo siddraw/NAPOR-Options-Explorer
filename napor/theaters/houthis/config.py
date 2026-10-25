@@ -26,6 +26,11 @@ THEATER = dict(
              ["2025-03-15", "Operation Rough Rider"], ["2025-05-06", "US-Houthi ceasefire"], ["2026-10-10", "Riyadh airport attack"]],
     under_logged="Some stretches are logged more thinly than others (2025-2026 far less than 2024), so \"none logged\" is not proof nothing happened.",
     spark_from="2016-10-01", claim_note="Houthi media (al-Masirah, Saba)",
+    # Exact rule for the political corner (what theaters/common.py counts): any logged diplomatic event, by anyone.
+    cats=dict(political=dict(
+        other="Share of past cases NOT followed within 14 days by any logged diplomatic event (talks, a ceasefire, a UN resolution, or a public statement or threat by either side).",
+        hold="Share of hold weeks NOT followed within 14 days by any logged diplomatic event (talks, a ceasefire, a UN resolution, or a public statement or threat by either side).",
+        rule="Counts when no diplomatic event of any kind was logged in the 14 days after, by anyone. Public statements and threats count as diplomatic events here (for example Trump's Jul 21 and Jul 23, 2026 warnings), so a threat alone makes the case \"not a risk\" on this corner.")),
 )
 
 # A tab needs at least this many counted cases to show a risk index; below it the page says "too few cases".
