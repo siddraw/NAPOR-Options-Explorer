@@ -233,7 +233,8 @@ def recount_hold(scheme="none", param=None, asof=None):
 
 LOOKBACKS = ("2025-06-22", "2026-04-08", "2026-06-17")      # past dates the page test also checks (look-back, no hindsight)
 
-if __name__ == "__main__":
+def run_iran():
+    """Recount Iran, write explorer/verify.json, print the numbers. Returns [] (the match against the page is checked by export_explorer and the Node test)."""
     scheme, param = weighting_in_force()
     rc = recount(weighting=(scheme, param), asof=LAST)
     est, pool = estimates(rc)
@@ -251,3 +252,14 @@ if __name__ == "__main__":
     print(f"as of {LAST} | recency weighting: {scheme} {param if param is not None else ''}".rstrip())
     for k, v in rc.items():
         print(k, {c: [v[c][0], v[c][1], round(v[c][2], 4), round(v[c][3], 4)] for c in CATS}, "n", v["n"])
+    return []
+
+
+if __name__ == "__main__":
+    # python3 verify_explorer.py [theater ...]   (default: every theater in explorer/theaters.json)
+    import importlib, sys, theaters
+    problems = []
+    for tid in sys.argv[1:] or theaters.registered():
+        print(f"\n[{tid}]")
+        problems += run_iran() if tid == "iran" else importlib.import_module(f"theaters.{tid}.verify").run()
+    sys.exit(1 if problems else 0)

@@ -31,11 +31,13 @@ MS = (1, 2, 4)
 M_MAIN = 2
 
 
-def rows_from_cases(cases_by_key):
-    """One row per (case, category) with a final outcome: (date, closes_on, option, category, outcome 0/1)."""
+def rows_from_cases(cases_by_key, flags=None):
+    """One row per (case, category) with a final outcome: (date, closes_on, option, category, outcome 0/1).
+    flags: option letter -> flag dict (default: the Iran flags; every theater passes its own)."""
+    flags = flags or NC.FLAGS
     rows = []
     for k, cases in cases_by_key.items():
-        fl = NC.FLAGS[k]
+        fl = flags[k]
         for c in cases:
             d = dt.date.fromisoformat(c["date"])
             for cat in CATS:
@@ -115,17 +117,18 @@ def period(d):
     return "2026 H1" if d.month <= 6 else "2026 H2"
 
 
-def learning_curve(ps):
-    keys = ["2019-20", "2021-23", "2024-25", "2026 H1", "2026 H2"]
+def learning_curve(ps, periods=None):
+    """periods: (keys in order, function date -> key). Default: the Iran periods."""
+    keys, fn = periods or (["2019-20", "2021-23", "2024-25", "2026 H1", "2026 H2"], period)
     out = []
     for k in keys:
-        sub = [p for p in ps if period(p["date"]) == k]
+        sub = [p for p in ps if fn(p["date"]) == k]
         if sub:
             out.append(dict(period=k, n=len(sub), **{m: brier(sub, m) for m in ("raw", "shrunk2", "pooled", "half")}))
     return out
 
 
-def out_of_sample(rows, cut=dt.date(2025, 12, 31)):
+def out_of_sample(rows, cut=dt.date(2025, 12, 31), label=None):
     train = [t for t in rows if t["closes"] <= cut]
     test = [r for r in rows if r["date"] > cut]
     ps, skipped = [], 0
@@ -135,12 +138,17 @@ def out_of_sample(rows, cut=dt.date(2025, 12, 31)):
             skipped += 1
             continue
         ps.append(dict(r, **p))
-    return dict(train_rows=len(train), test_rows=len(test), scored=len(ps), skipped=skipped,
-                brier={m: brier(ps, m) for m in METHODS}), ps
+    res = dict(train_rows=len(train), test_rows=len(test), scored=len(ps), skipped=skipped,
+               brier={m: brier(ps, m) for m in METHODS})
+    if label:
+        res["train_label"] = label            # shown on the page instead of "2019-2025" (theaters with another record start)
+    return res, ps
 
 
-def robustness():
+def robustness(ctx=None):
     """Escalation (reply) rate per trigger option under rule variants. Census judgement = ~5-day window."""
+    if ctx is not None and ctx.robustness is not None:
+        return ctx.robustness()
     EV = O.EV
     out = []
     variants = [
@@ -208,12 +216,15 @@ def weighting_report(ps, tab, dec):
 CONC = ("proposal", "talks", "ceasefire announcement", "ceasefire (", "ceasefire statement")   # same words as the "B" move in the export
 
 
-def political_rows(cases_by_key, window, words=None):
+def political_rows(cases_by_key, window, words=None, ctx=None):
     """Political-corner rows under an alternative rule: risk = no matching event within `window` days after the case.
     words=None: any Diplomatic event (the live rule). Otherwise only talks/proposal/ceasefire/deal events (CONC words)."""
-    last = NC.LAST
-    match = lambda e: O._talks(e) and (words is None or any(w in e[3].lower() for w in words))
-    evs = [e[1] for e in data.events if match(e)]
+    if ctx is not None:
+        last, evs = ctx.last, ctx.talk_dates(words)
+    else:
+        last = NC.LAST
+        match = lambda e: O._talks(e) and (words is None or any(w in e[3].lower() for w in words))
+        evs = [e[1] for e in data.events if match(e)]
     rows = []
     for k, cases in cases_by_key.items():
         for c in cases:
@@ -225,7 +236,7 @@ def political_rows(cases_by_key, window, words=None):
     return rows
 
 
-def political_proposal(cases_by_key, tab, dec):
+def political_proposal(cases_by_key, tab, dec, ctx=None):
     est = "w_" + dec["name"]                                 # the estimate the page shows (shrunk2 when no weighting)
     others = [c for c in CATS if c != "political"]
     cur = tab["political"][est]
@@ -234,7 +245,7 @@ def political_proposal(cases_by_key, tab, dec):
     for label, window, words in (("Current rule: no Diplomatic event (any side, incl. statements) within 14 days", 14, None),
                                  ("P1: no talks/proposal/ceasefire/deal event within 30 days", 30, CONC),
                                  ("P2: no talks/proposal/ceasefire/deal event within 14 days", 14, CONC)):
-        rows = political_rows(cases_by_key, window, words)
+        rows = political_rows(cases_by_key, window, words, ctx)
         ps, skipped = walk_forward(rows)
         t = {m: brier(ps, m) for m in ("raw", "shrunk2", est, "pooled", "half")}
         t26 = [p for p in ps if p["date"] >= Y2026]
@@ -252,27 +263,28 @@ def political_proposal(cases_by_key, tab, dec):
                 current_index_brier=round(base_all, 4), rules=out, p3=p3)
 
 
-def run(cases_by_key):
-    rows = rows_from_cases(cases_by_key)
+def run(cases_by_key, ctx=None):
+    """ctx = a theater context (see theaters/houthis/backtest.py); None = Iran."""
+    rows = rows_from_cases(cases_by_key, ctx.flags if ctx else None)
     ps, skipped = walk_forward(rows)
     tab = table(ps)
-    oos, _ = out_of_sample(rows)
+    oos, _ = out_of_sample(rows, *( (ctx.oos_cut, ctx.oos_label) if ctx else () ))
     dec_w = decide_weighting(tab)
     wrep, t26 = weighting_report(ps, tab, dec_w)
     return dict(
         generated=dt.date.today().isoformat(), rows=len(rows), predictions=len(ps), skipped_no_history=skipped,
         brier=tab, brier_2026=t26, calibration=dict(raw=calibration(ps, "raw"), shrunk2=calibration(ps, "shrunk2")),
-        learning=learning_curve(ps), out_of_sample=oos, robustness=robustness(), decision=decide(tab),
-        weighting=wrep, political_proposal=political_proposal(cases_by_key, tab, dec_w))
+        learning=learning_curve(ps, ctx.periods if ctx else None), out_of_sample=oos, robustness=robustness(ctx), decision=decide(tab),
+        weighting=wrep, political_proposal=political_proposal(cases_by_key, tab, dec_w, ctx))
 
 
 def all_cases():
     return {o["key"]: NC.option_cases(o["key"]) for o in O.OPTIONS}
 
 
-def no_hindsight_check(cases_by_key):
+def no_hindsight_check(cases_by_key, flags=None):
     """Appending a fake future case must not change any earlier prediction."""
-    rows = rows_from_cases(cases_by_key)
+    rows = rows_from_cases(cases_by_key, flags)
     base, _ = walk_forward(rows)
     fake_day = max(r["date"] for r in rows) + dt.timedelta(days=30)
     extra = [dict(date=fake_day, closes=fake_day + dt.timedelta(days=w), opt=k, cat=c, y=1, id="FAKE")
@@ -285,10 +297,8 @@ def no_hindsight_check(cases_by_key):
     return a == b, len(a)
 
 
-if __name__ == "__main__":
-    cb = all_cases()
-    res = run(cb)
-    json.dump(res, open(os.path.join(HERE, "backtest_risk.json"), "w"), indent=1, default=str)
+def report(res, cb, flags=None, tag=""):
+    """Print the backtest tables for one theater (tag = theater id when it is not Iran)."""
     print(f"Risk-assessment backtest: {res['predictions']} predictions from {res['rows']} case-category outcomes "
           f"({res['skipped_no_history']} skipped: no closed past case of that option yet).")
     print("\nBrier score (lower is better; 0.25 = always 50%)")
@@ -317,11 +327,33 @@ if __name__ == "__main__":
     print("Calibration (shrunk m=2): " + "; ".join(f"{b['lo']:.1f}-{b['hi']:.1f}: said {b['predicted']:.0%}, happened {b['observed']:.0%} (n={b['n']})" for b in res["calibration"]["shrunk2"]))
     print("\nLearning curve: " + "; ".join(f"{l['period']} raw {l['raw']:.3f} / shrunk {l['shrunk2']:.3f} / pooled {l['pooled']:.3f} (n={l['n']})" for l in res["learning"]))
     o = res["out_of_sample"]
-    print(f"\nOut of sample (fit 2019-2025, score 2026): {o['scored']} scored, {o['skipped']} skipped; " +
+    print(f"\nOut of sample (fit {o.get('train_label', '2019-2025')}, score 2026): {o['scored']} scored, {o['skipped']} skipped; " +
           ", ".join(f"{m} {v:.3f}" for m, v in o["brier"].items() if v is not None))
     print("\nEscalation rate under rule variants:")
     for r in res["robustness"]["rows"]:
         print("  " + r["key"] + "  " + " | ".join(f"{c['k']}/{c['n']}" for c in r["cells"]))
     print("  columns: " + " | ".join(res["robustness"]["variants"]))
-    ok, n = no_hindsight_check(cb)
+    ok, n = no_hindsight_check(cb, flags)
     print(f"\nNo-hindsight check (fake future case appended): {'PASS' if ok else 'FAIL'} ({n} earlier predictions unchanged)")
+
+
+def main(argv):
+    """python3 backtest_risk.py [theater ...]  (default: every theater in explorer/theaters.json)."""
+    import theaters
+    ids = argv or theaters.registered()
+    ok = True
+    for tid in ids:
+        if tid == "iran":
+            cb = all_cases()
+            res = run(cb)
+            json.dump(res, open(os.path.join(HERE, "backtest_risk.json"), "w"), indent=1, default=str)
+            report(res, cb)
+        else:
+            import importlib
+            print(f"\n===== {tid} =====")
+            importlib.import_module(f"theaters.{tid}.backtest").run_and_report(report)
+
+
+if __name__ == "__main__":
+    import sys
+    main(sys.argv[1:])

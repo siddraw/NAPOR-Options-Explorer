@@ -1,0 +1,25 @@
+{
+ "as_of": "2026-10-13",
+ "note": "Analyst reading of the news, written from logged events. Not data. The weekly agent replaces it every week.",
+ "headline": [
+  "The fighting now is Saudi-Houthi. Houthi missiles hit Riyadh's airport on Oct 8 (3 Saudis killed) and Oct 10 (12 killed, 309 wounded, including one American) (#1339, #1340).",
+  "Asked on Oct 10 whether the US would join Saudi strikes, Trump said 'We may. We're going to look at it' (#1341). A Houthi official warned of 'a swift and painful response' on the US if it does (#1342).",
+  "The log shows no US strike on the Houthis since the May 6, 2025 ceasefire (#1319). US advisers are in Saudi Arabia giving intelligence and targeting help (#1335), and US and Houthi officials met in Muscat on Sep 12-13 (#1337).",
+  "No Houthi attack on US forces or on non-Saudi shipping is logged since Sep 29, 2025. The last Treasury round was Jan 16, 2026 (#1329)."
+ ],
+ "key_dates": [],
+ "pending": [
+  "Whether the US joins the Saudi strikes (#1341)",
+  "Whether the Houthis carry out their warning against US interests (#1342)"
+ ],
+ "options": {
+  "A": {"status": "open", "label": "Open", "reason": "This is the current course: no US strike on the Houthis is logged since May 6, 2025 (#1319).", "events": [1319]},
+  "B": {"status": "active", "label": "In use now", "reason": "US officials met Houthi officials in Muscat on Sep 12-13, helped by Oman (#1337, Reuters, anonymous sources).", "events": [1337]},
+  "C": {"status": "open", "label": "Open", "reason": "Treasury added Houthi sanctions on Jan 16, 2026 (#1329); nothing newer is logged.", "events": [1329]},
+  "D": {"status": "open", "label": "Open", "reason": "No US naval-defense move against Houthi attacks is logged in 2026; the Houthi attacks that are logged were on Saudi targets (#1333).", "events": [1333]},
+  "E": {"status": "open", "label": "Open", "reason": "The last arms seizure in the log was announced on Jul 16, 2025, carried out by Yemeni forces (#1323).", "events": [1323]},
+  "F": {"status": "constrained", "label": "Constrained", "reason": "Trump declined Saudi requests for US strikes (#1336, Axios via AFP) but said on Oct 10 'We may' (#1341). The May 2025 ceasefire is the last US-Houthi agreement (#1319).", "events": [1319, 1336, 1341]},
+  "G": {"status": "constrained", "label": "Constrained", "reason": "Same limits as F: no US strike on the Houthis is logged since May 6, 2025 (#1319, #1336).", "events": [1319, 1336]},
+  "H": {"status": "active", "label": "In use now", "reason": "CNN reports 100+ US military advisers (a US official says about 200 troops) in Saudi Arabia (#1335).", "events": [1335]}
+ }
+}

@@ -13,29 +13,15 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import data, napor_options as O, napor_ids as N, napor_threads as T, napor_intensity as INT, napor_forecasts as F
 import napor_cases as NC, backtest_risk as BR
+from theaters.iran.config import THEATER, THEATER_ID   # wording dict now lives in the theater package
+import theaters as TH_REG
 
 EV = O.EV
 last = max(e[1] for e in data.events)
 first = min(e[1] for e in data.events)
 EXPLORER = os.path.join(HERE, "..", "explorer")
-THEATER_ID = "iran"
 DATA_FILE = os.path.join(EXPLORER, "data", THEATER_ID + ".json")
 HISTORY_FILE = os.path.join(EXPLORER, "data", THEATER_ID + "-history.json")
-
-# Words the page uses for this theater, so a future theater renders with its own wording.
-THEATER = dict(
-    id=THEATER_ID, name="Iran", status="active", title="Iran war",
-    sub="The options the US has right now in the Iran war, and what followed the last times the US did something like each one.",
-    adversary="Iran", actor="Iran or an Iran-backed group", actor_short="Iran or proxy",
-    proxy_note="Proxy = a militia Iran arms in Iraq or Syria. Before 2026, Iran mostly answered the US through these groups; those replies count and are labelled \"proxy\".",
-    salvo=dict(count=O.PATRIOTS_PER_SALVO, weapon="Patriots", when="Sep 8-9"),
-    hold_note="Hold cases are weeks of the 2026 war with no logged US sanctions, naval, strike or posture move (Feb 28-Apr 7 and Jul 7-25 left out: US activity there was continuous but logged as a few rows; pre-war weeks left out: too sparsely logged). Most hold weeks have few or no logged events, so they show what the log records in quiet weeks.",
-    not_measured="Oil prices, strain with allies and harm to ordinary Iranians are not measured.",
-    presets=[["2020-01-03", "Soleimani strike"], ["2025-06-22", "US strikes nuclear sites"], ["2026-02-28", "2026 war starts"],
-             ["2026-04-08", "First ceasefire"], ["2026-06-17", "Interim deal"], ["2026-07-08", "July campaign"], ["2026-09-10", "Holding pattern"]],
-    under_logged="Some stretches are logged as one row (for example the nightly US strikes of Jul 9-25, 2026), so \"none logged\" is not proof nothing happened.",
-)
-
 
 def ev(i):
     return NC.ev(i)
@@ -241,10 +227,7 @@ def write(out):
             f.write(blob)
     with open(HISTORY_FILE, "w") as f:
         json.dump(out["history"], f, indent=1)
-    theaters = dict(generated=out["generated"], default=THEATER_ID,
-                    theaters=[dict(id=THEATER_ID, name=THEATER["name"], status=THEATER["status"], data="data/" + THEATER_ID + ".json", asof=out["asof"])])
-    with open(os.path.join(EXPLORER, "theaters.json"), "w") as f:
-        json.dump(theaters, f, indent=1)
+    TH_REG.register(dict(id=THEATER_ID, name=THEATER["name"], status=THEATER["status"], data="data/" + THEATER_ID + ".json", asof=out["asof"]), out["generated"])
 
 
 def recount_diff(out):
@@ -266,7 +249,8 @@ def recount_diff(out):
     return diff
 
 
-if __name__ == "__main__":
+def run_iran():
+    """Build, write and self-check the Iran theater. Returns the list of problems (empty = PASS)."""
     out = build()
     bad = check(out)
     write(out)
@@ -274,4 +258,14 @@ if __name__ == "__main__":
     print("MISMATCH vs workbook counts:" if bad else "page counts match workbook counts", bad or "")
     diff = recount_diff(out)
     print("MISMATCH vs independent recount:" if diff else "risk rates match the independent recount", diff or "")
-    sys.exit(1 if bad or diff else 0)
+    return bad + diff
+
+
+if __name__ == "__main__":
+    # python3 export_explorer.py [theater ...]   (default: every theater in explorer/theaters.json)
+    import importlib
+    problems = []
+    for tid in sys.argv[1:] or TH_REG.registered():
+        print(f"\n[{tid}]")
+        problems += run_iran() if tid == "iran" else importlib.import_module(f"theaters.{tid}.export").run()
+    sys.exit(1 if problems else 0)

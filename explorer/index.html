@@ -469,7 +469,7 @@ function estOf(s, c){ // shown value for one corner
 }
 const pct = v => v === null || v === undefined ? "–" : Math.round(v*100) + "%";
 function riskIndex(o, cs){
-  if(!cs.length) return null;
+  if(!cs.length || o.too_few) return null;       // o.too_few: the theater's data file says this option has too few counted cases to show a rate
   const sc = catScores(o, cs), parts = []; let tot = 0;
   CATS.forEach(c => { const s = sc[c], ok = s.n > 0 || s.assumed; if(ok) tot += S.w[c]; parts.push({c, s, ok, w:S.w[c]}); });
   if(!tot) return null;
@@ -793,8 +793,8 @@ function weeklyShipping(){
   return `<div class="wk" role="img" aria-label="Logged attacks on shipping per week">` + counts.map((c, i) => `<div><b>${c}</b><i style="height:${Math.max(2, c/mx*80)}px"></i><span>${weeks[i].toLocaleDateString("en-US",{month:"short",day:"numeric"})}</span></div>`).join("") + `</div>`;
 }
 function outcomesBlock(o, st, ix){
-  if(!o.cases.length){
-    let h = `<p class="nodata" style="margin-bottom:10px">No past case of "${esc(o.name)}" is in the log, so there is no measured outcome. What is measured is what happens anyway: attacks on shipping, logged per week (the real count is higher, because big clusters are logged as one row).</p>` + weeklyShipping() +
+  if(!o.cases.length || o.too_few){
+    let h = `<p class="nodata" style="margin-bottom:10px">${o.cases.length ? "Too few cases: only " + o.cases.length + " past case" + (o.cases.length === 1 ? "" : "s") + " of" : "No past case of"} "${esc(o.name)}" ${o.cases.length ? "are" : "is"} in the log, so there is no measured outcome${o.cases.length ? " worth a percentage (the cases are listed below)" : ""}. What is measured is what happens anyway: attacks on shipping, logged per week (the real count is higher, because big clusters are logged as one row).</p>` + weeklyShipping() +
       `<p class="legend">Now about ${D.baseline.per_week} logged attacks a week (${D.baseline.n} in ${D.baseline.weeks} weeks) with no new US move.</p>`;
     if(fcs(o).length) h += `<h2 style="margin-top:16px">NAPOR's open forecasts (locked before the outcome)</h2>` + fcs(o).map(f => `<div class="fgauge"><div class="q">${esc(f.question)}<small>${esc(f.id)} · resolves by ${fmtDate(f.deadline)}</small></div><div class="big">${Math.round(f.p*100)}%</div><div class="bar"><i style="width:${f.p*100}%"></i></div></div>`).join("");
     return h;
@@ -850,6 +850,7 @@ function situationBlock(o){
     (D.week_events && D.week_events.length ? `<p class="nodata" style="margin-top:8px">New in the log this week:</p><ul>${D.week_events.slice().reverse().map(e => `<li><span class="mono">${fmtDate(e.date)}</span> #${e.id} ${esc(e.title.length > 130 ? e.title.slice(0,127) + "…" : e.title)}</li>`).join("")}</ul>` : "") + `</details></div>`;
 }
 function indexPanel(o, cs){
+  if(o.too_few) return `<p class="nodata">Too few cases: ${o.cases.length ? "only " + o.cases.length + " past case" + (o.cases.length === 1 ? "" : "s") + " of" : "no past cases of"} "${esc(o.name)}" ${o.cases.length ? "are" : "are"} in the log, so NAPOR does not show a risk index for it. The cases are listed below; the notes above are reasoning, not data.</p>`;
   if(!o.cases.length) return `<p class="nodata">No past cases of "${esc(o.name)}" are in the log, so NAPOR cannot compute a risk index for it. The visuals above show what is measured instead.</p>`;
   const holdNote = o.is_hold && TH.hold_note ? `<p class="note" style="margin-bottom:10px">${esc(TH.hold_note)}</p>` : "";
   const ix = riskIndex(o, cs);
@@ -970,7 +971,7 @@ function indexAt(o, iso){
 }
 function spark(o){
   const pts = []; let t = dd("2026-02-01"), end = dd(D.asof);
-  const first = dd(D.series[0][0]); t = new Date(Math.max(first, dd("2019-06-01")));
+  const first = dd(D.series[0][0]); t = new Date(Math.max(first, dd(TH.spark_from || "2019-06-01")));
   const step = 30; while(t <= end){ const iso = t.toISOString().slice(0,10); const ix = indexAt(o, iso); pts.push([iso, ix ? ix.idx : null]); t = new Date(t.getTime() + step*864e5); }
   pts.push([D.asof, (indexAt(o, D.asof) || {}).idx ?? null]);
   const W = 220, H = 34, n = pts.length, x = i => 2 + (W-4) * i / (n-1), y = v => H - 3 - (H-6) * v;
@@ -989,8 +990,8 @@ function renderTime(){
     const then = riskIndex(o, allKnown(o)), now = indexAt(o, D.asof), nxt = S.asof ? nextMoves(o, S.asof, 14) : [];
     const stt = S.asof ? statusAt(o, S.asof) : null;
     h += `<tr data-k="${o.key}"><td><b class="mono" style="color:var(--accent)">${o.key}</b> ${esc(o.name)}</td><td>${stt ? `<span class="pill ${esc(stt.status)}" title="${esc(stt.reason || "")}">${esc(stt.label)}</span>` : stPill(o)}</td>` +
-      `<td class="mono">${then ? Math.round(then.idx*100) + "% <span class=\"nodata\">(" + then.n + " cases)</span>" : "<span class=\"nodata\">no cases yet</span>"}</td>` +
-      `<td class="mono">${now ? Math.round(now.idx*100) + "%" : "–"}</td><td>${o.cases.length ? spark(o) : '<span class="nodata">no cases</span>'}</td>` +
+      `<td class="mono">${then ? Math.round(then.idx*100) + "% <span class=\"nodata\">(" + then.n + " cases)</span>" : "<span class=\"nodata\">" + (o.too_few ? "too few cases" : "no cases yet") + "</span>"}</td>` +
+      `<td class="mono">${now ? Math.round(now.idx*100) + "%" : "–"}</td><td>${o.cases.length && !o.too_few ? spark(o) : '<span class="nodata">' + (o.too_few ? "too few cases" : "no cases") + '</span>'}</td>` +
       `<td>${!S.asof ? '<span class="nodata">pick a past date</span>' : nxt.length ? "Yes: " + nxt.map(c => `#${c.id} ${fmtDate(c.date)}`).join(", ") : (addDays(S.asof, 1) > D.asof ? "not known yet" : "None logged")}</td></tr>`;
   }
   h += `</tbody></table></div><p class="legend">Status on past dates is worked out from the log: "In use" if the US did it in the 14 days before, "Constrained" if a ceasefire or pledge in force ruled it out, otherwise "Open". The option list stays the same so risk can be compared across dates. Early years are logged more thinly, so early indexes rest on few cases. War phases were named with hindsight; the risk numbers use only what was known on the date. ${esc(TH.under_logged || "")}</p>` +
@@ -1005,7 +1006,7 @@ function renderExplore(){
   let h = '<div class="main"><div class="list" role="group" aria-label="Options">';
   for(const x of D.options){
     const c2 = activeCases(x), xi = riskIndex(x, c2);
-    h += `<button data-k="${x.key}" aria-pressed="${x.key === S.sel}"><span class="key">${x.key}</span><span class="nm">${esc(x.name)}</span><span class="row2">${stPill(x)}</span><span class="ev">${xi ? "Risk index " + Math.round(xi.idx*100) + "% · " : ""}${c2.length} of ${x.cases.length} ${x.is_hold ? "hold weeks" : "past cases"}${S.phase || S.band ? " in this condition" : ""}</span></button>`;
+    h += `<button data-k="${x.key}" aria-pressed="${x.key === S.sel}"><span class="key">${x.key}</span><span class="nm">${esc(x.name)}</span><span class="row2">${stPill(x)}</span><span class="ev">${xi ? "Risk index " + Math.round(xi.idx*100) + "% · " : x.too_few ? "Too few cases · " : ""}${c2.length} of ${x.cases.length} ${x.is_hold ? "hold weeks" : "past cases"}${S.phase || S.band ? " in this condition" : ""}</span></button>`;
   }
   h += `</div><div class="panel detail"><div class="head"><h3>${o.key}. ${esc(o.name)}</h3><p class="what">${esc(o.what)}</p>${situationBlock(o)}` +
     `<div class="meter"><span>${st.cases} of ${st.total} past cases ${S.phase || S.band ? "match the condition you picked" : "in the log"}</span><span class="bar"><i style="width:${Math.min(100, st.cases / 8 * 100)}%"></i></span><span>8+ cases is a fair sample</span></div></div>`;
@@ -1038,11 +1039,11 @@ function renderCompare(){
     let mid, val;
     if(S.metric === "index"){
       const ix = riskIndex(o, activeCases(o));
-      mid = ix ? stackBar(ix) : `<div class="nodata">${o.cases.length ? "no cases in this condition" : "no past cases, so no index"}</div>`;
+      mid = ix ? stackBar(ix) : `<div class="nodata">${o.too_few ? "too few cases to show a risk index" : o.cases.length ? "no cases in this condition" : "no past cases, so no index"}</div>`;
       val = ix ? Math.round(ix.idx*100) + "% <small>range " + Math.round(ix.lo*100) + "–" + Math.round(ix.hi*100) + "%</small>" : "–";
     } else {
-      const c = stats(o)[S.metric], has = c && c.n;
-      mid = has ? iv(c) : `<div class="nodata">${(METRICS[S.metric].trig && !o.trigger) || c === null ? "not measured for this option" : "no past cases"}</div>`;
+      const c = stats(o)[S.metric], has = c && c.n && !o.too_few;
+      mid = has ? iv(c) : `<div class="nodata">${(METRICS[S.metric].trig && !o.trigger) || c === null ? "not measured for this option" : o.too_few ? "too few cases" : "no past cases"}</div>`;
       val = has ? P(c.k, c.n) + ` <small>${c.k} of ${c.n}</small>` : "–";
     }
     h += `<div class="frow" data-k="${o.key}"><div class="nm"><b>${o.key}</b>${esc(o.name)}<br>${stPill(o)}</div>${mid}<div class="val">${val}</div></div>`;
@@ -1148,12 +1149,12 @@ function renderReport(){
   const fst = lc[0], lst = lc[lc.length - 1];
   const take3 = fst && lst ? `${lst.shrunk2 > fst.shrunk2 + 0.03 ? "Scores got worse over time" : "Scores held steady over time"}: ${f3(fst.shrunk2)} in ${fst.period}, ${f3(lst.shrunk2)} in ${lst.period}${lst.shrunk2 > 0.24 ? ", close to a coin flip, so the current phase is hard to read from the past" : ""}.` : "";
   const oosb = oos.brier, oBest = ["raw","shrunk2","pooled"].reduce((a, m) => oosb[m] < oosb[a] ? m : a, "raw");
-  const take4 = oosb[oBest] > 0.25 ? `Fitted on 2019-2025 only, every method did worse on the 2026 cases than always saying 50% (best ${f3(oosb[oBest])}). The pre-war record alone does not predict this war well; 2026 cases are needed.` : `Fitted on 2019-2025 only, ${METHOD_NAME[oBest]} scored ${f3(oosb[oBest])} on the 2026 cases, better than a coin flip.`;
+  const take4 = oosb[oBest] > 0.25 ? `Fitted on ${oos.train_label || "2019-2025"} only, every method did worse on the 2026 cases than always saying 50% (best ${f3(oosb[oBest])}). The pre-war record alone does not predict this war well; 2026 cases are needed.` : `Fitted on ${oos.train_label || "2019-2025"} only, ${METHOD_NAME[oBest]} scored ${f3(oosb[oBest])} on the 2026 cases, better than a coin flip.`;
   h += `<h3 style="font-size:16px;margin:22px 0 4px">Backtest of the risk numbers</h3><p class="nodata" style="margin-bottom:12px">${bt.predictions} predictions across all options and categories; ${bt.skipped_no_history} skipped because the option had no closed past case yet. Updated ${fmtDate(bt.generated, true)}.</p><div class="rc-grid">`;
   h += `<div class="rc-card"><h3>Which method predicts best</h3><p class="take">${esc(take1)}</p>${hbars(["raw","shrunk2","pooled","half"].map(m => ({label: METHOD_NAME[m], v: ov[m], hl: m === best})), 0.32)}</div>`;
   h += `<div class="rc-card"><h3>Calibration</h3><p class="take">${esc(take2)}</p>${calibSvg(cal)}</div>`;
   h += `<div class="rc-card"><h3>Over time</h3><p class="take">${esc(take3)}</p>${learnSvg(lc)}</div>`;
-  h += `<div class="rc-card"><h3>Out of sample: 2019-2025 → 2026</h3><p class="take">${esc(take4)}</p>${hbars(["raw","shrunk2","pooled","half"].map(m => ({label: METHOD_NAME[m], v: oosb[m], hl: m === oBest})), 0.34)}<p class="legend">${oos.scored} of ${oos.test_rows} 2026 outcomes scored; ${oos.skipped} had no pre-2026 case of that option.</p></div>`;
+  h += `<div class="rc-card"><h3>Out of sample: ${oos.train_label || "2019-2025"} → 2026</h3><p class="take">${esc(take4)}</p>${hbars(["raw","shrunk2","pooled","half"].map(m => ({label: METHOD_NAME[m], v: oosb[m], hl: m === oBest})), 0.34)}<p class="legend">${oos.scored} of ${oos.test_rows} 2026 outcomes scored; ${oos.skipped} had no pre-2026 case of that option.</p></div>`;
   if(bt.weighting){ // recency weights: a plain table, options of the test in fixed order (not sorted by score)
     const wg = bt.weighting, dw = wg.decision, inUse = (D.estimate.weighting || {}).name || "none";
     const bad = Object.entries(dw.worse_by_cat || {}).filter(([, v]) => v > 0.01).map(([c, v]) => `${CAT_NAME[c].toLowerCase()} worse by ${f3(v)}`);
@@ -1207,7 +1208,7 @@ function renderHow(){
   ${useEst() ? `<h3>NAPOR estimate</h3><p>With few cases, a raw rate jumps around (1 of 2 is 50%). Each corner is pulled a little toward the same corner across all options: (k + ${EST_M()} × all-options rate) ÷ (n + ${EST_M()}). In the backtest this predicted better than the raw rate in every category (see Report card).</p>` : ""}
   ${useEst() ? recencyHow() : ""}
   <h3>x of n and the range</h3><p>"4 of 10" means 4 of the 10 past cases counted as risk. The range is where the true rate could plausibly sit (95% Wilson interval). Small samples give wide ranges.</p>
-  <h3>Sources</h3><p>Only allowed outlets (wire services, major papers and broadcasters, defense press) and official statements. No Wikipedia, blogs or social media. ${esc(TH.adversary)}'s state media appear only as labelled claims. Each event has a credibility score from 0 to 1; events under 0.5 are left out of the numbers.</p>
+  <h3>Sources</h3><p>Only allowed outlets (wire services, major papers and broadcasters, defense press) and official statements. No Wikipedia, blogs or social media. ${esc(TH.claim_note || (TH.adversary + "'s state media"))} appear only as labelled claims. Each event has a credibility score from 0 to 1; events under 0.5 are left out of the numbers.</p>
   <h3>Weekly update</h3><p>An agent adds the week's events every Monday, grades forecasts and rebuilds this page after a full check. This data: ${fmtDate(D.generated, true)}, news through ${fmtDate(D.asof, true)}.</p>
   <h3>Known limits</h3><ul><li>Small samples: read numbers as hints.</li><li>"After" is not "because of".</li><li>Big campaigns are logged as a few rows; quiet weeks may be under-logged.</li><li>Phase names were drawn with hindsight.</li><li>${esc(TH.not_measured || "")}</li></ul>`;
 }
