@@ -13,29 +13,15 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import data, napor_options as O, napor_ids as N, napor_threads as T, napor_intensity as INT, napor_forecasts as F
 import napor_cases as NC, backtest_risk as BR
+from theaters.iran.config import THEATER, THEATER_ID   # wording dict now lives in the theater package
+import theaters as TH_REG
 
 EV = O.EV
 last = max(e[1] for e in data.events)
 first = min(e[1] for e in data.events)
 EXPLORER = os.path.join(HERE, "..", "explorer")
-THEATER_ID = "iran"
 DATA_FILE = os.path.join(EXPLORER, "data", THEATER_ID + ".json")
 HISTORY_FILE = os.path.join(EXPLORER, "data", THEATER_ID + "-history.json")
-
-# Words the page uses for this theater, so a future theater renders with its own wording.
-THEATER = dict(
-    id=THEATER_ID, name="Iran", status="active", title="Iran war",
-    sub="The options the US has right now in the Iran war, and what followed the last times the US did something like each one.",
-    adversary="Iran", actor="Iran or an Iran-backed group", actor_short="Iran or proxy",
-    proxy_note="Proxy = a militia Iran arms in Iraq or Syria. Before 2026, Iran mostly answered the US through these groups; those replies count and are labelled \"proxy\".",
-    salvo=dict(count=O.PATRIOTS_PER_SALVO, weapon="Patriots", when="Sep 8-9"),
-    hold_note="Hold cases are weeks of the 2026 war with no logged US sanctions, naval, strike or posture move (Feb 28-Apr 7 and Jul 7-25 left out: US activity there was continuous but logged as a few rows; pre-war weeks left out: too sparsely logged). Most hold weeks have few or no logged events, so they show what the log records in quiet weeks.",
-    not_measured="Oil prices, strain with allies and harm to ordinary Iranians are not measured.",
-    presets=[["2020-01-03", "Soleimani strike"], ["2025-06-22", "US strikes nuclear sites"], ["2026-02-28", "2026 war starts"],
-             ["2026-04-08", "First ceasefire"], ["2026-06-17", "Interim deal"], ["2026-07-08", "July campaign"], ["2026-09-10", "Holding pattern"]],
-    under_logged="Some stretches are logged as one row (for example the nightly US strikes of Jul 9-25, 2026), so \"none logged\" is not proof nothing happened.",
-)
-
 
 def ev(i):
     return NC.ev(i)
@@ -97,7 +83,7 @@ def build():
             cases=cases, risks=[rp[c] for c in O.RISK_CATEGORIES], pros=O.PROS[k], harms=O.HARMS[k], unknown=O.UNKNOWNS[k],
             forecasts=[dict(id=f["id"], question=f["question"], p=f["probability"], deadline=f["deadline"], made_on=f["made_on"]) for f in open_fc if f["option"] == k]))
     # Every logged US move of each kind (not only the census cases), for "what did the US do next" on past dates.
-    _CONC = ("proposal", "talks", "ceasefire announcement", "ceasefire (", "ceasefire statement")
+    _CONC = BR.CONC
     census_ids = {c[0] for c in O.census}
     def kind_of(e):
         t = e[0]; k = data.event_kind[t]
@@ -130,7 +116,13 @@ def build():
         forecasts=[dict(id=f["id"], question=f["question"], p=f["probability"], made_on=f["made_on"], deadline=f["deadline"], option=f["option"],
                         outcome=f["outcome"], brier=f["brier"], note=f["resolution_note"], basis=f["basis"]) for f in fcs],
         backtest=BR.run(cases_by_key))
-    out["estimate"] = dict(shrink=out["report_card"]["backtest"]["decision"]["adopt"], m=BR.M_MAIN)
+    bt = out["report_card"]["backtest"]
+    dw = bt["weighting"]["decision"]
+    # estimate.weighting: the recency weight the page applies to every case (scheme "none" = every case counts 1)
+    out["estimate"] = dict(shrink=bt["decision"]["adopt"], m=BR.M_MAIN,
+                           weighting=dict(scheme=dw["scheme"], param=dw["param"], name=dw["name"], adopt=dw["adopt"], best_candidate=dw["best_candidate"],
+                                          gain=dw["gain"], worse_by_cat=dw["worse_by_cat"], rule=dw["rule"]))
+    out["report_card"]["political_proposal"] = bt["political_proposal"]
     ids = set()
     for o in out["options"]:
         for c in o["cases"]:
@@ -154,14 +146,20 @@ def wilson(k, n, z=1.96):
     return max(0, (c - m) / d), min(1, (c + m) / d)
 
 
-def category_scores(o, cases):
-    return NC.category_scores({k: o[k] for k in ("trigger", "military", "is_hold")}, cases)
+def weighting_of(out):
+    wt = out["estimate"]["weighting"]
+    return (wt["scheme"], wt["param"])
 
 
-def risk_index(o, cases, w=None, pool=None):
-    """Average of the measured corners. With pool (category -> pooled rate), corners are shrunk: (k + m p)/(n + m)."""
+def category_scores(o, cases, weighting=("none", None), T=None):
+    return NC.category_scores({k: o[k] for k in ("trigger", "military", "is_hold")}, cases, weighting, T)
+
+
+def risk_index(o, cases, w=None, pool=None, weighting=("none", None), T=None):
+    """Average of the measured corners. With pool (category -> pooled rate), corners are shrunk toward it:
+    (sum of weighted risks + m p)/(sum of weights + m); with no recency weighting that is (k + m p)/(n + m)."""
     if not cases: return None
-    sc = category_scores(o, cases); w = w or {c: 1 for c in CATS}
+    sc = category_scores(o, cases, weighting, T); w = w or {c: 1 for c in CATS}
     num = tot = 0
     for c in CATS:
         s = sc[c]
@@ -169,30 +167,32 @@ def risk_index(o, cases, w=None, pool=None):
             if s.get("assumed"):
                 p = 0
             elif pool is not None and pool.get(c) is not None:
-                p = (s["k"] + BR.M_MAIN * pool[c]) / (s["n"] + BR.M_MAIN)
+                p = (s["swy"] + BR.M_MAIN * pool[c]) / (s["sw"] + BR.M_MAIN)
             else:
                 p = s["k"] / s["n"]
             num += w[c] * p; tot += w[c]
     return round(num / tot, 3) if tot else None
 
 
-def pooled_rates(options):
+def pooled_rates(options, weighting=("none", None), T=None):
+    """Weighted all-options rate per category: sum(w*y) / sum(w) over every option's counted cases (same weights)."""
     tot = {c: [0, 0] for c in CATS}
     for o in options:
-        sc = category_scores(o, o["cases"])
+        sc = category_scores(o, o["cases"], weighting, T)
         for c in CATS:
             if not sc[c].get("assumed"):
-                tot[c][0] += sc[c]["k"]; tot[c][1] += sc[c]["n"]
+                tot[c][0] += sc[c]["swy"]; tot[c][1] += sc[c]["sw"]
     return {c: (k / n if n else None) for c, (k, n) in tot.items()}
 
 
 def update_history(out):
     path = HISTORY_FILE if os.path.exists(HISTORY_FILE) else os.path.join(EXPLORER, "history.json")
     hist = json.load(open(path)) if os.path.exists(path) else []
-    pool = pooled_rates(out["options"])
+    W, T = weighting_of(out), dt.date.fromisoformat(out["asof"])
+    pool = pooled_rates(out["options"], W, T)
     snap = dict(asof=out["asof"], intensity=out["intensity"]["pts"], band=out["intensity"]["band"], events=out["n_events"],
                 options={o["key"]: dict(n=len(o["cases"]), index=risk_index(o, o["cases"]),
-                                        estimate=risk_index(o, o["cases"], pool=pool) if out["estimate"]["shrink"] else None) for o in out["options"]},
+                                        estimate=risk_index(o, o["cases"], pool=pool, weighting=W, T=T) if out["estimate"]["shrink"] else None) for o in out["options"]},
                 status={k: dict(status=v["status"], label=v["label"]) for k, v in ((out.get("now") or {}).get("options") or {}).items()},
                 status_as_of=(out.get("now") or {}).get("as_of"))
     hist = [h for h in hist if h["asof"] != snap["asof"]] + [snap]
@@ -227,26 +227,30 @@ def write(out):
             f.write(blob)
     with open(HISTORY_FILE, "w") as f:
         json.dump(out["history"], f, indent=1)
-    theaters = dict(generated=out["generated"], default=THEATER_ID,
-                    theaters=[dict(id=THEATER_ID, name=THEATER["name"], status=THEATER["status"], data="data/" + THEATER_ID + ".json", asof=out["asof"])])
-    with open(os.path.join(EXPLORER, "theaters.json"), "w") as f:
-        json.dump(theaters, f, indent=1)
+    TH_REG.register(dict(id=THEATER_ID, name=THEATER["name"], status=THEATER["status"], data="data/" + THEATER_ID + ".json", asof=out["asof"]), out["generated"])
 
 
 def recount_diff(out):
+    """Compare [k, n, sum_wy, sum_w] per option and category with the independent recount (tolerance 1e-9)."""
     import verify_explorer
-    ver, diff = verify_explorer.recount(), []
+    ver, diff = verify_explorer.recount(weighting=weighting_of(out), asof=out["asof"]), []
+    W, T = weighting_of(out), dt.date.fromisoformat(out["asof"])
     for o in out["options"]:
         if not o["cases"]:
             continue
-        sc = category_scores(o, o["cases"])
+        sc = category_scores(o, o["cases"], W, T)
         for c in CATS:
-            if not sc[c].get("assumed") and [sc[c]["k"], sc[c]["n"]] != ver[o["key"]][c]:
-                diff.append((o["key"], c, [sc[c]["k"], sc[c]["n"]], ver[o["key"]][c]))
+            if sc[c].get("assumed"):
+                continue
+            mine = [sc[c]["k"], sc[c]["n"], sc[c]["swy"], sc[c]["sw"]]
+            theirs = ver[o["key"]][c]
+            if any(abs(a - b) > 1e-9 for a, b in zip(mine, theirs)):
+                diff.append((o["key"], c, mine, theirs))
     return diff
 
 
-if __name__ == "__main__":
+def run_iran():
+    """Build, write and self-check the Iran theater. Returns the list of problems (empty = PASS)."""
     out = build()
     bad = check(out)
     write(out)
@@ -254,4 +258,14 @@ if __name__ == "__main__":
     print("MISMATCH vs workbook counts:" if bad else "page counts match workbook counts", bad or "")
     diff = recount_diff(out)
     print("MISMATCH vs independent recount:" if diff else "risk rates match the independent recount", diff or "")
-    sys.exit(1 if bad or diff else 0)
+    return bad + diff
+
+
+if __name__ == "__main__":
+    # python3 export_explorer.py [theater ...]   (default: every theater in explorer/theaters.json)
+    import importlib
+    problems = []
+    for tid in sys.argv[1:] or TH_REG.registered():
+        print(f"\n[{tid}]")
+        problems += run_iran() if tid == "iran" else importlib.import_module(f"theaters.{tid}.export").run()
+    sys.exit(1 if problems else 0)

@@ -45,10 +45,12 @@ def outlet_name(raw):
     return s.strip()
 
 
-def source_kind(raw):
+def source_kind(raw, claim_media=None, claim_label="Iranian state media (claim only)"):
+    """Kind of outlet. claim_media / claim_label are per theater (Iran: state media; Houthis: al-Masirah, Saba)."""
     n = outlet_name(raw)
-    if n in STATE_MEDIA or any(n.startswith(x) for x in STATE_MEDIA):
-        return "Iranian state media (claim only)"
+    media = STATE_MEDIA if claim_media is None else claim_media
+    if n in media or any(n.startswith(x) for x in media):
+        return claim_label
     if any(n.startswith(x) for x in OFFICIAL):
         return "Official statement"
     return "Independent outlet"
@@ -93,7 +95,7 @@ def corroboration(eid):
     rs = reports_for(eid)
     indep = {r["outlet"] for r in rs if r["kind"] == "Independent outlet"}
     official = {r["outlet"] for r in rs if r["kind"] == "Official statement"}
-    claims = {r["outlet"] for r in rs if r["kind"].startswith("Iranian state media")}
+    claims = {r["outlet"] for r in rs if r["kind"].endswith("(claim only)")}
     return dict(reports=len(rs), independent=len(indep), official=len(official), claim_only=len(claims))
 
 
@@ -129,7 +131,7 @@ MIN_REPORT_WEIGHT = 0.30
 
 
 def source_score(r):
-    if r["kind"].startswith("Iranian state media"): return 0.30
+    if r["kind"].endswith("(claim only)"): return 0.30
     if r["kind"] == "Official statement": return 0.80
     return 0.80 if any(r["outlet"].startswith(a) for a in ALLOWED) else 0.60
 
@@ -146,10 +148,11 @@ def report_weight(r):
     return round(source_score(r) * fit_score(r), 3)
 
 
-def event_credibility(eid):
-    if eid in MERGED: return None
+def credibility_of(reports, check=""):
+    """Credibility 0-1 from a list of report dicts (outlet, kind, seen) and the source-check label.
+    Shared by every theater: event_credibility() below is the Iran wrapper."""
     best = {}
-    for r in reports_for(eid):
+    for r in reports:
         w = report_weight(r)
         if w >= MIN_REPORT_WEIGHT:
             best[r["outlet"]] = max(best.get(r["outlet"], 0), w)
@@ -157,11 +160,15 @@ def event_credibility(eid):
     for w in best.values():
         p_all_wrong *= (1 - w)
     c = min(0.99, 1 - p_all_wrong) if best else 0.0          # never claim certainty
-    check = event_audit[eid]["check"]
     if check == "Partly verified": c *= 0.8
     elif check == "Date conflict": c *= 0.9
     elif check == "Not supported": c = min(c, 0.20)
     return round(c, 2)
+
+
+def event_credibility(eid):
+    if eid in MERGED: return None
+    return credibility_of(reports_for(eid), event_audit[eid]["check"])
 
 
 def credibility_label(c):

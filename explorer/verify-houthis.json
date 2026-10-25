@@ -1,0 +1,2000 @@
+{
+ "asof": "2026-10-13",
+ "weighting": {
+  "scheme": "none",
+  "param": null
+ },
+ "shrink": true,
+ "m": 2,
+ "pooled": {
+  "people": 0.031914893617021274,
+  "escalation": 0.09574468085106383,
+  "military": 0.09876543209876543,
+  "economic": 0.06382978723404255,
+  "political": 0.9042553191489362
+ },
+ "options": {
+  "A": {
+   "people": [
+    3,
+    76,
+    3.0,
+    76.0
+   ],
+   "escalation": [
+    5,
+    76,
+    5.0,
+    76.0
+   ],
+   "military": [
+    5,
+    76,
+    5.0,
+    76.0
+   ],
+   "economic": [
+    4,
+    76,
+    4.0,
+    76.0
+   ],
+   "political": [
+    68,
+    76,
+    68.0,
+    76.0
+   ],
+   "n": 76,
+   "estimate": {
+    "people": 0.03927986906710311,
+    "escalation": 0.06655755591925805,
+    "military": 0.06663501107945552,
+    "economic": 0.05291871249318058,
+    "political": 0.8949809056192035
+   }
+  },
+  "B": {
+   "people": [
+    0,
+    4,
+    0.0,
+    4.0
+   ],
+   "escalation": [
+    1,
+    4,
+    1.0,
+    4.0
+   ],
+   "military": [
+    0,
+    0,
+    0.0,
+    0.0
+   ],
+   "economic": [
+    1,
+    4,
+    1.0,
+    4.0
+   ],
+   "political": [
+    4,
+    4,
+    4.0,
+    4.0
+   ],
+   "n": 4,
+   "estimate": {
+    "people": 0.010638297872340425,
+    "escalation": 0.19858156028368792,
+    "military": 0.0,
+    "economic": 0.1879432624113475,
+    "political": 0.9680851063829787
+   }
+  },
+  "C": {
+   "people": [
+    0,
+    7,
+    0.0,
+    7.0
+   ],
+   "escalation": [
+    0,
+    7,
+    0.0,
+    7.0
+   ],
+   "military": [
+    0,
+    0,
+    0.0,
+    0.0
+   ],
+   "economic": [
+    0,
+    7,
+    0.0,
+    7.0
+   ],
+   "political": [
+    7,
+    7,
+    7.0,
+    7.0
+   ],
+   "n": 7,
+   "estimate": {
+    "people": 0.0070921985815602835,
+    "escalation": 0.02127659574468085,
+    "military": 0.0,
+    "economic": 0.014184397163120567,
+    "political": 0.978723404255319
+   }
+  },
+  "D": {
+   "people": [
+    0,
+    0,
+    0.0,
+    0.0
+   ],
+   "escalation": [
+    0,
+    0,
+    0.0,
+    0.0
+   ],
+   "military": [
+    0,
+    0,
+    0.0,
+    0.0
+   ],
+   "economic": [
+    0,
+    0,
+    0.0,
+    0.0
+   ],
+   "political": [
+    0,
+    0,
+    0.0,
+    0.0
+   ],
+   "n": 0,
+   "estimate": {
+    "people": null,
+    "escalation": null,
+    "military": null,
+    "economic": null,
+    "political": null
+   }
+  },
+  "E": {
+   "people": [
+    0,
+    2,
+    0.0,
+    2.0
+   ],
+   "escalation": [
+    0,
+    2,
+    0.0,
+    2.0
+   ],
+   "military": [
+    0,
+    2,
+    0.0,
+    2.0
+   ],
+   "economic": [
+    0,
+    2,
+    0.0,
+    2.0
+   ],
+   "political": [
+    2,
+    2,
+    2.0,
+    2.0
+   ],
+   "n": 2,
+   "estimate": {
+    "people": 0.015957446808510637,
+    "escalation": 0.047872340425531915,
+    "military": 0.04938271604938271,
+    "economic": 0.031914893617021274,
+    "political": 0.9521276595744681
+   }
+  },
+  "F": {
+   "people": [
+    0,
+    3,
+    0.0,
+    3.0
+   ],
+   "escalation": [
+    3,
+    3,
+    3.0,
+    3.0
+   ],
+   "military": [
+    3,
+    3,
+    3.0,
+    3.0
+   ],
+   "economic": [
+    1,
+    3,
+    1.0,
+    3.0
+   ],
+   "political": [
+    3,
+    3,
+    3.0,
+    3.0
+   ],
+   "n": 3,
+   "estimate": {
+    "people": 0.01276595744680851,
+    "escalation": 0.6382978723404256,
+    "military": 0.6395061728395062,
+    "economic": 0.225531914893617,
+    "political": 0.9617021276595745
+   }
+  },
+  "G": {
+   "people": [
+    0,
+    0,
+    0.0,
+    0.0
+   ],
+   "escalation": [
+    0,
+    0,
+    0.0,
+    0.0
+   ],
+   "military": [
+    0,
+    0,
+    0.0,
+    0.0
+   ],
+   "economic": [
+    0,
+    0,
+    0.0,
+    0.0
+   ],
+   "political": [
+    0,
+    0,
+    0.0,
+    0.0
+   ],
+   "n": 0,
+   "estimate": {
+    "people": null,
+    "escalation": null,
+    "military": null,
+    "economic": null,
+    "political": null
+   }
+  },
+  "H": {
+   "people": [
+    0,
+    2,
+    0.0,
+    2.0
+   ],
+   "escalation": [
+    0,
+    2,
+    0.0,
+    2.0
+   ],
+   "military": [
+    0,
+    0,
+    0.0,
+    0.0
+   ],
+   "economic": [
+    0,
+    2,
+    0.0,
+    2.0
+   ],
+   "political": [
+    1,
+    2,
+    1.0,
+    2.0
+   ],
+   "n": 2,
+   "estimate": {
+    "people": 0.015957446808510637,
+    "escalation": 0.047872340425531915,
+    "military": 0.0,
+    "economic": 0.031914893617021274,
+    "political": 0.7021276595744681
+   }
+  }
+ },
+ "lookbacks": {
+  "2016-10-14": {
+   "asof": "2016-10-14",
+   "pooled": {
+    "people": null,
+    "escalation": null,
+    "military": null,
+    "economic": null,
+    "political": null
+   },
+   "options": {
+    "A": {
+     "people": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "escalation": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "political": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "n": 0,
+     "estimate": {
+      "people": null,
+      "escalation": null,
+      "military": null,
+      "economic": null,
+      "political": null
+     }
+    },
+    "B": {
+     "people": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "escalation": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "political": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "n": 0,
+     "estimate": {
+      "people": null,
+      "escalation": null,
+      "military": 0.0,
+      "economic": null,
+      "political": null
+     }
+    },
+    "C": {
+     "people": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "escalation": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "political": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "n": 0,
+     "estimate": {
+      "people": null,
+      "escalation": null,
+      "military": 0.0,
+      "economic": null,
+      "political": null
+     }
+    },
+    "D": {
+     "people": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "escalation": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "political": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "n": 0,
+     "estimate": {
+      "people": null,
+      "escalation": null,
+      "military": null,
+      "economic": null,
+      "political": null
+     }
+    },
+    "E": {
+     "people": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "escalation": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "political": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "n": 0,
+     "estimate": {
+      "people": null,
+      "escalation": null,
+      "military": null,
+      "economic": null,
+      "political": null
+     }
+    },
+    "F": {
+     "people": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "escalation": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "political": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "n": 1,
+     "estimate": {
+      "people": null,
+      "escalation": null,
+      "military": null,
+      "economic": null,
+      "political": null
+     }
+    },
+    "G": {
+     "people": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "escalation": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "political": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "n": 0,
+     "estimate": {
+      "people": null,
+      "escalation": null,
+      "military": null,
+      "economic": null,
+      "political": null
+     }
+    },
+    "H": {
+     "people": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "escalation": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "political": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "n": 0,
+     "estimate": {
+      "people": null,
+      "escalation": null,
+      "military": 0.0,
+      "economic": null,
+      "political": null
+     }
+    }
+   }
+  },
+  "2023-12-31": {
+   "asof": "2023-12-31",
+   "pooled": {
+    "people": 0.0,
+    "escalation": 0.16666666666666666,
+    "military": 0.3333333333333333,
+    "economic": 0.0,
+    "political": 1.0
+   },
+   "options": {
+    "A": {
+     "people": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "escalation": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "political": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "n": 0,
+     "estimate": {
+      "people": null,
+      "escalation": null,
+      "military": null,
+      "economic": null,
+      "political": null
+     }
+    },
+    "B": {
+     "people": [
+      0,
+      1,
+      0.0,
+      1.0
+     ],
+     "escalation": [
+      0,
+      1,
+      0.0,
+      1.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      1,
+      0.0,
+      1.0
+     ],
+     "political": [
+      1,
+      1,
+      1.0,
+      1.0
+     ],
+     "n": 1,
+     "estimate": {
+      "people": 0.0,
+      "escalation": 0.1111111111111111,
+      "military": 0.0,
+      "economic": 0.0,
+      "political": 1.0
+     }
+    },
+    "C": {
+     "people": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "escalation": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "political": [
+      2,
+      2,
+      2.0,
+      2.0
+     ],
+     "n": 2,
+     "estimate": {
+      "people": 0.0,
+      "escalation": 0.08333333333333333,
+      "military": 0.0,
+      "economic": 0.0,
+      "political": 1.0
+     }
+    },
+    "D": {
+     "people": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "escalation": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "political": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "n": 0,
+     "estimate": {
+      "people": null,
+      "escalation": null,
+      "military": null,
+      "economic": null,
+      "political": null
+     }
+    },
+    "E": {
+     "people": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "escalation": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "military": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "economic": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "political": [
+      2,
+      2,
+      2.0,
+      2.0
+     ],
+     "n": 2,
+     "estimate": {
+      "people": 0.0,
+      "escalation": 0.08333333333333333,
+      "military": 0.16666666666666666,
+      "economic": 0.0,
+      "political": 1.0
+     }
+    },
+    "F": {
+     "people": [
+      0,
+      1,
+      0.0,
+      1.0
+     ],
+     "escalation": [
+      1,
+      1,
+      1.0,
+      1.0
+     ],
+     "military": [
+      1,
+      1,
+      1.0,
+      1.0
+     ],
+     "economic": [
+      0,
+      1,
+      0.0,
+      1.0
+     ],
+     "political": [
+      1,
+      1,
+      1.0,
+      1.0
+     ],
+     "n": 1,
+     "estimate": {
+      "people": 0.0,
+      "escalation": 0.4444444444444444,
+      "military": 0.5555555555555555,
+      "economic": 0.0,
+      "political": 1.0
+     }
+    },
+    "G": {
+     "people": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "escalation": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "political": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "n": 0,
+     "estimate": {
+      "people": null,
+      "escalation": null,
+      "military": null,
+      "economic": null,
+      "political": null
+     }
+    },
+    "H": {
+     "people": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "escalation": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "political": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "n": 0,
+     "estimate": {
+      "people": null,
+      "escalation": null,
+      "military": 0.0,
+      "economic": null,
+      "political": null
+     }
+    }
+   }
+  },
+  "2024-06-30": {
+   "asof": "2024-06-30",
+   "pooled": {
+    "people": 0.0,
+    "escalation": 0.3333333333333333,
+    "military": 0.4,
+    "economic": 0.2222222222222222,
+    "political": 0.8888888888888888
+   },
+   "options": {
+    "A": {
+     "people": [
+      0,
+      1,
+      0.0,
+      1.0
+     ],
+     "escalation": [
+      0,
+      1,
+      0.0,
+      1.0
+     ],
+     "military": [
+      0,
+      1,
+      0.0,
+      1.0
+     ],
+     "economic": [
+      0,
+      1,
+      0.0,
+      1.0
+     ],
+     "political": [
+      0,
+      1,
+      0.0,
+      1.0
+     ],
+     "n": 1,
+     "estimate": {
+      "people": 0.0,
+      "escalation": 0.2222222222222222,
+      "military": 0.26666666666666666,
+      "economic": 0.14814814814814814,
+      "political": 0.5925925925925926
+     }
+    },
+    "B": {
+     "people": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "escalation": [
+      1,
+      2,
+      1.0,
+      2.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      1,
+      2,
+      1.0,
+      2.0
+     ],
+     "political": [
+      2,
+      2,
+      2.0,
+      2.0
+     ],
+     "n": 2,
+     "estimate": {
+      "people": 0.0,
+      "escalation": 0.41666666666666663,
+      "military": 0.0,
+      "economic": 0.3611111111111111,
+      "political": 0.9444444444444444
+     }
+    },
+    "C": {
+     "people": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "escalation": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "political": [
+      2,
+      2,
+      2.0,
+      2.0
+     ],
+     "n": 2,
+     "estimate": {
+      "people": 0.0,
+      "escalation": 0.16666666666666666,
+      "military": 0.0,
+      "economic": 0.1111111111111111,
+      "political": 0.9444444444444444
+     }
+    },
+    "D": {
+     "people": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "escalation": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "political": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "n": 0,
+     "estimate": {
+      "people": null,
+      "escalation": null,
+      "military": null,
+      "economic": null,
+      "political": null
+     }
+    },
+    "E": {
+     "people": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "escalation": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "military": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "economic": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "political": [
+      2,
+      2,
+      2.0,
+      2.0
+     ],
+     "n": 2,
+     "estimate": {
+      "people": 0.0,
+      "escalation": 0.16666666666666666,
+      "military": 0.2,
+      "economic": 0.1111111111111111,
+      "political": 0.9444444444444444
+     }
+    },
+    "F": {
+     "people": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "escalation": [
+      2,
+      2,
+      2.0,
+      2.0
+     ],
+     "military": [
+      2,
+      2,
+      2.0,
+      2.0
+     ],
+     "economic": [
+      1,
+      2,
+      1.0,
+      2.0
+     ],
+     "political": [
+      2,
+      2,
+      2.0,
+      2.0
+     ],
+     "n": 2,
+     "estimate": {
+      "people": 0.0,
+      "escalation": 0.6666666666666666,
+      "military": 0.7,
+      "economic": 0.3611111111111111,
+      "political": 0.9444444444444444
+     }
+    },
+    "G": {
+     "people": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "escalation": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "political": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "n": 0,
+     "estimate": {
+      "people": null,
+      "escalation": null,
+      "military": null,
+      "economic": null,
+      "political": null
+     }
+    },
+    "H": {
+     "people": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "escalation": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "political": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "n": 0,
+     "estimate": {
+      "people": null,
+      "escalation": null,
+      "military": 0.0,
+      "economic": null,
+      "political": null
+     }
+    }
+   }
+  },
+  "2025-05-06": {
+   "asof": "2025-05-06",
+   "pooled": {
+    "people": 0.0,
+    "escalation": 0.2222222222222222,
+    "military": 0.2727272727272727,
+    "economic": 0.1111111111111111,
+    "political": 0.9444444444444444
+   },
+   "options": {
+    "A": {
+     "people": [
+      0,
+      6,
+      0.0,
+      6.0
+     ],
+     "escalation": [
+      0,
+      6,
+      0.0,
+      6.0
+     ],
+     "military": [
+      0,
+      6,
+      0.0,
+      6.0
+     ],
+     "economic": [
+      0,
+      6,
+      0.0,
+      6.0
+     ],
+     "political": [
+      5,
+      6,
+      5.0,
+      6.0
+     ],
+     "n": 6,
+     "estimate": {
+      "people": 0.0,
+      "escalation": 0.05555555555555555,
+      "military": 0.06818181818181818,
+      "economic": 0.027777777777777776,
+      "political": 0.8611111111111112
+     }
+    },
+    "B": {
+     "people": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "escalation": [
+      1,
+      2,
+      1.0,
+      2.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      1,
+      2,
+      1.0,
+      2.0
+     ],
+     "political": [
+      2,
+      2,
+      2.0,
+      2.0
+     ],
+     "n": 3,
+     "estimate": {
+      "people": 0.0,
+      "escalation": 0.3611111111111111,
+      "military": 0.0,
+      "economic": 0.3055555555555556,
+      "political": 0.9722222222222222
+     }
+    },
+    "C": {
+     "people": [
+      0,
+      4,
+      0.0,
+      4.0
+     ],
+     "escalation": [
+      0,
+      4,
+      0.0,
+      4.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      4,
+      0.0,
+      4.0
+     ],
+     "political": [
+      4,
+      4,
+      4.0,
+      4.0
+     ],
+     "n": 4,
+     "estimate": {
+      "people": 0.0,
+      "escalation": 0.07407407407407407,
+      "military": 0.0,
+      "economic": 0.037037037037037035,
+      "political": 0.9814814814814815
+     }
+    },
+    "D": {
+     "people": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "escalation": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "political": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "n": 0,
+     "estimate": {
+      "people": null,
+      "escalation": null,
+      "military": null,
+      "economic": null,
+      "political": null
+     }
+    },
+    "E": {
+     "people": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "escalation": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "military": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "economic": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "political": [
+      2,
+      2,
+      2.0,
+      2.0
+     ],
+     "n": 2,
+     "estimate": {
+      "people": 0.0,
+      "escalation": 0.1111111111111111,
+      "military": 0.13636363636363635,
+      "economic": 0.05555555555555555,
+      "political": 0.9722222222222222
+     }
+    },
+    "F": {
+     "people": [
+      0,
+      3,
+      0.0,
+      3.0
+     ],
+     "escalation": [
+      3,
+      3,
+      3.0,
+      3.0
+     ],
+     "military": [
+      3,
+      3,
+      3.0,
+      3.0
+     ],
+     "economic": [
+      1,
+      3,
+      1.0,
+      3.0
+     ],
+     "political": [
+      3,
+      3,
+      3.0,
+      3.0
+     ],
+     "n": 3,
+     "estimate": {
+      "people": 0.0,
+      "escalation": 0.6888888888888889,
+      "military": 0.7090909090909091,
+      "economic": 0.24444444444444446,
+      "political": 0.9777777777777779
+     }
+    },
+    "G": {
+     "people": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "escalation": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "political": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "n": 0,
+     "estimate": {
+      "people": null,
+      "escalation": null,
+      "military": null,
+      "economic": null,
+      "political": null
+     }
+    },
+    "H": {
+     "people": [
+      0,
+      1,
+      0.0,
+      1.0
+     ],
+     "escalation": [
+      0,
+      1,
+      0.0,
+      1.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      1,
+      0.0,
+      1.0
+     ],
+     "political": [
+      1,
+      1,
+      1.0,
+      1.0
+     ],
+     "n": 1,
+     "estimate": {
+      "people": 0.0,
+      "escalation": 0.14814814814814814,
+      "military": 0.0,
+      "economic": 0.07407407407407407,
+      "political": 0.9629629629629629
+     }
+    }
+   }
+  },
+  "2026-09-10": {
+   "asof": "2026-09-10",
+   "pooled": {
+    "people": 0.022727272727272728,
+    "escalation": 0.09090909090909091,
+    "military": 0.09090909090909091,
+    "economic": 0.06818181818181818,
+    "political": 0.9425287356321839
+   },
+   "options": {
+    "A": {
+     "people": [
+      2,
+      72,
+      2.0,
+      72.0
+     ],
+     "escalation": [
+      4,
+      72,
+      4.0,
+      72.0
+     ],
+     "military": [
+      4,
+      72,
+      4.0,
+      72.0
+     ],
+     "economic": [
+      4,
+      72,
+      4.0,
+      72.0
+     ],
+     "political": [
+      66,
+      71,
+      66.0,
+      71.0
+     ],
+     "n": 72,
+     "estimate": {
+      "people": 0.02764127764127764,
+      "escalation": 0.05651105651105651,
+      "military": 0.05651105651105651,
+      "economic": 0.0558968058968059,
+      "political": 0.929932294126909
+     }
+    },
+    "B": {
+     "people": [
+      0,
+      3,
+      0.0,
+      3.0
+     ],
+     "escalation": [
+      1,
+      3,
+      1.0,
+      3.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      1,
+      3,
+      1.0,
+      3.0
+     ],
+     "political": [
+      3,
+      3,
+      3.0,
+      3.0
+     ],
+     "n": 3,
+     "estimate": {
+      "people": 0.00909090909090909,
+      "escalation": 0.2363636363636364,
+      "military": 0.0,
+      "economic": 0.22727272727272724,
+      "political": 0.9770114942528736
+     }
+    },
+    "C": {
+     "people": [
+      0,
+      7,
+      0.0,
+      7.0
+     ],
+     "escalation": [
+      0,
+      7,
+      0.0,
+      7.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      7,
+      0.0,
+      7.0
+     ],
+     "political": [
+      7,
+      7,
+      7.0,
+      7.0
+     ],
+     "n": 7,
+     "estimate": {
+      "people": 0.005050505050505051,
+      "escalation": 0.020202020202020204,
+      "military": 0.0,
+      "economic": 0.01515151515151515,
+      "political": 0.9872286079182631
+     }
+    },
+    "D": {
+     "people": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "escalation": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "political": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "n": 0,
+     "estimate": {
+      "people": null,
+      "escalation": null,
+      "military": null,
+      "economic": null,
+      "political": null
+     }
+    },
+    "E": {
+     "people": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "escalation": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "military": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "economic": [
+      0,
+      2,
+      0.0,
+      2.0
+     ],
+     "political": [
+      2,
+      2,
+      2.0,
+      2.0
+     ],
+     "n": 2,
+     "estimate": {
+      "people": 0.011363636363636364,
+      "escalation": 0.045454545454545456,
+      "military": 0.045454545454545456,
+      "economic": 0.03409090909090909,
+      "political": 0.9712643678160919
+     }
+    },
+    "F": {
+     "people": [
+      0,
+      3,
+      0.0,
+      3.0
+     ],
+     "escalation": [
+      3,
+      3,
+      3.0,
+      3.0
+     ],
+     "military": [
+      3,
+      3,
+      3.0,
+      3.0
+     ],
+     "economic": [
+      1,
+      3,
+      1.0,
+      3.0
+     ],
+     "political": [
+      3,
+      3,
+      3.0,
+      3.0
+     ],
+     "n": 3,
+     "estimate": {
+      "people": 0.00909090909090909,
+      "escalation": 0.6363636363636364,
+      "military": 0.6363636363636364,
+      "economic": 0.22727272727272724,
+      "political": 0.9770114942528736
+     }
+    },
+    "G": {
+     "people": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "escalation": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "political": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "n": 0,
+     "estimate": {
+      "people": null,
+      "escalation": null,
+      "military": null,
+      "economic": null,
+      "political": null
+     }
+    },
+    "H": {
+     "people": [
+      0,
+      1,
+      0.0,
+      1.0
+     ],
+     "escalation": [
+      0,
+      1,
+      0.0,
+      1.0
+     ],
+     "military": [
+      0,
+      0,
+      0.0,
+      0.0
+     ],
+     "economic": [
+      0,
+      1,
+      0.0,
+      1.0
+     ],
+     "political": [
+      1,
+      1,
+      1.0,
+      1.0
+     ],
+     "n": 2,
+     "estimate": {
+      "people": 0.015151515151515152,
+      "escalation": 0.06060606060606061,
+      "military": 0.0,
+      "economic": 0.04545454545454545,
+      "political": 0.9616858237547893
+     }
+    }
+   }
+  }
+ }
+}

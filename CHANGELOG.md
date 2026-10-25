@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-24 — Round 2, stages 1–2
+- Recency weighting (approved to test): backtested six versions (none; pre-2026 weight 0.25/0.5; half-life 180/365/730 days). Best overall was era 0.25 (0.1763 vs 0.1806), but it made military worse by 0.022 and escalation by 0.015, failing the written rule (no category worse by >0.01). **No change**: Iran numbers unchanged. Weighting code, page support and weighted recount are in place for later.
+- Political category: three alternative definitions backtested and shown on the Report Card as a proposal only (live rule unchanged). "Talks only, within 14 days" scored 0.268 vs 0.304 live; dropping political from the index scored 0.149 vs 0.180.
+
 ## 2026-10-22 - Improvement round 1: Hold data, backtest of the risk numbers, Report card, one-command weekly build, theater-ready page
 - **Option A (Hold) now has real cases** (`napor/hold_weeks.py`): weeks of the 2026 war (Mondays) with no logged US
   sanctions, naval, strike or posture move in the Monday-to-Monday window. Left out: Feb 28-Apr 7 and Jul 7-25 (US

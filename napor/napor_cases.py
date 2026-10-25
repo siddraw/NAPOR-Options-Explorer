@@ -127,12 +127,46 @@ def outcome(flags, c, cat):
     raise KeyError(cat)
 
 
-def category_scores(flags, cases):
+# ---- recency weights (Stage 1): how much an older case counts when the estimate is made on date T ----
+# name -> (scheme, param). "none": every case counts 1. "era": cases before ERA_CUT count `param`, later ones 1.
+# "halflife": weight = 0.5 ** (age in days / param). Raw k/n and the Wilson range always stay unweighted.
+ERA_CUT = dt.date(2026, 1, 1)
+CANDIDATES = {"none": ("none", None), "era25": ("era", 0.25), "era50": ("era", 0.5),
+              "hl180": ("halflife", 180), "hl365": ("halflife", 365), "hl730": ("halflife", 730)}
+MILDNESS = ["none", "era50", "hl730", "hl365", "era25", "hl180"]      # tie-break order, mildest first
+
+
+def case_weight(scheme, param, T, d):
+    """Weight of a case dated d when the estimate is made on date T (both datetime.date)."""
+    if scheme == "none":
+        return 1.0
+    if scheme == "era":
+        return float(param) if d < ERA_CUT else 1.0
+    if scheme == "halflife":
+        return 0.5 ** ((T - d).days / param)
+    raise KeyError(scheme)
+
+
+def category_scores(flags, cases, weighting=("none", None), T=None):
+    """Per category: k, n (unweighted, as shown) plus sw = sum of weights and swy = weighted risk count.
+    T defaults to the latest case date; callers that look back pass their as-of date."""
+    scheme, param = weighting
+    if T is None and cases:
+        T = max(dt.date.fromisoformat(c["date"]) for c in cases)
     sc = {}
     for cat in CATS:
         if cat == "military" and flags["military"] == "none":
-            sc[cat] = dict(k=0, n=0, assumed=True)
+            sc[cat] = dict(k=0, n=0, sw=0.0, swy=0.0, assumed=True)
             continue
-        got = [outcome(flags, c, cat) for c in cases]
-        sc[cat] = dict(k=sum(1 for b, f in got if b and f), n=sum(1 for b, _ in got if b))
+        k = n = 0
+        sw = swy = 0.0
+        for c in cases:
+            ok, y = outcome(flags, c, cat)
+            if not ok:
+                continue
+            w = case_weight(scheme, param, T, dt.date.fromisoformat(c["date"]))
+            n += 1; sw += w
+            if y:
+                k += 1; swy += w
+        sc[cat] = dict(k=k, n=n, sw=sw, swy=swy)
     return sc

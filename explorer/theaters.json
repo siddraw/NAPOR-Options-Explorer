@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-22",
+ "generated": "2026-10-24",
  "default": "iran",
  "theaters": [
   {
@@ -8,6 +8,13 @@
    "status": "active",
    "data": "data/iran.json",
    "asof": "2026-10-18"
+  },
+  {
+   "id": "houthis",
+   "name": "Houthis / Red Sea",
+   "status": "active",
+   "data": "data/houthis.json",
+   "asof": "2026-10-13"
   }
  ]
 }
