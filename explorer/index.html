@@ -460,7 +460,7 @@ const CAT_DEF = {
                : o.military === "strike" ? `Share of hold weeks with a strike by ${TH.actor} in the 7 days after (the kind that uses up interceptors).`
                : "No direct military cost expected from the move itself, so this counts as 0%.",
   economic: o => "Share of past cases where attacks on shipping rose in the 7 days after, compared with the 7 days before.",
-  political: o => "Share of past cases NOT followed by talks or diplomatic moves within 14 days."
+  political: o => "Share of past cases NOT followed within 14 days by talks, a meeting, a ceasefire or a deal between the US and Iran (directly or through a mediator). Statements, threats and appeals do not count."
 };
 /* NAPOR estimate: each corner's rate pulled toward the same corner's rate across all options (backtested; see Report card). */
 const useEst = () => !!(D && D.estimate && D.estimate.shrink);
@@ -516,7 +516,7 @@ function setMetrics(){ METRICS = {
   fast: {name:"Reply came within 2 days", unit:"replies logged", trig:true},
   hurt: {name:"Reply hurt people", unit:"replies logged", trig:true},
   strike7: {name:`${TH.actor_cap} ${ACT().verb}`, unit:"past cases, timing only"},
-  talks14: {name:"Talks or diplomatic moves within 14 days", unit:"past cases"},
+  talks14: {name:"Talks within 14 days", unit:"past cases"},
   civ: {name:USH("Civilian harm reported in the US act itself"), unit:"past cases"}
 }; }
 
@@ -823,7 +823,7 @@ function outcomesBlock(o, st, ix){
   }
   if(o.is_hold) h += flowRow("US holds (no new move that week)", "all hold weeks = 100%", 1, "100%", st.cases + " weeks", "", "var(--open)");
   const s7 = st.strike7; h += flowRow(TH.actor_short + " " + ACT().row, o.is_hold ? "share of hold weeks" : "timing only, not shown to be a reply", pc(s7), P(s7.k, s7.n), s7.k + " of " + s7.n + " · " + R(s7.k, s7.n), "", "var(--k2)", s7);
-  const tk = st.talks14; h += flowRow("Talks or diplomatic moves follow within 14 days", "share of past cases with a full window or a talk already", pc(tk), P(tk.k, tk.n), tk.k + " of " + tk.n + " · " + R(tk.k, tk.n), "", "var(--k4)", tk);
+  const tk = st.talks14; h += flowRow("Talks follow within 14 days", "share of past cases with a full window or a talk already", pc(tk), P(tk.k, tk.n), tk.k + " of " + tk.n + " · " + R(tk.k, tk.n), "", "var(--k4)", tk);
   const em = ECONM(), cs = activeCases(o).filter(c => c.ship_a !== null), up = {k: cs.filter(c => c.ship_a > c.ship_b).length, n: cs.length};
   if(em.mode === "none") h += flowRow((em.name || "Economic") + " harm", "no clear measure in the log", 0, "not measured", "", "", "var(--k5)");
   else h += flowRow(em.mode === "events" ? (em.label || "Counter-measures follow within " + em.days + " days") : "Attacks on shipping rise the next week", "share of past cases", pc(up), P(up.k, up.n), up.k + " of " + up.n + " · " + R(up.k, up.n), "", "var(--k5)", up);
@@ -892,7 +892,7 @@ const RULE = {
   escalation: o => o.trigger ? `Counts when ${TH.actor} replied within about 5 days.` : `Counts when ${TH.actor} struck anywhere within 7 days (timing only, not shown to be a reply).`,
   military: o => o.military === "strike" ? `Counts when ${TH.actor} carried out a strike in the 7 days after, the kind that uses up interceptors.` : "Counts when the reply was a missile, rocket or drone strike, the kind that uses up interceptors" + (TH.salvo ? ` (about ${TH.salvo.count} ${TH.salvo.weapon} in the ${TH.salvo.when} salvo).` : "."),
   economic: o => "Counts when logged attacks on shipping in the 7 days after were higher than in the 7 days before.",
-  political: o => "Counts when no talks or diplomatic move followed within 14 days."
+  political: o => "Counts when no talks, meeting, negotiation, formal proposal, ceasefire or deal between the US and Iran, directly or through a mediator, was logged within 14 days. Statements, threats and appeals do not count as talks. Changed on 2026-10-26 with Sidd's approval."
 };
 const short = (t, n=140) => t.length > n ? t.slice(0, n-1) + "…" : t;
 function srcLinks(id){
@@ -949,7 +949,7 @@ function judge(o, c, cat){
   }
   if(cat === "political"){
     if(c.talks14 === null) return {base:false, why:["<li>Less than 14 days of news after this case and no talks yet; not counted yet.</li>"]};
-    return {base:true, flag:c.talks14 === false, why: c.talk_ev.length ? c.talk_ev.map(e => `<li>Talks: ${evLine(e)}</li>`) : ["<li>No talks or diplomatic move logged in the 14 days after.</li>"]};
+    return {base:true, flag:c.talks14 === false, why: c.talk_ev.length ? c.talk_ev.map(e => `<li>Talks: ${evLine(e)}</li>`) : ["<li>No talks, meeting, proposal, ceasefire or deal logged in the 14 days after (statements and threats do not count).</li>"]};
   }
 }
 const fw = w => w >= 0.995 ? "1" : w.toFixed(2);
@@ -1199,13 +1199,11 @@ function renderReport(){
   h += `<h3 style="font-size:16px;margin:22px 0 4px">How much do the reply rules matter?</h3><p class="take">Escalation rate for each option that has a reply test, under different rules for what counts as a reply.</p><div class="tbl"><table class="btable" style="min-width:600px"><thead><tr><th>Option</th>${(rb.short || rb.variants).map((v, i) => `<th title="${esc(rb.variants[i])}">${esc(v)}</th>`).join("")}</tr></thead><tbody>` +
     rb.rows.map(r => `<tr><td style="max-width:170px"><b class="mono" style="color:var(--accent)">${esc(r.key)}</b> ${esc(short(r.name, 34))}</td>${r.cells.map(c => `<td class="n">${c.n ? Math.round(100*c.k/c.n) + "%" : "–"} <span class="nodata">${c.k}/${c.n}</span></td>`).join("")}</tr>`).join("") +
     `</tbody></table></div><p class="legend">${rb.variants.map((v, i) => `<b>${esc((rb.short || [])[i] || "")}</b>: ${esc(v)}`).join(" · ")}. Options in fixed order, not ranked. The 3-day column leaves out replies with no logged date.</p>`;
-  const pp = rc.political_proposal;
-  if(pp){
-    const sg = v => v === null || v === undefined ? "–" : (v > 0 ? "+" : "") + v.toFixed(3);
-    h += `<h3 style="font-size:16px;margin:22px 0 4px">Proposal - needs Sidd's approval</h3><p class="take">The live "political" corner is unchanged. It counts a past case as risk when no diplomatic event of any kind (including statements, by any side) was logged within 14 days. These are other ways to count it, tested on the same walk-forward. Nothing here is switched on.</p><div class="tbl"><table class="btable" style="min-width:640px"><thead><tr><th>Rule for "political"</th><th>Predictions</th><th>Cases counted as risk</th><th>Brier (all)</th><th>vs live rule</th><th>vs coin flip 0.25</th><th>2026 only</th><th>Index Brier</th></tr></thead><tbody>` +
-      pp.rules.map((r, i) => `<tr><td>${esc(r.label)}${i === 0 ? ' <span class="nodata">(live)</span>' : ""}</td><td class="n">${r.predictions}</td><td class="n">${r.risk_cases} of ${r.rows}</td><td class="n">${f3(r.est)}</td><td class="n">${i === 0 ? "–" : sg(r.vs_current)}</td><td class="n">${sg(r.vs_coin)}</td><td class="n">${f3(r.est_2026)}</td><td class="n">${f3(r.index_brier)}</td></tr>`).join("") +
-      `<tr><td>${esc(pp.p3.label)}</td><td class="n">–</td><td class="n">–</td><td class="n">–</td><td class="n">${sg(pp.p3.vs_current)} (index)</td><td class="n">${sg(pp.p3.vs_coin)} (index)</td><td class="n">–</td><td class="n">${f3(pp.p3.index_brier)}</td></tr></tbody></table></div>` +
-      `<p class="legend">Brier of the page's estimate for this one corner; lower is closer to what happened. "Index Brier" = the average of the corner scores (the live index is ${f3(pp.current_index_brier)}). A rule with a lower score is easier to predict; that does not make it a truer measure of political risk, so it is Sidd's call. Talks/proposal/ceasefire/deal events use the same words as the "Diplomacy" option's past moves.</p>`;
+  const pc = rc.political_change;
+  if(pc){
+    h += `<h3 style="font-size:16px;margin:22px 0 4px">Political rule changed on ${esc(fmtDate(pc.changed, true))}</h3><p class="take">Sidd approved a new rule for the "political" corner on ${esc(fmtDate(pc.changed, true))}. It used to count a case as risk when no diplomatic event of any kind (statements and threats included) was logged within 14 days. Now it counts a case as risk only when no actual talks, meeting, proposal, ceasefire or deal was logged within 14 days. Statements, threats and appeals no longer count as talks.</p><div class="tbl"><table class="btable" style="min-width:420px"><thead><tr><th>Rule for "political"</th><th>Political Brier</th><th>Index Brier</th></tr></thead><tbody>` +
+      [pc.old, pc.new].map((r, i) => `<tr><td>${i ? "New rule (live)" : "Old rule (retired)"}</td><td class="n">${f3(r.est)}</td><td class="n">${f3(r.index_brier)}</td></tr>`).join("") +
+      `</tbody></table></div><p class="legend">Brier is the backtest score of the page's estimate; lower is closer to what happened (0.25 = a coin flip). The index Brier is the average of the corner scores. The two rules ask different questions, so a lower score means the new rule is easier to predict, not that it measures political risk better.</p>`;
   }
   h += `</div>`;
   $("#view").innerHTML = h;
