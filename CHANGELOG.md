@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-24 — Round 2, stages 3–5
+- **Per-theater engine** (`napor/theaters/common.py`): shared code for cases, export, verify and backtest. Each theater is a package `napor/theaters/<id>/` (config, events, now.json, wrappers). `weekly_build.py` now loops over every theater in `explorer/theaters.json`. Page data goes to `explorer/data/<id>.json`, `<id>-history.json` and `explorer/verify-<id>.json`. Iran has a wrapper package too; its numbers are unchanged.
+- **Houthi tab** (88 events, IDs 1001–1599): Red Sea crisis, US strikes and Houthi replies. The organizer fixed problems found in review. Weak spots: 2024 was continuous fighting, so few cases count as separate cases; the 2025–26 log is thin.
+- **North Korea tab** (76 events, IDs 2001–2999): US/South Korea drills, deployments, sanctions and talks, and DPRK launches and tests as replies. Weak spots: the launch log is a sample, not every launch; economic harm is not measured; routine launch seasons are hard to tell from replies.
+- **China tab** (63 events, IDs 3001–3999): Taiwan Strait transits, arms sales, visits, sanctions, and PLA drills as replies. Weak spots: small n, so wide ranges; Option A (Hold) has no cases; background PLA activity vs a real reply is a judgment call.
+- Chinese, Houthi and DPRK state media are used only as labelled claims.
 ## 2026-10-26 (weekly agent)
 Data updates only; no model rules changed.
 - **Iran**: new events #117-#128 (news Oct 19-26), sources in audit_sources.py (allowed outlets, Treasury/OFAC; every URL from

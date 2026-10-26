@@ -26,6 +26,11 @@ THEATER = dict(
              ["2025-03-15", "Operation Rough Rider"], ["2025-05-06", "US-Houthi ceasefire"], ["2026-10-10", "Riyadh airport attack"]],
     under_logged="Some stretches are logged more thinly than others (2025-2026 far less than 2024), so \"none logged\" is not proof nothing happened.",
     spark_from="2016-10-01", claim_note="Houthi media (al-Masirah, Saba)",
+    # Exact rule for the political corner (what theaters/common.py counts): any logged diplomatic event, by anyone.
+    cats=dict(political=dict(
+        other="Share of past cases NOT followed within 14 days by any logged diplomatic event (talks, a ceasefire, a UN resolution, or a public statement or threat by either side).",
+        hold="Share of hold weeks NOT followed within 14 days by any logged diplomatic event (talks, a ceasefire, a UN resolution, or a public statement or threat by either side).",
+        rule="Counts when no diplomatic event of any kind was logged in the 14 days after, by anyone. Public statements and threats count as diplomatic events here (for example Trump's Jul 21 and Jul 23, 2026 warnings), so a threat alone makes the case \"not a risk\" on this corner.")),
 )
 
 # A tab needs at least this many counted cases to show a risk index; below it the page says "too few cases".
@@ -178,3 +183,24 @@ CONSTRAINT_OPTIONS = ("F", "G")
 
 # ---- napor_now.json for this theater lives next to this file (written by the weekly agent) -------------------
 NOW_FILE = "now.json"
+
+# ---- plain-language risk lines (the page's "What the log says"; filled in by theaters/common.py) -----------------------
+THREAD_PREFIX = "H"
+LOOKBACKS = ("2016-10-14", "2023-12-31", "2024-06-30", "2025-05-06", "2026-09-10")      # past dates the page test also checks (no hindsight)
+RISK_TEXT = dict(
+    people_trigger="Replies that hurt people: {hurt} of {n} logged{detail}. Civilian harm reported in the US act itself: none in an allowed outlet.",
+    people_hold="Ship crews: attacks on shipping have been logged at about {per_week} a week in the current phase. No new US act to answer.",
+    people_sanctions="No direct casualties. Harm to ordinary Yemenis from sanctions: not measured.",
+    people_other="No direct casualties from the move itself.",
+    esc_trigger="The Houthis or a group they work with replied within ~5 days: {reply} (range {range}). Fast (within 2 days): {fast}. Back-and-forth past one reply: {longer}.",
+    esc_hold="No new US trigger. The Houthis attacked in some weeks anyway (see the hold-week cases). Whether holding back changes what they do: not measured.",
+    esc_timing="The Houthis attacked within 7 days after {strikes} past cases (timing only, not shown to be replies). Reply rate: not measured for this option.",
+    no_cases="No past cases, so no measure.",
+    mil_reply="A missile, drone or boat attack followed within ~5 days in {k} of {n} past cases. Losses of US equipment in those replies: none logged.",
+    mil_strike="Share of hold weeks with a Houthi attack in the 7 days after (see the cases).",
+    mil_none="No military cost expected from the move itself.",
+    eco_cases="Attacks on shipping, 7 days before -> after past cases: {shipping} (total). Oil prices and freight costs: not measured.",
+    eco_baseline="Baseline: about {per_week} logged attacks on shipping a week in the current phase. Oil prices and freight costs: not measured.",
+    pol_cases="Talks or diplomatic moves within 14 days after: {talks}. Strain with Saudi Arabia and the Gulf: not measured.",
+    pol_none="No past cases, so no measure. Strain with Saudi Arabia and the Gulf: not measured.",
+)

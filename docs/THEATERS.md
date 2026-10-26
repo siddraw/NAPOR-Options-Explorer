@@ -1,5 +1,7 @@
 # Next tabs: conflicts and standoffs the US is in (research memo, 2026-10-22)
 
+**Status (2026-10-24):** Houthis, North Korea and China are built (tabs on the page). Venezuela and the others are still research only.
+
 Research only, no code. Sources are allowed outlets read in this session (URLs from search or fetch
 results only). Case counts are **rough estimates from what the coverage suggests, not counts**; each
 must be built and checked like the Iran log before any number is shown. Uncertain points are marked.
