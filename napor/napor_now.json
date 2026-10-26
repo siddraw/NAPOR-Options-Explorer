@@ -1,26 +1,27 @@
 {
-  "as_of": "2026-10-18",
+  "as_of": "2026-10-26",
   "note": "Analyst reading of the news, written by the weekly agent from logged events. Not data. Replace every week.",
   "headline": [
-    "Attacks on shipping are at a record: UKMTO counted 10-12 in the week to Oct 16, and the container ship GFS Pride sank on Oct 13 (#109). The US has not answered them with strikes on Iran.",
-    "Trump pledged on Oct 8 that the US 'will not be attacking Iran at any time prior to' the Nov 3 midterms (#97). CBS reports strike plans are ready (#111) and Trump has said action could resume after the midterms (#82, #88).",
-    "Talks are live: Iran says it is reviewing US 'comments' and that Hormuz would reopen on the sixth day if the US complies (#115). The US counter-offer went through Qatar on Sep 29 (#86).",
-    "Sanctions rounds keep coming roughly weekly (Sep 28, Oct 1, Oct 8, Oct 15), and the US disabled a blockade runner on Oct 10-11 (#104)."
+    "Trump is openly weighing a return to war: 'do I make a deal with them, or do I finish them off?' (Oct 25), after saying the US 'may do another little Epic Fury' (Oct 23). He also said 'There will not be a strike today' (#122, #126).",
+    "The US is thinning out in the Gulf: non-emergency diplomats ordered out of Saudi Arabia (Oct 21), staff cuts in Jordan, Lebanon, Qatar and the UAE (Oct 23), and officials say the military is quietly reducing its footprint (#120). A US intelligence memo warns of Iranian plots against US personnel (#124).",
+    "Shipping: UKMTO confirmed two tanker hits (Oct 20 off Iraq, Oct 21 off Oman, no one hurt) (#117, #118). The IRGC claims nine more hits Oct 22-23 and threatens US bases; Trump calls them 'fake hits' (#121, #123). Brent oil rose to about $117.",
+    "Talks: no deal. Iran says messages still go through intermediaries and it is open to talks under the June interim deal (#125, #127). Saudi, Pakistani and Turkish officials are in Tehran on Oct 26; the US is not part of that meeting (#128).",
+    "New sanctions on Oct 21 (shadow fleet, #119). No US strike on Iran and no Iranian attack on US forces was found this week."
   ],
   "key_dates": [
-    {"date": "2026-10-25", "label": "Open window for situation S001 (what the US does Oct 12-25) closes"},
-    {"date": "2026-11-03", "label": "Midterm elections; end of Trump's no-strike pledge"},
+    {"date": "2026-11-01", "label": "Forecast F006 (shipping attacks Oct 26-Nov 1) closes"},
+    {"date": "2026-11-03", "label": "Midterm elections; end of Trump's no-strike pledge; forecasts F003, F005 and situation S003 close"},
     {"date": "2026-11-17", "label": "Situation S002 window closes (what the US does Nov 4-17)"}
   ],
-  "pending": ["Iran's formal answer to the US counter-offer (#99, #115)", "Whether the Nov 3 pledge holds"],
+  "pending": ["Whether Trump picks a deal or renewed strikes after Nov 3 (#126)", "Whether the IRGC carries out its threat against US bases (#121)", "Iran's formal answer to the US counter-offer (#86, #127)"],
   "options": {
-    "A": {"status": "open", "label": "Open", "reason": "This is the current course: no new US strikes since Sep 9, blockade and sanctions continue.", "events": [97]},
-    "B": {"status": "active", "label": "In use now", "reason": "Talks are running through Qatar and other mediators. Iran is reviewing US comments (#115) and the US sent a counter-offer on Sep 29 (#86).", "events": [86, 95, 115]},
-    "C": {"status": "active", "label": "In use now", "reason": "Treasury added new sanctions on Sep 28, Oct 1, Oct 8 and Oct 15.", "events": [85, 87, 107, 110]},
-    "D": {"status": "active", "label": "In use now", "reason": "The blockade is being enforced: an Iranian-linked dhow was destroyed on Oct 6 (#106) and a blockade runner was disabled on Oct 10-11 (#104).", "events": [104, 106]},
-    "E": {"status": "constrained", "label": "Constrained", "reason": "Trump's pledge covers attacks on Iran before Nov 3 (#97). The Oct 10-11 strike on a ship at sea came after the pledge, so strikes at sea may be treated as outside it (not confirmed).", "events": [97, 104]},
-    "F": {"status": "constrained", "label": "Constrained until Nov 3", "reason": "Ruled out by Trump's pledge before the midterms (#97). Strike plans are reported ready (#111).", "events": [97, 111]},
-    "G": {"status": "constrained", "label": "Constrained until Nov 3", "reason": "Ruled out by Trump's pledge before the midterms (#97). Officials say bombing may resume after them (#82).", "events": [82, 97]},
-    "H": {"status": "open", "label": "Open", "reason": "Posture is already shifting: bombers left RAF Fairford and a carrier left the region (#91, #92), while 3 ships with 7,000+ sailors deployed (#89).", "events": [89, 91, 92]}
+    "A": {"status": "open", "label": "Open", "reason": "Still the current course on strikes: no US strike since Sep 9; Trump said on Oct 25 'There will not be a strike today'.", "events": [97, 126]},
+    "B": {"status": "active", "label": "In use now", "reason": "Messages are still passed through intermediaries (#127) and Iran says it is open to talks under the June deal (#125); no direct talks or deal confirmed.", "events": [125, 127]},
+    "C": {"status": "active", "label": "In use now", "reason": "Treasury added shadow-fleet sanctions on Oct 21, after the Oct 15 round.", "events": [110, 119]},
+    "D": {"status": "active", "label": "In use now", "reason": "The blockade and US-supported transits continue (Iran threatens action if US escorts resume, #123); no new blockade strike is logged since Oct 10-11 (#104).", "events": [104, 123]},
+    "E": {"status": "constrained", "label": "Constrained", "reason": "Trump's pledge covers attacks on Iran before Nov 3 (#97). Whether strikes on Iranian boats at sea fall outside it is not confirmed.", "events": [97, 104]},
+    "F": {"status": "constrained", "label": "Constrained until Nov 3", "reason": "Ruled out by Trump's pledge before the midterms (#97); he says he is weighing renewed strikes (#122, #126).", "events": [97, 122, 126]},
+    "G": {"status": "constrained", "label": "Constrained until Nov 3", "reason": "Ruled out by Trump's pledge before the midterms (#97); strike plans are reported ready (#111).", "events": [97, 111]},
+    "H": {"status": "active", "label": "In use now", "reason": "The US is pulling diplomats and, per officials, some military staff from Gulf posts (#120); earlier, bombers left RAF Fairford and a carrier left the region (#91, #92).", "events": [91, 92, 120]}
   }
 }

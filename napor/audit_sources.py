@@ -1458,6 +1458,49 @@ SOURCES.update({
 })
 
 
+# ---------------------------------------------------------------------------
+# Weekly update, 2026-10-26 (weekly agent). Every URL below came from a search result or a fetch
+# in that session. seen="full text" = the article was read; "snippet" = headline/snippet only.
+# ---------------------------------------------------------------------------
+_AJ22 = _s('Iran says seven ships hit in Hormuz Strait, warns US of wider response', 'Al Jazeera', '2026-10-22',
+           'https://www.aljazeera.com/news/2026/10/22/iran-says-seven-ships-hit-in-hormuz-strait-warns-us-of-wider-response')
+_AJ24 = _s("Iran says won't allow US warships to get close as Trump ponders new attacks", 'Al Jazeera', '2026-10-24',
+           'https://www.aljazeera.com/news/2026/10/24/iran-says-wont-allow-us-warships-to-get-close-as-trump-ponders-new-attacks')
+_AJ24B = _s('Is Iran planning attacks on Americans; why is the US on alert?', 'Al Jazeera', '2026-10-24',
+            'https://www.aljazeera.com/news/2026/10/24/is-iran-planning-attacks-on-americans-why-is-the-us-on-alert')
+_AJ26 = _s('Iran war live: Saudi, Pakistani and Turkish officials in Tehran for talks', 'Al Jazeera (liveblog)', '2026-10-26',
+           'https://www.aljazeera.com/news/liveblog/2026/10/26/iran-war-live-trump-rules-out-strikes-today-israeli-forces-raid-hebron')
+_CBS25 = _s('Trump says he\'s weighing deal with Iran against action to "finish them off"', 'CBS News', '2026-10-26',
+            'https://www.cbsnews.com/live-updates/iran-war-trump-us-oil-gas-prices-strait-of-hormuz-midterms/')
+_CBS21 = _s('US orders some diplomats to leave Saudi Arabia amid Houthi attacks', 'CBS News', '2026-10-21',
+            'https://www.cbsnews.com/news/us-saudi-arabia-ordered-departure-houthis/')
+_RTR21 = _s('US orders departure of diplomats from Saudi Arabia amid Houthi strikes', 'Reuters (via Internazionale)', '2026-10-21',
+            'https://www.internazionale.it/ultime-notizie-reuters/2026/10/21/exclusive-us-preparing-to-issue-ordered-departure-of-some-personnel-from-gulf-embassies-us-officials')
+
+VERDICT.update({117: 'confirmed', 118: 'confirmed', 119: 'confirmed', 120: 'confirmed', 121: 'partly_confirmed',
+                122: 'confirmed', 123: 'partly_confirmed', 124: 'confirmed', 125: 'confirmed', 126: 'confirmed',
+                127: 'confirmed', 128: 'confirmed'})
+SOURCES.update({
+ 117: [_s("Tanker struck by projectile southeast of Iraq's Al Faw on Tuesday, UKMTO says", 'Reuters (via Devdiscourse)', '2026-10-21',
+          'https://www.devdiscourse.com/article/international/3995693-tanker-struck-by-projectile-southeast-of-iraqs-alfaw-on-tuesday-ukmto-says')],
+ 118: [_s('Projectile hit tanker near Strait of Hormuz, maritime agency says', 'Times of Israel (AFP)', '2026-10-21',
+          'https://www.timesofisrael.com/liveblog_entry/projectile-hit-tanker-near-strait-of-hormuz-maritime-agency-says/')],
+ 119: [_s("Operation Economic Outcast Targets Iran's Shadow Fleet Networks", 'Treasury (press release sb0664)', '2026-10-21',
+          'https://home.treasury.gov/news/press-releases/sb0664'),
+       _s('Iran-related Designations; Belarus and North Korea Designations Removals; Issuance of Iran-related and Russia-related General Licenses', 'Treasury (OFAC recent actions)', '2026-10-21',
+          'https://ofac.treasury.gov/recent-actions/20261021')],
+ 120: [_CBS21, _RTR21, _CBS25],
+ 121: [_AJ22, _CBS25],
+ 122: [_CBS25, _AJ24, _AJ24B],
+ 123: [_AJ24, _CBS25],
+ 124: [_AJ24B, _AJ24, _CBS25],
+ 125: [_CBS25, _AJ24],
+ 126: [_CBS25],
+ 127: [_CBS25],
+ 128: [_AJ26, _AJ24],
+})
+
+
 # Pre-war record (prewar.py)
 from prewar import SOURCES as _PRE_SOURCES, VERDICT as _PRE_VERDICT
 SOURCES.update(_PRE_SOURCES)

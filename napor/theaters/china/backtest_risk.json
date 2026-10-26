@@ -298,16 +298,16 @@
   }
  ],
  "out_of_sample": {
-  "train_rows": 107,
+  "train_rows": 106,
   "test_rows": 9,
   "scored": 9,
   "skipped": 0,
   "brier": {
    "raw": 0.0014,
-   "shrunk1": 0.005,
-   "shrunk2": 0.0095,
-   "shrunk4": 0.0163,
-   "pooled": 0.0531,
+   "shrunk1": 0.0048,
+   "shrunk2": 0.009,
+   "shrunk4": 0.0154,
+   "pooled": 0.0497,
    "half": 0.25
   },
   "train_label": "2019-2025"

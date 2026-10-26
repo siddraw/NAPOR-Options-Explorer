@@ -283,19 +283,35 @@ def all_cases():
     return {o["key"]: NC.option_cases(o["key"]) for o in O.OPTIONS}
 
 
+def window_covers_lags(cases_by_key, flags=None):
+    """The window a theater declares must reach the latest linked reply it can count (people, military)."""
+    flags = flags or NC.FLAGS
+    bad = []
+    for k, cases in cases_by_key.items():
+        fl = flags[k]
+        for c in cases:
+            lag = max([r["days"] for r in c.get("replies", [])] or [0])
+            for cat, need in (("people", max(lag, 7)), ("military", lag)):
+                if NC.outcome(fl, c, cat)[0] and need > NC.window_days(fl, cat):
+                    bad.append((k, c["id"], cat, need, NC.window_days(fl, cat)))
+    return bad
+
+
 def no_hindsight_check(cases_by_key, flags=None):
-    """Appending a fake future case must not change any earlier prediction."""
+    """Appending a fake future case must not change any earlier prediction, and every category's closing window must
+    reach the latest reply lag that category can count (so no case is used while its outcome window is open)."""
+    flags = flags or NC.FLAGS
     rows = rows_from_cases(cases_by_key, flags)
     base, _ = walk_forward(rows)
     fake_day = max(r["date"] for r in rows) + dt.timedelta(days=30)
-    extra = [dict(date=fake_day, closes=fake_day + dt.timedelta(days=w), opt=k, cat=c, y=1, id="FAKE")
-             for k in cases_by_key for c, w in (("people", 7), ("escalation", 5), ("economic", 7), ("political", 14))]
+    extra = [dict(date=fake_day, closes=fake_day + dt.timedelta(days=NC.window_days(flags[k], c)), opt=k, cat=c, y=1, id="FAKE")
+             for k in cases_by_key for c in CATS]
     again, _ = walk_forward(sorted(rows + extra, key=lambda r: (r["date"], r["opt"], str(r["id"]), r["cat"])))
     again = [p for p in again if p["id"] != "FAKE"]
     key = lambda p: (p["date"], p["opt"], str(p["id"]), p["cat"])
     a = {key(p): tuple(p[m] for m in ALLM) for p in base}
     b = {key(p): tuple(p[m] for m in ALLM) for p in again}
-    return a == b, len(a)
+    return a == b and not window_covers_lags(cases_by_key, flags), len(a)
 
 
 def report(res, cb, flags=None, tag=""):

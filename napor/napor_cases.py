@@ -97,6 +97,11 @@ WINDOW = {"people": 7, "economic": 7, "political": 14}   # days until a category
 
 
 def window_days(flags, cat):
+    """Days after a case until the category's outcome is final. A theater may declare its own in flags["close"] (config CLOSE);
+    anything it leaves out, and every Iran option, uses the defaults below."""
+    declared = (flags.get("close") or {}).get(cat)
+    if declared is not None:
+        return declared
     if cat == "escalation":
         return 5 if flags["trigger"] else 7
     if cat == "military":

@@ -98,7 +98,11 @@ OPTIONS = [
 # trigger: escalation = "North Korea replied within 7 days" (Trigger Census); otherwise "an act within 7 days" (timing only).
 # military: "reply" = the reply was a ballistic missile or ICBM; "strike" = such a launch within 7 days (A); "none" = counted as 0%.
 # reply_days / econ_days travel with the flags into the data file; the backtest uses them for the length of each outcome window.
-_W = dict(reply_days=7)
+# Closing window in days per category: when a case's outcome is final (read by napor_cases.window_days, the backtest and the page).
+# Linked replies count at any lag; the longest logged lag is 6 days, so the 7-day reply window covers all. Economic is not measured.
+CLOSE = dict(people=7, escalation=7, military=7, economic=7, political=14)
+_W = dict(close=CLOSE, reply_days=7)
+THEATER["close"] = CLOSE            # travels into the data file so the page masks past dates with the same windows
 FLAGS = {
     "A": dict(trigger=False, military="strike", us_move=False, is_hold=True, salvo=False, **_W),
     "B": dict(trigger=True, military="reply", us_move=False, is_hold=False, salvo=False, **_W),

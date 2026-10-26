@@ -72,6 +72,14 @@ EVENTS = [
 (1341, d(2026,10,10), "US", "Diplomatic statement (threat)", "Houthis", "Asked about joining Saudi strikes, Trump says 'We may. We're going to look at it'; Secretary of State Rubio confirms an American was among the dead", 1340, "n/a", "Medium", "see audit"),
 (1342, d(2026,10,12), "Houthis", "Threat (US)", "US forces and interests", "Houthi politburo member Mohammed al-Bukhaiti tells AFP that if the US joins the campaign the Houthis will answer at once, with 'a swift and painful response' on the US and its interests in the region", 1341, "n/a", "Medium", "see audit"),
 (1343, d(2026,10,13), "US", "Diplomatic statement", "Houthis", "Trump says the Houthis are 'behaving very badly' and he might ask Turkish President Erdogan to step in on Saudi Arabia's behalf (Reuters via Times of Israel)", None, "n/a", "Medium", "see audit"),
+# --- weekly update 2026-10-26 (weekly agent): news Oct 14-26. No US strike on the Houthis and no
+# Houthi attack on US forces or on non-Saudi shipping was found. ---
+(1344, d(2026,10,18), "US", "Diplomatic statement (security alerts)", "US citizens in the region", "US embassies in Bahrain, Iraq, Israel, Jordan, Kuwait, Lebanon, Oman, Qatar and the UAE issue coordinated alerts that Houthi hostilities 'have the potential to escalate rapidly'; the embassy in Saudi Arabia follows on Oct 19 warning of attacks on airports (ABC calls the wave unprecedented)", None, "n/a", "Medium", "see audit"),
+(1345, d(2026,10,20), "Unknown (Houthis suspected)", "Strike (proxy front)", "Shaybah oilfield (Saudi Arabia)", "Saudi air defences stop a drone aimed at Saudi Aramco's Shaybah oilfield; the energy ministry does not say who launched it; Reuters and CBS report it among Houthi attacks on Saudi Arabia", None, "2 killed, 2 injured by falling debris (Saudi energy ministry via CBS, Reuters)", "Medium", "see audit"),
+(1346, d(2026,10,21), "Houthis (Iran-backed)", "Strike (proxy front)", "Dammam airport (Saudi Arabia)", "Attack on King Fahd International Airport in Dammam (Reuters, Oct 21); Al Jazeera lists Dammam airport among recent Houthi targets", None, "1 killed, 8 injured (Saudi civil aviation authority via Reuters)", "Medium", "see audit"),
+(1347, d(2026,10,21), "US", "Diplomatic precaution (ordered departure)", "US embassy and consulates, Saudi Arabia", "State orders non-emergency US government staff and families to leave Saudi Arabia, saying the 'Iranian-supported Houthis have increasingly engaged in hostilities against Saudi Arabia'; officials say families will also leave other Gulf missions and the military is quietly reducing its footprint (CBS, Reuters)", 1345, "n/a", "Medium", "see audit"),
+(1348, d(2026,10,24), "Houthis (CLAIM)", "Strike (proxy front, claimed)", "Saudi Arabia and Aden", "Houthis CLAIM missile and drone attacks on Riyadh airport, Dammam, Najran, Khamis Mushait, oil pipelines and Aden; Saudi Arabia says it intercepted missiles aimed at Taif and Yanbu; Saudi-led jets bomb Marib, Taiz and other provinces", None, "Not stated for the claimed attacks", "Medium", "see audit"),
+(1349, d(2026,10,26), "Saudi-led coalition", "Air defense and strike", "Houthi missile launchers, Sanaa", "Saudi-led forces say they intercepted a Houthi ballistic missile aimed at Riyadh and destroyed two launchers in Sanaa; Riyadh airport had reopened two terminals on Oct 25 and the Houthis warned airlines against using it", None, "Not stated", "Medium", "see audit"),
 ]
 
 # Who made each US move: option letters (B talks, C sanctions, D naval defense, E arms interdiction,
@@ -98,6 +106,12 @@ _AFP_AHRAM_0723B = _s('Trump threatens Houthis with major military punishment', 
 _AJ_OCT11 = _s('Yemen fighting expands as Houthis attack Saudi airport: What to know', 'Al Jazeera', '2026-10-11', 'https://www.aljazeera.com/news/2026/10/11/yemen-fighting-expands-as-houthis-attack-saudi-airport-what-to-know', 'full text')
 _NPR_OCT10 = _s('Trump weighs joining the fight against Houthis after Riyadh airport attack', 'NPR (via KUNC)', '2026-10-10', 'https://www.kunc.org/npr-news/2026-10-10/trump-weighs-joining-the-fight-against-houthis-after-riyadh-airport-attack', 'full text')
 _TREAS = lambda h, dt_, n: _s(h, 'Treasury (OFAC)', dt_, f'https://home.treasury.gov/news/press-releases/{n}', 'full text')
+
+_ABC_OCT20 = _s('Trump admin sees escalating risk from Houthis, prompting unprecedented wave of warnings', 'ABC News', '2026-10-20', 'https://abcnews.com/Politics/trump-admin-sees-escalating-risk-houthis-prompting-unprecedented/story?id=137397953', 'full text')
+_CBS_OCT21 = _s('US orders some diplomats to leave Saudi Arabia amid Houthi attacks', 'CBS News', '2026-10-21', 'https://www.cbsnews.com/news/us-saudi-arabia-ordered-departure-houthis/', 'full text')
+_RTR_OCT21 = _s('US orders departure of diplomats from Saudi Arabia amid Houthi strikes', 'Reuters (via Internazionale)', '2026-10-21', 'https://www.internazionale.it/ultime-notizie-reuters/2026/10/21/exclusive-us-preparing-to-issue-ordered-departure-of-some-personnel-from-gulf-embassies-us-officials', 'full text')
+_AJ_OCT24 = _s("Iran says won't allow US warships to get close as Trump ponders new attacks", 'Al Jazeera', '2026-10-24', 'https://www.aljazeera.com/news/2026/10/24/iran-says-wont-allow-us-warships-to-get-close-as-trump-ponders-new-attacks', 'full text')
+_CBS_LIVE_OCT26 = _s('Trump says he\'s weighing deal with Iran against action to "finish them off"', 'CBS News', '2026-10-26', 'https://www.cbsnews.com/live-updates/iran-war-trump-us-oil-gas-prices-strait-of-hormuz-midterms/', 'full text')
 
 SOURCES = {
  1301: [_TREAS('Treasury Increases Financial Pressure on the Houthis', '2025-01-17', 'jy2794')],
@@ -151,11 +165,18 @@ SOURCES = {
  1341: [_NPR_OCT10, _AJ_OCT11],
  1342: [_s("Houthi official warns of 'swift, painful response' if US enters Yemen war", 'AFP (via Times of Israel)', '2026-10-12', 'https://www.timesofisrael.com/liveblog_entry/houthi-official-warns-of-swift-painful-response-if-us-enters-yemen-war/', 'full text')],
  1343: [_s("Trump says Yemen's Houthis are 'behaving very badly,' may ask Erdogan to intervene", 'Reuters (via Times of Israel)', '2026-10-13', 'https://www.timesofisrael.com/liveblog_entry/trump-says-yemens-houthis-are-behaving-very-badly-may-ask-erdogan-to-intervene/', 'full text')],
+ # weekly update 2026-10-26: every URL came from a search result or fetch in that session
+ 1344: [_ABC_OCT20],
+ 1345: [_CBS_OCT21, _RTR_OCT21],
+ 1346: [_RTR_OCT21, _AJ_OCT24],
+ 1347: [_CBS_OCT21, _RTR_OCT21],
+ 1348: [_CBS_LIVE_OCT26, _AJ_OCT24],
+ 1349: [_CBS_LIVE_OCT26],
 }
 VERDICT = {k: 'confirmed' for k in SOURCES}
 VERDICT[1302] = 'not_confirmed'   # only a Houthi claim, relayed by USNI; CENTCOM did not respond
 # Rows where an allowed outlet confirms the event but not every detail in the row.
-PARTLY = {1315, 1316}   # 1331/1332 re-sourced 2026-10-25 (Reuters, AAP, AFP give the dates)
+PARTLY = {1315, 1316, 1345}   # 1331/1332 re-sourced 2026-10-25 (Reuters, AAP, AFP give the dates)
 
 # Trigger Census rows for US moves of kinds C-H.
 # Category = what the move cost the other side; status as in data.py (R-strong, R-weak, R-proxy, N, Unclear, Unverified).
@@ -196,8 +217,8 @@ START_ACTS = {1307}
 # Periods when an option was limited: (start, end, text, [event ids])
 # (The Jan 19 - Mar 14, 2025 Houthi pause is a phase, not a US constraint: strikes stayed available.)
 CONSTRAINTS = [
- (d(2025, 5, 6), d(2026, 10, 24), "Oman-brokered US-Houthi ceasefire: the US stopped striking the Houthis and the Houthis said they would not target US ships, so strikes (F/G) were limited. No US strike on the Houthis was found after May 6, 2025 in the searches for this file; the Houthis told US officials in Sep 2026 they still keep the ceasefire (Reuters).", [1319, 1337]),
- (d(2026, 9, 10), d(2026, 10, 24), "Saudi-Houthi war: Trump declined Saudi requests for US strikes (Axios via AFP, Sep 10) and US help was limited to intelligence and targeting advice, with no US strikes or refuelling (CNN). CNN also says US forces are stretched by the Iran conflict. Trump said on Oct 10 'We may' join; no decision found by Oct 24.", [1335, 1336, 1341]),
+ (d(2025, 5, 6), d(2026, 10, 26), "Oman-brokered US-Houthi ceasefire: the US stopped striking the Houthis and the Houthis said they would not target US ships, so strikes (F/G) were limited. No US strike on the Houthis was found after May 6, 2025 in the searches for this file; the Houthis told US officials in Sep 2026 they still keep the ceasefire (Reuters).", [1319, 1337]),
+ (d(2026, 9, 10), d(2026, 10, 26), "Saudi-Houthi war: Trump declined Saudi requests for US strikes (Axios via AFP, Sep 10) and US help was limited to intelligence and targeting advice, with no US strikes or refuelling (CNN). CNN also says US forces are stretched by the Iran conflict. Trump said on Oct 10 'We may' join; no decision found by Oct 26, and ABC (Oct 20) says the administration is wary of opening a second front.", [1335, 1336, 1341, 1344]),
 ]
 
 # Phases (oldest first)
@@ -207,7 +228,7 @@ PHASES = [
  ("Operation Rough Rider", d(2025, 3, 15), d(2025, 5, 6), "Daily US strikes from #1307; Houthi attacks on US warships; ends with the Oman-brokered ceasefire (#1319)"),
  ("US-Houthi ceasefire, attacks on other ships", d(2025, 5, 7), d(2025, 10, 9), "Magic Seas and Eternity C sunk (#1320, #1321); sanctions rounds; Minervagracht (#1327)"),
  ("Gaza-ceasefire lull", d(2025, 10, 10), d(2026, 2, 27), "No Houthi attacks logged after Sep 29; Houthis signal the pause (#1328); Treasury round (#1329)"),
- ("Iran war and Saudi-Houthi front", d(2026, 2, 28), d(2026, 10, 24), "Houthis threaten a restart (#1330), blockade Saudi ports (#1331), Riyadh airport attacks (#1339, #1340); US threats, advisers and Muscat talks (#1334, #1335, #1337)"),
+ ("Iran war and Saudi-Houthi front", d(2026, 2, 28), d(2026, 10, 26), "Houthis threaten a restart (#1330), blockade Saudi ports (#1331), Riyadh airport attacks (#1339, #1340); US threats, advisers and Muscat talks (#1334, #1335, #1337)"),
 ]
 
 CHAIN_NAMES = {

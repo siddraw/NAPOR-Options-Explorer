@@ -99,7 +99,11 @@ OPTIONS = [
 
 # trigger: escalation = "China replied within 7 days" (Trigger Census); otherwise "a Chinese action within 7 days" (timing only).
 # military: "reply" = the reply was a live-fire or named large-scale drill; "strike" = such a drill within 7 days (A); "none" = counted as 0%.
-_W = dict(reply_days=7, econ_days=14)
+# Closing window in days per category: when a case's outcome is final (read by napor_cases.window_days, the backtest and the page).
+# Linked replies (people, military) count at any lag; the longest logged lag is 11 days (#3056, Justice Mission 2025), so 11. Escalation is judged at reply_days (7), economic at ECON days (14), political at 14.
+CLOSE = dict(people=11, escalation=7, military=11, economic=14, political=14)
+_W = dict(close=CLOSE, reply_days=7, econ_days=14)
+THEATER["close"] = CLOSE            # travels into the data file so the page masks past dates with the same windows
 FLAGS = {
     "A": dict(trigger=False, military="strike", us_move=False, is_hold=True, salvo=False, **_W),
     "B": dict(trigger=False, military="none", us_move=False, is_hold=False, salvo=False, **_W),

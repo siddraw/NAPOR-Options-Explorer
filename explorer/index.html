@@ -401,10 +401,13 @@ function asofCase(c){
   const k = Dt + "|" + c.id + "|" + c.date; if(MASK.key !== Dt){ MASK = {key:Dt, map:new Map()}; } if(MASK.map.has(k)) return MASK.map.get(k);
   const known = e => e.date <= Dt, reps = c.replies.filter(known), done = n => addDays(c.date, n) <= Dt;
   const m = {...c, replies: reps, strike_ev: c.strike_ev.filter(known), talk_ev: c.talk_ev.filter(known), ship_a_ev: done(EDAYS()) ? c.ship_a_ev : []};
-  m.replied = c.replied === null ? null : done(RD()) ? c.replied : (reps.length ? true : null);
+  m.replied = c.replied === null ? null : done(CL("escalation")) ? c.replied : (reps.length ? true : null);
   m.strike7 = c.strike7 === null ? (m.strike_ev.length ? true : null) : done(7) ? c.strike7 : (m.strike_ev.length ? true : null);
   m.talks14 = m.talk_ev.length ? true : (done(14) && c.talks14 !== null ? false : null);
   m.ship_a = done(EDAYS()) ? c.ship_a : null;
+  /* a corner that reads linked replies at any lag stays open until its window closes, unless a hurt / kinetic reply is already known */
+  m.open_people = !done(CL("people")) && !(c.civ || reps.some(r => r.hurt));
+  m.open_mil = !done(CL("military")) && !reps.some(r => r.kinetic);
   if(isWeek(c)){ m.mil7 = done(7) ? c.mil7 : (m.strike_ev.length ? true : null); m.hurt7 = done(7) ? c.hurt7 : null; }
   MASK.map.set(k, m); return m;
 }
@@ -431,6 +434,8 @@ let TH = {actor:"the adversary or a proxy", actor_short:"adversary or proxy", ad
 const RD = () => TH.reply_days || 5;                                              // days a reply is looked for
 const ECONM = () => TH.econ || {mode:"ships", days:7};                            // economic corner: ships (attacks on shipping), events (counter-measures within N days) or none (not measured)
 const EDAYS = () => ECONM().days || 7;
+/* Closing window per category (days until a case's outcome is final), from the data file's theater.close; Iran / Houthi defaults when absent. Same numbers as napor_cases.window_days. */
+const CL = cat => { const v = (TH.close || {})[cat]; return v != null ? v : ({people:7, escalation:RD(), military:RD(), economic:EDAYS(), political:14})[cat]; };
 const ACT = () => Object.assign({verb:"struck within 7 days", row:"strikes within 7 days", col:"Strike ≤7d", none:"No strike"}, TH.act || {});
 const BASEN = () => (TH.base && TH.base.noun) || "attacks on shipping";
 const INTN = () => (TH.intensity && TH.intensity.name) || "War intensity";
@@ -438,9 +443,9 @@ const isWeek = c => !!c.week;
 const caseRef = c => isWeek(c) ? "Week" : "#" + c.id;
 function catScores(o, cs){
   const sc = {};
-  sc.people = rate(cs, c => c.strike7 !== null && !(isWeek(c) && c.hurt7 === null), c => !!c.civ || c.replies.some(r => r.hurt) || c.hurt7 === true);
+  sc.people = rate(cs, c => c.strike7 !== null && !(isWeek(c) && c.hurt7 === null) && !(c.open_people && CL("people") > 7), c => !!c.civ || c.replies.some(r => r.hurt) || c.hurt7 === true);
   sc.escalation = o.trigger ? rate(cs, c => c.replied !== null, c => c.replied === true) : rate(cs, c => c.strike7 !== null, c => c.strike7 === true);
-  sc.military = o.military === "reply" ? rate(cs, c => c.replied !== null, c => c.replies.some(r => r.kinetic))
+  sc.military = o.military === "reply" ? rate(cs, c => c.replied !== null && !(c.open_mil && CL("military") > RD()), c => c.replies.some(r => r.kinetic))
               : o.military === "strike" ? rate(cs, c => c.strike7 !== null, c => c.mil7 === true) : {k:0, n:0, assumed:true};
   sc.economic = ECONM().mode === "none" ? {k:0, n:0, sw:0, swy:0, nm:true} : rate(cs, c => c.ship_a !== null, c => c.ship_a > c.ship_b);   // nm = not measured for this theater
   sc.political = rate(cs, c => c.talks14 !== null, c => c.talks14 === false);
