@@ -42,6 +42,15 @@ import data                      # only for act_kind(), the shared word list tha
 import napor_ids as N
 import napor_intensity as INT    # only for the shared bands and the "someone died" test
 import theaters as TH_REG
+import napor_options as _IRAN   # only for TALK_WORDS, the one word list every theater's political corner uses
+
+TALK_WORDS = _IRAN.TALK_WORDS
+
+
+def is_talk(action_type):
+    """Political corner (rule changed 2026-10-26, approved by Sidd): a Diplomatic row counts only if its action type names talks, a meeting,
+    a proposal, a ceasefire or a deal. Statements, threats and appeals do not."""
+    return any(w in action_type.lower() for w in TALK_WORDS)
 
 REPLY = ("R-strong", "R-weak", "R-proxy")
 COUNTED = REPLY + ("N",)
@@ -191,9 +200,13 @@ class Theater:
             return self.usable(e) and self.C.adversary_side(e[2]) and (self.KIND[e[0]] in self.ECON.get("kinds", ()) or e[0] in self.ECON.get("extra", ()))
         return self._ship(e)
 
-    def _talks(self, e):
-        """Same rule as the live Iran rule: any diplomatic event (any side, statements included)."""
+    def _diplo(self, e):
+        """Any diplomatic event, statements included (the political rule before 2026-10-26; only the old-vs-new comparison uses it)."""
         return self.usable(e) and self.KIND[e[0]] == "Diplomatic"
+
+    def _talks(self, e):
+        """Same rule as the live Iran rule: a Diplomatic row whose action type names talks, a proposal, a ceasefire or a deal (any side)."""
+        return self._diplo(e) and is_talk(e[3])
 
     def is_military_reply(self, eid):
         f = _cfg(self.C, "MILITARY_REPLY", None)
@@ -537,9 +550,9 @@ class Backtest:
             out.append(res)
         return dict(variants=[v[0] for v in variants], short=["As published", "No proxy", "No weak", "Strong only", "Within 3 days"], rows=out)
 
-    def _talk_dates(self, words):
+    def _talk_dates(self, legacy=False):
         K = self.K
-        return [e[1] for e in K.EVENTS if K._talks(e) and (words is None or any(w in e[3].lower() for w in words))]
+        return [e[1] for e in K.EVENTS if (K._diplo(e) if legacy else K._talks(e))]
 
     def context(self):
         K, C = self.K, self.C
@@ -645,7 +658,7 @@ class Export:
         out["context"] = self.context_periods()
         bt, _ = BT.run(cb)
         json.dump(bt, open(BT.JSON_FILE, "w"), indent=1, default=str)
-        out["report_card"] = dict(forecasts=[], backtest=bt, political_proposal=bt["political_proposal"])
+        out["report_card"] = dict(forecasts=[], backtest=bt, political_change=bt["political_change"])
         dw = bt["weighting"]["decision"]
         out["estimate"] = dict(shrink=bt["decision"]["adopt"], m=BR.M_MAIN,
                                weighting=dict(scheme=dw["scheme"], param=dw["param"], name=dw["name"], adopt=dw["adopt"], best_candidate=dw["best_candidate"],
@@ -812,7 +825,7 @@ class Recount:
         attack = lambda i: hou(i) and self.kind(i) in C.ATTACK_KINDS
         ship = lambda i: hou(i) and (self.kind(i) == "Maritime" or i in _cfg(C, "SHIP_ATTACK_EXTRA", ()))
         econ_events = lambda i: hou(i) and (self.kind(i) in self.ECON.get("kinds", ()) or i in self.ECON.get("extra", ()))
-        talk = lambda i: self.kind(i) == "Diplomatic"
+        talk = lambda i: self.kind(i) == "Diplomatic" and is_talk(EV[i][3])
         mil = _cfg(C, "MILITARY_REPLY", None)
         is_mil = (lambda i: bool(mil(EV[i]))) if mil else (lambda i: self.kind(i) == "Kinetic")
         done = lambda day, n: day + n * DAY <= T

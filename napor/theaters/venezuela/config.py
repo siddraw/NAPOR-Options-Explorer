@@ -19,7 +19,8 @@ The five categories, exactly as defined for this tab (the page shows these words
   economic    Venezuelan counter-measures within 14 days of the move: an oil or gas cut-off, an airline ban, or the expulsion of firms or diplomats
               (a Venezuelan act whose action type starts with "Economic act" or "Diplomatic break"). Timing only: the log does not show the
               US move caused it. Only 3 such acts are logged (#4002, #4029, #4041).
-  political   no talks or deal within 14 days: no logged US move of option B (talks, a deal, a swap, a license, restored ties) in the 14 days after the move.
+  political   no talks within 14 days (rule changed 2026-10-26 with Sidd's approval): no logged US move of option B whose action type names talks, a meeting,
+              a proposal, a ceasefire or a deal in the 14 days after the move. Statements and threats do not count.
 """
 import datetime as dt
 
@@ -75,8 +76,8 @@ THEATER = dict(
                       other="Share of past cases followed within 14 days by a Venezuelan counter-measure: an oil or gas cut-off, an airline ban, or the expulsion of firms or diplomats (timing only, not shown to be caused by the US move).",
                       rule="Counts when Venezuela announced a counter-measure (an oil or gas cut-off, an airline ban, or the expulsion of firms or diplomats) within 14 days after the move. Only 3 are logged (#4002, #4029, #4041); #4041 is dated by the Reuters report, not the day it took effect. The window starts the day after the move, so a same-day act (the 2019 expulsion order, #4002) is not counted."),
         political=dict(name="Political / diplomatic", short="Political",
-                       other="Share of past cases NOT followed by talks or a deal within 14 days.",
-                       rule="Counts when no US talks or deal (a call, a swap, an oil license or deal, restored ties or an embassy reopening) was logged within 14 days after the move."),
+                       other="Share of past cases NOT followed within 14 days by talks between the US and Venezuela (a call or a meeting, directly or through a mediator). Statements and threats do not count.",
+                       rule="Counts when no US talks with Venezuela (a call or a meeting, directly or through a mediator) were logged within 14 days after the move. Statements, threats and appeals do not count as talks. Changed on 2026-10-26 with Sidd's approval."),
     ),
 )
 
@@ -246,7 +247,7 @@ RISK_TEXT = dict(
     mil_none="No military cost expected from the move itself.",
     eco_cases="Venezuelan counter-measures (oil or gas cut-offs, airline bans, expulsions) within 14 days after past cases: {shipping}. Oil prices and output: not measured.",
     eco_baseline="Baseline: about {per_week} logged Venezuelan hostile acts a week in the current phase. Oil prices and output: not measured.",
-    pol_cases="Talks or a deal within 14 days after: {talks}. Strain with Colombia, Cuba, Russia and Caribbean states: not measured.",
+    pol_cases="Talks within 14 days after: {talks} (statements and threats do not count). Strain with Colombia, Cuba, Russia and Caribbean states: not measured.",
     pol_none="No past cases, so no measure. Strain with Colombia, Cuba, Russia and Caribbean states: not measured.",
 )
 

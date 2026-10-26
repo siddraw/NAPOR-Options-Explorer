@@ -14,8 +14,8 @@ The five categories, exactly as defined for this tab (the page shows these words
   military    the reply was a live-fire or named large-scale drill (the logged action type says "Large-scale drills" or "live fire")
   economic    Chinese counter-sanctions or trade measures against US firms or the US within 14 days of the move (a Chinese action of kind
               Sanctions, for example a sanctions list or an export ban). The window is 14 days, not 7, so a case counts only after 14 days of news.
-  political   no talks or leader contact within 14 days: no logged event of kind Diplomatic (a call, summit or senior meeting, by anyone)
-              in the 14 days after the move.
+  political   no talks within 14 days (rule changed 2026-10-26 with Sidd's approval): no logged Diplomatic row whose action type names talks, a meeting,
+              a proposal, a ceasefire or a deal (a call, summit or senior meeting) in the 14 days after the move. Statements and threats do not count.
 """
 import datetime as dt
 import re
@@ -69,8 +69,8 @@ THEATER = dict(
                       other="Share of past cases followed within 14 days by Chinese counter-sanctions or trade measures against US firms or the US (timing only, not shown to be caused by the US move).",
                       rule="Counts when China announced counter-sanctions or trade measures against US firms or the US within 14 days after the move."),
         political=dict(name="Political / diplomatic", short="Political",
-                       other="Share of past cases NOT followed by talks or leader contact within 14 days.",
-                       rule="Counts when no talks or leader contact (a call, a summit or a senior meeting, by anyone) was logged within 14 days after the move."),
+                       other="Share of past cases NOT followed within 14 days by talks or a meeting between the US and China (a call, a summit or a senior meeting). Statements and threats do not count.",
+                       rule="Counts when no talks or meeting between the US and China (a call, a summit or a senior meeting) was logged within 14 days after the move. Statements, threats and appeals do not count as talks. Changed on 2026-10-26 with Sidd's approval."),
     ),
 )
 
@@ -208,7 +208,7 @@ RISK_TEXT = dict(
     mil_none="No military cost expected from the move itself.",
     eco_cases="Chinese counter-sanctions or trade measures within 14 days after past cases: {shipping}. Oil, chip and trade prices: not measured.",
     eco_baseline="Baseline: about {per_week} logged Chinese actions and counter-sanctions a week in the current phase. Prices: not measured.",
-    pol_cases="Talks or leader contact within 14 days after: {talks}. Strain with allies: not measured.",
+    pol_cases="Talks or a meeting between the US and China within 14 days after: {talks} (statements and threats do not count). Strain with allies: not measured.",
     pol_none="No past cases, so no measure. Strain with allies: not measured.",
 )
 

@@ -175,7 +175,11 @@ def _iran_side(actor):
 
 
 def _irstrike(e): return _usable(e) and KIND[e[0]] == "Kinetic" and _iran_side(e[2])
-def _talks(e): return _usable(e) and KIND[e[0]] == "Diplomatic"
+# Political corner (rule changed 2026-10-26, approved by Sidd): only actual talks, a meeting, a proposal, a ceasefire or a deal count.
+# Statements, threats and appeals do not. Same words as the "Diplomacy" option's past moves (option B).
+TALK_WORDS = ("proposal", "talks", "ceasefire announcement", "ceasefire (", "ceasefire statement")
+def _diplo(e): return _usable(e) and KIND[e[0]] == "Diplomatic"       # any diplomatic event, statements included (the rule before 2026-10-26)
+def _talks(e): return _diplo(e) and any(w in e[3].lower() for w in TALK_WORDS)
 
 
 def _window(f, day, a, b):
@@ -195,9 +199,7 @@ def option_cases(key):
         return []
     if key == "B":
         # conciliatory moves only: offers, talks, ceasefires, deals (not ultimatums, rejections or rhetoric)
-        _CONC = ("proposal", "talks", "ceasefire announcement", "ceasefire (", "ceasefire statement")
-        ids = [e[0] for e in data.events if _usable(e) and us_side(e[0]) and KIND[e[0]] == "Diplomatic"
-               and any(w in e[3].lower() for w in _CONC)]
+        ids = [e[0] for e in data.events if _talks(e) and us_side(e[0])]
     elif key == "H":
         ids = [e[0] for e in data.events if _usable(e) and us_side(e[0]) and KIND[e[0]] == "Posture"]
     else:
@@ -312,7 +314,7 @@ def risk_profile(key):
         prof[RISK_CATEGORIES[3]] = f"Baseline: ~{bl['per_week']} attacks on shipping a week in the current phase. Oil prices and shipping costs: not measured."
     # 5. Political / diplomatic
     if m.get("n"):
-        prof[RISK_CATEGORIES[4]] = f"Talks or diplomatic moves within 14 days after: {m['talks']}. Strain with allies (Jordan, Gulf states, UK): not measured."
+        prof[RISK_CATEGORIES[4]] = f"Talks within 14 days after: {m['talks']} (statements and threats do not count). Strain with allies (Jordan, Gulf states, UK): not measured."
     else:
         prof[RISK_CATEGORIES[4]] = "Iran is expected to answer the US counter-offer; Trump's no-strike pledge stands until Nov 3. Strain with allies: not measured."
     prof["Pros (analyst notes)"] = PROS[key]

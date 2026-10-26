@@ -212,19 +212,21 @@ def weighting_report(ps, tab, dec):
     return dict(candidates=cands, n=tab["overall"]["n"], n_2026=t26["overall"]["n"], decision=dec), t26
 
 
-# ---- Stage 2: proposal for the political corner (NOT live; the page rule is unchanged) ----
-CONC = ("proposal", "talks", "ceasefire announcement", "ceasefire (", "ceasefire statement")   # same words as the "B" move in the export
+# ---- Political corner: rule changed 2026-10-26 (approved by Sidd) ----
+# New rule ("talks only, within 14 days", tested in round 2 as P2): risk = no actual talks, meeting, negotiation, proposal, ceasefire or deal
+# between the US and the adversary (directly or through a mediator) logged within 14 days. Statements, threats and appeals do not count.
+# The old rule counted any Diplomatic event, statements included. It is still computed here so the Report Card can show old vs new.
+CONC = O.TALK_WORDS      # same words as the "B" move in the export
 
 
-def political_rows(cases_by_key, window, words=None, ctx=None):
-    """Political-corner rows under an alternative rule: risk = no matching event within `window` days after the case.
-    words=None: any Diplomatic event (the live rule). Otherwise only talks/proposal/ceasefire/deal events (CONC words)."""
+def political_rows(cases_by_key, window, legacy=False, ctx=None):
+    """Political-corner rows: risk = no matching event within `window` days after the case.
+    legacy=False: the live rule (talks only, O._talks / theater _talks). legacy=True: the pre-2026-10-26 rule (any Diplomatic event)."""
     if ctx is not None:
-        last, evs = ctx.last, ctx.talk_dates(words)
+        last, evs = ctx.last, ctx.talk_dates(legacy)
     else:
         last = NC.LAST
-        match = lambda e: O._talks(e) and (words is None or any(w in e[3].lower() for w in words))
-        evs = [e[1] for e in data.events if match(e)]
+        evs = [e[1] for e in data.events if (O._diplo(e) if legacy else O._talks(e))]
     rows = []
     for k, cases in cases_by_key.items():
         for c in cases:
@@ -236,32 +238,23 @@ def political_rows(cases_by_key, window, words=None, ctx=None):
     return rows
 
 
-def political_proposal(cases_by_key, tab, dec, ctx=None):
+def political_change(cases_by_key, tab, dec, ctx=None):
+    """Old vs new Brier of the political corner (and of the index) on the same walk-forward. The new rule is the live one."""
     est = "w_" + dec["name"]                                 # the estimate the page shows (shrunk2 when no weighting)
     meas = [c for c in CATS if tab[c][est] is not None]          # a category a theater does not measure (no predictions) is left out of the index
     others = [c for c in meas if c != "political"]
-    cur = tab["political"][est]
-    base_all = sum(tab[c][est] for c in meas) / len(meas)
     out = []
-    for label, window, words in (("Current rule: no Diplomatic event (any side, incl. statements) within 14 days", 14, None),
-                                 ("P1: no talks/proposal/ceasefire/deal event within 30 days", 30, CONC),
-                                 ("P2: no talks/proposal/ceasefire/deal event within 14 days", 14, CONC)):
-        rows = political_rows(cases_by_key, window, words, ctx)
+    for label, legacy in (("Old rule: any diplomatic event within 14 days, statements and threats included", True),
+                          ("New rule: only talks, a meeting, a proposal, a ceasefire or a deal within 14 days", False)):
+        rows = political_rows(cases_by_key, 14, legacy, ctx)
         ps, skipped = walk_forward(rows)
-        t = {m: brier(ps, m) for m in ("raw", "shrunk2", est, "pooled", "half")}
-        t26 = [p for p in ps if p["date"] >= Y2026]
-        out.append(dict(label=label, window=window, rows=len(rows), predictions=len(ps), risk_cases=sum(r["y"] for r in rows),
-                        brier=t, est=t[est], est_2026=brier(t26, est), n_2026=len(t26),
-                        vs_current=round(t[est] - cur, 4), vs_coin=round(t[est] - 0.25, 4),
-                        index_brier=round((sum(tab[c][est] for c in others) + t[est]) / (len(others) + 1), 4)))
-    p3 = dict(label="P3: political left out of the index (average of the other four corners)",
-              est=None, index_brier=round(sum(tab[c][est] for c in others) / len(others), 4))
-    p3["vs_current"] = round(p3["index_brier"] - round(base_all, 4), 4)
-    p3["vs_coin"] = round(p3["index_brier"] - 0.25, 4)
-    return dict(method=est, note="Brier of the estimate the page shows, same walk-forward (only rows closed before each date). "
-                "Index-level Brier = average of the five (or four) category Brier scores. These are different outcome definitions, "
-                "so a lower Brier means the new rule is easier to predict, not that it is a better measure.",
-                current_index_brier=round(base_all, 4), rules=out, p3=p3)
+        t = brier(ps, est)
+        out.append(dict(label=label, legacy=legacy, rows=len(rows), predictions=len(ps), risk_cases=sum(r["y"] for r in rows), est=t,
+                        index_brier=round((sum(tab[c][est] for c in others) + t) / (len(others) + 1), 4)))
+    return dict(changed="2026-10-26", approved_by="Sidd", method=est, old=out[0], new=out[1],
+                note="Brier of the estimate the page shows, same walk-forward (only rows closed before each date). Index Brier = average of the "
+                     "category Brier scores. The two rules define the outcome differently, so a lower Brier means the new rule is easier to predict, "
+                     "not that it is a better measure.")
 
 
 def run(cases_by_key, ctx=None):
@@ -276,7 +269,7 @@ def run(cases_by_key, ctx=None):
         generated=dt.date.today().isoformat(), rows=len(rows), predictions=len(ps), skipped_no_history=skipped,
         brier=tab, brier_2026=t26, calibration=dict(raw=calibration(ps, "raw"), shrunk2=calibration(ps, "shrunk2")),
         learning=learning_curve(ps, ctx.periods if ctx else None), out_of_sample=oos, robustness=robustness(ctx), decision=decide(tab),
-        weighting=wrep, political_proposal=political_proposal(cases_by_key, tab, dec_w, ctx))
+        weighting=wrep, political_change=political_change(cases_by_key, tab, dec_w, ctx))
 
 
 def all_cases():
@@ -334,12 +327,10 @@ def report(res, cb, flags=None, tag=""):
     dw = w["decision"]
     print(f"Weighting decision: best by overall Brier = {dw['best_candidate']}; gain over no weighting {dw['gain']:+.4f}; worse by category {dw['worse_by_cat']} -> " +
           (f"ADOPT recency weight {dw['name']}" if dw["adopt"] else "KEEP no recency weighting"))
-    pp = res["political_proposal"]
-    print(f"\nPolitical-corner proposal (NOT live; Brier of '{pp['method']}'; 0.25 = coin flip)")
-    for r in pp["rules"]:
-        print(f"  {r['label']}: {r['predictions']} predictions, risk in {r['risk_cases']} of {r['rows']} cases; Brier {r['est']:.4f} "
-              f"(vs current {r['vs_current']:+.4f}, vs 0.25 {r['vs_coin']:+.4f}); 2026-only {r['est_2026']:.4f}; index-level {r['index_brier']:.4f} (current {pp['current_index_brier']:.4f})")
-    print(f"  {pp['p3']['label']}: index-level Brier {pp['p3']['index_brier']:.4f} (vs current {pp['p3']['vs_current']:+.4f}, vs 0.25 {pp['p3']['vs_coin']:+.4f})")
+    pc = res["political_change"]
+    print(f"\nPolitical corner (rule changed {pc['changed']}, approved by {pc['approved_by']}; Brier of '{pc['method']}'; 0.25 = coin flip)")
+    for r in (pc["old"], pc["new"]):
+        print(f"  {r['label']}: {r['predictions']} predictions, risk in {r['risk_cases']} of {r['rows']} cases; Brier {r['est']:.4f}; index-level {r['index_brier']:.4f}")
     print("\nCalibration (raw): " + "; ".join(f"{b['lo']:.1f}-{b['hi']:.1f}: said {b['predicted']:.0%}, happened {b['observed']:.0%} (n={b['n']})" for b in res["calibration"]["raw"]))
     print("Calibration (shrunk m=2): " + "; ".join(f"{b['lo']:.1f}-{b['hi']:.1f}: said {b['predicted']:.0%}, happened {b['observed']:.0%} (n={b['n']})" for b in res["calibration"]["shrunk2"]))
     print("\nLearning curve: " + "; ".join(f"{l['period']} raw {l['raw']:.3f} / shrunk {l['shrunk2']:.3f} / pooled {l['pooled']:.3f} (n={l['n']})" for l in res["learning"]))

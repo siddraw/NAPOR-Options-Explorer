@@ -99,6 +99,12 @@ standard, census status "R-proxy" for replies by Iran-backed groups) and log it 
   ((k + 2 x pooled) / (n + 2)) because the backtest chose it (see `backtest_risk.py`, decision rule in
   `decide()`). Do not change m or switch it off on your own; if the weekly backtest stops favouring it,
   report the numbers and wait for Sidd.
+- **The "political" corner counts talks only (changed 2026-10-26, approved by Sidd).** A past case counts as political risk when no
+  actual talks, meeting, negotiation, formal proposal, ceasefire or deal between the US and the adversary (directly or through a
+  mediator) was logged within 14 days. Statements, threats and appeals do NOT count as talks. The rule is the same in every theater
+  (`napor_options.TALK_WORDS`, `_talks` in `napor_options.py` and `theaters/common.py`); do not change it without Sidd. When you file a
+  diplomatic event, put the right words in its action type: "talks", "proposal" or "ceasefire (...)" only for real talks, offers or
+  ceasefires; "statement", "threat", "demand" or "rejection" for words alone.
 - **One tab per conflict.** Theater wording lives in each theater's `config.py` (Iran: `THEATER` in
   `export_explorer.py`); the list of tabs is `explorer/theaters.json`. Do not add a theater without Sidd's go-ahead.
 - **Be honest about uncertainty.** Say "not measured" or "too few cases" rather than guess.

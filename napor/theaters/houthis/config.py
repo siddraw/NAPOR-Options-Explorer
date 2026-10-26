@@ -26,11 +26,12 @@ THEATER = dict(
              ["2025-03-15", "Operation Rough Rider"], ["2025-05-06", "US-Houthi ceasefire"], ["2026-10-10", "Riyadh airport attack"]],
     under_logged="Some stretches are logged more thinly than others (2025-2026 far less than 2024), so \"none logged\" is not proof nothing happened.",
     spark_from="2016-10-01", claim_note="Houthi media (al-Masirah, Saba)",
-    # Exact rule for the political corner (what theaters/common.py counts): any logged diplomatic event, by anyone.
+    # Exact rule for the political corner (what theaters/common.py counts; changed 2026-10-26 with Sidd's approval): only logged talks, a meeting,
+    # a proposal, a ceasefire or a deal. Statements, threats and appeals do not count.
     cats=dict(political=dict(
-        other="Share of past cases NOT followed within 14 days by any logged diplomatic event (talks, a ceasefire, a UN resolution, or a public statement or threat by either side).",
-        hold="Share of hold weeks NOT followed within 14 days by any logged diplomatic event (talks, a ceasefire, a UN resolution, or a public statement or threat by either side).",
-        rule="Counts when no diplomatic event of any kind was logged in the 14 days after, by anyone. Public statements and threats count as diplomatic events here (for example Trump's Jul 21 and Jul 23, 2026 warnings), so a threat alone makes the case \"not a risk\" on this corner.")),
+        other="Share of past cases NOT followed within 14 days by logged talks, a meeting, a formal proposal, a ceasefire or a deal between the US and the Houthis (directly or through a mediator such as Oman). Statements, threats and appeals do not count.",
+        hold="Share of hold weeks NOT followed within 14 days by logged talks, a meeting, a formal proposal, a ceasefire or a deal between the US and the Houthis (directly or through a mediator such as Oman). Statements, threats and appeals do not count.",
+        rule="Counts when no talks, meeting, negotiation, formal proposal (such as a UN resolution), ceasefire or deal between the US and the Houthis, directly or through a mediator such as Oman, was logged in the 14 days after. Public statements, threats and appeals do not count as talks (for example Trump's Jul 21 and Jul 23, 2026 warnings), so a threat alone does not stop a case from counting as a risk on this corner. Changed on 2026-10-26 with Sidd's approval.")),
 )
 
 # A tab needs at least this many counted cases to show a risk index; below it the page says "too few cases".
@@ -201,6 +202,6 @@ RISK_TEXT = dict(
     mil_none="No military cost expected from the move itself.",
     eco_cases="Attacks on shipping, 7 days before -> after past cases: {shipping} (total). Oil prices and freight costs: not measured.",
     eco_baseline="Baseline: about {per_week} logged attacks on shipping a week in the current phase. Oil prices and freight costs: not measured.",
-    pol_cases="Talks or diplomatic moves within 14 days after: {talks}. Strain with Saudi Arabia and the Gulf: not measured.",
+    pol_cases="Talks within 14 days after: {talks} (statements and threats do not count). Strain with Saudi Arabia and the Gulf: not measured.",
     pol_none="No past cases, so no measure. Strain with Saudi Arabia and the Gulf: not measured.",
 )
