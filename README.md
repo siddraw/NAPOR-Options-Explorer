@@ -9,6 +9,9 @@ in the Iran–US war, and the risks and pros of each one.
 
 Scope: five theaters: the 2026 Iran–US war, the Houthis / Red Sea, North Korea, China / Taiwan, and Venezuela / Caribbean. Iran is the main one.
 
+## View the page
+The Options Explorer is `explorer/index.html`. To host it on GitHub Pages: repo Settings → Pages → Source "Deploy from a branch" → branch `main`, folder `/ (root)`. It then opens at https://siddraw.github.io/NAPOR-risk-assessment/ (Pages on a private repo needs a paid GitHub plan; otherwise make the repo public).
+
 ## How it works
 
 1. **Event log** – every event, once, with an ID, from credible outlets only (`napor/data.py`,
