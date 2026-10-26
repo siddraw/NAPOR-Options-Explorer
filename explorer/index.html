@@ -430,6 +430,7 @@ function rate(cs, base, flag){ // k of n as shown (unweighted) plus sw = sum of 
 }
 /* Theater wording (set from the data file, so a future theater renders with its own words) */
 let TH = {actor:"the adversary or a proxy", actor_short:"adversary or proxy", adversary:"the adversary", proxy_note:"", salvo:null, presets:[]};
+const USH = dflt => TH.us_hurt || dflt;   /* a theater may word the "harm in the US action" line itself (Venezuela: anyone killed or hurt) */
 /* Per-theater words and rules from the data file (theater.reply_days, .act, .econ, .base, .intensity, .cats, .small_n). A theater that sets none of them gets the Iran / Houthi words. */
 const RD = () => TH.reply_days || 5;                                              // days a reply is looked for
 const ECONM = () => TH.econ || {mode:"ships", days:7};                            // economic corner: ships (attacks on shipping), events (counter-measures within N days) or none (not measured)
@@ -516,7 +517,7 @@ function setMetrics(){ METRICS = {
   hurt: {name:"Reply hurt people", unit:"replies logged", trig:true},
   strike7: {name:`${TH.actor_cap} ${ACT().verb}`, unit:"past cases, timing only"},
   talks14: {name:"Talks or diplomatic moves within 14 days", unit:"past cases"},
-  civ: {name:"Civilian harm reported in the US act itself", unit:"past cases"}
+  civ: {name:USH("Civilian harm reported in the US act itself"), unit:"past cases"}
 }; }
 
 /* ---------- small components ---------- */
@@ -827,7 +828,7 @@ function outcomesBlock(o, st, ix){
   if(em.mode === "none") h += flowRow((em.name || "Economic") + " harm", "no clear measure in the log", 0, "not measured", "", "", "var(--k5)");
   else h += flowRow(em.mode === "events" ? (em.label || "Counter-measures follow within " + em.days + " days") : "Attacks on shipping rise the next week", "share of past cases", pc(up), P(up.k, up.n), up.k + " of " + up.n + " · " + R(up.k, up.n), "", "var(--k5)", up);
   if(o.is_hold){ const hu = rate(activeCases(o), c => c.strike7 !== null && c.hurt7 !== null, c => c.hurt7 === true); h += flowRow("Someone hurt in a hostile act that week", "share of hold weeks (checked by hand)", pc(hu), P(hu.k, hu.n), hu.k + " of " + hu.n, "", "var(--k2)"); }
-  else { const cv = st.civ; h += flowRow("Civilians reported hurt in the US action itself", "share of past cases", pc(cv), P(cv.k, cv.n), cv.k + " of " + cv.n, "", "var(--k2)"); }
+  else { const cv = st.civ; h += flowRow(USH("Civilians reported hurt in the US action itself"), "share of past cases", pc(cv), P(cv.k, cv.n), cv.k + " of " + cv.n, "", "var(--k2)"); }
   h += '</div>';
   const sb = cs.reduce((a,c) => a + c.ship_b, 0), sa = cs.reduce((a,c) => a + c.ship_a, 0), mx = Math.max(1, sb, sa);
   h += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:16px">` + (em.mode !== "ships" ? "" : `<div><h2>Shipping attacks, 7 days before vs after</h2><div class="pair"><div><i style="height:${sb/mx*100}%"></i>before ${sb}</div><div><i style="height:${sa/mx*100}%"></i>after ${sa}</div></div><p class="legend">Total across ${cs.length} past cases${sb ? " (" + (sa >= sb ? "+" : "") + Math.round((sa-sb)/sb*100) + "%)" : ""}. Not shown to be caused by the US action.</p></div>`);
@@ -914,7 +915,7 @@ function judge(o, c, cat){
   if(cat === "people"){
     if(c.strike7 === null) return {base:false, why:["<li>Less than 7 days of news after this case; not counted yet.</li>"]};
     const flag = !!c.civ || rp.some(r => r.hurt);
-    L.push(c.civ ? `<li><b>Civilian harm in the US action:</b> ${esc(c.civ)}</li>` : `<li>Civilian harm in the US action: none reported${c.dmg && c.dmg !== "n/a" ? " (other reported effects: " + esc(short(c.dmg, 120)) + ")" : ""}</li>`);
+    L.push(c.civ ? `<li><b>${USH("Civilian harm in the US action")}:</b> ${esc(c.civ)}</li>` : `<li>${USH("Civilian harm in the US action")}: none reported${c.dmg && c.dmg !== "n/a" ? " (other reported effects: " + esc(short(c.dmg, 120)) + ")" : ""}</li>`);
     L.push(...(rp.length ? repLines(false) : ["<li>No linked reply.</li>"]));
     return {base:true, flag, why:L};
   }
@@ -967,7 +968,7 @@ function renderCat(){
     `<div class="rule"><b>What counts as risk here</b>${esc(RULE[cat](o))}</div>`;
   if(cat === "people" && !o.is_hold){
     const civ = base.filter(r => !!r.c.civ).length, rh = base.filter(r => r.c.replies.some(x => x.hurt)).length;
-    h += `<div class="tally"><span>Civilians hurt in the US action: <b>${civ}</b> case${civ === 1 ? "" : "s"}</span><span>A reply hurt people: <b>${rh}</b> case${rh === 1 ? "" : "s"}</span><span>No one hurt: <b>${n - k}</b></span></div>`;
+    h += `<div class="tally"><span>${USH("Civilians hurt in the US action")}: <b>${civ}</b> case${civ === 1 ? "" : "s"}</span><span>A reply hurt people: <b>${rh}</b> case${rh === 1 ? "" : "s"}</span><span>No one hurt: <b>${n - k}</b></span></div>`;
   }
   if(cat === "military" && n && o.salvo && TH.salvo){ h += `<div class="tally"><span>Expected interceptors if the US does this: <b>≈${Math.round(k / n * TH.salvo.count)}</b> ${esc(TH.salvo.weapon)} (${P(k, n)} × ~${TH.salvo.count})</span></div>`; }
   if(cat === "economic" && ECONM().mode === "events"){ const sa = base.reduce((a,r) => a + r.c.ship_a, 0); h += `<div class="tally"><span>Counter-sanctions or trade measures, all cases: <b>${sa}</b></span><span>Prices: not measured</span></div>`; }
@@ -1049,7 +1050,7 @@ function caseTable(o){
   const tri = v => v === null || v === undefined ? '<span class="dot open" title="not yet known"></span>' : `<span class="dot ${v ? "" : "no"}" title="${v ? "yes" : "no"}"></span>`;
   let h = `<div class="tbl"><table><thead><tr><th>Date</th><th>#</th><th>${o.is_hold ? "Hold week" : "What the US did"}</th><th>Phase · intensity then</th>` + (o.trigger ? `<th class="c" title="Reply from ${esc(TH.actor)} within about ${RD()} days">Reply ≤${RD()}d</th>` : '') + `<th class="c" title="${esc(ACT().col)}: ${esc(TH.actor)} within 7 days (timing only)">${esc(ACT().col)}</th>` + (o.is_hold ? '<th class="c" title="A hostile act in the 7 days hurt anyone (checked by hand)">Hurt ≤7d</th>' : '') + '<th class="c">Talks ≤14d</th>' + econHead() + '</tr></thead><tbody>';
   for(const c of o.cases)
-    h += `<tr class="${act.has(c.id) ? "" : "off"}"><td class="mono">${fmtDate(c.date)}</td><td class="mono">${isWeek(c) ? "wk" : c.id}</td><td>${esc(c.title.length > 140 ? c.title.slice(0,137) + "…" : c.title)}${c.civ ? `<br><span class="nodata">Civilian harm: ${esc(c.civ)}</span>` : ""}${isWeek(c) ? "" : "<br>" + srcLinks(c.id)}</td><td>${esc(c.phase)} · ${c.band_at} (${c.pts_at})</td>` +
+    h += `<tr class="${act.has(c.id) ? "" : "off"}"><td class="mono">${fmtDate(c.date)}</td><td class="mono">${isWeek(c) ? "wk" : c.id}</td><td>${esc(c.title.length > 140 ? c.title.slice(0,137) + "…" : c.title)}${c.civ ? `<br><span class="nodata">${USH("Civilian harm")}: ${esc(c.civ)}</span>` : ""}${isWeek(c) ? "" : "<br>" + srcLinks(c.id)}</td><td>${esc(c.phase)} · ${c.band_at} (${c.pts_at})</td>` +
       (o.trigger ? `<td class="c">${tri(c.replied)}</td>` : '') + `<td class="c">${tri(c.strike7)}</td>` + (o.is_hold ? `<td class="c">${tri(c.hurt7)}</td>` : '') + `<td class="c">${tri(c.talks14)}</td>${econCells(c, tri)}</tr>`;
   return h + `</tbody></table></div><p class="legend">${esc(TH.proxy_note)} ● yes · ○ no · dashed = not known yet. Source links: allowed outlets; "cred" = credibility 0-1.</p>`;
 }
