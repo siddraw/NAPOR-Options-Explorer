@@ -81,5 +81,88 @@
    }
   },
   "status_as_of": "2026-10-13"
+ },
+ {
+  "asof": "2026-10-26",
+  "intensity": 12,
+  "band": "High",
+  "events": 91,
+  "options": {
+   "A": {
+    "n": 78,
+    "index": 0.226,
+    "estimate": null
+   },
+   "B": {
+    "n": 4,
+    "index": 0.3,
+    "estimate": null
+   },
+   "C": {
+    "n": 7,
+    "index": 0.2,
+    "estimate": null
+   },
+   "D": {
+    "n": 0,
+    "index": null,
+    "estimate": null
+   },
+   "E": {
+    "n": 2,
+    "index": 0.2,
+    "estimate": null
+   },
+   "F": {
+    "n": 3,
+    "index": 0.667,
+    "estimate": null
+   },
+   "G": {
+    "n": 0,
+    "index": null,
+    "estimate": null
+   },
+   "H": {
+    "n": 2,
+    "index": 0.1,
+    "estimate": null
+   }
+  },
+  "status": {
+   "A": {
+    "status": "open",
+    "label": "Open"
+   },
+   "B": {
+    "status": "active",
+    "label": "In use now"
+   },
+   "C": {
+    "status": "open",
+    "label": "Open"
+   },
+   "D": {
+    "status": "open",
+    "label": "Open"
+   },
+   "E": {
+    "status": "open",
+    "label": "Open"
+   },
+   "F": {
+    "status": "constrained",
+    "label": "Constrained"
+   },
+   "G": {
+    "status": "constrained",
+    "label": "Constrained"
+   },
+   "H": {
+    "status": "active",
+    "label": "In use now"
+   }
+  },
+  "status_as_of": "2026-10-26"
  }
 ]
