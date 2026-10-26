@@ -122,7 +122,7 @@ def build():
     out["estimate"] = dict(shrink=bt["decision"]["adopt"], m=BR.M_MAIN,
                            weighting=dict(scheme=dw["scheme"], param=dw["param"], name=dw["name"], adopt=dw["adopt"], best_candidate=dw["best_candidate"],
                                           gain=dw["gain"], worse_by_cat=dw["worse_by_cat"], rule=dw["rule"]))
-    out["report_card"]["political_proposal"] = bt["political_proposal"]
+    out["report_card"]["political_change"] = bt["political_change"]
     ids = set()
     for o in out["options"]:
         for c in o["cases"]:

@@ -1,23 +1,23 @@
 {
  "generated": "2026-10-26",
- "rows": 467,
- "predictions": 440,
+ "rows": 466,
+ "predictions": 439,
  "skipped_no_history": 27,
  "brier": {
   "overall": {
-   "raw": 0.0818,
-   "shrunk1": 0.077,
-   "shrunk2": 0.0769,
-   "shrunk4": 0.0776,
-   "pooled": 0.082,
+   "raw": 0.0576,
+   "shrunk1": 0.058,
+   "shrunk2": 0.0591,
+   "shrunk4": 0.0605,
+   "pooled": 0.0658,
    "half": 0.25,
-   "w_none": 0.0769,
-   "w_era25": 0.0787,
-   "w_era50": 0.0776,
-   "w_hl180": 0.0849,
-   "w_hl365": 0.0833,
-   "w_hl730": 0.0813,
-   "n": 440
+   "w_none": 0.0591,
+   "w_era25": 0.062,
+   "w_era50": 0.0605,
+   "w_hl180": 0.0678,
+   "w_hl365": 0.0657,
+   "w_hl730": 0.0637,
+   "n": 439
   },
   "people": {
    "raw": 0.0436,
@@ -80,36 +80,36 @@
    "n": 90
   },
   "political": {
-   "raw": 0.1415,
-   "shrunk1": 0.1158,
-   "shrunk2": 0.11,
-   "shrunk4": 0.1063,
-   "pooled": 0.1022,
+   "raw": 0.0225,
+   "shrunk1": 0.0225,
+   "shrunk2": 0.0225,
+   "shrunk4": 0.0225,
+   "pooled": 0.0225,
    "half": 0.25,
-   "w_none": 0.11,
-   "w_era25": 0.1045,
-   "w_era50": 0.1064,
-   "w_hl180": 0.1066,
-   "w_hl365": 0.1086,
-   "w_hl730": 0.1093,
-   "n": 90
+   "w_none": 0.0225,
+   "w_era25": 0.0225,
+   "w_era50": 0.0225,
+   "w_hl180": 0.0225,
+   "w_hl365": 0.0225,
+   "w_hl730": 0.0225,
+   "n": 89
   }
  },
  "brier_2026": {
   "overall": {
-   "raw": 0.0754,
-   "shrunk1": 0.0748,
-   "shrunk2": 0.0746,
-   "shrunk4": 0.0744,
-   "pooled": 0.0753,
+   "raw": 0.0513,
+   "shrunk1": 0.051,
+   "shrunk2": 0.0508,
+   "shrunk4": 0.0507,
+   "pooled": 0.0515,
    "half": 0.25,
-   "w_none": 0.0746,
-   "w_era25": 0.0745,
-   "w_era50": 0.0745,
-   "w_hl180": 0.0734,
-   "w_hl365": 0.0741,
-   "w_hl730": 0.0744,
-   "n": 212
+   "w_none": 0.0508,
+   "w_era25": 0.0508,
+   "w_era50": 0.0508,
+   "w_hl180": 0.0503,
+   "w_hl365": 0.0504,
+   "w_hl730": 0.0506,
+   "n": 211
   },
   "people": {
    "raw": 0.0448,
@@ -172,19 +172,19 @@
    "n": 43
   },
   "political": {
-   "raw": 0.1666,
-   "shrunk1": 0.1653,
-   "shrunk2": 0.1649,
-   "shrunk4": 0.1645,
-   "pooled": 0.1652,
+   "raw": 0.0476,
+   "shrunk1": 0.0476,
+   "shrunk2": 0.0476,
+   "shrunk4": 0.0476,
+   "pooled": 0.0477,
    "half": 0.25,
-   "w_none": 0.1649,
-   "w_era25": 0.1648,
-   "w_era50": 0.1648,
-   "w_hl180": 0.1618,
-   "w_hl365": 0.1644,
-   "w_hl730": 0.1649,
-   "n": 43
+   "w_none": 0.0476,
+   "w_era25": 0.0477,
+   "w_era50": 0.0477,
+   "w_hl180": 0.0477,
+   "w_hl365": 0.0477,
+   "w_hl730": 0.0476,
+   "n": 42
   }
  },
  "calibration": {
@@ -192,9 +192,9 @@
    {
     "lo": 0,
     "hi": 0.2,
-    "n": 344,
+    "n": 341,
     "predicted": 0.047,
-    "observed": 0.076
+    "observed": 0.067
    },
    {
     "lo": 0.2,
@@ -206,23 +206,16 @@
    {
     "lo": 0.4,
     "hi": 0.6,
-    "n": 4,
+    "n": 3,
     "predicted": 0.5,
-    "observed": 0.25
-   },
-   {
-    "lo": 0.6,
-    "hi": 0.8,
-    "n": 1,
-    "predicted": 0.667,
-    "observed": 1.0
+    "observed": 0.0
    },
    {
     "lo": 0.8,
     "hi": 1,
-    "n": 89,
-    "predicted": 0.924,
-    "observed": 0.888
+    "n": 93,
+    "predicted": 0.999,
+    "observed": 0.978
    }
   ],
   "shrunk2": [
@@ -243,23 +236,23 @@
    {
     "lo": 0.4,
     "hi": 0.6,
-    "n": 5,
-    "predicted": 0.542,
+    "n": 3,
+    "predicted": 0.507,
     "observed": 1.0
    },
    {
     "lo": 0.6,
     "hi": 0.8,
-    "n": 4,
-    "predicted": 0.668,
+    "n": 1,
+    "predicted": 0.6,
     "observed": 1.0
    },
    {
     "lo": 0.8,
     "hi": 1,
-    "n": 85,
-    "predicted": 0.921,
-    "observed": 0.882
+    "n": 89,
+    "predicted": 0.999,
+    "observed": 0.978
    }
   ]
  },
@@ -283,31 +276,31 @@
   {
    "period": "2025 H1",
    "n": 82,
-   "raw": 0.1107,
-   "shrunk2": 0.08,
-   "pooled": 0.0938,
+   "raw": 0.0579,
+   "shrunk2": 0.0607,
+   "pooled": 0.0814,
    "half": 0.25
   },
   {
    "period": "2025 H2+",
-   "n": 340,
-   "raw": 0.0704,
-   "shrunk2": 0.0698,
-   "pooled": 0.0707,
+   "n": 339,
+   "raw": 0.0517,
+   "shrunk2": 0.0513,
+   "pooled": 0.0526,
    "half": 0.25
   }
  ],
  "out_of_sample": {
   "train_rows": 249,
-  "test_rows": 212,
-  "scored": 212,
+  "test_rows": 211,
+  "scored": 211,
   "skipped": 0,
   "brier": {
-   "raw": 0.0749,
-   "shrunk1": 0.0744,
-   "shrunk2": 0.0743,
-   "shrunk4": 0.0741,
-   "pooled": 0.0767,
+   "raw": 0.0511,
+   "shrunk1": 0.0508,
+   "shrunk2": 0.0507,
+   "shrunk4": 0.0506,
+   "pooled": 0.0523,
    "half": 0.25
   },
   "train_label": "2016-2025"
@@ -488,13 +481,13 @@
  "decision": {
   "adopt": false,
   "m": 2,
-  "gain": 0.0049,
+  "gain": -0.0015,
   "worse_by_cat": {
    "people": 0.0,
    "escalation": 0.0034,
    "military": 0.0084,
    "economic": -0.0035,
-   "political": -0.0315
+   "political": 0.0
   },
   "rule": "Show the shrunk value if it beats raw by at least 0.005 overall and is not worse by more than 0.01 in any category."
  },
@@ -504,131 +497,131 @@
     "name": "none",
     "scheme": "none",
     "param": null,
-    "overall": 0.0769,
-    "y2026": 0.0746,
+    "overall": 0.0591,
+    "y2026": 0.0508,
     "by_cat": {
      "people": 0.0436,
      "escalation": 0.082,
      "military": 0.0798,
      "economic": 0.0694,
-     "political": 0.11
+     "political": 0.0225
     },
     "by_cat_2026": {
      "people": 0.0448,
      "escalation": 0.0669,
      "military": 0.0704,
      "economic": 0.0257,
-     "political": 0.1649
+     "political": 0.0476
     }
    },
    {
     "name": "era25",
     "scheme": "era",
     "param": 0.25,
-    "overall": 0.0787,
-    "y2026": 0.0745,
+    "overall": 0.062,
+    "y2026": 0.0508,
     "by_cat": {
      "people": 0.0437,
      "escalation": 0.0889,
      "military": 0.0894,
      "economic": 0.0682,
-     "political": 0.1045
+     "political": 0.0225
     },
     "by_cat_2026": {
      "people": 0.0451,
      "escalation": 0.0667,
      "military": 0.0712,
      "economic": 0.0245,
-     "political": 0.1648
+     "political": 0.0477
     }
    },
    {
     "name": "era50",
     "scheme": "era",
     "param": 0.5,
-    "overall": 0.0776,
-    "y2026": 0.0745,
+    "overall": 0.0605,
+    "y2026": 0.0508,
     "by_cat": {
      "people": 0.0437,
      "escalation": 0.0855,
      "military": 0.0848,
      "economic": 0.0686,
-     "political": 0.1064
+     "political": 0.0225
     },
     "by_cat_2026": {
      "people": 0.045,
      "escalation": 0.0668,
      "military": 0.0708,
      "economic": 0.025,
-     "political": 0.1648
+     "political": 0.0477
     }
    },
    {
     "name": "hl180",
     "scheme": "halflife",
     "param": 180,
-    "overall": 0.0849,
-    "y2026": 0.0734,
+    "overall": 0.0678,
+    "y2026": 0.0503,
     "by_cat": {
      "people": 0.0439,
      "escalation": 0.1029,
      "military": 0.0977,
      "economic": 0.075,
-     "political": 0.1066
+     "political": 0.0225
     },
     "by_cat_2026": {
      "people": 0.0447,
      "escalation": 0.0655,
      "military": 0.0703,
      "economic": 0.0245,
-     "political": 0.1618
+     "political": 0.0477
     }
    },
    {
     "name": "hl365",
     "scheme": "halflife",
     "param": 365,
-    "overall": 0.0833,
-    "y2026": 0.0741,
+    "overall": 0.0657,
+    "y2026": 0.0504,
     "by_cat": {
      "people": 0.0438,
      "escalation": 0.0982,
      "military": 0.0936,
      "economic": 0.0733,
-     "political": 0.1086
+     "political": 0.0225
     },
     "by_cat_2026": {
      "people": 0.0448,
      "escalation": 0.0659,
      "military": 0.0704,
      "economic": 0.0248,
-     "political": 0.1644
+     "political": 0.0477
     }
    },
    {
     "name": "hl730",
     "scheme": "halflife",
     "param": 730,
-    "overall": 0.0813,
-    "y2026": 0.0744,
+    "overall": 0.0637,
+    "y2026": 0.0506,
     "by_cat": {
      "people": 0.0437,
      "escalation": 0.0932,
      "military": 0.0898,
      "economic": 0.0716,
-     "political": 0.1093
+     "political": 0.0225
     },
     "by_cat_2026": {
      "people": 0.0448,
      "escalation": 0.0663,
      "military": 0.0704,
      "economic": 0.0252,
-     "political": 0.1649
+     "political": 0.0476
     }
    }
   ],
-  "n": 440,
-  "n_2026": 212,
+  "n": 439,
+  "n_2026": 211,
   "decision": {
    "scheme": "none",
    "param": null,
@@ -646,78 +639,28 @@
    "rule": "Adopt the recency weight with the lowest overall Brier only if it beats no weighting by at least 0.003 overall and is not worse by more than 0.01 in any category; otherwise keep no recency weighting."
   }
  },
- "political_proposal": {
+ "political_change": {
+  "changed": "2026-10-26",
+  "approved_by": "Sidd",
   "method": "w_none",
-  "note": "Brier of the estimate the page shows, same walk-forward (only rows closed before each date). Index-level Brier = average of the five (or four) category Brier scores. These are different outcome definitions, so a lower Brier means the new rule is easier to predict, not that it is a better measure.",
-  "current_index_brier": 0.077,
-  "rules": [
-   {
-    "label": "Current rule: no Diplomatic event (any side, incl. statements) within 14 days",
-    "window": 14,
-    "rows": 96,
-    "predictions": 90,
-    "risk_cases": 85,
-    "brier": {
-     "raw": 0.1415,
-     "shrunk2": 0.11,
-     "w_none": 0.11,
-     "pooled": 0.1022,
-     "half": 0.25
-    },
-    "est": 0.11,
-    "est_2026": 0.1649,
-    "n_2026": 43,
-    "vs_current": 0.0,
-    "vs_coin": -0.14,
-    "index_brier": 0.077
-   },
-   {
-    "label": "P1: no talks/proposal/ceasefire/deal event within 30 days",
-    "window": 30,
-    "rows": 92,
-    "predictions": 86,
-    "risk_cases": 86,
-    "brier": {
-     "raw": 0.1241,
-     "shrunk2": 0.0688,
-     "w_none": 0.0688,
-     "pooled": 0.0534,
-     "half": 0.25
-    },
-    "est": 0.0688,
-    "est_2026": 0.1003,
-    "n_2026": 39,
-    "vs_current": -0.0412,
-    "vs_coin": -0.1812,
-    "index_brier": 0.0687
-   },
-   {
-    "label": "P2: no talks/proposal/ceasefire/deal event within 14 days",
-    "window": 14,
-    "rows": 95,
-    "predictions": 89,
-    "risk_cases": 92,
-    "brier": {
-     "raw": 0.0624,
-     "shrunk2": 0.0312,
-     "w_none": 0.0312,
-     "pooled": 0.0234,
-     "half": 0.25
-    },
-    "est": 0.0312,
-    "est_2026": 0.047,
-    "n_2026": 42,
-    "vs_current": -0.0788,
-    "vs_coin": -0.2188,
-    "index_brier": 0.0612
-   }
-  ],
-  "p3": {
-   "label": "P3: political left out of the index (average of the other four corners)",
-   "est": null,
-   "index_brier": 0.0687,
-   "vs_current": -0.0083,
-   "vs_coin": -0.1813
-  }
+  "old": {
+   "label": "Old rule: any diplomatic event within 14 days, statements and threats included",
+   "legacy": true,
+   "rows": 96,
+   "predictions": 90,
+   "risk_cases": 85,
+   "est": 0.11,
+   "index_brier": 0.077
+  },
+  "new": {
+   "label": "New rule: only talks, a meeting, a proposal, a ceasefire or a deal within 14 days",
+   "legacy": false,
+   "rows": 95,
+   "predictions": 89,
+   "risk_cases": 93,
+   "est": 0.0225,
+   "index_brier": 0.0595
+  },
+  "note": "Brier of the estimate the page shows, same walk-forward (only rows closed before each date). Index Brier = average of the category Brier scores. The two rules define the outcome differently, so a lower Brier means the new rule is easier to predict, not that it is a better measure."
  }
 }

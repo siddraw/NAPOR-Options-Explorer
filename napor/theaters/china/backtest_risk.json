@@ -677,78 +677,28 @@
    "rule": "Adopt the recency weight with the lowest overall Brier only if it beats no weighting by at least 0.003 overall and is not worse by more than 0.01 in any category; otherwise keep no recency weighting."
   }
  },
- "political_proposal": {
+ "political_change": {
+  "changed": "2026-10-26",
+  "approved_by": "Sidd",
   "method": "w_none",
-  "note": "Brier of the estimate the page shows, same walk-forward (only rows closed before each date). Index-level Brier = average of the five (or four) category Brier scores. These are different outcome definitions, so a lower Brier means the new rule is easier to predict, not that it is a better measure.",
-  "current_index_brier": 0.0813,
-  "rules": [
-   {
-    "label": "Current rule: no Diplomatic event (any side, incl. statements) within 14 days",
-    "window": 14,
-    "rows": 24,
-    "predictions": 18,
-    "risk_cases": 24,
-    "brier": {
-     "raw": 0.0,
-     "shrunk2": 0.0,
-     "w_none": 0.0,
-     "pooled": 0.0,
-     "half": 0.25
-    },
-    "est": 0.0,
-    "est_2026": 0.0,
-    "n_2026": 2,
-    "vs_current": 0.0,
-    "vs_coin": -0.25,
-    "index_brier": 0.0813
-   },
-   {
-    "label": "P1: no talks/proposal/ceasefire/deal event within 30 days",
-    "window": 30,
-    "rows": 24,
-    "predictions": 18,
-    "risk_cases": 23,
-    "brier": {
-     "raw": 0.0582,
-     "shrunk2": 0.0578,
-     "w_none": 0.0578,
-     "pooled": 0.0566,
-     "half": 0.25
-    },
-    "est": 0.0578,
-    "est_2026": 0.0052,
-    "n_2026": 2,
-    "vs_current": 0.0578,
-    "vs_coin": -0.1922,
-    "index_brier": 0.0928
-   },
-   {
-    "label": "P2: no talks/proposal/ceasefire/deal event within 14 days",
-    "window": 14,
-    "rows": 24,
-    "predictions": 18,
-    "risk_cases": 24,
-    "brier": {
-     "raw": 0.0,
-     "shrunk2": 0.0,
-     "w_none": 0.0,
-     "pooled": 0.0,
-     "half": 0.25
-    },
-    "est": 0.0,
-    "est_2026": 0.0,
-    "n_2026": 2,
-    "vs_current": 0.0,
-    "vs_coin": -0.25,
-    "index_brier": 0.0813
-   }
-  ],
-  "p3": {
-   "label": "P3: political left out of the index (average of the other four corners)",
-   "est": null,
-   "index_brier": 0.1016,
-   "vs_current": 0.0203,
-   "vs_coin": -0.1484
-  }
+  "old": {
+   "label": "Old rule: any diplomatic event within 14 days, statements and threats included",
+   "legacy": true,
+   "rows": 24,
+   "predictions": 18,
+   "risk_cases": 24,
+   "est": 0.0,
+   "index_brier": 0.0813
+  },
+  "new": {
+   "label": "New rule: only talks, a meeting, a proposal, a ceasefire or a deal within 14 days",
+   "legacy": false,
+   "rows": 24,
+   "predictions": 18,
+   "risk_cases": 24,
+   "est": 0.0,
+   "index_brier": 0.0813
+  },
+  "note": "Brier of the estimate the page shows, same walk-forward (only rows closed before each date). Index Brier = average of the category Brier scores. The two rules define the outcome differently, so a lower Brier means the new rule is easier to predict, not that it is a better measure."
  }
 }

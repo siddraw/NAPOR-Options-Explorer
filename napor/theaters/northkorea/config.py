@@ -13,8 +13,8 @@ The five categories, exactly as defined for this tab (the page shows these words
               IRBM or SRBM). Satellite rockets, cruise missiles, "projectiles", a nuclear test, drones and statements do not count.
   economic    NOT MEASURED. The log has no clear measure of sanctions relief, trade or prices, and NAPOR does not force a
               shipping measure onto North Korea. The page shows "not measured" and leaves the corner out of the index.
-  political   no talks or contact within 14 days: no logged event of kind Diplomatic (a summit, a meeting, or an offer to meet,
-              by anyone) in the 14 days after the move.
+  political   no talks within 14 days (rule changed 2026-10-26 with Sidd's approval): no logged Diplomatic row whose action type names talks, a
+              meeting, a proposal, a ceasefire or a deal (a summit, a meeting, or an offer to meet) in the 14 days after the move. Statements and threats do not count.
 """
 import datetime as dt
 import re
@@ -67,8 +67,8 @@ THEATER = dict(
                       other="Not measured for North Korea. There is no clear measure of sanctions relief, trade or prices in the log, so this corner is shown as \"not measured\" and left out of the index.",
                       rule="Not measured. Nothing is counted for this corner."),
         political=dict(name="Political / diplomatic", short="Political",
-                       other="Share of past cases NOT followed by talks or contact (a summit, a meeting or an offer to meet) within 14 days.",
-                       rule="Counts when no talks or contact (a summit, a meeting or an offer to meet, by anyone) was logged within 14 days after the move."),
+                       other="Share of past cases NOT followed within 14 days by talks (a summit, a meeting or an offer to meet) between the US and North Korea. Statements and threats do not count.",
+                       rule="Counts when no talks (a summit, a meeting or an offer to meet) between the US and North Korea were logged within 14 days after the move. Statements, threats and appeals do not count as talks. Changed on 2026-10-26 with Sidd's approval."),
     ),
 )
 
@@ -226,7 +226,7 @@ RISK_TEXT = dict(
     mil_none="No military cost expected from the move itself.",
     eco_cases="Economic effects (sanctions relief, trade, prices): not measured for North Korea. This corner is left out of the index.",
     eco_baseline="Baseline: about {per_week} logged North Korean launches or provocations a week in the current phase. Economic effects: not measured for North Korea.",
-    pol_cases="Talks or contact (a summit, a meeting or an offer to meet) within 14 days after: {talks}. Strain with South Korea, Japan and China: not measured.",
+    pol_cases="Talks (a summit, a meeting or an offer to meet) within 14 days after: {talks} (statements and threats do not count). Strain with South Korea, Japan and China: not measured.",
     pol_none="No past cases, so no measure. Strain with South Korea, Japan and China: not measured.",
 )
 

@@ -9,7 +9,7 @@ The five outcomes are then measured exactly as for the other options, counted fr
   military   - an Iranian/proxy kinetic strike in those 7 days (same test as "the reply was kinetic"
                for D-G, which does not check the weapon either)
   economic   - attacks on shipping in the 7 days after > the 7 days before
-  political  - no talks or diplomatic move within 14 days
+  political  - no talks (a meeting, proposal, ceasefire or deal; not statements or threats) within 14 days
 
 Left out on purpose:
   - Feb 28 - Apr 7 (daily open war) and Jul 7 - Jul 25 (nightly US campaign logged as one row): US
