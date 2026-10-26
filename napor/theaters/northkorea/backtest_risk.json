@@ -499,12 +499,12 @@
      },
      {
       "variant": "Weak replies do not count",
-      "k": 3,
+      "k": 1,
       "n": 7
      },
      {
       "variant": "Only strong replies count",
-      "k": 3,
+      "k": 1,
       "n": 7
      },
      {
