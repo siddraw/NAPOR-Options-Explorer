@@ -892,7 +892,7 @@ const RULE = {
   escalation: o => o.trigger ? `Counts when ${TH.actor} replied within about 5 days.` : `Counts when ${TH.actor} struck anywhere within 7 days (timing only, not shown to be a reply).`,
   military: o => o.military === "strike" ? `Counts when ${TH.actor} carried out a strike in the 7 days after, the kind that uses up interceptors.` : "Counts when the reply was a missile, rocket or drone strike, the kind that uses up interceptors" + (TH.salvo ? ` (about ${TH.salvo.count} ${TH.salvo.weapon} in the ${TH.salvo.when} salvo).` : "."),
   economic: o => "Counts when logged attacks on shipping in the 7 days after were higher than in the 7 days before.",
-  political: o => "Counts when no talks, meeting, negotiation, formal proposal, ceasefire or deal between the US and Iran, directly or through a mediator, was logged within 14 days. Statements, threats and appeals do not count as talks. Changed on 2026-10-26 with Sidd's approval."
+  political: o => "Counts when no talks, meeting, negotiation (including messages passed through intermediaries), formal proposal, ceasefire or deal between the US and Iran, directly or through a mediator, was logged within 14 days. Statements, threats and appeals do not count as talks. Changed on 2026-10-26 with Sidd's approval."
 };
 const short = (t, n=140) => t.length > n ? t.slice(0, n-1) + "…" : t;
 function srcLinks(id){
