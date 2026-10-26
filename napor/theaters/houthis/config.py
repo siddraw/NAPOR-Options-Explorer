@@ -119,6 +119,7 @@ PEOPLE_HURT = {
     "2025-09-22": (True, [1327], "Minervagracht: one crew member later died, one injured (AP, USNI)."),
     "2026-07-20": (False, [1333], "Saudi tanker Encelia hit by fire: no deaths reported (AFP via Ahram Online)."),
     "2026-10-05": (True, [1339, 1340], "Riyadh airport attacks: 3 Saudis killed on Oct 8, then 12 killed and 309 wounded on Oct 10 (Saudi civil aviation via Al Jazeera, NPR)."),
+    "2026-10-19": (True, [1345, 1346], "Shaybah oilfield drone (Oct 20): 2 killed, 2 injured by debris, attacker not named by Saudi Arabia (CBS, Reuters); Dammam airport attack (Oct 21): 1 killed, 8 injured (Saudi civil aviation via Reuters). #1348 is a Houthi claim with no casualties stated."),
 }
 
 CIVILIAN_HARM = {}        # no civilian harm reported in an allowed outlet for any counted US move (Houthi casualty claims are not counted)

@@ -97,10 +97,15 @@
    113,
    114
   ],
-  "outcome": null,
-  "resolved_on": null,
-  "resolution_note": null,
-  "brier": null
+  "outcome": "YES",
+  "resolved_on": "2026-10-26",
+  "resolution_note": "YES. UKMTO reported an unknown projectile hitting a tanker about 30 nm southeast of Iraq's Faw port on Oct 20 (no damage, crew safe; Reuters) and a tanker hit and set on fire 11 nm off Bukha, Oman, at the Strait of Hormuz on Oct 21 (crew safe; AFP via Times of Israel). The IRGC also claimed seven tankers hit on Oct 22 and two on Oct 23 (Al Jazeera); those are unverified claims and are not needed for the YES.",
+  "brier": 0.012,
+  "sources": [
+   "https://www.devdiscourse.com/article/international/3995693-tanker-struck-by-projectile-southeast-of-iraqs-alfaw-on-tuesday-ukmto-says",
+   "https://www.timesofisrael.com/liveblog_entry/projectile-hit-tanker-near-strait-of-hormuz-maritime-agency-says/",
+   "https://www.aljazeera.com/news/2026/10/22/iran-says-seven-ships-hit-in-hormuz-strait-warns-us-of-wider-response"
+  ]
  },
  {
   "id": "F005",
@@ -115,6 +120,30 @@
   "related_events": [
    80,
    113
+  ],
+  "outcome": null,
+  "resolved_on": null,
+  "resolution_note": null,
+  "brier": null
+ },
+ {
+  "id": "F006",
+  "made_on": "2026-10-26",
+  "news_through": "2026-10-26",
+  "question": "Will there be at least one new attack on a commercial ship in or near the Strait of Hormuz / Gulf (by Iran or an unidentified attacker) during Oct 26-Nov 1?",
+  "resolves_yes_if": "An allowed outlet, UKMTO or CENTCOM reports at least one new projectile, drone, mine or boarding attack on a commercial vessel in the Gulf, Strait of Hormuz or Gulf of Oman dated Oct 26-Nov 1, not attributed to the US. IRGC claims alone (not confirmed by UKMTO, CENTCOM or an allowed outlet's own reporting) do not count. Houthi attacks in the Red Sea do not count.",
+  "deadline": "2026-11-01",
+  "probability": 0.91,
+  "basis": "Baseline: 16 logged attack rows in 6.6 weeks of the current phase (Sep 10-Oct 25) = 2.4 per week; chance of at least one in a week (Poisson) = 1 - e^-2.4 = 91%. Same method as F002/F004. Caution: UKMTO-confirmed hits this week (2) were fewer than the record week to Oct 16, and some logged rows are IRGC claims, so the true rate of confirmed attacks may be lower.",
+  "option": "A",
+  "related_events": [
+   109,
+   112,
+   114,
+   117,
+   118,
+   121,
+   123
   ],
   "outcome": null,
   "resolved_on": null,

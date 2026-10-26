@@ -418,5 +418,336 @@
   "seen": "filed by matcher (not yet confirmed by a person)",
   "status": "needs human check: Iranian army claim only, no ship names; could overlap #112 (tankers hit off Saudi Arabia Oct 16-17) or be separate Gulf of Oman incidents. Not logged.",
   "received": "2026-10-19"
+ },
+ {
+  "report_id": "R0352",
+  "published": "2026-10-21",
+  "outlet": "Reuters (via Devdiscourse)",
+  "kind": "Independent outlet",
+  "headline": "Tanker struck by projectile southeast of Iraq's Al Faw on Tuesday, UKMTO says",
+  "url": "https://www.devdiscourse.com/article/international/3995693-tanker-struck-by-projectile-southeast-of-iraqs-alfaw-on-tuesday-ukmto-says",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 266,
+  "candidates": [
+   {
+    "score": 0.351,
+    "event_id": 114,
+    "date": "2026-10-18",
+    "detail": "UKMTO: a tug is struck by two unknown projectiles off the UAE; damaged but continuing its "
+   },
+   {
+    "score": 0.156,
+    "event_id": 115,
+    "date": "2026-10-18",
+    "detail": "FM Araghchi says Tehran is reviewing US 'comments' on its proposal; if the US complies, 't"
+   },
+   {
+    "score": 0.0,
+    "event_id": 265,
+    "date": "2023-01-10",
+    "detail": "US Navy patrol ships intercept a fishing vessel carrying 2,116 AK-47s on a route from Iran"
+   }
+  ],
+  "match_score": 0.351,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-10-26: logged as new event #117 (sources in audit_sources.py)",
+  "received": "2026-10-26"
+ },
+ {
+  "report_id": "R0353",
+  "published": "2026-10-21",
+  "outlet": "Times of Israel (AFP)",
+  "kind": "Independent outlet",
+  "headline": "Projectile hit tanker near Strait of Hormuz, maritime agency says",
+  "url": "https://www.timesofisrael.com/liveblog_entry/projectile-hit-tanker-near-strait-of-hormuz-maritime-agency-says/",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 266,
+  "candidates": [
+   {
+    "score": 0.314,
+    "event_id": 114,
+    "date": "2026-10-18",
+    "detail": "UKMTO: a tug is struck by two unknown projectiles off the UAE; damaged but continuing its "
+   },
+   {
+    "score": 0.293,
+    "event_id": 115,
+    "date": "2026-10-18",
+    "detail": "FM Araghchi says Tehran is reviewing US 'comments' on its proposal; if the US complies, 't"
+   },
+   {
+    "score": 0.0,
+    "event_id": 265,
+    "date": "2023-01-10",
+    "detail": "US Navy patrol ships intercept a fishing vessel carrying 2,116 AK-47s on a route from Iran"
+   }
+  ],
+  "match_score": 0.314,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-10-26: logged as new event #118 (sources in audit_sources.py)",
+  "received": "2026-10-26"
+ },
+ {
+  "report_id": "R0354",
+  "published": "2026-10-21",
+  "outlet": "Treasury (press release sb0664)",
+  "kind": "Official statement",
+  "headline": "Operation Economic Outcast Targets Iran's Shadow Fleet Networks",
+  "url": "https://home.treasury.gov/news/press-releases/sb0664",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 266,
+  "candidates": [
+   {
+    "score": 0.156,
+    "event_id": 114,
+    "date": "2026-10-18",
+    "detail": "UKMTO: a tug is struck by two unknown projectiles off the UAE; damaged but continuing its "
+   },
+   {
+    "score": 0.076,
+    "event_id": 115,
+    "date": "2026-10-18",
+    "detail": "FM Araghchi says Tehran is reviewing US 'comments' on its proposal; if the US complies, 't"
+   },
+   {
+    "score": 0.0,
+    "event_id": 265,
+    "date": "2023-01-10",
+    "detail": "US Navy patrol ships intercept a fishing vessel carrying 2,116 AK-47s on a route from Iran"
+   }
+  ],
+  "match_score": 0.156,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-10-26: logged as new event #119 (sources in audit_sources.py)",
+  "received": "2026-10-26"
+ },
+ {
+  "report_id": "R0355",
+  "published": "2026-10-21",
+  "outlet": "Reuters (via Internazionale)",
+  "kind": "Independent outlet",
+  "headline": "US orders departure of diplomats from Saudi Arabia amid Houthi strikes",
+  "url": "https://www.internazionale.it/ultime-notizie-reuters/2026/10/21/exclusive-us-preparing-to-issue-ordered-departure-of-some-personnel-from-gulf-embassies-us-officials",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 266,
+  "candidates": [
+   {
+    "score": 0.296,
+    "event_id": 114,
+    "date": "2026-10-18",
+    "detail": "UKMTO: a tug is struck by two unknown projectiles off the UAE; damaged but continuing its "
+   },
+   {
+    "score": 0.076,
+    "event_id": 115,
+    "date": "2026-10-18",
+    "detail": "FM Araghchi says Tehran is reviewing US 'comments' on its proposal; if the US complies, 't"
+   },
+   {
+    "score": 0.0,
+    "event_id": 265,
+    "date": "2023-01-10",
+    "detail": "US Navy patrol ships intercept a fishing vessel carrying 2,116 AK-47s on a route from Iran"
+   }
+  ],
+  "match_score": 0.296,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-10-26: logged as new event #120 (sources in audit_sources.py)",
+  "received": "2026-10-26"
+ },
+ {
+  "report_id": "R0356",
+  "published": "2026-10-22",
+  "outlet": "Al Jazeera",
+  "kind": "Independent outlet",
+  "headline": "Iran says seven ships hit in Hormuz Strait, warns US of wider response",
+  "url": "https://www.aljazeera.com/news/2026/10/22/iran-says-seven-ships-hit-in-hormuz-strait-warns-us-of-wider-response",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 266,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 265,
+    "date": "2023-01-10",
+    "detail": "US Navy patrol ships intercept a fishing vessel carrying 2,116 AK-47s on a route from Iran"
+   },
+   {
+    "score": 0.0,
+    "event_id": 264,
+    "date": "2020-02-13",
+    "detail": "USS Normandy's boarding team seizes 150 Iranian-made Dehlavieh anti-tank missiles, 3 Irani"
+   },
+   {
+    "score": 0.0,
+    "event_id": 263,
+    "date": "2021-03-03",
+    "detail": "Rockets hit Ain al-Asad air base, which hosts US troops; a US civilian contractor dies dur"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-10-26: logged as new event #121 (sources in audit_sources.py)",
+  "received": "2026-10-26"
+ },
+ {
+  "report_id": "R0357",
+  "published": "2026-10-24",
+  "outlet": "Al Jazeera",
+  "kind": "Independent outlet",
+  "headline": "Iran says won't allow US warships to get close as Trump ponders new attacks",
+  "url": "https://www.aljazeera.com/news/2026/10/24/iran-says-wont-allow-us-warships-to-get-close-as-trump-ponders-new-attacks",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 266,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 265,
+    "date": "2023-01-10",
+    "detail": "US Navy patrol ships intercept a fishing vessel carrying 2,116 AK-47s on a route from Iran"
+   },
+   {
+    "score": 0.0,
+    "event_id": 264,
+    "date": "2020-02-13",
+    "detail": "USS Normandy's boarding team seizes 150 Iranian-made Dehlavieh anti-tank missiles, 3 Irani"
+   },
+   {
+    "score": 0.0,
+    "event_id": 263,
+    "date": "2021-03-03",
+    "detail": "Rockets hit Ain al-Asad air base, which hosts US troops; a US civilian contractor dies dur"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-10-26: logged as new event #122, #123 and #125 (sources in audit_sources.py)",
+  "received": "2026-10-26"
+ },
+ {
+  "report_id": "R0358",
+  "published": "2026-10-24",
+  "outlet": "Al Jazeera",
+  "kind": "Independent outlet",
+  "headline": "Is Iran planning attacks on Americans; why is the US on alert?",
+  "url": "https://www.aljazeera.com/news/2026/10/24/is-iran-planning-attacks-on-americans-why-is-the-us-on-alert",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 266,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 265,
+    "date": "2023-01-10",
+    "detail": "US Navy patrol ships intercept a fishing vessel carrying 2,116 AK-47s on a route from Iran"
+   },
+   {
+    "score": 0.0,
+    "event_id": 264,
+    "date": "2020-02-13",
+    "detail": "USS Normandy's boarding team seizes 150 Iranian-made Dehlavieh anti-tank missiles, 3 Irani"
+   },
+   {
+    "score": 0.0,
+    "event_id": 263,
+    "date": "2021-03-03",
+    "detail": "Rockets hit Ain al-Asad air base, which hosts US troops; a US civilian contractor dies dur"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-10-26: logged as new event #124 (sources in audit_sources.py)",
+  "received": "2026-10-26"
+ },
+ {
+  "report_id": "R0359",
+  "published": "2026-10-26",
+  "outlet": "CBS News",
+  "kind": "Independent outlet",
+  "headline": "Trump says he's weighing deal with Iran against action to finish them off",
+  "url": "https://www.cbsnews.com/live-updates/iran-war-trump-us-oil-gas-prices-strait-of-hormuz-midterms/",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 266,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 265,
+    "date": "2023-01-10",
+    "detail": "US Navy patrol ships intercept a fishing vessel carrying 2,116 AK-47s on a route from Iran"
+   },
+   {
+    "score": 0.0,
+    "event_id": 264,
+    "date": "2020-02-13",
+    "detail": "USS Normandy's boarding team seizes 150 Iranian-made Dehlavieh anti-tank missiles, 3 Irani"
+   },
+   {
+    "score": 0.0,
+    "event_id": 263,
+    "date": "2021-03-03",
+    "detail": "Rockets hit Ain al-Asad air base, which hosts US troops; a US civilian contractor dies dur"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-10-26: logged as new event #126 and #127 (sources in audit_sources.py)",
+  "received": "2026-10-26"
+ },
+ {
+  "report_id": "R0360",
+  "published": "2026-10-26",
+  "outlet": "Al Jazeera",
+  "kind": "Independent outlet",
+  "headline": "Iran war live: Saudi, Pakistani and Turkish officials in Tehran for talks",
+  "url": "https://www.aljazeera.com/news/liveblog/2026/10/26/iran-war-live-trump-rules-out-strikes-today-israeli-forces-raid-hebron",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 266,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 265,
+    "date": "2023-01-10",
+    "detail": "US Navy patrol ships intercept a fishing vessel carrying 2,116 AK-47s on a route from Iran"
+   },
+   {
+    "score": 0.0,
+    "event_id": 264,
+    "date": "2020-02-13",
+    "detail": "USS Normandy's boarding team seizes 150 Iranian-made Dehlavieh anti-tank missiles, 3 Irani"
+   },
+   {
+    "score": 0.0,
+    "event_id": 263,
+    "date": "2021-03-03",
+    "detail": "Rockets hit Ain al-Asad air base, which hosts US troops; a US civilian contractor dies dur"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-10-26: logged as new event #128 (sources in audit_sources.py)",
+  "received": "2026-10-26"
+ },
+ {
+  "report_id": "R0361",
+  "published": "2026-10-22",
+  "outlet": "Al Jazeera",
+  "kind": "Independent outlet",
+  "headline": "Iran says seven ships hit in Hormuz Strait, warns US of wider response",
+  "url": "https://www.aljazeera.com/news/2026/10/22/iran-says-seven-ships-hit-in-hormuz-strait-warns-us-of-wider-response",
+  "decision": "POSSIBLE OVERLAP",
+  "matched_event": 118,
+  "proposed_new_event_id": null,
+  "candidates": [],
+  "match_score": 0.642,
+  "seen": "full text",
+  "received": "2026-10-26",
+  "status": "needs human check: the IRGC's claim of seven tankers hit overnight into Oct 22 (#121) may include the UKMTO-confirmed tanker hit off Bukha on Oct 21 (#118); duplicate_watch scores the pair 0.64. Both kept as separate rows; not merged."
  }
 ]

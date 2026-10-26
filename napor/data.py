@@ -157,7 +157,7 @@ MONTHS = [
     ("Jul 2026", d(2026,7,1), d(2026,7,31)),
     ("Aug 2026", d(2026,8,1), d(2026,8,31)),
     ("Sep 2026", d(2026,9,1), d(2026,9,30)),
-    ("Oct 2026 (to Oct 18)", d(2026,10,1), d(2026,10,31)),
+    ("Oct 2026 (to Oct 26)", d(2026,10,1), d(2026,10,31)),
 ]
 
 
@@ -297,6 +297,27 @@ events.extend([
 (115, d(2026,10,18), 'Iran', 'Diplomatic response pending', 'US', "FM Araghchi says Tehran is reviewing US 'comments' on its proposal; if the US complies, 'the Strait of Hormuz will reopen on the sixth day' and negotiations start on the seventh", 86, 'n/a', 'Medium', 'see audit'),
 # Catch-up row (2026-10-22): found while building the Hold weeks; sourced in audit_sources.py.
 (116, d(2026,6,7), 'Iran', 'Strike (exchange with Israel)', 'Israel', 'Iran and Israel trade fire over the weekend of Jun 6-7, the first exchange since the April ceasefire; Iran then agrees to halt attacks (see #43)', None, 'No casualty figures in the source read', 'Medium', 'see audit'),
+])
+
+# ---------------------------------------------------------------------------
+# Weekly update, Oct 26 (weekly agent; credible-outlet research covering Oct 19-26). No US strike
+# on Iranian territory or on ships at sea and no Iranian strike on US forces or bases was found.
+# UKMTO-confirmed shipping attacks this week were fewer than the IRGC claims (two confirmed,
+# Oct 20-21, against nine claimed Oct 22-23). One row per incident or claim cluster.
+# ---------------------------------------------------------------------------
+events.extend([
+(117, d(2026,10,20), 'Unknown', 'Strike (shipping)', 'Iraq (northern Gulf)', 'UKMTO: an unknown projectile hits a tanker about 30 nautical miles southeast of Iraq\'s Faw port (Tuesday Oct 20, reported Oct 21)', None, 'No damage; crew reported safe (Reuters citing UKMTO)', 'Medium', 'see audit'),
+(118, d(2026,10,21), 'Unknown', 'Strike (shipping)', 'Strait of Hormuz', 'UKMTO: a tanker 11 nautical miles off Bukha, Oman, at the Strait of Hormuz, is hit by an unknown projectile and catches fire; now at anchor', None, 'Fire; all crew reported safe (AFP citing UKMTO)', 'Medium', 'see audit'),
+(119, d(2026,10,21), 'US', 'Sanctions response', 'Iran', "Treasury sanctions 4 entities, 5 people and 9 vessels in Iran's shadow-fleet oil network (Operation Economic Outcast)", None, 'n/a', 'Medium', 'see audit'),
+(120, d(2026,10,21), 'US', 'Force posture (drawdown)', 'Middle East region', "State orders non-emergency staff and families out of Saudi Arabia (Oct 21), citing Houthi attacks, and on Oct 23 cuts staff at embassies in Jordan, Lebanon, Qatar and the UAE; US officials say the military is quietly reducing its footprint at Middle East posts, partly over direct threats from Iran", None, 'n/a', 'Medium', 'see audit'),
+(121, d(2026,10,22), 'Iran (IRGC claim)', 'Strike (shipping, claimed)', 'Strait of Hormuz', "IRGC CLAIMS seven tankers were hit overnight into Oct 22 (four struck while transferring oil, three by mines) and warns the conflict 'will extend to' US bases if the US keeps helping tankers through; Trump says Iran is 'making up fake hits, mines'; CENTCOM says the mine claims are incorrect and Iran is using missiles and drones", None, 'Fires and damage (IRGC claim; unverified). No names or casualties given', 'Medium', 'see audit'),
+(122, d(2026,10,23), 'US', 'Diplomatic statement (threat)', 'Iran', "Trump tells a Florida rally the US 'may do another little Epic Fury' and asks whether to 'finish it off' or let Iran 'wither' under the blockade and sanctions; Ambassador Tom Barrack says a strike 'this weekend' is 'Absolutely' possible", 97, 'n/a', 'Medium', 'see audit'),
+(123, d(2026,10,23), 'Iran (IRGC claim)', 'Strike (shipping, claimed mine) + threat', 'Strait of Hormuz', "IRGC CLAIMS two supertankers hit mines; Iranian state TV says movement of 'non-compliant' ships through Hormuz has been halted and threatens 'much more forceful' action if US escorts resume", None, 'Not stated (IRGC claim; unverified)', 'Medium', 'see audit'),
+(124, d(2026,10,24), 'US', 'Diplomatic statement (intelligence warning)', 'Iran', "Axios and the NYT report a memo from DNI Jay Clayton to Secretary Rubio saying Iran has 'substantially increased efforts to target US personnel' abroad, with plots at 'advanced stages'; Washington does not comment publicly", None, 'n/a', 'Medium', 'see audit'),
+(125, d(2026,10,24), 'Iran', 'Diplomatic statement', 'US', "Armed forces chief Ali Abdollahi says US warships will not enter the Gulf 'under any circumstances'; Iran's ambassador to Pakistan says Tehran is still open to talks under the June Pakistan-brokered interim deal", None, 'n/a', 'Medium', 'see audit'),
+(126, d(2026,10,25), 'US', 'Diplomatic statement', 'Iran', "Trump: 'do I make a deal with them, or do I finish them off?' and, asked about a strike, 'No. There will not be a strike today'", 97, 'n/a', 'Medium', 'see audit'),
+(127, d(2026,10,25), 'Iran', 'Diplomatic contact (via intermediaries)', 'US', "Iran's foreign ministry says messages are still being passed to the US through intermediaries; FM Araghchi says that with or without war 'our policies remain the same'", 86, 'n/a', 'Medium', 'see audit'),
+(128, d(2026,10,26), 'Saudi Arabia/Pakistan/Turkey', 'Diplomatic talks (regional)', 'Iran', "Saudi, Pakistani and Turkish officials meet in Tehran with Iran's security chief to discuss the fallout of the war and the fighting in Yemen; the US is not part of the meeting (a day after an eight-country foreign ministers' meeting in Istanbul on Oct 23 without the US or Iran)", None, 'n/a', 'Medium', 'see audit'),
 ])
 
 # ---------------------------------------------------------------------------
@@ -625,7 +646,11 @@ census += [
  (104, "Economic/Blockade", "Unclear", "US jet disables a blockade runner, Oct 10-11. No Iranian attack on US forces, bases or US-flagged ships Oct 11-16 (forecast F001 resolved NO). But attacks on commercial shipping surged (GFS Pride sunk Oct 13), and Iran said it was stepping up strikes over the blockade and sanctions; no outlet ties them to this strike. [Proposed: N, as for #85/#87.]"),
  (106, "Military/Property", "Unclear", "US destroys an IRGC-linked surveillance dhow, Oct 6 (announced Oct 14). No Iranian attack on US forces found Oct 6-11; shipping attacks continued (#94, #96, #100, #101). No outlet links them. [Proposed: N.]"),
  (107, "Economic/Blockade", "Unclear", "US shadow-fleet sanctions, Oct 8. Shipping attacks continued Oct 9-13 (#100, #101, #103, #105, #109); no outlet ties them to these sanctions specifically. [Proposed: N, as for #85/#87.]"),
- (110, "Economic/Blockade", "Unverified", "US shadow-banking sanctions, Oct 15. Window runs to Oct 20; check next week."),
+ (110, "Economic/Blockade", "Unclear", "US shadow-banking sanctions, Oct 15 (checked Oct 26). No Iranian attack on US forces, bases or US-flagged ships Oct 15-20. Shipping attacks continued (#112, #113, #114, #117); no outlet ties them to these sanctions. [Proposed: N, as for #85/#87.]"),
+]
+# Weekly update, Oct 26: new US sanctions whose window is still open.
+census += [
+ (119, "Economic/Blockade", "Unverified", "US shadow-fleet sanctions, Oct 21. Window runs to Oct 26; check next week. So far: IRGC claims of tanker hits Oct 22-23 (#121, #123) and a threat against US bases, no attack on US forces found."),
 ]
 
 # Continuous-war rule: while both sides were striking each other daily, every act is

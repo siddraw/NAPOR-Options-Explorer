@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-10-26 (weekly agent)
+Data updates only; no model rules changed.
+- **Iran**: new events #117-#128 (news Oct 19-26), sources in audit_sources.py (allowed outlets, Treasury/OFAC; every URL from
+  this session's searches/fetches). #121 and #123 are IRGC claims (partly confirmed). Reason: weekly scan.
+- Review queue: 9 stories confirmed as new events (R0352-R0360). 1 left for Sidd (R0361: the IRGC's "seven tankers" claim, #121,
+  may include the UKMTO-confirmed Bukha tanker hit, #118; duplicate_watch 0.64). Reason: uncertain matches are not guessed.
+- Trigger Census: #110 moved from 'Unverified' to 'Unclear' (window closed; proposed N, waiting on Sidd as for #104/#106/#107);
+  #119 (Oct 21 sanctions) added as 'Unverified' (window still open). These do not move any rate.
+- Forecast graded: F004 YES (Brier 0.012). S001 closed: US choice C (sanctions), with the blockade continuing and no strikes.
+  New situation S003 (US choice Oct 26-Nov 3) and forecast F006 (shipping attacks Oct 26-Nov 1, 91%), made Oct 26 before the outcome.
+- napor_now.json rewritten for Oct 26 (H now "in use": staff drawdown #120). Month label 'Oct 2026 (to Oct 26)' in data.py and
+  build.py text. Hold weeks: none new (week of Oct 19 has #119 sanctions).
+- **Houthis / Red Sea**: new events #1344-#1349 (news Oct 14-26) in theaters/houthis/events_late.py with sources; none is
+  tagged as a US option move (#1347, the Saudi ordered departure, is a diplomatic precaution). The open-ended end date of the
+  current phase and of the two constraints moved from Oct 24 to Oct 26 (no boundary moved; they run "to the latest news").
+  Hold week of Oct 19: people-hurt flag True (#1345, #1346). now.json rewritten for Oct 26.
+- Weekly build: PASS. Backtest of the page's numbers: Iran NAPOR estimate 0.183 vs raw 0.193; Houthis 0.077 vs 0.082.
+
 ## 2026-10-24 — Round 2, stages 1–2
 - Recency weighting (approved to test): backtested six versions (none; pre-2026 weight 0.25/0.5; half-life 180/365/730 days). Best overall was era 0.25 (0.1763 vs 0.1806), but it made military worse by 0.022 and escalation by 0.015, failing the written rule (no category worse by >0.01). **No change**: Iran numbers unchanged. Weighting code, page support and weighted recount are in place for later.
 - Political category: three alternative definitions backtested and shown on the Report Card as a proposal only (live rule unchanged). "Talks only, within 14 days" scored 0.268 vs 0.304 live; dropping political from the index scored 0.149 vs 0.180.
