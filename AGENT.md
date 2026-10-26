@@ -5,20 +5,21 @@ reports in simple, plain language.
 
 ## Every week
 
-Four theaters are live (`explorer/theaters.json`): `iran`, `houthis`, `northkorea`, `china`. Steps 1-2 and 6-7
+Five theaters are live (`explorer/theaters.json`): `iran`, `houthis`, `northkorea`, `china`, `venezuela`. Steps 1-2 and 6-7
 are done once per theater. Steps 3-5 are Iran only.
 
 1. **Scan, per theater.** Find the past week's events using only allowed credible outlets and official
    statements (`docs/SOURCE_STANDARD.md`). No Wikipedia, blogs or tabloids as sources. Never invent URLs.
    Each theater has its own claim-only media, shown only as labelled claims (score 0.30): Iran: Iranian state
    media; Houthis: al-Masirah and Houthi statements; North Korea: KCNA and Rodong Sinmun; China: Xinhua,
-   Global Times, CGTN, PLA Daily, Chinese MND/MFA. The list is in each theater's `config.py`.
+   Global Times, CGTN, PLA Daily, Chinese MND/MFA; Venezuela: Telesur and VTV (Venezuelan state media). The list is in each theater's `config.py`.
 2. **File events, per theater.** Add confirmed new events in that theater's file and ID block, in the same
    record format as the rows already there, with sources:
    - Iran: `data.py` (+ `audit_sources.py`); run each story through `napor_ids.intake()`. Pre-war: `prewar.py` (201+).
    - Houthis: `napor/theaters/houthis/events_early.py` / `events_late.py`, IDs 1001-1599.
    - North Korea: `napor/theaters/northkorea/events.py`, IDs 2001-2999.
    - China: `napor/theaters/china/events.py`, IDs 3001-3999.
+   - Venezuela / Caribbean: `napor/theaters/venezuela/events.py`, IDs 4001-4999 (event and pair IDs). Venezuela's escalation rule is stricter than the census: `rules.py` keeps a census reply only if a hostile act (attack, harassment, mobilization) is logged within 7 days; statements do not count.
    Uncertain matches go to the Review Queue for Sidd; do not guess.
 3. **Grade forecasts (Iran only).** For every forecast in `napor_forecasts.json` whose deadline has passed,
    resolve it with `napor_forecasts.resolve()` from credible sources, citing them.
@@ -53,7 +54,7 @@ are done once per theater. Steps 3-5 are Iran only.
    https://claude.ai/artifact/8YQyFjEyHHNv4RA5qqopow, then publish `explorer/index.html` to that same
    `url` with `files` = {"theaters.json": "explorer/theaters.json", "data.json": "explorer/data.json",
    and for every theater id in `theaters.json`: "data/<id>.json": "explorer/data/<id>.json" and
-   "data/<id>-history.json": "explorer/data/<id>-history.json"}. (Today: iran, houthis, northkorea, china.
+   "data/<id>-history.json": "explorer/data/<id>-history.json"}. (Today: iran, houthis, northkorea, china, venezuela.
    `data.json` is a fallback copy of `data/iran.json`. The verify files `explorer/verify-<id>.json` are
    checks, not page files.) Do not change `index.html` unless Sidd asked for a design change. If the Artifact
    tool is not available, commit the regenerated `explorer/` files anyway and say in the report that the page

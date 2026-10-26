@@ -7,7 +7,7 @@ cause-and-reply chains, war phases, a forecast log and a decision log.
 in the Iran–US war, and the risks and pros of each one.
 **It does not pick an option.** That is the decision-maker's job.
 
-Scope: four theaters: the 2026 Iran–US war, the Houthis / Red Sea, North Korea, and China / Taiwan. Iran is the main one.
+Scope: five theaters: the 2026 Iran–US war, the Houthis / Red Sea, North Korea, China / Taiwan, and Venezuela / Caribbean. Iran is the main one.
 
 ## How it works
 
@@ -44,6 +44,7 @@ Build the workbook: `cd napor && python3 build.py` → `NAPOR_iran_war.xlsx`.
 - **Houthis / Red Sea**: US moves and Houthi replies. Caveat: 2024 was continuous fighting, so few cases count, and the 2025–26 log is thin.
 - **North Korea**: US/South Korea moves and DPRK launches. Caveat: the launch log is a sample; economic harm is not measured.
 - **China / Taiwan**: Taiwan Strait and South China Sea. Caveat: small n; Option A has no cases.
+- **Venezuela / Caribbean**: US moves toward Venezuela and the boat-strike campaign, and Venezuelan or armed-group replies. Caveat: only 8 of about 70 boat strikes are logged one by one, most Venezuelan replies are statements (not counted as escalation), option G has 1 case, and hold weeks may hide unlogged strikes.
 
 Each non-Iran theater is a package in `napor/theaters/<id>/`; data goes to `explorer/data/<id>.json`.
 

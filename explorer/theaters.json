@@ -29,6 +29,13 @@
    "status": "active",
    "data": "data/china.json",
    "asof": "2026-07-24"
+  },
+  {
+   "id": "venezuela",
+   "name": "Venezuela / Caribbean",
+   "status": "active",
+   "data": "data/venezuela.json",
+   "asof": "2026-10-14"
   }
  ]
 }
