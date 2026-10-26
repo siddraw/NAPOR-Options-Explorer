@@ -1254,7 +1254,7 @@ function renderTheaterTabs(){
   const nav = $("#theaters"), list = THEATERS ? THEATERS.theaters : (D ? [{id: (D.theater || {}).id || "main", name: (D.theater || {}).name || "Main", status: (D.theater || {}).status}] : []);
   nav.innerHTML = list.map(t => `<a href="#${esc(t.id)}" data-theater="${esc(t.id)}"${t.id === S.theater ? ' aria-current="page"' : ""}>${esc(t.name)}${t.status ? `<span class="st">${esc(t.status)}</span>` : ""}</a>`).join("");
 }
-function failLoad(){ $("#view").innerHTML = '<div class="panel err">Could not load the NAPOR data. Ask Claude to republish the explorer.</div>'; $("#stamp").textContent = ""; }
+function failLoad(){ $("#view").innerHTML = '<div class="panel err">Could not load the NAPOR data. Try reloading the page.</div>'; $("#stamp").textContent = ""; }
 function loadData(path, fallback){
   fetch(path, {cache:"no-store"}).then(r => { if(!r.ok) throw 0; return r.json(); }).then(boot)
     .catch(() => fallback ? loadData(fallback) : failLoad());

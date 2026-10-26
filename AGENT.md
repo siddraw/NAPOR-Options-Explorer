@@ -110,3 +110,6 @@ standard, census status "R-proxy" for replies by Iran-backed groups) and log it 
 - **One tab per conflict.** Theater wording lives in each theater's `config.py` (Iran: `THEATER` in
   `export_explorer.py`); the list of tabs is `explorer/theaters.json`. Do not add a theater without Sidd's go-ahead.
 - **Be honest about uncertainty.** Say "not measured" or "too few cases" rather than guess.
+
+## Commits
+- No AI attribution: never add Co-Authored-By, Claude-Session or similar lines to commit messages, and commit as the repo owner.
