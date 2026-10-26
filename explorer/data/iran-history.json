@@ -131,42 +131,42 @@
    "A": {
     "n": 11,
     "index": 0.182,
-    "estimate": 0.209
+    "estimate": 0.208
    },
    "B": {
     "n": 16,
-    "index": 0.212,
-    "estimate": 0.219
+    "index": 0.2,
+    "estimate": 0.207
    },
    "C": {
     "n": 12,
-    "index": 0.206,
-    "estimate": 0.218
+    "index": 0.189,
+    "estimate": 0.203
    },
    "D": {
     "n": 7,
-    "index": 0.267,
-    "estimate": 0.29
+    "index": 0.238,
+    "estimate": 0.266
    },
    "E": {
     "n": 3,
     "index": 0.5,
-    "estimate": 0.431
+    "estimate": 0.428
    },
    "F": {
     "n": 12,
     "index": 0.583,
-    "estimate": 0.552
+    "estimate": 0.551
    },
    "G": {
     "n": 7,
     "index": 0.629,
-    "estimate": 0.569
+    "estimate": 0.568
    },
    "H": {
     "n": 10,
     "index": 0.2,
-    "estimate": 0.212
+    "estimate": 0.211
    }
   },
   "status": {

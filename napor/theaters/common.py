@@ -206,7 +206,9 @@ class Theater:
 
     def _talks(self, e):
         """Same rule as the live Iran rule: a Diplomatic row whose action type names talks, a proposal, a ceasefire or a deal (any side)."""
-        return self._diplo(e) and is_talk(e[3])
+        if not self._diplo(e) or e[0] in _cfg(self.C, "TALK_EXCLUDE", ()):
+            return False
+        return is_talk(e[3]) or e[0] in _cfg(self.C, "TALK_EXTRA", ()) or self.US_OPTION.get(e[0]) == "B"
 
     def is_military_reply(self, eid):
         f = _cfg(self.C, "MILITARY_REPLY", None)
@@ -825,7 +827,7 @@ class Recount:
         attack = lambda i: hou(i) and self.kind(i) in C.ATTACK_KINDS
         ship = lambda i: hou(i) and (self.kind(i) == "Maritime" or i in _cfg(C, "SHIP_ATTACK_EXTRA", ()))
         econ_events = lambda i: hou(i) and (self.kind(i) in self.ECON.get("kinds", ()) or i in self.ECON.get("extra", ()))
-        talk = lambda i: self.kind(i) == "Diplomatic" and is_talk(EV[i][3])
+        talk = lambda i: self.kind(i) == "Diplomatic" and i not in _cfg(C, "TALK_EXCLUDE", ()) and (is_talk(EV[i][3]) or i in _cfg(C, "TALK_EXTRA", ()) or OPT.get(i) == "B")
         mil = _cfg(C, "MILITARY_REPLY", None)
         is_mil = (lambda i: bool(mil(EV[i]))) if mil else (lambda i: self.kind(i) == "Kinetic")
         done = lambda day, n: day + n * DAY <= T

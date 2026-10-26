@@ -29,10 +29,13 @@ THEATER = dict(
     # Exact rule for the political corner (what theaters/common.py counts; changed 2026-10-26 with Sidd's approval): only logged talks, a meeting,
     # a proposal, a ceasefire or a deal. Statements, threats and appeals do not count.
     cats=dict(political=dict(
-        other="Share of past cases NOT followed within 14 days by logged talks, a meeting, a formal proposal, a ceasefire or a deal between the US and the Houthis (directly or through a mediator such as Oman). Statements, threats and appeals do not count.",
-        hold="Share of hold weeks NOT followed within 14 days by logged talks, a meeting, a formal proposal, a ceasefire or a deal between the US and the Houthis (directly or through a mediator such as Oman). Statements, threats and appeals do not count.",
-        rule="Counts when no talks, meeting, negotiation, formal proposal (such as a UN resolution), ceasefire or deal between the US and the Houthis, directly or through a mediator such as Oman, was logged in the 14 days after. Public statements, threats and appeals do not count as talks (for example Trump's Jul 21 and Jul 23, 2026 warnings), so a threat alone does not stop a case from counting as a risk on this corner. Changed on 2026-10-26 with Sidd's approval.")),
+        other="Share of past cases NOT followed within 14 days by logged talks, a meeting, a formal proposal to or by the Houthis, a ceasefire or a deal between the US and the Houthis (directly or through a mediator such as Oman). UN resolutions, statements, threats and appeals do not count.",
+        hold="Share of hold weeks NOT followed within 14 days by logged talks, a meeting, a formal proposal to or by the Houthis, a ceasefire or a deal between the US and the Houthis (directly or through a mediator such as Oman). UN resolutions, statements, threats and appeals do not count.",
+        rule="Counts when no talks, meeting, negotiation, formal proposal made to or by the Houthis, ceasefire or deal between the US and the Houthis, directly or through a mediator such as Oman, was logged in the 14 days after. A UN Security Council resolution or other multilateral act, and public statements, threats and appeals, do not count as talks (for example Trump's Jul 21 and Jul 23, 2026 warnings), so a threat alone does not stop a case from counting as a risk on this corner. Changed on 2026-10-26 with Sidd's approval.")),
 )
+
+# The UN Security Council resolution 2722 (#1020, Jan 2024) is a multilateral act, not talks or a proposal to or by the Houthis, so it does not count.
+TALK_EXCLUDE = (1020,)
 
 # A tab needs at least this many counted cases to show a risk index; below it the page says "too few cases".
 MIN_CASES = 3

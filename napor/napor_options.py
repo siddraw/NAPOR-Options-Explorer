@@ -179,7 +179,11 @@ def _irstrike(e): return _usable(e) and KIND[e[0]] == "Kinetic" and _iran_side(e
 # Statements, threats and appeals do not. Same words as the "Diplomacy" option's past moves (option B).
 TALK_WORDS = ("proposal", "talks", "ceasefire announcement", "ceasefire (", "ceasefire statement")
 def _diplo(e): return _usable(e) and KIND[e[0]] == "Diplomatic"       # any diplomatic event, statements included (the rule before 2026-10-26)
-def _talks(e): return _diplo(e) and any(w in e[3].lower() for w in TALK_WORDS)
+# Rows the word list misses or wrongly takes (Iran): #99 (Oct 9) "talks continue through mediators" and #127 (Oct 25) messages still passed to the US
+# through intermediaries are negotiation by an Iranian-side row, so they count. Rejections, demands and statements still do not.
+TALK_EXTRA = (99, 127)
+TALK_EXCLUDE = ()
+def _talks(e): return _diplo(e) and e[0] not in TALK_EXCLUDE and (e[0] in TALK_EXTRA or any(w in e[3].lower() for w in TALK_WORDS))
 
 
 def _window(f, day, a, b):
