@@ -845,7 +845,7 @@ class Recount:
                 else:
                     prs = [p for p in self.PAIRS if p[1] == tid and EV[p[2]][1] <= T]
                     if s7 is not None:
-                        self.add(ppl, w, any(p[4] == "Y" for p in prs))
+                        self.add(ppl, w, (tid in _cfg(C, "CIVILIAN_HARM", {})) or any(p[4] == "Y" for p in prs))
                     if fl["trigger"]:
                         st = [c[2] for c in self.CENSUS if c[0] == tid][0]
                         rep = (st in REPLY) if done(day, self.RD) else (True if prs else None)

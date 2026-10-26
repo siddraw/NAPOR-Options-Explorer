@@ -1,0 +1,85 @@
+[
+ {
+  "asof": "2026-10-14",
+  "intensity": 0,
+  "band": "Quiet",
+  "events": 63,
+  "options": {
+   "A": {
+    "n": 14,
+    "index": 0.214,
+    "estimate": null
+   },
+   "B": {
+    "n": 8,
+    "index": 0.225,
+    "estimate": null
+   },
+   "C": {
+    "n": 6,
+    "index": 0.233,
+    "estimate": null
+   },
+   "D": {
+    "n": 8,
+    "index": 0.45,
+    "estimate": null
+   },
+   "E": {
+    "n": 8,
+    "index": 0.35,
+    "estimate": null
+   },
+   "F": {
+    "n": 2,
+    "index": 0.2,
+    "estimate": null
+   },
+   "G": {
+    "n": 1,
+    "index": 0.2,
+    "estimate": null
+   },
+   "H": {
+    "n": 8,
+    "index": 0.275,
+    "estimate": null
+   }
+  },
+  "status": {
+   "A": {
+    "status": "open",
+    "label": "Open"
+   },
+   "B": {
+    "status": "active",
+    "label": "In use now"
+   },
+   "C": {
+    "status": "active",
+    "label": "In use now"
+   },
+   "D": {
+    "status": "active",
+    "label": "In use now"
+   },
+   "E": {
+    "status": "open",
+    "label": "Open"
+   },
+   "F": {
+    "status": "open",
+    "label": "Open"
+   },
+   "G": {
+    "status": "open",
+    "label": "Open"
+   },
+   "H": {
+    "status": "open",
+    "label": "Open"
+   }
+  },
+  "status_as_of": "2026-10-14"
+ }
+]

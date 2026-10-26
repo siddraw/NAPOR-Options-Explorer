@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-26 — Venezuela / Caribbean tab (fifth theater)
+- **Venezuela tab** (64 events, IDs 4001–4066 in block 4001–4999; `napor/theaters/venezuela/`): US moves toward Venezuela and the boat-strike campaign, and Venezuelan or armed-group replies. Registered in `explorer/theaters.json`; `weekly_build.py` PASS. Telesur and VTV are claim-only. Escalation counts only a hostile act within 7 days (attack, harassment, mobilization); `rules.py` demotes census replies that were words, diplomatic or economic steps. Military = armed action (only #4019). Economic = Venezuelan counter-measures within 14 days (events mode; only 3 logged). Political = no US talks or deal within 14 days.
+- Weak spots: only 8 of about 70 boat strikes are logged one by one; most replies are statements, so escalation is 0 of 6 to 8 for most options; F (2 cases) and G (1 case) show "too few cases"; E's 4 replies are 2 Venezuelan acts; hold weeks (14) may hide unlogged strikes (weeks with outlet-count evidence are excluded); the economic corner rests on 3 acts, one dated by report; the 2 newest sanctions moves wait for 7 days of news.
+- Shared code: `common.py` Recount now counts `CIVILIAN_HARM` in the people corner (as the page and verify_explorer.py already did); no effect on other theaters (empty there). `index.html`: the "harm in the US action" labels read `theater.us_hurt` when set (Venezuela: "Anyone killed or hurt in the US action"); defaults unchanged.
+
 ## 2026-10-24 — Round 2, stages 3–5
 - **Per-theater engine** (`napor/theaters/common.py`): shared code for cases, export, verify and backtest. Each theater is a package `napor/theaters/<id>/` (config, events, now.json, wrappers). `weekly_build.py` now loops over every theater in `explorer/theaters.json`. Page data goes to `explorer/data/<id>.json`, `<id>-history.json` and `explorer/verify-<id>.json`. Iran has a wrapper package too; its numbers are unchanged.
 - **Houthi tab** (88 events, IDs 1001–1599): Red Sea crisis, US strikes and Houthi replies. The organizer fixed problems found in review. Weak spots: 2024 was continuous fighting, so few cases count as separate cases; the 2025–26 log is thin.
