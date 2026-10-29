@@ -3,7 +3,7 @@
   "asof": "2026-10-12",
   "intensity": 4,
   "band": "Low",
-  "events": 73,
+  "events": 159,
   "options": {
    "A": {
     "n": 69,
@@ -11,18 +11,18 @@
     "estimate": null
    },
    "B": {
-    "n": 4,
-    "index": 0.375,
+    "n": 10,
+    "index": 0.275,
     "estimate": null
    },
    "C": {
-    "n": 4,
-    "index": 0.625,
+    "n": 11,
+    "index": 0.523,
     "estimate": null
    },
    "D": {
-    "n": 7,
-    "index": 0.643,
+    "n": 10,
+    "index": 0.625,
     "estimate": null
    },
    "E": {
@@ -31,13 +31,13 @@
     "estimate": null
    },
    "F": {
-    "n": 0,
-    "index": null,
+    "n": 1,
+    "index": 0.75,
     "estimate": null
    },
    "G": {
-    "n": 7,
-    "index": 0.643,
+    "n": 12,
+    "index": 0.521,
     "estimate": null
    },
    "H": {

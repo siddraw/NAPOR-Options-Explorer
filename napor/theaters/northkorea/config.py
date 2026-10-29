@@ -1,6 +1,6 @@
 """North Korea theater: wording, options, flags and rules, all in one place.
 
-The research file (events.py) holds the facts and is read only. This file holds the decisions the engine needs:
+The research files (events_pre2017.py for Mar 1993 - Aug 2017, events.py from Aug 31, 2017) hold the facts and are read only. This file holds the decisions the engine needs:
 which options exist, what counts as an act by the other side, which outlets are claims only, how each of the five
 risk categories is defined for North Korea, which weeks count as "hold" weeks, and the analyst notes the page shows.
 
@@ -35,10 +35,11 @@ THEATER = dict(
     salvo=None,
     hold_note="Hold cases are weeks from Jan 20, 2025 on (the start of the second Trump term) with no logged US sanctions, drill, deployment, missile-defense or posture move. Weeks inside the Sep 12 - Oct 12, 2026 dense-launch stretch and two weeks of Ulchi Freedom Shield 2025 and one week of Freedom Edge 2025 (US moves that an allowed outlet reports but the log does not hold) are left out. The log is a sample, not a full list: it says that many launches and some US moves are missing, so a week that looks quiet may only be a week where nothing was logged. Read option A as a rough sketch and do not compare it number-for-number with options that rest on a few well-reported cases.",
     not_measured="Economic effects (sanctions relief, trade, prices) are not measured for North Korea; that corner is left out of the index. Strain with South Korea, Japan and China is not measured either.",
-    presets=[["2017-09-03", "Sixth nuclear test"], ["2018-06-12", "Singapore summit"], ["2019-06-30", "DMZ meeting"], ["2022-11-02", "23 missiles in one day"],
+    presets=[["1994-10-18", "Agreed Framework"], ["2006-10-09", "First nuclear test"], ["2013-04-03", "Kaesong closed, THAAD to Guam"], ["2016-09-09", "Fifth nuclear test"],
+             ["2017-09-03", "Sixth nuclear test"], ["2018-06-12", "Singapore summit"], ["2019-06-30", "DMZ meeting"], ["2022-11-02", "23 missiles in one day"],
              ["2023-07-18", "Submarine visits Busan"], ["2025-11-07", "Launch after carrier and DMZ visits"], ["2026-08-17", "Scaled-down Ulchi Freedom Shield"]],
-    under_logged="The log is a sample: 2020 and most of 2021 are empty, and many launches from 2022 on are missing, so \"none logged\" is not proof nothing happened.",
-    spark_from="2017-09-01", claim_note="North Korean state media (KCNA, Rodong Sinmun)",
+    under_logged="The log is a sample. It starts in March 1993, but 1995-97, 2004, 2007-08, 2011 and 2014-15 are thinly logged, and the 1993-2015 years hold only a few Treasury rounds and short-range launches. 2020 and most of 2021 are empty, and many launches from 2022 on are missing, so \"none logged\" is not proof nothing happened.",
+    spark_from="1993-03-01", claim_note="North Korean state media (KCNA, Rodong Sinmun)",
     # ---- per-theater words and rules the page reads (defaults on the page are the Iran / Houthi words) ----
     reply_days=7,
     intensity=dict(name="Tension level", note="Tension level counts logged North Korean launches, tests and provocations (not threatening statements) in the 14 days before each date: 2 points each, +2 if someone died. The log is a sample, so quiet stretches are understated."),
@@ -154,8 +155,9 @@ _BALLISTIC = re.compile(r"ballistic|icbm|irbm|srbm")
 
 
 def _headlines(eid):
-    from theaters.northkorea import events
-    return " ".join(s.get("headline", "") for s in events.SOURCES.get(eid, [])).lower()
+    from theaters.northkorea import events, events_pre2017
+    srcs = events.SOURCES.get(eid) or events_pre2017.SOURCES.get(eid, [])
+    return " ".join(s.get("headline", "") for s in srcs).lower()
 
 
 def MILITARY_REPLY(e):
@@ -194,10 +196,14 @@ CIVILIAN_HARM = {}        # no civilian harm reported in an allowed outlet for a
 
 # ---- the backtest -----------------------------------------------------------------------------------------
 OOS_CUT = d(2025, 12, 31)
-OOS_LABEL = "2017-2025"
+OOS_LABEL = "1993-2025"
 
 
 def period(day):
+    if day < d(2010, 1, 1):
+        return "1993-2009"
+    if day < d(2017, 8, 31):
+        return "2010-Aug17"
     if day < d(2020, 1, 1):
         return "2017-19"
     if day < d(2023, 1, 1):
@@ -207,8 +213,8 @@ def period(day):
     return "2025+"
 
 
-PERIOD_KEYS = ["2017-19", "2020-22", "2023-24", "2025+"]
-LOOKBACKS = ("2018-06-13", "2019-03-01", "2022-10-01", "2024-07-02", "2025-11-08")      # past dates the page test also checks (no hindsight)
+PERIOD_KEYS = ["1993-2009", "2010-Aug17", "2017-19", "2020-22", "2023-24", "2025+"]
+LOOKBACKS = ("1999-09-24", "2006-10-16", "2013-04-10", "2016-03-20", "2018-06-13", "2019-03-01", "2022-10-01", "2024-07-02", "2025-11-08")      # past dates the page test also checks (no hindsight)
 
 # ---- plain-language risk lines (the page's "What the log says"; filled in by theaters/common.py) -----------------------
 THREAD_PREFIX = "K"
