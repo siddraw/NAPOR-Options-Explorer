@@ -1541,3 +1541,7 @@ SOURCES.update({
 from prewar import SOURCES as _PRE_SOURCES, VERDICT as _PRE_VERDICT
 SOURCES.update(_PRE_SOURCES)
 VERDICT.update(_PRE_VERDICT)
+# Earlier record, Nov 1979 - May 2019 (prewar_early.py)
+from prewar_early import SOURCES as _EARLY_SOURCES, VERDICT as _EARLY_VERDICT
+SOURCES.update(_EARLY_SOURCES)
+VERDICT.update(_EARLY_VERDICT)

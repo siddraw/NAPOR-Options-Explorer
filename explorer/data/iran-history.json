@@ -126,47 +126,47 @@
   "asof": "2026-10-26",
   "intensity": 8,
   "band": "Medium",
-  "events": 182,
+  "events": 259,
   "options": {
    "A": {
     "n": 11,
     "index": 0.164,
-    "estimate": 0.193
+    "estimate": 0.19
    },
    "B": {
-    "n": 15,
+    "n": 23,
     "index": 0.2,
-    "estimate": 0.207
+    "estimate": 0.204
    },
    "C": {
-    "n": 12,
-    "index": 0.189,
-    "estimate": 0.203
+    "n": 30,
+    "index": 0.194,
+    "estimate": 0.198
    },
    "D": {
     "n": 7,
     "index": 0.238,
-    "estimate": 0.266
+    "estimate": 0.262
    },
    "E": {
     "n": 3,
     "index": 0.5,
-    "estimate": 0.427
+    "estimate": 0.419
    },
    "F": {
     "n": 12,
     "index": 0.583,
-    "estimate": 0.55
+    "estimate": 0.548
    },
    "G": {
     "n": 7,
     "index": 0.629,
-    "estimate": 0.567
+    "estimate": 0.564
    },
    "H": {
-    "n": 9,
-    "index": 0.2,
-    "estimate": 0.212
+    "n": 12,
+    "index": 0.217,
+    "estimate": 0.221
    }
   },
   "status": {

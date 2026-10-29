@@ -132,7 +132,7 @@ def baseline_hold():
 UNKNOWNS = {
     "A": "Shipping attacks have kept coming without any new US move (see the baseline line). Trump has said there will be no US strikes before Nov 3; what Iran does if that holds is not in the data.",
     "B": "Diplomatic moves are not counted as past cases with a reply test, so there is no reply rate. The last rounds (Sep 23 - Oct 9) drew rejections and counter-offers, not attacks. Iran called the US answer 'insufficient' (Oct 11) and on Oct 18 said it was still reviewing US 'comments'.",
-    "C": "Both past cases are from the current quiet phase, and neither drew a linked attack. Tanker attacks continued that week, but no outlet tied them to the sanctions.",
+    "C": "No counted sanctions case, back to 1979, drew a linked Iranian attack. Many early ones rest on one article and the record before 2019 is thin. In the current quiet phase, tanker attacks continued, but no outlet tied them to the sanctions.",
     "D": "Small sample. The pre-war cases (a 2020 fuel-cargo seizure and two seizures of Iranian arms bound for the Houthis, 2020 and 2023) drew no reply. In 2026, Iran answered the blockade start and a ship seizure, but not a warship transit. The Oct 10-11 strike on a blockade runner drew no Iranian attack on US forces within 5 days (F001: NO), but attacks on commercial shipping surged; it is not counted until the link is settled (#104).",
     "E": "Only 2 cases, both in early September; both drew Iranian missile fire (at a US warship, then at a Jordan base).",
     "F": "Every past case drew a reply, but all were before the current quiet phase. One logged reply caused casualties (Qatar, Jul 12: 3 wounded, including a child).",
@@ -231,7 +231,7 @@ def measured_signals(key):
 PROS = {
     "A": "No new US act for Iran to answer, so no added risk of retaliation from it. Keeps Trump's stated no-strike pledge before Nov 3. Leaves room for Iran's expected reply to the US counter-offer. Uses no interceptors.",
     "B": "No direct casualties. In the log, US diplomatic moves were usually followed by more diplomacy within two weeks (see measured column). A deal is the only option that addresses all the goals at once: the June memorandum included phased Hormuz reopening and an end to the blockade.",
-    "C": "Economic pressure without casualties or interceptor use. Neither past case drew an Iranian military reply.",
+    "C": "Economic pressure without casualties or interceptor use. No counted sanctions case, back to 1979, drew an Iranian military reply.",
     "D": "Aims directly at the blockade and Hormuz goals. In the April cases, no direct Iranian strike followed within 7 days, and the replies that came caused no casualties (0 of 2).",
     "E": "In both past cases, logged attacks on shipping dropped to zero the following week. Hits IRGC oil revenue (US claim). Crews were told to abandon ship before the Sep 8 strike, and no deaths were reported.",
     "F": "Aims to reduce Iran's ability to launch missiles, drones and mines (military effect is claimed by CENTCOM, not independently measured). In 1 of 4 logged replies did anyone get hurt.",

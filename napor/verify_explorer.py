@@ -231,7 +231,7 @@ def recount_hold(scheme="none", param=None, asof=None):
     return dict(people=ppl, escalation=esc, military=mil, economic=eco, political=pol, n=n)
 
 
-LOOKBACKS = ("2025-06-22", "2026-04-08", "2026-06-17")      # past dates the page test also checks (look-back, no hindsight)
+LOOKBACKS = ("1988-04-15", "2006-06-01", "2013-11-22", "2018-05-07", "2019-05-04", "2025-06-22", "2026-04-08", "2026-06-17")      # past dates the page test also checks (look-back, no hindsight)
 
 def run_iran():
     """Recount Iran, write explorer/verify.json, print the numbers. Returns [] (the match against the page is checked by export_explorer and the Node test)."""

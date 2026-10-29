@@ -11,9 +11,10 @@ CHAIN  - a back-and-forth: events linked by "this was a reply to that". Each cha
 from collections import defaultdict
 from data import d, events, pairs, MERGED, event_kind
 import prewar as _pre
+import prewar_early as _early
 
 # (phase type, start, end, what marks the start)
-PHASES = list(_pre.PHASES) + [
+PHASES = list(_early.PHASES) + list(_pre.PHASES) + [
     ("Open war",           d(2026, 2, 28), d(2026, 4, 7),  "#2 Operation Epic Fury opens the war"),
     ("Fragile ceasefire",  d(2026, 4, 8),  d(2026, 7, 7),  "#28 two-week ceasefire (Apr 7-8); renewed Jun 8 (#43); interim deal Jun 17 (#50)"),
     ("Open war",           d(2026, 7, 8),  d(2026, 7, 25), "#59 Trump declares the ceasefire over; #60 90-target strike wave"),
@@ -78,6 +79,7 @@ NAMES = {
     97: "No-strike pledge before the midterms -> reported strike plans",
     98: "Houthi missile strikes on Riyadh (separate front, context)",
 }
+NAMES.update(_early.CHAIN_NAMES)
 NAMES.update(_pre.CHAIN_NAMES)
 _WAR_START = d(2026, 2, 27)
 

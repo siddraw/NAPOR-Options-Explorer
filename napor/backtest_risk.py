@@ -14,7 +14,7 @@ Methods compared:
              case counts w = weight(T - case date), T = the date being predicted. w_none equals shrunk2.
 Rows dated on/after 2026-01-01 are also scored on their own ("2026-only"). A prediction is skipped when the option had no closed past case for that category yet ("no history").
 
-Also: calibration bins, a learning curve (Brier by period), an out-of-sample split (fit on 2019-2025,
+Also: calibration bins, a learning curve (Brier by period), an out-of-sample split (fit on 1979-2025,
 score 2026) and a robustness table for the escalation rate under rule variants.
 Run: python3 backtest_risk.py   (prints tables, writes backtest_risk.json)
 """
@@ -113,13 +113,16 @@ def calibration(ps, m, edges=(0, .2, .4, .6, .8, 1.0001)):
 
 def period(d):
     if d.year < 2026:
+        if d.year <= 1994: return "1979-94"
+        if d.year <= 2008: return "1995-2008"
+        if d.year <= 2018: return "2009-18"
         return "2019-20" if d.year <= 2020 else ("2021-23" if d.year <= 2023 else "2024-25")
     return "2026 H1" if d.month <= 6 else "2026 H2"
 
 
 def learning_curve(ps, periods=None):
     """periods: (keys in order, function date -> key). Default: the Iran periods."""
-    keys, fn = periods or (["2019-20", "2021-23", "2024-25", "2026 H1", "2026 H2"], period)
+    keys, fn = periods or (["1979-94", "1995-2008", "2009-18", "2019-20", "2021-23", "2024-25", "2026 H1", "2026 H2"], period)
     out = []
     for k in keys:
         sub = [p for p in ps if fn(p["date"]) == k]
@@ -262,7 +265,7 @@ def run(cases_by_key, ctx=None):
     rows = rows_from_cases(cases_by_key, ctx.flags if ctx else None)
     ps, skipped = walk_forward(rows)
     tab = table(ps)
-    oos, _ = out_of_sample(rows, *( (ctx.oos_cut, ctx.oos_label) if ctx else () ))
+    oos, _ = out_of_sample(rows, *( (ctx.oos_cut, ctx.oos_label) if ctx else (dt.date(2025, 12, 31), "1979-2025") ))
     dec_w = decide_weighting(tab)
     wrep, t26 = weighting_report(ps, tab, dec_w)
     return dict(
@@ -335,7 +338,7 @@ def report(res, cb, flags=None, tag=""):
     print("Calibration (shrunk m=2): " + "; ".join(f"{b['lo']:.1f}-{b['hi']:.1f}: said {b['predicted']:.0%}, happened {b['observed']:.0%} (n={b['n']})" for b in res["calibration"]["shrunk2"]))
     print("\nLearning curve: " + "; ".join(f"{l['period']} raw {l['raw']:.3f} / shrunk {l['shrunk2']:.3f} / pooled {l['pooled']:.3f} (n={l['n']})" for l in res["learning"]))
     o = res["out_of_sample"]
-    print(f"\nOut of sample (fit {o.get('train_label', '2019-2025')}, score 2026): {o['scored']} scored, {o['skipped']} skipped; " +
+    print(f"\nOut of sample (fit {o.get('train_label', '1979-2025')}, score 2026): {o['scored']} scored, {o['skipped']} skipped; " +
           ", ".join(f"{m} {v:.3f}" for m, v in o["brier"].items() if v is not None))
     print("\nEscalation rate under rule variants:")
     for r in res["robustness"]["rows"]:

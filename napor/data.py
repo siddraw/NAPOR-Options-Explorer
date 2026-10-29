@@ -324,8 +324,12 @@ events.extend([
 # Pre-war record, May 2019 - Feb 27, 2026 (prewar.py). IDs 201+.
 # ---------------------------------------------------------------------------
 import prewar as _pre
+import prewar_early as _early      # Nov 1979 - May 2019 (IDs 300+)
+events.extend(_early.EVENTS)
 events.extend(_pre.EVENTS)
+pairs.extend(_early.PAIRS)
 pairs.extend(_pre.PAIRS)
+census.extend(_early.CENSUS)
 census.extend(_pre.CENSUS)
 
 # Census statuses that count, and the ones that mean "a reply came".
@@ -666,8 +670,8 @@ census += [
 # automatically 'answered' by the next day's strikes, which would inflate the reply rate.
 # Triggers inside these windows are moved out of the census; the acts that STARTED each
 # stretch (#2, #57, #60) stay in.
-_OPEN_WAR = [(d(2026, 2, 28), d(2026, 4, 7)), (d(2026, 7, 7), d(2026, 7, 25))] + _pre.WINDOWS
-_START_ACTS = {2, 57, 60} | _pre.START_ACTS
+_OPEN_WAR = [(d(2026, 2, 28), d(2026, 4, 7)), (d(2026, 7, 7), d(2026, 7, 25))] + _pre.WINDOWS + _early.WINDOWS
+_START_ACTS = {2, 57, 60} | _pre.START_ACTS | _early.START_ACTS
 _ev_date = {e[0]: e[1] for e in events}
 census_open_war_excluded = [c for c in census if c[0] not in _START_ACTS
                             and any(a <= _ev_date[c[0]] <= b for a, b in _OPEN_WAR)]
@@ -680,6 +684,7 @@ census_exclusions.append("Candidates moved out of the census by the continuous-w
 census_exclusions.append(" ".join(_CENSUS_NOT_COUNTED.values()))
 census_exclusions.append("Pre-war continuous fighting: Oct 17, 2023 - Jan 29, 2024, Iran-backed militias attacked US forces almost daily, so US strikes in that stretch (#233, #234, #236, #237) are context only. "
                          "The twelve-day war (Jun 13-24, 2025) is treated the same way; the US strike that brought the US in (#255) is counted.")
+census_exclusions.extend(_early.NOTES)
 census_exclusions.append("Pre-war rows not counted: #207 (defensive drone shootdown), #211/#231/#246/#259/#261 (deployments, measured separately), talks (#248-#252, #260, #262).")
 
 
