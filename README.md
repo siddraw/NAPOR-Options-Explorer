@@ -3,7 +3,7 @@
 An options explorer for the risks behind US national security decisions, built from 450+ events across
 5 active conflicts and information pulled from 500+ credible sources.
 
-![tests](https://github.com/siddraw/NAPOR-risk-assessment/actions/workflows/tests.yml/badge.svg) ![license](https://img.shields.io/badge/license-all%20rights%20reserved-lightgrey)
+![tests](https://github.com/siddraw/NAPOR-Options-Explorer/actions/workflows/tests.yml/badge.svg) ![license](https://img.shields.io/badge/license-all%20rights%20reserved-lightgrey)
 
 ![NAPOR Options Explorer](docs/screenshot.png)
 
