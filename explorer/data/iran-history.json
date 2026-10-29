@@ -126,15 +126,15 @@
   "asof": "2026-10-26",
   "intensity": 8,
   "band": "Medium",
-  "events": 186,
+  "events": 182,
   "options": {
    "A": {
     "n": 11,
-    "index": 0.182,
-    "estimate": 0.208
+    "index": 0.164,
+    "estimate": 0.193
    },
    "B": {
-    "n": 16,
+    "n": 15,
     "index": 0.2,
     "estimate": 0.207
    },
@@ -151,22 +151,22 @@
    "E": {
     "n": 3,
     "index": 0.5,
-    "estimate": 0.428
+    "estimate": 0.427
    },
    "F": {
     "n": 12,
     "index": 0.583,
-    "estimate": 0.551
+    "estimate": 0.55
    },
    "G": {
     "n": 7,
     "index": 0.629,
-    "estimate": 0.568
+    "estimate": 0.567
    },
    "H": {
-    "n": 10,
+    "n": 9,
     "index": 0.2,
-    "estimate": 0.211
+    "estimate": 0.212
    }
   },
   "status": {

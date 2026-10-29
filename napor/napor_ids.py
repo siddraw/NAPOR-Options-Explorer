@@ -118,6 +118,8 @@ def corroboration(eid):
 # credible story = 0.80; two different outlets = 0.96; Iranian state media alone = 0.30.
 # Then the source check adjusts it: Partly verified x 0.8; Not supported -> at most 0.20.
 #
+# LINK RULE (approved 2026-10-28): a report with no https link has weight 0, so an event with no linked
+# report has credibility 0 and is always below the cut.
 # RULE: an event is used in the statistics only if its credibility is 0.50 or more.
 # 0.50-0.65 is used but flagged "use with caution".
 # ---------------------------------------------------------------------------
@@ -144,7 +146,13 @@ def fit_score(r):
     return 0.65
 
 
+def has_link(r):
+    """Link rule (owner-approved 2026-10-28): a report counts only if it has a working https link."""
+    return str(r.get("url") or "").strip().lower().startswith("https://")
+
+
 def report_weight(r):
+    if not has_link(r): return 0.0              # name-only report: zero credit
     return round(source_score(r) * fit_score(r), 3)
 
 

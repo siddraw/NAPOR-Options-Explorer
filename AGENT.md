@@ -20,6 +20,10 @@ are done once per theater. Steps 3-5 are Iran only.
    - North Korea: `napor/theaters/northkorea/events.py`, IDs 2001-2999.
    - China: `napor/theaters/china/events.py`, IDs 3001-3999.
    - Venezuela / Caribbean: `napor/theaters/venezuela/events.py`, IDs 4001-4999 (event and pair IDs). Venezuela's escalation rule is stricter than the census: `rules.py` keeps a census reply only if a hostile act (attack, harassment, mobilization) is logged within 7 days; statements do not count.
+   **Link rule (approved 2026-10-28): only add events that have a link.** Every new event needs at least one source with
+   a working https URL from an allowed outlet or an official release. A name-only report gets zero credit, and an event
+   with no linked source is excluded from every count (credibility 0). Treat any existing link-less event as excluded;
+   find a link for it or leave it out.
    Uncertain matches go to the Review Queue for Sidd; do not guess.
 3. **Grade forecasts (Iran only).** For every forecast in `napor_forecasts.json` whose deadline has passed,
    resolve it with `napor_forecasts.resolve()` from credible sources, citing them.

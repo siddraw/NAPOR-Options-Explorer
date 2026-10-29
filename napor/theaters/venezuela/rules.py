@@ -29,7 +29,7 @@ _EV = {e[0]: e for e in EVENTS}
 
 
 def _cred(eid):
-    reps = [dict(outlet=N.outlet_name(s["outlet"]), kind=N.source_kind(s["outlet"], C.CLAIM_MEDIA, C.CLAIM_LABEL), seen=s.get("seen", "")) for s in SOURCES.get(eid, [])]
+    reps = [dict(outlet=N.outlet_name(s["outlet"]), kind=N.source_kind(s["outlet"], C.CLAIM_MEDIA, C.CLAIM_LABEL), seen=s.get("seen", ""), url=s.get("url", "")) for s in SOURCES.get(eid, [])]
     chk = "Not supported" if VERDICT.get(eid) == "not_confirmed" else ("Partly verified" if eid in PARTLY else "Verified")
     return N.credibility_of(reps, chk)
 

@@ -54,16 +54,19 @@ Defined in `napor/napor_ids.py` (`credibility_of`) and shared by every theater.
    - Source score: allowed outlet or official statement 0.80; other outlet 0.60; claim-only outlet 0.30.
    - Fit score (how sure the report is about this event): read in full 1.00; snippet only 0.80; outlet
      named but story not saved 0.65.
+   - **Link rule (approved 2026-10-28).** A report counts only if it has a working `https://` link to an allowed
+     outlet or an official release. A report that only names an outlet gets weight 0 (`napor_ids.has_link`).
    - A report with weight under 0.30 is dropped.
 2. An **event** combines its reports, counting each outlet once (its best report):
    `credibility = 1 - (1 - w1) x (1 - w2) x ...`, capped at 0.99. One full-text allowed outlet gives 0.80;
    two different outlets give 0.96; a claim-only outlet alone gives 0.30.
 3. The source check adjusts it: "Partly verified" x 0.8; "Date conflict" x 0.9; "Not supported" capped at 0.20.
-4. **The cut.** An event is used in the statistics only if credibility is **0.50 or more**
+4. **The cut.** An event with no linked source has credibility 0, so it is always under the cut and is left out of
+   every count, rate, backtest and recount, in all five theaters. Otherwise an event is used in the statistics only if credibility is **0.50 or more**
    (`napor_ids.INCLUDE_AT`). Events from 0.50 to 0.65 are used but flagged "use with caution". Below 0.50
    the event stays in the log but is dropped from cases, replies, chains, the intensity scale and every
    count. Census rows and pairs that touch such an event are dropped too.
-Today the cut removes 4 of 190 Iran events, 3 of 94 Houthi, 3 of 76 North Korea, 2 of 63 China and 1 of 64 Venezuela events.
+Today the cut removes 8 of 190 Iran events (the 4 newly under the link rule are #84, #86, #88 and #89), 3 of 94 Houthi, 3 of 76 North Korea, 2 of 63 China and 1 of 64 Venezuela events.
 
 ## 4. How a US move becomes a case
 
@@ -256,4 +259,4 @@ The old rule is still computed so the Report card can show both.
   were made after earlier backtests. Iran's out-of-sample score is worse than 50%.
 - **Not measured.** Oil and freight prices, harm to ordinary people in the adversary country, strain with allies, and North Korea's
   economic harm. Sources are public news only; state-media claims are labelled and scored 0.30.
-- **Known gaps.** Iran #67 has no source, and 20 Iran reports are names without a link (flagged not re-checked). The exported `n_events` counts only events at credibility 0.50 or more in every theater, Iran included (Iran logs 190, so its `n_events` is lower by the number under the cut).
+- **Known gaps.** Iran #67 has no source. About 20 Iran reports are names without a link (flagged not re-checked); they get zero credit under the link rule, and four events (#84, #86, #88, #89) relied on them alone and are now excluded. The exported `n_events` counts only events at credibility 0.50 or more in every theater, Iran included (Iran logs 190, so its `n_events` is lower by the number under the cut).

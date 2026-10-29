@@ -14,7 +14,7 @@ The classes here hold the rules (they are the same for every theater):
               it does NOT use Theater, so a mistake in the case builder cannot hide
 
 Rules (same meaning as the Iran engine):
-  - an event counts only with credibility >= 0.50 (napor_ids.credibility_of: full-text allowed outlet 0.80, two outlets
+  - an event counts only with credibility >= 0.50 and at least one https-linked source (napor_ids.credibility_of: full-text allowed outlet 0.80, two outlets
     0.96, claim-only outlet 0.30; "Partly verified" x 0.8; a row marked not_confirmed is capped at 0.20)
   - option cases for trigger options are the Trigger Census rows with a counted status (R-strong, R-weak, R-proxy, N)
   - non-trigger options use every counted US move with that letter; hold weeks are Mondays with no logged US move
@@ -787,7 +787,7 @@ class Recount:
 
     def cred(self, i):
         C = self.C
-        reps = [dict(outlet=N.outlet_name(s["outlet"]), kind=N.source_kind(s["outlet"], C.CLAIM_MEDIA, C.CLAIM_LABEL), seen=s.get("seen", "")) for s in self.SRC.get(i, [])]
+        reps = [dict(outlet=N.outlet_name(s["outlet"]), kind=N.source_kind(s["outlet"], C.CLAIM_MEDIA, C.CLAIM_LABEL), seen=s.get("seen", ""), url=s.get("url", "")) for s in self.SRC.get(i, [])]
         chk = "Not supported" if self.VERD.get(i) == "not_confirmed" else ("Partly verified" if i in self.PARTLY else "Verified")
         return N.credibility_of(reps, chk)
 

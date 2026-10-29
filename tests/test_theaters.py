@@ -107,6 +107,20 @@ def test_every_event_has_at_least_one_source(log):
     assert all(log.cred(i) < N.INCLUDE_AT for i in bare), f"{log.tid}: an unsourced event is being counted"
 
 
+def test_every_counted_event_has_an_https_source(log):
+    """Link rule (approved 2026-10-28): an event counts only if at least one of its sources has an https link."""
+    for e in log.events:
+        linked = [r for r in log.reports(e[0]) if str(r.get("url", "")).startswith("https://")]
+        if not linked:
+            assert log.cred(e[0]) < N.INCLUDE_AT, f"{log.tid}: event {e[0]} has no https source but is counted"
+    counted_no_link = [e[0] for e in log.events if log.cred(e[0]) >= N.INCLUDE_AT
+                       and not any(str(r.get("url", "")).startswith("https://") for r in log.reports(e[0]))]
+    assert not counted_no_link, f"{log.tid}: counted events with no https source: {counted_no_link}"
+    out = load_export(log.tid)
+    ids = {c["id"] for o in out["options"] for c in o["cases"]}
+    assert not ids & {e[0] for e in log.events if log.cred(e[0]) < N.INCLUDE_AT}, f"{log.tid}: an excluded event is in the exported cases"
+
+
 def test_every_source_url_starts_with_https(log):
     bad = []
     for e in log.events:
@@ -139,8 +153,11 @@ def test_cut_is_0_50():
 
 
 def test_credibility_rules():
-    full = dict(outlet="Reuters", kind="Independent outlet", seen="full text")
-    claim = dict(outlet="IRNA", kind="Iranian state media (claim only)", seen="full text")
+    link = "https://www.reuters.com/world/example"
+    full = dict(outlet="Reuters", kind="Independent outlet", seen="full text", url=link)
+    claim = dict(outlet="IRNA", kind="Iranian state media (claim only)", seen="full text", url="https://en.irna.ir/example")
+    assert N.credibility_of([dict(full, url="")]) == 0.0                        # link rule: a name-only report gets zero credit
+    assert N.credibility_of([dict(full, url="http://www.reuters.com/x")]) == 0.0   # only https counts
     assert N.credibility_of([full]) == 0.80
     assert N.credibility_of([full, dict(full, outlet="AP")]) == 0.96             # two different outlets
     assert N.credibility_of([full, dict(full, headline="again")]) == 0.80       # the same outlet counts once
