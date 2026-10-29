@@ -1,20 +1,20 @@
 """China (Taiwan Strait and South China Sea) theater: wording, options, flags and rules, all in one place.
 
-The research file (events.py) holds the facts and is read only. This file holds the decisions the engine needs.
+The research files (events_pre2019.py for May 1995 - Dec 2018, events.py from Jan 2019) hold the facts and are read only. This file holds the decisions the engine needs.
 
-SMALL NUMBERS: Taiwan-specific US moves are few. The research file counts D (transits and FONOPs) as the only option with a
-usable number of cases; E and F have a handful, C, G and H have one or none. The page says so on every option (see THEATER["small_n"]).
+SMALL NUMBERS: Taiwan-specific US moves are few. Since the log was extended back to 1995, B (talks) has 21 counted cases, D (transits and
+FONOPs) 15, E 9 and F 7; C, G and H have one or two. The page says so on every option (see THEATER["small_n"]).
 
 The five categories, exactly as defined for this tab (the page shows these words; the rules are in theaters/common.py):
   people      anyone hurt in a Chinese reply within 7 days of the US move
   escalation  a PLA named drill, a spike in aircraft entering Taiwan's air defense zone (ADIZ), a coast-guard confrontation or a Chinese
-              counter-sanction within 7 days. Taken from the Trigger Census: R-strong or R-weak means a dated action that China or an allowed
+              counter-sanction within 7 days. A clear link means a dated action that China or an allowed
               outlet ties to the US move (or a clear step up on a named day); routine daily PLA flights and "tracked and monitored" shadowing
-              are background, not a reply (status N).
+              are background, not a reply.
   military    the reply was a live-fire or named large-scale drill (the logged action type says "Large-scale drills" or "live fire")
   economic    Chinese counter-sanctions or trade measures against US firms or the US within 14 days of the move (a Chinese action of kind
               Sanctions, for example a sanctions list or an export ban). The window is 14 days, not 7, so a case counts only after 14 days of news.
-  political   no talks within 14 days (rule changed 2026-10-26 with Sidd's approval): no logged Diplomatic row whose action type names talks, a meeting,
+  political   no talks within 14 days: no logged Diplomatic row whose action type names talks, a meeting,
               a proposal, a ceasefire or a deal (a call, summit or senior meeting) in the 14 days after the move. Statements and threats do not count.
 """
 import datetime as dt
@@ -36,10 +36,11 @@ THEATER = dict(
     salvo=None,
     hold_note="Option A is not built for China. A hold week would be a week with no US transit, arms sale, visit, sanction or talks, but the log is a sample of named events (2021 holds one row, and most FONOPs and allied drills are missing), and routine PLA flights near Taiwan happen almost daily and are not logged. A week that looks quiet may only be a week where nothing was logged, so NAPOR does not invent hold weeks.",
     not_measured="Oil and chip prices, shipping and trade volumes, harm to ordinary Taiwanese and strain with allies are not measured. Only Chinese counter-sanctions and trade measures are.",
-    presets=[["2019-07-08", "$2.2B arms sale"], ["2020-08-09", "Azar visit to Taipei"], ["2022-08-02", "Pelosi visit"], ["2023-04-05", "Tsai-McCarthy meeting"],
+    presets=[["1995-05-22", "Lee Teng-hui visa"], ["1996-03-10", "Carriers sent toward Taiwan"], ["2001-04-24", "Largest arms sale in a decade"], ["2015-10-27", "First Lassen FONOP"],
+             ["2019-07-08", "$2.2B arms sale"], ["2020-08-09", "Azar visit to Taipei"], ["2022-08-02", "Pelosi visit"], ["2023-04-05", "Tsai-McCarthy meeting"],
              ["2024-12-10", "Largest maritime deployment"], ["2025-12-29", "Justice Mission 2025 drills"]],
-    under_logged="The log is a sample of named events. 2021 and 2022-2023 US FONOPs are mostly missing, routine PLA flights are not logged, and some Chinese counter-sanctions were found only on outlets that are not allowed, so \"none logged\" is not proof nothing happened.",
-    spark_from="2019-01-01", claim_note="Chinese state media (Xinhua, Global Times, CGTN, PLA Daily)",
+    under_logged="The log is a sample of named events. It starts in May 1995, but 1997-2000, 2002-2007, 2012 and 2014 are thinly logged: the 1995-2018 years hold the big crises, summits, arms sales and tariff rounds, not the routine patrols and transits. Many 1995-2008 rows rest on a CRS chronology or the Congressional Record. 2021 and 2022-2023 US FONOPs are mostly missing, routine PLA flights are not logged, and some Chinese counter-sanctions were found only on outlets that are not allowed, so \"none logged\" is not proof nothing happened.",
+    spark_from="1995-05-01", claim_note="Chinese state media (Xinhua, Global Times, CGTN, PLA Daily)",
     small_n="Small numbers: Taiwan-specific US moves are few. Most options here have only a handful of counted cases (the exact number is on each option), and options with fewer than 3 show \"too few cases\" instead of a percentage. Even the larger ones (D) are mostly cases where China answered with words and shadowing. Read every rate as a hint, not a forecast.",
     # ---- per-theater words and rules the page reads (defaults on the page are the Iran / Houthi words) ----
     reply_days=7,
@@ -57,20 +58,20 @@ THEATER = dict(
                         trigger="Share of past cases followed within 7 days by a named PLA drill, a spike in aircraft entering Taiwan's air defense zone, a coast-guard confrontation or a Chinese counter-sanction that China or an allowed outlet ties to the US move. Routine flights and shadowing do not count.",
                         other="Share of past cases followed within 7 days by any logged Chinese military or coast-guard action (a drill, patrol, median-line crossing, close pass, deployment, missile launch or coast-guard confrontation) or counter-sanction (timing only).",
                         hold="Share of hold weeks followed within 7 days by any logged Chinese military or coast-guard action (a drill, patrol, median-line crossing, close pass, deployment, missile launch or coast-guard confrontation) or counter-sanction (timing only).",
-                        rule=dict(trigger="Counts when China replied within 7 days with a named PLA drill, an air-defense-zone spike, a coast-guard confrontation or a counter-sanction that China or an allowed outlet ties to the US move (Trigger Census status R-strong or R-weak). Routine flights and shadowing do not count.",
+                        rule=dict(trigger="Counts when China replied within 7 days with a named PLA drill, an air-defense-zone spike, a coast-guard confrontation or a counter-sanction that China or an allowed outlet ties to the US move. Routine flights and shadowing do not count.",
                                   other="Counts when the log holds any logged Chinese military or coast-guard action (a drill, patrol, median-line crossing, close pass, deployment, missile launch or coast-guard confrontation) or counter-sanction in the 7 days after the move (timing only, not shown to be a reply). Unlike the reply rule, a patrol or close pass counts here.")),
         military=dict(name="Military cost", short="Military cost",
                       reply="Share of past cases where China's reply was a live-fire drill or a named large-scale drill.",
                       strike="Share of hold weeks with a live-fire or named large-scale Chinese drill in the 7 days after.",
                       none="No direct military cost expected from the move itself, so this counts as 0%.",
-                      rule=dict(reply="Counts when a Chinese reply the log links to the move was a live-fire or named large-scale drill. Combat patrols, median-line crossings, a close pass at sea and a coast-guard confrontation do not. Linked replies are usually within 7 days, but not always: the Justice Mission 2025 drills came 11 days after the Dec 18, 2025 arms sale (#3056) and count here, although the escalation corner (7 days) counts #3056 as no reply.",
+                      rule=dict(reply="Counts when a Chinese reply the log links to the move was a live-fire or named large-scale drill. Combat patrols, median-line crossings, a close pass at sea and a coast-guard confrontation do not. Linked replies are usually within 7 days, but not always: the Justice Mission 2025 drills came 11 days after the Dec 18, 2025 arms sale (#3056) and count here, although the escalation category (7 days) counts #3056 as no reply.",
                                 strike="Counts when a live-fire or named large-scale Chinese drill took place in the 7 days after the Monday.")),
         economic=dict(name="Economic harm", short="Economic",
                       other="Share of past cases followed within 14 days by Chinese counter-sanctions or trade measures against US firms or the US (timing only, not shown to be caused by the US move).",
                       rule="Counts when China announced counter-sanctions or trade measures against US firms or the US within 14 days after the move."),
         political=dict(name="Political / diplomatic", short="Political",
                        other="Share of past cases NOT followed within 14 days by talks or a meeting between the US and China (a call, a summit or a senior meeting). Statements and threats do not count.",
-                       rule="Counts when no talks or meeting between the US and China (a call, a summit or a senior meeting) was logged within 14 days after the move. Statements, threats and appeals do not count as talks. Changed on 2026-10-26 with Sidd's approval."),
+                       rule="Counts when no talks or meeting between the US and China (a call, a summit or a senior meeting) was logged within 14 days after the move. Statements, threats and appeals do not count as talks."),
     ),
 )
 
@@ -97,7 +98,7 @@ OPTIONS = [
          what="Other deployments, for example two-carrier operations in the South China Sea."),
 ]
 
-# trigger: escalation = "China replied within 7 days" (Trigger Census); otherwise "a Chinese action within 7 days" (timing only).
+# trigger: escalation = "China replied within 7 days" (clear link or timing only); otherwise "a Chinese action within 7 days" (timing only).
 # military: "reply" = the reply was a live-fire or named large-scale drill; "strike" = such a drill within 7 days (A); "none" = counted as 0%.
 # Closing window in days per category: when a case's outcome is final (read by napor_cases.window_days, the backtest and the page).
 # Linked replies (people, military) count at any lag; the longest logged lag is 11 days (#3056, Justice Mission 2025), so 11. Escalation is judged at reply_days (7), economic at ECON days (14), political at 14.
@@ -176,10 +177,14 @@ CIVILIAN_HARM = {}
 
 # ---- the backtest -----------------------------------------------------------------------------------------
 OOS_CUT = d(2025, 12, 31)
-OOS_LABEL = "2019-2025"
+OOS_LABEL = "1995-2025"
 
 
 def period(day):
+    if day < d(2009, 1, 1):
+        return "1995-2008"
+    if day < d(2019, 1, 1):
+        return "2009-18"
     if day < d(2021, 1, 1):
         return "2019-20"
     if day < d(2024, 1, 1):
@@ -189,8 +194,8 @@ def period(day):
     return "2026"
 
 
-PERIOD_KEYS = ["2019-20", "2021-23", "2024-25", "2026"]
-LOOKBACKS = ("2019-05-01", "2020-11-01", "2022-08-10", "2024-01-01", "2025-12-20")      # past dates the page test also checks (no hindsight)
+PERIOD_KEYS = ["1995-2008", "2009-18", "2019-20", "2021-23", "2024-25", "2026"]
+LOOKBACKS = ("1996-03-20", "2001-05-01", "2009-04-01", "2016-01-15", "2018-10-05", "2019-05-01", "2020-11-01", "2022-08-10", "2024-01-01", "2025-12-20")      # past dates the page test also checks (no hindsight)
 
 # ---- plain-language risk lines (the page's "What the log says"; filled in by theaters/common.py) -----------------------
 THREAD_PREFIX = "C"
