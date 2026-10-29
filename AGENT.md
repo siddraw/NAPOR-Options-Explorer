@@ -15,11 +15,11 @@ are done once per theater. Steps 3-5 are Iran only.
    Global Times, CGTN, PLA Daily, Chinese MND/MFA; Venezuela: Telesur and VTV (Venezuelan state media). The list is in each theater's `config.py`.
 2. **File events, per theater.** Add confirmed new events in that theater's file and ID block, in the same
    record format as the rows already there, with sources:
-   - Iran: `data.py` (+ `audit_sources.py`); run each story through `napor_ids.intake()`. Pre-war: `prewar.py` (201+).
+   - Iran: `data.py` (+ `audit_sources.py`); run each story through `napor_ids.intake()`. Pre-war: `prewar.py` (201+, May 2019 on) and `prewar_early.py` (300+, Nov 1979 - May 2019).
    - Houthis: `napor/theaters/houthis/events_early.py` / `events_late.py`, IDs 1001-1599.
-   - North Korea: `napor/theaters/northkorea/events.py`, IDs 2001-2999.
-   - China: `napor/theaters/china/events.py`, IDs 3001-3999.
-   - Venezuela / Caribbean: `napor/theaters/venezuela/events.py`, IDs 4001-4999 (event and pair IDs). Venezuela's escalation rule is stricter than the census: `rules.py` keeps a census reply only if a hostile act (attack, harassment, mobilization) is logged within 7 days; statements do not count.
+   - North Korea: `napor/theaters/northkorea/events.py`, IDs 2001-2999 (earlier years in `events_pre2017.py`, 2500+).
+   - China: `napor/theaters/china/events.py`, IDs 3001-3999 (earlier years in `events_pre2019.py`, 3500+).
+   - Venezuela / Caribbean: `napor/theaters/venezuela/events.py`, IDs 4001-4999 (event and pair IDs; earlier years in `events_pre2019.py`, 4500+). Venezuela's escalation rule is stricter than the census: `rules.py` keeps a census reply only if a hostile act (attack, harassment, mobilization) is logged within 7 days; statements do not count.
    **Link rule (approved 2026-10-28): only add events that have a link.** Every new event needs at least one source with
    a working https URL from an allowed outlet or an official release. A name-only report gets zero credit, and an event
    with no linked source is excluded from every count (credibility 0). Treat any existing link-less event as excluded;
@@ -84,7 +84,7 @@ are done once per theater. Steps 3-5 are Iran only.
 
 ## Older events
 
-Events before the 2026 war (May 2019 - Feb 27, 2026) live in `napor/prewar.py` with IDs 201+.
+Iran events before the 2026 war live in `napor/prewar.py` (May 2019 - Feb 27, 2026, IDs 201+) and `napor/prewar_early.py` (Nov 1979 - May 2019, IDs 300+).
 If a credible source turns up a missing pre-war US move or reply, add it there (same source
 standard, census status "R-proxy" for replies by Iran-backed groups) and log it in CHANGELOG.md.
 

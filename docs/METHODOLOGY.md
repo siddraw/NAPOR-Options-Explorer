@@ -1,7 +1,7 @@
 # NAPOR: Risk Assessment - methodology
 
 Technical reference for how the numbers on the Options Explorer are made. Numbers quoted here come from the
-files in this repository as built on 2026-10-28; they change as events are added. For the folder layout see
+files in this repository as built on 2026-10-29; they change as events are added. For the folder layout see
 [ARCHITECTURE.md](ARCHITECTURE.md). For the rules on sources see [SOURCE_STANDARD.md](SOURCE_STANDARD.md).
 
 What the tool is: a count of what followed past US moves, shown as "x of n past cases". It describes the
@@ -16,10 +16,13 @@ China / Taiwan, Venezuela / Caribbean (list: `explorer/theaters.json`).
 - **Event.** One real-world event, written down once. A row holds an ID, a date, who acted, the action type,
   the target, a detail line and the damage reported. If one event has several news stories, the stories are
   separate **reports** that all point to the same event ID.
-- **ID blocks.** Iran 1-128 (the 2026 war) and 201-265 (May 2019 to Feb 2026); Houthis 1001-1599;
-  North Korea 2001-2999; China 3001-3999; Venezuela 4001-4999.
-- **Where the rows live.** Iran: `napor/data.py` and `napor/prewar.py`, sources in `napor/audit_sources.py`.
-  Other theaters: `napor/theaters/<id>/events*.py`. These files are the record; the code reads them and
+- **ID blocks.** Iran 1-128 (the 2026 war), 201-265 (May 2019 to Feb 2026) and 300-376 (Nov 1979 to May 2019);
+  Houthis 1001-1599 (Sep 2014 on); North Korea 2001-2999 (2001-2076 from Aug 2017, 2500-2587 for Mar 1993 to Aug 2017);
+  China 3001-3999 (3001-3063 from Jan 2019, 3500-3566 for May 1995 to Dec 2018); Venezuela 4001-4999 (4001-4066 from
+  Jan 2019, 4500-4568 for Feb 1999 to Jan 2019).
+- **Where the rows live.** Iran: `napor/data.py`, `napor/prewar.py` and `napor/prewar_early.py`, sources in `napor/audit_sources.py`.
+  Other theaters: `napor/theaters/<id>/events*.py` (the earlier years are in `events_pre2017.py` for North Korea and
+  `events_pre2019.py` for China and Venezuela). These files are the record; the code reads them and
   does not change them.
 - **Duplicates.** A duplicate keeps its row as a record, but its reports move to the surviving event (Iran: #76 into
   #75, #49 into #50, #29 into #28). Uncertain matches go to `napor/napor_review_queue.json` for a person to decide.
@@ -66,7 +69,7 @@ Defined in `napor/napor_ids.py` (`credibility_of`) and shared by every theater.
    (`napor_ids.INCLUDE_AT`). Events from 0.50 to 0.65 are used but flagged "use with caution". Below 0.50
    the event stays in the log but is dropped from cases, replies, chains, the intensity scale and every
    count. Census rows and pairs that touch such an event are dropped too.
-Today the cut removes 8 of 190 Iran events (the 4 newly under the link rule are #84, #86, #88 and #89), 3 of 94 Houthi, 3 of 76 North Korea, 2 of 63 China and 1 of 64 Venezuela events.
+Today the cut removes 8 of 267 Iran events (#22, #64, #67, #101 and the 4 newly under the link rule, #84, #86, #88 and #89), 3 of 123 Houthi, 3 of 162 North Korea, 2 of 130 China and 1 of 133 Venezuela events. That leaves 798 counted events (Iran 259, Houthis 120, North Korea 159, China 128, Venezuela 132).
 
 ## 4. How a US move becomes a case
 
@@ -94,7 +97,7 @@ Moves inside these windows are context only, not cases. The act that started eac
 
 | Theater | Windows | Acts that started them (kept) |
 |---|---|---|
-| Iran | Oct 17, 2023 - Jan 29, 2024; Jun 13-24, 2025; Feb 28 - Apr 7, 2026; Jul 7-25, 2026 | #255, #2, #57, #60 |
+| Iran | Jul 22, 1987 - Jul 3, 1988 (Tanker War); Oct 17, 2023 - Jan 29, 2024; Jun 13-24, 2025; Feb 28 - Apr 7, 2026; Jul 7-25, 2026 | none for 1987-88; #255, #2, #57, #60 |
 | Houthis | Jan 12, 2024 - Jan 19, 2025; Mar 15 - May 6, 2025 | #1021, #1307 |
 | North Korea | Sep 25 - Nov 2, 2022; Sep 12 - Oct 12, 2026 | #2022, #2072 |
 | China | Aug 4-31, 2022 | #3026 |
@@ -148,7 +151,7 @@ the answer is already "yes"). Window lengths are in section 9.
 - People: anyone killed or hurt in the US action itself or in a Venezuelan reply, as the source reports it. Boat-strike deaths count.
 - Escalation: a hostile act by Venezuela or an armed group within 7 days: an attack, harassment of US assets, or a mobilization. Words, diplomatic steps and economic steps do not (`rules.py` re-labels census replies that were only words as `N`).
 - Military: armed action only (an attack on, or armed harassment of, US forces or assets). A mobilization or exercise does not.
-- Economic: a Venezuelan counter-measure within 14 days (oil or gas cut-off, airline ban, expelling firms or diplomats). Timing only; three such acts are logged.
+- Economic: a Venezuelan counter-measure within 14 days (oil or gas cut-off, airline ban, expelling firms or diplomats). Timing only; eleven such acts are logged (eight before 2019).
 
 ### 6.2 Political: "talks only" (all theaters)
 Risk = no actual talks, meeting, negotiation, formal proposal, ceasefire or deal between the US and the adversary
@@ -166,8 +169,8 @@ Diplomatic row, plus every US option-B row, plus listed exceptions (`TALK_EXTRA`
   category across all options: `(k + 2 x pooled) / (n + 2)`. It steadies rates built on a handful of cases.
   It is a model rule: it is shown only for a theater where the backtest chose it, by this written rule
   (`decide()` in `backtest_risk.py`): the shrunk value must beat raw by at least 0.005 overall and be no worse
-  than raw by more than 0.01 in any category. **Today only Iran passes** (gain 0.0096). Houthis, North Korea and
-  China fail on overall gain; Venezuela gains 0.0175 overall but fails because the people category is worse by 0.0113.
+  than raw by more than 0.01 in any category. **Today only Iran passes** (gain 0.0082). Houthis, North Korea and
+  China fail on overall gain; Venezuela gains 0.0093 overall but fails because the people category is worse by 0.0115.
   Where it fails the page shows the raw k of n. Raw k/n and the Wilson range are never shrunk.
 
 ## 8. The risk index
@@ -215,31 +218,31 @@ Current results (`napor/backtest_risk.json`, `napor/theaters/<id>/backtest_risk.
 
 | Theater | Rows | Scored | Raw | Shrunk (m=2) | Pooled | 50% | Page shows |
 |---|---|---|---|---|---|---|---|
-| Iran | 343 | 296 | 0.1902 | 0.1806 | 0.2112 | 0.25 | estimate |
-| Houthis | 466 | 439 | 0.0576 | 0.0591 | 0.0658 | 0.25 | raw |
-| North Korea | 380 | 348 | 0.0475 | 0.0496 | 0.0914 | 0.25 | raw |
-| China | 117 | 88 | 0.0723 | 0.0790 | 0.1211 | 0.25 | raw |
-| Venezuela | 273 | 218 | 0.1003 | 0.0828 | 0.0998 | 0.25 | raw |
+| Iran | 449 | 398 | 0.1393 | 0.1311 | 0.1554 | 0.25 | estimate |
+| Houthis | 503 | 472 | 0.0567 | 0.0586 | 0.0647 | 0.25 | raw |
+| North Korea | 468 | 432 | 0.0642 | 0.0621 | 0.0979 | 0.25 | raw |
+| China | 264 | 230 | 0.0623 | 0.0653 | 0.0796 | 0.25 | raw |
+| Venezuela | 368 | 313 | 0.0688 | 0.0595 | 0.0702 | 0.25 | raw |
 
-Out of sample (fit through Dec 31, 2025, score 2026): Iran 0.2761 (shrunk) and 0.2799 (raw), both worse than 50%,
-so the pre-war record alone did not describe the 2026 war; Houthis 0.0507; North Korea 0.0322; China 0.0090
-(9 rows); Venezuela 0.0403.
+Out of sample (fit through Dec 31, 2025, score 2026): Iran 0.2818 (shrunk) and 0.2775 (raw, 126 rows scored), both worse than 50%,
+so the pre-war record alone did not describe the 2026 war; Houthis 0.0495; North Korea 0.0332; China 0.0027
+(9 rows); Venezuela 0.0305.
 
 ## 11. Decisions taken
 
 **Recency weighting: tested, rejected (2026-10-24, CHANGELOG).** Six versions were backtested on Iran: no weight; pre-2026
 cases weighted 0.25 or 0.5; half-life 180, 365 or 730 days. The best overall was pre-2026 weight 0.25 (0.1763 vs 0.1806 with no
 weight), but it made military worse by 0.022 and escalation by 0.015, which fails the written rule (adopt only if the gain is
-at least 0.003 and no category is worse by more than 0.01). No change was made. On today's data the same test gives
-0.1760 vs 0.1806 with military worse by 0.0218 and escalation by 0.0148, so the answer holds. Houthis, North Korea,
+at least 0.003 and no category is worse by more than 0.01). No change was made. On today's data (the log now starts in 1979) the best
+version is a 730-day half-life, 0.1255 vs 0.1311 with no weight, with military worse by 0.0297, so the answer holds. Houthis, North Korea,
 China and Venezuela also keep no weighting. The weighting code stays in place, switched off.
 
 **Political "talks only": adopted 2026-10-26 (CHANGELOG).** Old rule: no diplomatic event of any kind in 14 days
 (statements and threats included). Problem: one public threat cancelled a political risk, so the corner mostly
 measured how often officials talk. Round-2 test on Iran: "talks only, 14 days" scored 0.268 against 0.304 for the live rule.
-Adopted by the project owner, with the same rule in every theater. Brier of the political corner, old to new: Iran 0.3084 to
-0.2989; Houthis 0.1100 to 0.0225; North Korea, China and Venezuela unchanged (0.0233, 0.0000, 0.0730). Index Brier, old to
-new: Iran 0.1816 to 0.1797; Houthis 0.0770 to 0.0595; others unchanged. No option's risk index moved more than 5
+Adopted by the project owner, with the same rule in every theater. Brier of the political corner, old to new (today's data, 1979 on): Iran 0.2460 to
+0.2262; Houthis 0.1219 to 0.0295; North Korea 0.0545 to 0.0362; China 0.0000 to 0.0000; Venezuela 0.0320 to 0.0320. Index Brier, old to
+new: Iran 0.1409 to 0.1369; Houthis 0.0777 to 0.0593; North Korea 0.0667 to 0.0621; China and Venezuela unchanged (0.0687, 0.0592). No option's risk index moved more than 5
 points. A lower score here means the new definition is easier to forecast, not that it measures political risk better.
 The old rule is still computed so the Report card can show both.
 
@@ -253,10 +256,10 @@ The old rule is still computed so the Report card can show both.
   proof nothing happened. Hold weeks are the most exposed.
 - **Judgment calls.** Census statuses, `TALK_EXTRA` rows, civilian-harm entries and hold-week "people hurt" flags are set by hand
   from the logged text (Iran #115 and the Oct 2026 `Unclear` rows are examples).
-- **Lopsided outcomes.** Where nearly every case has the same outcome (Houthis political: 93 of 95 had no talks; North Korea
+- **Lopsided outcomes.** Where nearly every case has the same outcome (Houthis political: 102 of 105 had no talks; North Korea
   people: none hurt), a low Brier mostly reflects that, not skill.
 - **Backtest scope.** Scores are retrospective and use definitions tuned on this same data; the shrinkage and weighting choices
   were made after earlier backtests. Iran's out-of-sample score is worse than 50%.
 - **Not measured.** Oil and freight prices, harm to ordinary people in the adversary country, strain with allies, and North Korea's
   economic harm. Sources are public news only; state-media claims are labelled and scored 0.30.
-- **Known gaps.** Iran #67 has no source. About 20 Iran reports are names without a link (flagged not re-checked); they get zero credit under the link rule, and four events (#84, #86, #88, #89) relied on them alone and are now excluded. The exported `n_events` counts only events at credibility 0.50 or more in every theater, Iran included (Iran logs 190, so its `n_events` is lower by the number under the cut).
+- **Known gaps.** Iran #67 has no source. About 20 Iran reports are names without a link (flagged not re-checked); they get zero credit under the link rule, and four events (#84, #86, #88, #89) relied on them alone and are now excluded. The exported `n_events` counts only events at credibility 0.50 or more in every theater, Iran included (Iran logs 267, so its `n_events`, 259, is lower by the 8 under the cut).

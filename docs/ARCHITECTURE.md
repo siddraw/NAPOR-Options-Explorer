@@ -85,6 +85,7 @@ Paths below are used by the weekly update. Do not move or rename them without up
 | **`napor/`** (engine and Iran data) | |
 | `napor/data.py` | Iran 2026 event log (IDs 1-128), pairs, Trigger Census, merged duplicates, kind of act |
 | `napor/prewar.py` | Iran events from May 2019 to Feb 2026 (IDs 201-265), windows, phases |
+| `napor/prewar_early.py` | Iran events from Nov 1979 to May 2019 (IDs 300-376), the 1987-88 Tanker War window, early phases |
 | `napor/audit_sources.py` | Source citations (outlet, headline, date, URL) for the Iran events |
 | `napor/napor_ids.py` | Report IDs, credibility scoring, the 0.50 cut, intake of new stories |
 | `napor/resolver.py`, `napor/matcher.py` | Decide whether a new story is a new event or a known one |
@@ -113,7 +114,9 @@ Paths below are used by the weekly update. Do not move or rename them without up
 | `napor/theaters/<id>/cases.py, export.py, verify.py, backtest.py` | A few lines each; call the shared classes |
 | `napor/theaters/<id>/now.json` | "Right now" notes for that theater |
 | `napor/theaters/<id>/backtest_risk.json` | Backtest result for that theater |
-| `napor/theaters/houthis/events_early.py`, `events_late.py` | Houthi log in two files |
+| `napor/theaters/houthis/events_early.py`, `events_late.py` | Houthi log in two files (Sep 2014 on) |
+| `napor/theaters/northkorea/events_pre2017.py` | North Korea events from Mar 1993 to Aug 2017 (IDs 2500-2587); `events.py` runs from Aug 31, 2017 |
+| `napor/theaters/china/events_pre2019.py`, `napor/theaters/venezuela/events_pre2019.py` | China (May 1995 - Dec 2018, IDs 3500-3566) and Venezuela (Feb 1999 - Jan 2019, IDs 4500-4568) earlier events; `events.py` runs from Jan 2019 |
 | `napor/theaters/northkorea/notes.py`, `china/notes.py`, `venezuela/notes.py` | Analyst notes shown on the page |
 | `napor/theaters/venezuela/acts.py`, `rules.py` | Word tests for hostile acts and the stricter escalation rule |
 | **`tests/`** | |

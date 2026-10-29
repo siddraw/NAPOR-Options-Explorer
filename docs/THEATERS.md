@@ -1,6 +1,6 @@
 # Next tabs: conflicts and standoffs the US is in (research memo, 2026-10-22)
 
-**Status (2026-10-26):** Houthis, North Korea, China and Venezuela / Caribbean are built (tabs on the page). The others are still research only.
+**Status (2026-10-29):** Houthis, North Korea, China and Venezuela / Caribbean are built (tabs on the page), with logs reaching back to 2014, 1993, 1995 and 1999. The others are still research only.
 
 Research only, no code. Sources are allowed outlets read in this session (URLs from search or fetch
 results only). Case counts are **rough estimates from what the coverage suggests, not counts**; each
@@ -18,7 +18,7 @@ The Houthis threatened "a swift and painful response targeting the U.S." if the 
 was March-May 2025. Houthi attacks on Red Sea shipping are not reported this month. ([CBS, Oct 13](https://www.cbsnews.com/live-updates/iran-war-us-trump-saudi-arabia-houthi/))
 - **US options:** hold; diplomacy (via Oman/Saudi); sanctions/terror designations; interdiction of Iranian
   arms shipments; strikes on launch sites; strikes on leaders; naval escort/posture.
-- **Cases since 2019 (rough):** large. The Nov 2023 - May 2025 Red Sea crisis alone holds dozens of US
+- **Cases 2019-2026 (rough):** large. The Nov 2023 - May 2025 Red Sea crisis alone holds dozens of US
   strikes and a few hundred Houthi attacks, mostly covered by CENTCOM, AP and USNI. Much of it is
   continuous fighting, so the continuous-war rule will remove many triggers; a few dozen countable cases is
   plausible (uncertain).
@@ -32,7 +32,7 @@ an "irregular" path, after an Oct 3 hypersonic test; Kim has rejected Trump's ca
 ([AP via News4Jax, Oct 12](https://www.news4jax.com/news/world/2026/10/12/south-koreas-military-says-north-korea-fired-a-projectile-toward-the-sea/))
 - **US options:** hold; talks/summit offer; sanctions; joint drills with South Korea/Japan; strategic-asset
   deployments (bombers, carriers, submarine visits); missile-defense moves.
-- **Cases since 2019 (rough):** many dozens of US/allied drills, deployments and sanctions, and a long list of
+- **Cases 2019-2026 (rough):** many dozens of US/allied drills, deployments and sanctions, and a long list of
   missile tests that often follow them within days. Replies are mostly tests and statements, not attacks.
 - **Data difficulty:** low-medium. Launches are dated by South Korea's JCS and Japan; drills by USFK/INDOPACOM.
   Risk categories would need re-wording (escalation = test or provocation, not strikes).
@@ -44,7 +44,7 @@ saying it "illegally intruded"; in a separate standoff a Chinese coast guard shi
 waters near Taiwan's Pratas Islands. ([Reuters via TimesLIVE, Oct 20](https://www.timeslive.co.za/news/world/2026-10-20-china-sends-naval-forces-to-monitor-us-warship-near-disputed-shoal/))
 - **US options:** hold; transits/FONOPs; arms sales to Taiwan; sanctions/export controls; high-level visits;
   talks; deployments.
-- **Cases since 2019 (rough):** dozens of Taiwan Strait transits, arms-sale announcements and visits, with
+- **Cases 2019-2026 (rough):** dozens of Taiwan Strait transits, arms-sale announcements and visits, with
   datable PLA replies (large drills after the 2022 Pelosi visit and 2023-2024 events). Most replies are
   non-kinetic.
 - **Data difficulty:** medium. Good coverage; PLA "routine" activity makes it hard to tell a reply from
@@ -59,7 +59,7 @@ The boat strikes continue: an Oct 4, 2026 strike killed four, bringing the toll 
 Venezuela's current politics (interim leadership under Delcy Rodríguez, US presence) were not confirmed in an
 allowed outlet this session: **uncertain**.
 - **US options:** hold; boat strikes; land strikes; sanctions; naval posture; talks with the interim government.
-- **Cases since 2019 (rough):** about 70 US strikes, but few datable "replies" by an adversary (traffickers do
+- **Cases 2019-2026 (rough):** about 70 US strikes, but few datable "replies" by an adversary (traffickers do
   not answer in public), so "reply" rates would be thin. Harm (deaths per strike) is well reported.
 - **Data difficulty:** medium-high for the reply side; low for the US side.
 - **Fit:** partial. Works for harm and political categories, weak for escalation.
