@@ -12,7 +12,7 @@ The five categories, exactly as defined for this tab (the page shows these words
   people      anyone killed or hurt in the US action itself OR in a Venezuelan reply, as the logged source reports it. Boat-strike deaths count.
   escalation  a hostile act by Venezuela or an armed group within 7 days of the move: an attack, harassment of US assets, or a military
               mobilization announced as a response. Words alone do not count. A diplomatic step or an economic step is not a hostile act here
-              (economic steps have their own corner). Taken from the Trigger Census as seen through rules.py: a row the research file marks
+              (economic steps have their own category). Taken from the Trigger Census as seen through rules.py: a row the research file marks
               R-strong or R-weak keeps that status only if such an act is logged 0-7 days after the move; otherwise it counts as N.
   military    the reply was armed action: an attack on, or armed harassment of, US forces or assets (the logged action type starts with
               "Attack", "Harassment" or "Strike"). A mobilization announcement, a militia call-up or a national exercise does not.
@@ -64,7 +64,7 @@ THEATER = dict(
                         trigger="Share of past cases followed within 7 days by a hostile act from Venezuela or an armed group: an attack, harassment of US assets, or a military mobilization announced as a response. Words alone do not count.",
                         other="Share of past cases followed within 7 days by any logged Venezuelan hostile act (an attack, harassment or a mobilization; timing only).",
                         hold="Share of hold weeks followed within 7 days by a logged Venezuelan hostile act (an attack, harassment or a mobilization; timing only).",
-                        rule=dict(trigger="Counts when Venezuela or an armed group took a hostile act within 7 days of the move: an attack, harassment of US assets, or a military mobilization announced as a response. A statement, a denunciation, a diplomatic step or an economic step does not count (Trigger Census status R-strong or R-weak, kept only when such an act is logged 0-7 days after the move). Several denunciations that the research file marks as weak replies are counted as no reply here.",
+                        rule=dict(trigger="Counts when Venezuela or an armed group took a hostile act within 7 days of the move: an attack, harassment of US assets, or a military mobilization announced as a response. A statement, a denunciation, a diplomatic step or an economic step does not count (a clear link or timing only, kept only when such an act is logged 0-7 days after the move). Several denunciations that the research file marks as weak replies are counted as no reply here.",
                                   other="Counts when the log holds any Venezuelan hostile act (an attack, harassment or a mobilization) in the 7 days after the move (timing only, not shown to be a reply).")),
         military=dict(name="Military cost", short="Military cost",
                       reply="Share of past cases where the Venezuelan reply was armed action: an attack on, or armed harassment of, US forces or assets.",
@@ -77,7 +77,7 @@ THEATER = dict(
                       rule="Counts when Venezuela announced a counter-measure (an oil or gas cut-off, an airline ban, or the expulsion of firms or diplomats) within 14 days after the move. Only 3 are logged (#4002, #4029, #4041); #4041 is dated by the Reuters report, not the day it took effect. The window starts the day after the move, so a same-day act (the 2019 expulsion order, #4002) is not counted."),
         political=dict(name="Political / diplomatic", short="Political",
                        other="Share of past cases NOT followed within 14 days by talks or a deal between the US and Venezuela (a call, a meeting, an oil deal or license, a prisoner swap, restored ties).  Statements and threats do not count.",
-                       rule="Counts when no US talks or deal with Venezuela (a call, a meeting, an oil deal or license, a prisoner swap, restored ties or an embassy reopening, directly or through a mediator) were logged within 14 days after the move. Statements, threats and appeals do not count as talks. Changed on 2026-10-26 with Sidd's approval."),
+                       rule="Counts when no US talks or deal with Venezuela (a call, a meeting, an oil deal or license, a prisoner swap, restored ties or an embassy reopening, directly or through a mediator) were logged within 14 days after the move. Statements, threats and appeals do not count as talks. Rule changed on 2026-10-26."),
     ),
 )
 
@@ -149,7 +149,7 @@ def KIND_OF(e):
         if acts.is_hostile(a):
             return "Kinetic"            # an attack, harassment of US assets or a military mobilization
         if acts.is_countermeasure(a):
-            return "Sanctions"          # an oil or gas cut-off, an airline ban, or the expulsion of diplomats (the economic corner)
+            return "Sanctions"          # an oil or gas cut-off, an airline ban, or the expulsion of diplomats (the economic category)
         return "Other"                  # a statement, a denunciation or a concession
     if us_side(e[2]):
         opt = EV.US_OPTION.get(e[0])

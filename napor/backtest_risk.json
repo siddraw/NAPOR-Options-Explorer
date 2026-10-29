@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-28",
+ "generated": "2026-10-29",
  "rows": 335,
  "predictions": 288,
  "skipped_no_history": 47,
@@ -321,18 +321,18 @@
  },
  "robustness": {
   "variants": [
-   "As published (R-strong, R-weak, R-proxy count; ~5 days)",
-   "Proxy replies do not count",
-   "Weak replies do not count",
-   "Only strong replies count",
+   "As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)",
+   "Replies by an ally group do not count",
+   "Timing-only replies do not count",
+   "Only replies with a clear link count",
    "Reply within 3 days (logged reply dates)",
    "Within 7 days: also any Iran/proxy strike (timing only)"
   ],
   "short": [
    "As published",
-   "No proxy",
-   "No weak",
-   "Strong only",
+   "No ally group",
+   "No timing only",
+   "Clear link only",
    "Within 3 days",
    "Within 7 days, any strike"
   ],
@@ -342,22 +342,22 @@
     "name": "New sanctions",
     "cells": [
      {
-      "variant": "As published (R-strong, R-weak, R-proxy count; ~5 days)",
+      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)",
       "k": 0,
       "n": 9
      },
      {
-      "variant": "Proxy replies do not count",
+      "variant": "Replies by an ally group do not count",
       "k": 0,
       "n": 9
      },
      {
-      "variant": "Weak replies do not count",
+      "variant": "Timing-only replies do not count",
       "k": 0,
       "n": 9
      },
      {
-      "variant": "Only strong replies count",
+      "variant": "Only replies with a clear link count",
       "k": 0,
       "n": 9
      },
@@ -378,22 +378,22 @@
     "name": "Naval pressure (blockade enforcement, transits, seizures)",
     "cells": [
      {
-      "variant": "As published (R-strong, R-weak, R-proxy count; ~5 days)",
+      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)",
       "k": 2,
       "n": 6
      },
      {
-      "variant": "Proxy replies do not count",
+      "variant": "Replies by an ally group do not count",
       "k": 2,
       "n": 6
      },
      {
-      "variant": "Weak replies do not count",
+      "variant": "Timing-only replies do not count",
       "k": 2,
       "n": 6
      },
      {
-      "variant": "Only strong replies count",
+      "variant": "Only replies with a clear link count",
       "k": 2,
       "n": 6
      },
@@ -414,22 +414,22 @@
     "name": "Strike Iranian shipping (e.g. tankers)",
     "cells": [
      {
-      "variant": "As published (R-strong, R-weak, R-proxy count; ~5 days)",
+      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)",
       "k": 2,
       "n": 2
      },
      {
-      "variant": "Proxy replies do not count",
+      "variant": "Replies by an ally group do not count",
       "k": 2,
       "n": 2
      },
      {
-      "variant": "Weak replies do not count",
+      "variant": "Timing-only replies do not count",
       "k": 1,
       "n": 2
      },
      {
-      "variant": "Only strong replies count",
+      "variant": "Only replies with a clear link count",
       "k": 1,
       "n": 2
      },
@@ -450,22 +450,22 @@
     "name": "Strike military sites (equipment, not people)",
     "cells": [
      {
-      "variant": "As published (R-strong, R-weak, R-proxy count; ~5 days)",
+      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)",
       "k": 11,
       "n": 12
      },
      {
-      "variant": "Proxy replies do not count",
+      "variant": "Replies by an ally group do not count",
       "k": 6,
       "n": 12
      },
      {
-      "variant": "Weak replies do not count",
+      "variant": "Timing-only replies do not count",
       "k": 9,
       "n": 12
      },
      {
-      "variant": "Only strong replies count",
+      "variant": "Only replies with a clear link count",
       "k": 4,
       "n": 12
      },
@@ -486,22 +486,22 @@
     "name": "Strike that risks killing personnel",
     "cells": [
      {
-      "variant": "As published (R-strong, R-weak, R-proxy count; ~5 days)",
+      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)",
       "k": 6,
       "n": 7
      },
      {
-      "variant": "Proxy replies do not count",
+      "variant": "Replies by an ally group do not count",
       "k": 5,
       "n": 7
      },
      {
-      "variant": "Weak replies do not count",
+      "variant": "Timing-only replies do not count",
       "k": 6,
       "n": 7
      },
      {
-      "variant": "Only strong replies count",
+      "variant": "Only replies with a clear link count",
       "k": 5,
       "n": 7
      },
@@ -530,7 +530,7 @@
    "economic": -0.0028,
    "political": -0.0195
   },
-  "rule": "Show the shrunk value if it beats raw by at least 0.005 overall and is not worse by more than 0.01 in any category."
+  "rule": "Show the NAPOR estimate if it beats the raw x of n by at least 0.005 overall and is not worse by more than 0.01 in any category."
  },
  "weighting": {
   "candidates": [
@@ -702,6 +702,6 @@
    "est": 0.2948,
    "index_brier": 0.1745
   },
-  "note": "Brier of the estimate the page shows, same walk-forward (only rows closed before each date). Index Brier = average of the category Brier scores. The two rules define the outcome differently, so a lower Brier means the new rule is easier to predict, not that it is a better measure."
+  "note": "Brier of the estimate the page shows, same replay in date order (only rows closed before each date). Index Brier = average of the category Brier scores. The two rules define the outcome differently, so a lower Brier means the new rule is easier to predict, not that it is a better measure."
  }
 }

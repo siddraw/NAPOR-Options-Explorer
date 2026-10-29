@@ -131,9 +131,9 @@ def baseline_hold():
 
 UNKNOWNS = {
     "A": "Shipping attacks have kept coming without any new US move (see the baseline line). Trump has said there will be no US strikes before Nov 3; what Iran does if that holds is not in the data.",
-    "B": "Diplomatic moves are not in the census, so there is no reply rate. The last rounds (Sep 23 - Oct 9) drew rejections and counter-offers, not attacks. Iran called the US answer 'insufficient' (Oct 11) and on Oct 18 said it was still reviewing US 'comments'.",
+    "B": "Diplomatic moves are not counted as past cases with a reply test, so there is no reply rate. The last rounds (Sep 23 - Oct 9) drew rejections and counter-offers, not attacks. Iran called the US answer 'insufficient' (Oct 11) and on Oct 18 said it was still reviewing US 'comments'.",
     "C": "Both past cases are from the current quiet phase, and neither drew a linked attack. Tanker attacks continued that week, but no outlet tied them to the sanctions.",
-    "D": "Small sample. The pre-war cases (a 2020 fuel-cargo seizure and two seizures of Iranian arms bound for the Houthis, 2020 and 2023) drew no reply. In 2026, Iran answered the blockade start and a ship seizure, but not a warship transit. The Oct 10-11 strike on a blockade runner drew no Iranian attack on US forces within 5 days (F001: NO), but attacks on commercial shipping surged; how to score it is waiting for Sidd (census row #104 is 'Unclear').",
+    "D": "Small sample. The pre-war cases (a 2020 fuel-cargo seizure and two seizures of Iranian arms bound for the Houthis, 2020 and 2023) drew no reply. In 2026, Iran answered the blockade start and a ship seizure, but not a warship transit. The Oct 10-11 strike on a blockade runner drew no Iranian attack on US forces within 5 days (F001: NO), but attacks on commercial shipping surged; it is not counted until the link is settled (#104).",
     "E": "Only 2 cases, both in early September; both drew Iranian missile fire (at a US warship, then at a Jordan base).",
     "F": "Every past case drew a reply, but all were before the current quiet phase. One logged reply caused casualties (Qatar, Jul 12: 3 wounded, including a child).",
     "G": "Every past case drew a fast reply, mostly the same day. One logged reply caused casualties (Tel Aviv, Feb 28: 1 killed, 27 injured). None in the current quiet phase.",
@@ -175,7 +175,7 @@ def _iran_side(actor):
 
 
 def _irstrike(e): return _usable(e) and KIND[e[0]] == "Kinetic" and _iran_side(e[2])
-# Political corner (rule changed 2026-10-26, approved by Sidd): only actual talks, a meeting, a proposal, a ceasefire or a deal count.
+# Political category (rule changed 2026-10-26, approved by Sidd): only actual talks, a meeting, a proposal, a ceasefire or a deal count.
 # Statements, threats and appeals do not. Same words as the "Diplomacy" option's past moves (option B).
 TALK_WORDS = ("proposal", "talks", "ceasefire announcement", "ceasefire (", "ceasefire statement")
 def _diplo(e): return _usable(e) and KIND[e[0]] == "Diplomatic"       # any diplomatic event, statements included (the rule before 2026-10-26)
@@ -299,7 +299,7 @@ def risk_profile(key):
     elif key == "A":
         prof[RISK_CATEGORIES[1]] = "No new US trigger. Iranian or unidentified attacks on shipping keep happening anyway (baseline). Whether holding back changes Iran's behaviour: not measured."
     elif key == "B":
-        prof[RISK_CATEGORIES[1]] = f"Iran struck within 7 days after {m['strikes_after']} past conciliatory US moves (timing only, not shown to be replies). Reply rate to diplomacy: not measured (not in the census)."
+        prof[RISK_CATEGORIES[1]] = f"Iran struck within 7 days after {m['strikes_after']} past conciliatory US moves (timing only, not shown to be replies). Reply rate to diplomacy: not measured (not counted here)."
     else:
         prof[RISK_CATEGORIES[1]] = f"Iran struck within 7 days after {m['strikes_after']} past posture changes (all early October). Not tested as triggers."
     # 3. Military cost

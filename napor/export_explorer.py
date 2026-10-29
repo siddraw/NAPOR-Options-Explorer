@@ -156,7 +156,7 @@ def category_scores(o, cases, weighting=("none", None), T=None):
 
 
 def risk_index(o, cases, w=None, pool=None, weighting=("none", None), T=None):
-    """Average of the measured corners. With pool (category -> pooled rate), corners are shrunk toward it:
+    """Average of the measured categories. With pool (category -> pooled rate), categories are shrunk toward it:
     (sum of weighted risks + m p)/(sum of weights + m); with no recency weighting that is (k + m p)/(n + m)."""
     if not cases: return None
     sc = category_scores(o, cases, weighting, T); w = w or {c: 1 for c in CATS}

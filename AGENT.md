@@ -103,7 +103,7 @@ standard, census status "R-proxy" for replies by Iran-backed groups) and log it 
   ((k + 2 x pooled) / (n + 2)) because the backtest chose it (see `backtest_risk.py`, decision rule in
   `decide()`). Do not change m or switch it off on your own; if the weekly backtest stops favouring it,
   report the numbers and wait for Sidd.
-- **The "political" corner counts talks only (changed 2026-10-26, approved by Sidd).** A past case counts as political risk when no
+- **The "political" category counts talks only (changed 2026-10-26, approved by Sidd).** A past case counts as political risk when no
   actual talks, meeting, negotiation, formal proposal, ceasefire or deal between the US and the adversary (directly or through a
   mediator) was logged within 14 days. Statements, threats and appeals do NOT count as talks, and neither does a multilateral act
   such as a UN resolution. Every US option-B row counts (so Venezuela's deals and swaps do), and so does an adversary row that is a

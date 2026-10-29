@@ -152,10 +152,10 @@ def robustness(ctx=None):
     EV = O.EV
     out = []
     variants = [
-        ("As published (R-strong, R-weak, R-proxy count; ~5 days)", lambda st, prs, day: st in NC.REPLY, True),
-        ("Proxy replies do not count", lambda st, prs, day: st in ("R-strong", "R-weak"), True),
-        ("Weak replies do not count", lambda st, prs, day: st in ("R-strong", "R-proxy"), True),
-        ("Only strong replies count", lambda st, prs, day: st == "R-strong", True),
+        ("As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)", lambda st, prs, day: st in NC.REPLY, True),
+        ("Replies by an ally group do not count", lambda st, prs, day: st in ("R-strong", "R-weak"), True),
+        ("Timing-only replies do not count", lambda st, prs, day: st in ("R-strong", "R-proxy"), True),
+        ("Only replies with a clear link count", lambda st, prs, day: st == "R-strong", True),
         ("Reply within 3 days (logged reply dates)", lambda st, prs, day: st in NC.REPLY and any(p_days <= 3 for p_days in prs), "lag"),
         ("Within 7 days: also any Iran/proxy strike (timing only)", lambda st, prs, day: st in NC.REPLY or bool(O._window(O._irstrike, day, 1, 7)), True),
     ]
@@ -174,7 +174,7 @@ def robustness(ctx=None):
                 k += 1 if f(st, lags, day) else 0
             res["cells"].append(dict(variant=label, k=k, n=n))
         out.append(res)
-    short = ["As published", "No proxy", "No weak", "Strong only", "Within 3 days", "Within 7 days, any strike"]
+    short = ["As published", "No ally group", "No timing only", "Clear link only", "Within 3 days", "Within 7 days, any strike"]
     return dict(variants=[v[0] for v in variants], short=short, rows=out)
 
 
@@ -183,7 +183,7 @@ def decide(tab):
     worse = {c: round(tab[c]["shrunk2"] - tab[c]["raw"], 4) for c in CATS if tab[c]["n"] and tab[c]["raw"] is not None}
     adopt = raw is not None and sh is not None and raw - sh >= 0.005 and all(v <= 0.01 for v in worse.values())
     return dict(adopt=adopt, m=M_MAIN, gain=round(raw - sh, 4) if raw is not None else None, worse_by_cat=worse,
-                rule="Show the shrunk value if it beats raw by at least 0.005 overall and is not worse by more than 0.01 in any category.")
+                rule="Show the NAPOR estimate if it beats the raw x of n by at least 0.005 overall and is not worse by more than 0.01 in any category.")
 
 
 def decide_weighting(tab):
@@ -212,7 +212,7 @@ def weighting_report(ps, tab, dec):
     return dict(candidates=cands, n=tab["overall"]["n"], n_2026=t26["overall"]["n"], decision=dec), t26
 
 
-# ---- Political corner: rule changed 2026-10-26 (approved by Sidd) ----
+# ---- Political category: rule changed 2026-10-26 (approved by Sidd) ----
 # New rule ("talks only, within 14 days", tested in round 2 as P2): risk = no actual talks, meeting, negotiation, proposal, ceasefire or deal
 # between the US and the adversary (directly or through a mediator) logged within 14 days. Statements, threats and appeals do not count.
 # The old rule counted any Diplomatic event, statements included. It is still computed here so the Report Card can show old vs new.
@@ -220,7 +220,7 @@ CONC = O.TALK_WORDS      # same words as the "B" move in the export
 
 
 def political_rows(cases_by_key, window, legacy=False, ctx=None):
-    """Political-corner rows: risk = no matching event within `window` days after the case.
+    """Political-category rows: risk = no matching event within `window` days after the case.
     legacy=False: the live rule (talks only, O._talks / theater _talks). legacy=True: the pre-2026-10-26 rule (any Diplomatic event)."""
     if ctx is not None:
         last, evs = ctx.last, ctx.talk_dates(legacy)
@@ -239,7 +239,7 @@ def political_rows(cases_by_key, window, legacy=False, ctx=None):
 
 
 def political_change(cases_by_key, tab, dec, ctx=None):
-    """Old vs new Brier of the political corner (and of the index) on the same walk-forward. The new rule is the live one."""
+    """Old vs new Brier of the political category (and of the index) on the same date-ordered replay. The new rule is the live one."""
     est = "w_" + dec["name"]                                 # the estimate the page shows (shrunk2 when no weighting)
     meas = [c for c in CATS if tab[c][est] is not None]          # a category a theater does not measure (no predictions) is left out of the index
     others = [c for c in meas if c != "political"]
@@ -252,7 +252,7 @@ def political_change(cases_by_key, tab, dec, ctx=None):
         out.append(dict(label=label, legacy=legacy, rows=len(rows), predictions=len(ps), risk_cases=sum(r["y"] for r in rows), est=t,
                         index_brier=round((sum(tab[c][est] for c in others) + t) / (len(others) + 1), 4)))
     return dict(changed="2026-10-26", approved_by="Sidd", method=est, old=out[0], new=out[1],
-                note="Brier of the estimate the page shows, same walk-forward (only rows closed before each date). Index Brier = average of the "
+                note="Brier of the estimate the page shows, same replay in date order (only rows closed before each date). Index Brier = average of the "
                      "category Brier scores. The two rules define the outcome differently, so a lower Brier means the new rule is easier to predict, "
                      "not that it is a better measure.")
 
@@ -328,7 +328,7 @@ def report(res, cb, flags=None, tag=""):
     print(f"Weighting decision: best by overall Brier = {dw['best_candidate']}; gain over no weighting {dw['gain']:+.4f}; worse by category {dw['worse_by_cat']} -> " +
           (f"ADOPT recency weight {dw['name']}" if dw["adopt"] else "KEEP no recency weighting"))
     pc = res["political_change"]
-    print(f"\nPolitical corner (rule changed {pc['changed']}, approved by {pc['approved_by']}; Brier of '{pc['method']}'; 0.25 = coin flip)")
+    print(f"\nPolitical category (rule changed {pc['changed']}, approved by {pc['approved_by']}; Brier of '{pc['method']}'; 0.25 = coin flip)")
     for r in (pc["old"], pc["new"]):
         print(f"  {r['label']}: {r['predictions']} predictions, risk in {r['risk_cases']} of {r['rows']} cases; Brier {r['est']:.4f}; index-level {r['index_brier']:.4f}")
     print("\nCalibration (raw): " + "; ".join(f"{b['lo']:.1f}-{b['hi']:.1f}: said {b['predicted']:.0%}, happened {b['observed']:.0%} (n={b['n']})" for b in res["calibration"]["raw"]))

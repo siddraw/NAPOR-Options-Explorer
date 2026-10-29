@@ -9,7 +9,7 @@ recency weights of the counted cases and sum_wy the same sum over the cases that
 computed here (not imported): none = 1; era25/era50 = 0.25/0.5 before 2026-01-01, else 1; hl<H> = 0.5 ** (age in
 days / H), age measured from the as-of date. The weighting in force is read from backtest_risk.json (the written
 decision rule), or can be passed in. Estimate = (sum_wy + 2 x pooled) / (sum_w + 2), pooled = sum_wy / sum_w
-over all options (military corners assumed 0 are left out of the pool and shown as 0).
+over all options (military categories assumed 0 are left out of the pool and shown as 0).
 """
 import json, os, datetime as dt
 import data, napor_options as O
@@ -114,7 +114,7 @@ def estimates(out):
     return est, pool
 
 
-# Options with no direct military cost expected from the move itself (their military corner is an assumed 0).
+# Options with no direct military cost expected from the move itself (their military category is an assumed 0).
 NO_MIL = ("B", "C", "H")
 ASSUMED_MIL = lambda k, c: c == "military" and k in NO_MIL
 

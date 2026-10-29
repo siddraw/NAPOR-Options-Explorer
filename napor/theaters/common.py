@@ -23,10 +23,10 @@ Rules (same meaning as the Iran engine):
 Hooks a config may define (all optional; the defaults are the Houthi rules):
   KIND_OF(event)            kind of an event row (Kinetic, Maritime, Diplomatic, Sanctions, Posture, Other); default: data.act_kind + KIND_OVERRIDE
   ATTACK_KINDS              kinds that count as a hostile act when the other side does them
-  MILITARY_REPLY(event)     True when a reply counts for the military corner; default: kind is Kinetic
+  MILITARY_REPLY(event)     True when a reply counts for the military category; default: kind is Kinetic
   HOSTILE_TEST(event, kind) rows that add points to the intensity scale; default: any counted Kinetic or Maritime row
   BASELINE_TEST(event, kind) rows the "no new US move" baseline counts (with BASELINE = "attack"); default: the hostile acts (ATTACK_KINDS)
-  ECON                      dict(mode="ships" | "events" | "none", days=7, kinds=(...), extra=set()): how the economic corner is measured
+  ECON                      dict(mode="ships" | "events" | "none", days=7, kinds=(...), extra=set()): how the economic category is measured
   BASELINE                  "ships" (default) or "attack": what the "no new US move" baseline counts
   REPLY_DAYS, THREAD_PREFIX, SANCTIONS_KEY, HOLD_TITLE, RISK_TEXT, LOOKBACKS, PERIOD_KEYS, period()
 """
@@ -42,13 +42,13 @@ import data                      # only for act_kind(), the shared word list tha
 import napor_ids as N
 import napor_intensity as INT    # only for the shared bands and the "someone died" test
 import theaters as TH_REG
-import napor_options as _IRAN   # only for TALK_WORDS, the one word list every theater's political corner uses
+import napor_options as _IRAN   # only for TALK_WORDS, the one word list every theater's political category uses
 
 TALK_WORDS = _IRAN.TALK_WORDS
 
 
 def is_talk(action_type):
-    """Political corner (rule changed 2026-10-26, approved by Sidd): a Diplomatic row counts only if its action type names talks, a meeting,
+    """Political category (rule changed 2026-10-26, approved by Sidd): a Diplomatic row counts only if its action type names talks, a meeting,
     a proposal, a ceasefire or a deal. Statements, threats and appeals do not."""
     return any(w in action_type.lower() for w in TALK_WORDS)
 
@@ -341,7 +341,7 @@ class Theater:
         return [dict(id=j, date=EV[j][1].isoformat(), title=EV[j][5], actor=EV[j][2], dmg=EV[j][7] or "") for j in ids]
 
     def _hold_mil(self, st):
-        """Hold weeks, military corner: any hostile act in the 7 days after (default) or, if the config defines MILITARY_REPLY, only such a reply."""
+        """Hold weeks, military category: any hostile act in the 7 days after (default) or, if the config defines MILITARY_REPLY, only such a reply."""
         if _cfg(self.C, "MILITARY_REPLY", None):
             return any(self.is_military_reply(i) for i in st)
         return bool(st)
@@ -542,10 +542,10 @@ class Backtest:
         K, C = self.K, self.C
         rd = K.REPLY_DAYS
         variants = [
-            (f"As published (R-strong, R-weak, R-proxy count; ~{rd} days)", lambda st, lags: st in K.REPLY),
-            ("Proxy replies do not count", lambda st, lags: st in ("R-strong", "R-weak")),
-            ("Weak replies do not count", lambda st, lags: st in ("R-strong", "R-proxy")),
-            ("Only strong replies count", lambda st, lags: st == "R-strong"),
+            (f"As published (a clear link, timing only, or a reply by an ally group all count; ~{rd} days)", lambda st, lags: st in K.REPLY),
+            ("Replies by an ally group do not count", lambda st, lags: st in ("R-strong", "R-weak")),
+            ("Timing-only replies do not count", lambda st, lags: st in ("R-strong", "R-proxy")),
+            ("Only replies with a clear link count", lambda st, lags: st == "R-strong"),
             ("Reply within 3 days (logged reply dates)", lambda st, lags: st in K.REPLY and any(x <= 3 for x in lags)),
         ]
         out = []
@@ -565,7 +565,7 @@ class Backtest:
                     kk += 1 if f(st, lags) else 0
                 res["cells"].append(dict(variant=label, k=kk, n=n))
             out.append(res)
-        return dict(variants=[v[0] for v in variants], short=["As published", "No proxy", "No weak", "Strong only", "Within 3 days"], rows=out)
+        return dict(variants=[v[0] for v in variants], short=["As published", "No ally group", "No timing only", "Clear link only", "Within 3 days"], rows=out)
 
     def _talk_dates(self, legacy=False):
         K = self.K

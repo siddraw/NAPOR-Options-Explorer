@@ -12,7 +12,7 @@ The five categories, exactly as defined for this tab (the page shows these words
   military    the reply was a ballistic missile or ICBM (the logged action type or the cited headline says ballistic, ICBM,
               IRBM or SRBM). Satellite rockets, cruise missiles, "projectiles", a nuclear test, drones and statements do not count.
   economic    NOT MEASURED. The log has no clear measure of sanctions relief, trade or prices, and NAPOR does not force a
-              shipping measure onto North Korea. The page shows "not measured" and leaves the corner out of the index.
+              shipping measure onto North Korea. The page shows "not measured" and leaves the category out of the index.
   political   no talks within 14 days (rule changed 2026-10-26 with Sidd's approval): no logged Diplomatic row whose action type names talks, a
               meeting, a proposal, a ceasefire or a deal (a summit, a meeting, or an offer to meet) in the 14 days after the move. Statements and threats do not count.
 """
@@ -34,7 +34,7 @@ THEATER = dict(
     proxy_note="Every reply here is an act by North Korea itself. KCNA and Rodong Sinmun are used only as labelled claims of what North Korea says; launches are dated by South Korea's Joint Chiefs of Staff or Japan's Defense Ministry as reported by an allowed outlet.",
     salvo=None,
     hold_note="Hold cases are weeks from Jan 20, 2025 on (the start of the second Trump term) with no logged US sanctions, drill, deployment, missile-defense or posture move. Weeks inside the Sep 12 - Oct 12, 2026 dense-launch stretch and two weeks of Ulchi Freedom Shield 2025 and one week of Freedom Edge 2025 (US moves that an allowed outlet reports but the log does not hold) are left out. The log is a sample, not a full list: it says that many launches and some US moves are missing, so a week that looks quiet may only be a week where nothing was logged. Read option A as a rough sketch and do not compare it number-for-number with options that rest on a few well-reported cases.",
-    not_measured="Economic effects (sanctions relief, trade, prices) are not measured for North Korea; that corner is left out of the index. Strain with South Korea, Japan and China is not measured either.",
+    not_measured="Economic effects (sanctions relief, trade, prices) are not measured for North Korea; that category is left out of the index. Strain with South Korea, Japan and China is not measured either.",
     presets=[["1994-10-18", "Agreed Framework"], ["2006-10-09", "First nuclear test"], ["2013-04-03", "Kaesong closed, THAAD to Guam"], ["2016-09-09", "Fifth nuclear test"],
              ["2017-09-03", "Sixth nuclear test"], ["2018-06-12", "Singapore summit"], ["2019-06-30", "DMZ meeting"], ["2022-11-02", "23 missiles in one day"],
              ["2023-07-18", "Submarine visits Busan"], ["2025-11-07", "Launch after carrier and DMZ visits"], ["2026-08-17", "Scaled-down Ulchi Freedom Shield"]],
@@ -45,7 +45,7 @@ THEATER = dict(
     intensity=dict(name="Tension level", note="Tension level counts logged North Korean launches, tests and provocations (not threatening statements) in the 14 days before each date: 2 points each, +2 if someone died. The log is a sample, so quiet stretches are understated."),
     base=dict(noun="North Korean launches and provocations", short="launches or provocations", kinds=["Kinetic"]),
     act=dict(verb="launched, tested or provoked within 7 days", row="launches, tests or provokes within 7 days", col="Act ≤7d", none="No launch, test or provocation"),
-    econ=dict(mode="none", name="Economic", text="Not measured. The log has no clear measure of sanctions relief, trade or prices for North Korea, so this corner is left out of the index instead of being filled with a made-up number."),
+    econ=dict(mode="none", name="Economic", text="Not measured. The log has no clear measure of sanctions relief, trade or prices for North Korea, so this category is left out of the index instead of being filled with a made-up number."),
     cats=dict(
         people=dict(name="Harm to people", short="People hurt",
                     other="Share of past cases where anyone was reported hurt in a North Korean reply (a launch, test or provocation) within 7 days.",
@@ -56,7 +56,7 @@ THEATER = dict(
                         trigger="Share of past cases followed by a North Korean missile launch, nuclear test or provocation within 7 days. Some of these replies are threatening statements the log files as provocations (for example #2049), not launches.",
                         other="Share of past cases followed by a North Korean missile launch, nuclear test or provocation within 7 days (timing only). A threatening statement the log files as a provocation counts.",
                         hold="Share of hold weeks followed by a North Korean missile launch, nuclear test or provocation within 7 days (timing only). A threatening statement the log files as a provocation counts.",
-                        rule=dict(trigger="Counts when North Korea launched a missile, tested a nuclear weapon or provoked within 7 days (Trigger Census status R-strong or R-weak). A threatening statement the log files as a provocation counts.",
+                        rule=dict(trigger="Counts when North Korea launched a missile, tested a nuclear weapon or provoked within 7 days (a clear link or timing only). A threatening statement the log files as a provocation counts.",
                                   other="Counts when North Korea launched, tested or provoked anywhere within 7 days (timing only, not shown to be a reply). A threatening statement the log files as a provocation counts.")),
         military=dict(name="Military cost", short="Military cost",
                       reply="Share of past cases where North Korea's reply was a ballistic missile or ICBM.",
@@ -65,11 +65,11 @@ THEATER = dict(
                       rule=dict(reply="Counts when the reply was a ballistic missile or ICBM. A satellite rocket, a cruise missile, \"projectiles\", a nuclear test, drones and statements do not count.",
                                 strike="Counts when a North Korean ballistic missile or ICBM was launched in the 7 days after the Monday.")),
         economic=dict(name="Economic harm", short="Economic",
-                      other="Not measured for North Korea. There is no clear measure of sanctions relief, trade or prices in the log, so this corner is shown as \"not measured\" and left out of the index.",
-                      rule="Not measured. Nothing is counted for this corner."),
+                      other="Not measured for North Korea. There is no clear measure of sanctions relief, trade or prices in the log, so this category is shown as \"not measured\" and left out of the index.",
+                      rule="Not measured. Nothing is counted for this category."),
         political=dict(name="Political / diplomatic", short="Political",
                        other="Share of past cases NOT followed within 14 days by talks (a summit, a meeting or an offer to meet) between the US and North Korea. Statements and threats do not count.",
-                       rule="Counts when no talks (a summit, a meeting or an offer to meet) between the US and North Korea were logged within 14 days after the move. Statements, threats and appeals do not count as talks. Changed on 2026-10-26 with Sidd's approval."),
+                       rule="Counts when no talks (a summit, a meeting or an offer to meet) between the US and North Korea were logged within 14 days after the move. Statements, threats and appeals do not count as talks. Rule changed on 2026-10-26."),
     ),
 )
 
@@ -116,7 +116,7 @@ FLAGS = {
 }
 US_MOVE_KINDS = ("Sanctions", "Posture")     # kinds of act that make a week "not a hold week"
 REPLY_DAYS = 7
-ECON = dict(mode="none", days=7)             # the economic corner is not measured for North Korea
+ECON = dict(mode="none", days=7)             # the economic category is not measured for North Korea
 
 # ---- sources and actors -----------------------------------------------------------------------------------
 CLAIM_MEDIA = {"KCNA", "Rodong Sinmun", "Korean Central News Agency"}      # North Korean outlets: allowed only as labelled claims, scored 0.30
@@ -230,7 +230,7 @@ RISK_TEXT = dict(
     mil_reply="A ballistic missile or ICBM followed within 7 days in {k} of {n} past cases. Losses of US or allied equipment in those replies: none logged.",
     mil_strike="Share of hold weeks with a North Korean ballistic missile or ICBM launch in the 7 days after (see the cases).",
     mil_none="No military cost expected from the move itself.",
-    eco_cases="Economic effects (sanctions relief, trade, prices): not measured for North Korea. This corner is left out of the index.",
+    eco_cases="Economic effects (sanctions relief, trade, prices): not measured for North Korea. This category is left out of the index.",
     eco_baseline="Baseline: about {per_week} logged North Korean launches or provocations a week in the current phase. Economic effects: not measured for North Korea.",
     pol_cases="Talks (a summit, a meeting or an offer to meet) within 14 days after: {talks} (statements and threats do not count). Strain with South Korea, Japan and China: not measured.",
     pol_none="No past cases, so no measure. Strain with South Korea, Japan and China: not measured.",

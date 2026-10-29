@@ -20,7 +20,7 @@ Rules used here (docs/SOURCE_STANDARD.md):
 - The Saudi-led air campaign itself is not logged event by event. The one strike logged (#1078, the Oct 8, 2016
   funeral hall) is a context row for the US reaction (#1077) and is not scored (see KIND_OVERRIDE in config.py).
 - UN-run talks and ceasefires between Yemeni parties (#1051, #1066, #1069, #1070, #1072) and the UN resolution
-  (#1060) are logged as context. They are not US-Houthi talks, so config.py keeps them out of the political-corner talks count.
+  (#1060) are logged as context. They are not US-Houthi talks, so config.py keeps them out of the political-category talks count.
 - Dates follow the announcement date when a move was announced later (as in events_early.py).
 - Looked at and left out: the Sep 2015 Arabian Sea arms interdiction (a Combined Maritime Forces member seized
   it, USS Forrest Sherman only assisted, the crew said it was bound for Somalia: AP, VOA); the Feb 27 and Mar 20, 2016

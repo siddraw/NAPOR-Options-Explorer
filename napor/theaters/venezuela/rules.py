@@ -2,7 +2,7 @@
 
 The research file marks a Venezuelan statement as a reply (census R-weak) when it answers a US move within days. This tab's rule is
 stricter: only a HOSTILE ACT counts as an escalation reply (an attack, harassment of US assets, or a military mobilization announced
-within 7 days of the move; words alone, a diplomatic step and an economic step do not; economic steps are measured in their own corner).
+within 7 days of the move; words alone, a diplomatic step and an economic step do not; economic steps are measured in their own category).
 So this view of the file changes the census and the pairs and nothing else:
   CENSUS  a row the file marks R-strong or R-weak is kept only if a counted hostile act by Venezuela or an armed group is logged 0-7 days
           after the move; otherwise it becomes "N" and the note says what the file had. Rows marked N or Unclear stay as they are.
@@ -46,7 +46,7 @@ CENSUS, _kept = [], {}
 for _c in E.CENSUS:
     _h = _hostile_after(_c[0]) if _c[2] in _REPLY else []
     if _c[2] in _REPLY and not _h:
-        CENSUS.append((_c[0], _c[1], "N", f"Not counted as an escalation reply here: no attack, harassment or mobilization within 7 days (the research file marks it {_c[2]}; words or a non-hostile step). {_c[3]}"))
+        CENSUS.append((_c[0], _c[1], "N", f"Not counted as an escalation reply here: no attack, harassment or mobilization within 7 days (words or a non-hostile step). {_c[3]}"))
     else:
         CENSUS.append(_c)
         if _c[2] in _REPLY:

@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-28",
+ "generated": "2026-10-29",
  "rows": 253,
  "predictions": 198,
  "skipped_no_history": 55,
@@ -306,17 +306,17 @@
  },
  "robustness": {
   "variants": [
-   "As published (R-strong, R-weak, R-proxy count; ~7 days)",
-   "Proxy replies do not count",
-   "Weak replies do not count",
-   "Only strong replies count",
+   "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
+   "Replies by an ally group do not count",
+   "Timing-only replies do not count",
+   "Only replies with a clear link count",
    "Reply within 3 days (logged reply dates)"
   ],
   "short": [
    "As published",
-   "No proxy",
-   "No weak",
-   "Strong only",
+   "No ally group",
+   "No timing only",
+   "Clear link only",
    "Within 3 days"
   ],
   "rows": [
@@ -325,22 +325,22 @@
     "name": "Talks or deals",
     "cells": [
      {
-      "variant": "As published (R-strong, R-weak, R-proxy count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
       "k": 0,
       "n": 8
      },
      {
-      "variant": "Proxy replies do not count",
+      "variant": "Replies by an ally group do not count",
       "k": 0,
       "n": 8
      },
      {
-      "variant": "Weak replies do not count",
+      "variant": "Timing-only replies do not count",
       "k": 0,
       "n": 8
      },
      {
-      "variant": "Only strong replies count",
+      "variant": "Only replies with a clear link count",
       "k": 0,
       "n": 8
      },
@@ -356,22 +356,22 @@
     "name": "Sanctions, designations and indictments",
     "cells": [
      {
-      "variant": "As published (R-strong, R-weak, R-proxy count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
       "k": 0,
       "n": 6
      },
      {
-      "variant": "Proxy replies do not count",
+      "variant": "Replies by an ally group do not count",
       "k": 0,
       "n": 6
      },
      {
-      "variant": "Weak replies do not count",
+      "variant": "Timing-only replies do not count",
       "k": 0,
       "n": 6
      },
      {
-      "variant": "Only strong replies count",
+      "variant": "Only replies with a clear link count",
       "k": 0,
       "n": 6
      },
@@ -387,22 +387,22 @@
     "name": "Boat strikes",
     "cells": [
      {
-      "variant": "As published (R-strong, R-weak, R-proxy count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
       "k": 1,
       "n": 8
      },
      {
-      "variant": "Proxy replies do not count",
+      "variant": "Replies by an ally group do not count",
       "k": 1,
       "n": 8
      },
      {
-      "variant": "Weak replies do not count",
+      "variant": "Timing-only replies do not count",
       "k": 0,
       "n": 8
      },
      {
-      "variant": "Only strong replies count",
+      "variant": "Only replies with a clear link count",
       "k": 0,
       "n": 8
      },
@@ -418,22 +418,22 @@
     "name": "Naval and air deployments and posture",
     "cells": [
      {
-      "variant": "As published (R-strong, R-weak, R-proxy count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
       "k": 3,
       "n": 7
      },
      {
-      "variant": "Proxy replies do not count",
+      "variant": "Replies by an ally group do not count",
       "k": 3,
       "n": 7
      },
      {
-      "variant": "Weak replies do not count",
+      "variant": "Timing-only replies do not count",
       "k": 0,
       "n": 7
      },
      {
-      "variant": "Only strong replies count",
+      "variant": "Only replies with a clear link count",
       "k": 0,
       "n": 7
      },
@@ -449,22 +449,22 @@
     "name": "Land strikes",
     "cells": [
      {
-      "variant": "As published (R-strong, R-weak, R-proxy count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
       "k": 0,
       "n": 1
      },
      {
-      "variant": "Proxy replies do not count",
+      "variant": "Replies by an ally group do not count",
       "k": 0,
       "n": 1
      },
      {
-      "variant": "Weak replies do not count",
+      "variant": "Timing-only replies do not count",
       "k": 0,
       "n": 1
      },
      {
-      "variant": "Only strong replies count",
+      "variant": "Only replies with a clear link count",
       "k": 0,
       "n": 1
      },
@@ -480,22 +480,22 @@
     "name": "Raids or operations against leaders",
     "cells": [
      {
-      "variant": "As published (R-strong, R-weak, R-proxy count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
       "k": 0,
       "n": 1
      },
      {
-      "variant": "Proxy replies do not count",
+      "variant": "Replies by an ally group do not count",
       "k": 0,
       "n": 1
      },
      {
-      "variant": "Weak replies do not count",
+      "variant": "Timing-only replies do not count",
       "k": 0,
       "n": 1
      },
      {
-      "variant": "Only strong replies count",
+      "variant": "Only replies with a clear link count",
       "k": 0,
       "n": 1
      },
@@ -511,22 +511,22 @@
     "name": "Other",
     "cells": [
      {
-      "variant": "As published (R-strong, R-weak, R-proxy count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
       "k": 0,
       "n": 6
      },
      {
-      "variant": "Proxy replies do not count",
+      "variant": "Replies by an ally group do not count",
       "k": 0,
       "n": 6
      },
      {
-      "variant": "Weak replies do not count",
+      "variant": "Timing-only replies do not count",
       "k": 0,
       "n": 6
      },
      {
-      "variant": "Only strong replies count",
+      "variant": "Only replies with a clear link count",
       "k": 0,
       "n": 6
      },
@@ -550,7 +550,7 @@
    "economic": -0.0014,
    "political": -0.0005
   },
-  "rule": "Show the shrunk value if it beats raw by at least 0.005 overall and is not worse by more than 0.01 in any category."
+  "rule": "Show the NAPOR estimate if it beats the raw x of n by at least 0.005 overall and is not worse by more than 0.01 in any category."
  },
  "weighting": {
   "candidates": [
@@ -722,6 +722,6 @@
    "est": 0.0508,
    "index_brier": 0.0745
   },
-  "note": "Brier of the estimate the page shows, same walk-forward (only rows closed before each date). Index Brier = average of the category Brier scores. The two rules define the outcome differently, so a lower Brier means the new rule is easier to predict, not that it is a better measure."
+  "note": "Brier of the estimate the page shows, same replay in date order (only rows closed before each date). Index Brier = average of the category Brier scores. The two rules define the outcome differently, so a lower Brier means the new rule is easier to predict, not that it is a better measure."
  }
 }
