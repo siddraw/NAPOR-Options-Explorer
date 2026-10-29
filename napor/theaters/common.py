@@ -93,6 +93,21 @@ def strength(n):
     return "OK"
 
 
+def exclude_in_windows(census, ev, windows, start_acts):
+    """The continuous-fighting rule, as a census filter: a row dated inside an exclusion window is not a case (class "Unclear", context only),
+    except the act that starts the window (start_acts). `ev` maps event id -> event row; the date is row[1]."""
+    out = []
+    for c in census:
+        day = ev[c[0]][1]
+        hit = [(a, b) for a, b in windows if a <= day <= b]
+        if hit and c[0] not in start_acts and c[2] != "Unclear":
+            a, b = hit[0]
+            out.append((c[0], c[1], "Unclear", f"Not counted: dated inside the continuous-fighting window {a.isoformat()} to {b.isoformat()}, where every act is automatically 'answered'. Context only. " + c[3]))
+        else:
+            out.append(c)
+    return out
+
+
 # =====================================================================================================================
 class Theater:
     """The event table and the past cases behind every option, in the shape the page uses."""

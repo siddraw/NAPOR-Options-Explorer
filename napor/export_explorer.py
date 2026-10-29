@@ -61,7 +61,7 @@ def build():
         series=series,
         hostile=[dict(id=e[0], date=e[1].isoformat(), actor=e[2], kind=data.event_kind[e[0]], pts=INT.points_for(e), deadly=bool(INT._deadly(e)), title=e[5]) for e in INT.HOSTILE],
         phases=[dict(name=p[0], start=p[1].isoformat(), end=min(p[2], last).isoformat()) for p in T.PHASES if p[1] <= last],
-        baseline=O.baseline_hold(), n_events=len([e for e in data.events if e[0] not in data.MERGED]),
+        baseline=O.baseline_hold(), n_events=len([e for e in data.events if e[0] not in data.MERGED and N.counts(e[0])]),   # events at credibility 0.50+ only, as in the other theaters
         chain=dict(n=chain.get("chains"), longer=round(1 - chain["share_stopped_after_one_reply"], 3) if chain else None),
         patriots=O.PATRIOTS_PER_SALVO, options=[])
     out["week_events"] = [ev(e[0]) | dict(actor=e[2]) for e in sorted(data.events, key=lambda e: e[1])

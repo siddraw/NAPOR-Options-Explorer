@@ -2,6 +2,7 @@
 
 Every test runs once per theater listed in explorer/theaters.json (iran, houthis, northkorea, china, venezuela).
 Nothing here writes a file: the exported data is read from explorer/data/<id>.json, and the checks call the project's own functions."""
+import datetime as dt
 import importlib
 
 import pytest
@@ -210,3 +211,25 @@ def test_page_counts_match_the_logs_own_counts(log):
     import export_explorer as X
     bad = [b for b in X.check(load_export(log.tid)) if b[2] != (0, 0)]
     assert bad == []
+
+
+# ---- continuous-fighting windows: no counted case sits inside one (start acts excepted) -------------------
+def test_no_venezuela_case_is_dated_inside_an_exclusion_window():
+    from theaters.venezuela import events as VE
+    out = load_export("venezuela")
+    starts = VE.START_ACTS
+    bad = []
+    for o in out["options"]:
+        if o["is_hold"]:
+            continue
+        for c in o["cases"]:
+            day = dt.date.fromisoformat(c["date"])
+            if c["id"] not in starts and any(a <= day <= b for a, b in VE.WINDOWS):
+                bad.append((o["key"], c["id"]))
+    assert not bad, f"cases inside an exclusion window: {bad}"
+    assert not {4032, 4044, 4046, 4048} & {c["id"] for o in out["options"] for c in o["cases"]}
+
+
+def test_n_events_counts_only_events_at_0_50_or_more(log):
+    out = load_export(log.tid)
+    assert out["n_events"] == sum(1 for e in log.events if log.cred(e[0]) >= N.INCLUDE_AT)

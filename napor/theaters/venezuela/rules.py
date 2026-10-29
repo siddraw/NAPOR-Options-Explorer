@@ -9,11 +9,14 @@ So this view of the file changes the census and the pairs and nothing else:
   PAIRS   only trigger -> reply links whose reply is a hostile act are kept (statements are not replies here), plus one derived link for
           each kept census row that the file did not pair (ids 4901 and up), so the case pop-up lists the act that made it count.
   CENSUS  also: a row still marked N whose 7-day window has not closed at the last logged event becomes "Unclear" (not counted yet).
+  CENSUS  also: a row dated inside an exclusion window (WINDOWS) is not counted unless it is a window's start act (START_ACTS), the rule the
+          other theaters use; the windows also drive the hold weeks.
 Nothing is added to or removed from EVENTS, SOURCES, US_OPTION, WINDOWS, START_ACTS or PHASES. cases.py and verify.py both read this
 view, so the page numbers and the independent recount use the same rows."""
 import datetime as dt
 
 import napor_ids as N
+from theaters import common
 from theaters.venezuela import events as E
 from theaters.venezuela import acts
 from theaters.venezuela import config as C
@@ -48,6 +51,9 @@ for _c in E.CENSUS:
         CENSUS.append(_c)
         if _c[2] in _REPLY:
             _kept[_c[0]] = _h
+
+# Continuous-fighting rule, as in the other theaters: a move dated inside an exclusion window is context only, except the act that starts the window.
+CENSUS = common.exclude_in_windows(CENSUS, _EV, WINDOWS, START_ACTS)
 
 # A move with fewer than 7 days of news after it has no finished reply window yet: it is listed in the census as "Unclear" (not counted) until the
 # window closes, as the page and the independent recount do. (The shared case builder would otherwise count it as "no reply" at once.)

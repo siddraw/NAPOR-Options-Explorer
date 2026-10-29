@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-28 - Tests, docs, license and three consistency fixes
+- I added a pytest suite (`tests/`) and a CI workflow that runs it, plus methodology and architecture docs in `docs/` and a license file.
+- **Venezuela now follows the same continuous-fighting rule as the other theaters.** A US move dated inside an exclusion window is no longer a case, except the move that starts the window. Before, Venezuela used its windows only to skip hold weeks, so #4032, #4044, #4046 and #4048 still counted. They are now "Unclear" in the census (context only). The windows are unchanged. The shared helper is `exclude_in_windows` in `theaters/common.py`, called from `theaters/venezuela/rules.py`. Cases per option: E 8 to 7, F 2 to 1, H 8 to 6; the rest are the same. I rewrote the Venezuelan notes for E, F and H to match, and added a test that no Venezuelan case sits inside a window.
+- **Iran `n_events` now counts only events at credibility 0.50 or more**, as the other theaters do (it used to include the 4 events under the cut). The page's "new events" line in the history strip now says "counted (credibility 0.50+)".
+- I corrected the Houthi event count below (88 to 94) and the 2026-10-26 backtest numbers (Iran 0.1806 vs raw 0.1902).
+- Iran re-sourcing is still in progress; I will log it here when it is done.
+
 ## 2026-10-26 - Model rule change: "political" corner is now "talks only" (I approved on 2026-10-26)
 - **Rule, every theater.** Old: risk = no diplomatic event of any kind (statements and threats by any side included) logged within 14 days. New: risk = no actual talks, meeting, negotiation, formal proposal, ceasefire or deal between the US and the adversary (directly or through a mediator) logged within 14 days. Statements, threats and appeals do not count. This is the "P2: talks only, 14 days" rule tested in round 2 (same words as the "Diplomacy" option's past moves: `napor_options.TALK_WORDS`).
 - **Reason.** The old rule let a single public threat or warning cancel a political risk, so the corner mostly measured how often officials talk, not whether talks were happening. I approved the talks-only rule after the round-2 backtest.
@@ -17,7 +24,7 @@
 
 ## 2026-10-24 — Round 2, stages 3–5
 - **Per-theater engine** (`napor/theaters/common.py`): shared code for cases, export, verify and backtest. Each theater is a package `napor/theaters/<id>/` (config, events, now.json, wrappers). `weekly_build.py` now loops over every theater in `explorer/theaters.json`. Page data goes to `explorer/data/<id>.json`, `<id>-history.json` and `explorer/verify-<id>.json`. Iran has a wrapper package too; its numbers are unchanged.
-- **Houthi tab** (88 events, IDs 1001–1599): Red Sea crisis, US strikes and Houthi replies. Problems found in review were fixed. Weak spots: 2024 was continuous fighting, so few cases count as separate cases; the 2025–26 log is thin.
+- **Houthi tab** (94 events, IDs 1001–1599): Red Sea crisis, US strikes and Houthi replies. Problems found in review were fixed. Weak spots: 2024 was continuous fighting, so few cases count as separate cases; the 2025–26 log is thin.
 - **North Korea tab** (76 events, IDs 2001–2999): US/South Korea drills, deployments, sanctions and talks, and DPRK launches and tests as replies. Weak spots: the launch log is a sample, not every launch; economic harm is not measured; routine launch seasons are hard to tell from replies.
 - **China tab** (63 events, IDs 3001–3999): Taiwan Strait transits, arms sales, visits, sanctions, and PLA drills as replies. Weak spots: small n, so wide ranges; Option A (Hold) has no cases; background PLA activity vs a real reply is a judgment call.
 - Chinese, Houthi and DPRK state media are used only as labelled claims.
@@ -37,7 +44,7 @@ Data updates only; no model rules changed.
   tagged as a US option move (#1347, the Saudi ordered departure, is a diplomatic precaution). The open-ended end date of the
   current phase and of the two constraints moved from Oct 24 to Oct 26 (no boundary moved; they run "to the latest news").
   Hold week of Oct 19: people-hurt flag True (#1345, #1346). now.json rewritten for Oct 26.
-- Weekly build: PASS. Backtest of the page's numbers: Iran NAPOR estimate 0.183 vs raw 0.193; Houthis 0.077 vs 0.082.
+- Weekly build: PASS. Backtest of the page's numbers: Iran NAPOR estimate 0.1806 vs raw 0.1902; Houthis 0.077 vs 0.082.
 
 ## 2026-10-24 — Round 2, stages 1–2
 - Recency weighting (approved to test): backtested six versions (none; pre-2026 weight 0.25/0.5; half-life 180/365/730 days). Best overall was era 0.25 (0.1763 vs 0.1806), but it made military worse by 0.022 and escalation by 0.015, failing the written rule (no category worse by >0.01). **No change**: Iran numbers unchanged. Weighting code, page support and weighted recount are in place for later.

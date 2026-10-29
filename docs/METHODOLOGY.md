@@ -98,9 +98,9 @@ Moves inside these windows are context only, not cases. The act that started eac
 | Venezuela | Oct 27 - Nov 15, 2025; Dec 15, 2025 - Jan 2, 2026 | #4030, #4043 |
 
 How the windows are applied differs by theater. Iran: the code removes census rows inside a window. Houthis, North Korea
-and China: the research files mark such rows `Unclear`, so they are not counted. Venezuela: the windows are used only to
-skip hold weeks; four census rows inside them are still counted (#4032, #4044, #4046, #4048). In every theater a window
-also keeps hold weeks out, because a quiet week there is "a logging gap, not a hold".
+and China: the research files mark such rows `Unclear`, so they are not counted. Venezuela: `theaters/common.exclude_in_windows`
+(called from `rules.py`) marks census rows inside a window `Unclear`, except the start acts, so #4032, #4044, #4046 and #4048
+are context only. In every theater a window also keeps hold weeks out, because a quiet week there is "a logging gap, not a hold".
 
 ## 6. The five risk categories
 
@@ -256,5 +256,4 @@ The old rule is still computed so the Report card can show both.
   were made after earlier backtests. Iran's out-of-sample score is worse than 50%.
 - **Not measured.** Oil and freight prices, harm to ordinary people in the adversary country, strain with allies, and North Korea's
   economic harm. Sources are public news only; state-media claims are labelled and scored 0.30.
-- **Known gaps.** Iran #67 has no source, and 20 Iran reports are names without a link (flagged not re-checked). Iran's exported `n_events` is 190 (non-merged, including the four events under the
-  cut); other theaters export only events at 0.50 or more.
+- **Known gaps.** Iran #67 has no source, and 20 Iran reports are names without a link (flagged not re-checked). The exported `n_events` counts only events at credibility 0.50 or more in every theater, Iran included (Iran logs 190, so its `n_events` is lower by the number under the cut).
