@@ -3,7 +3,7 @@
   "asof": "2026-10-14",
   "intensity": 0,
   "band": "Quiet",
-  "events": 63,
+  "events": 132,
   "options": {
    "A": {
     "n": 14,
@@ -11,13 +11,13 @@
     "estimate": null
    },
    "B": {
-    "n": 8,
-    "index": 0.225,
+    "n": 11,
+    "index": 0.218,
     "estimate": null
    },
    "C": {
-    "n": 6,
-    "index": 0.233,
+    "n": 18,
+    "index": 0.244,
     "estimate": null
    },
    "D": {
@@ -41,8 +41,8 @@
     "estimate": null
    },
    "H": {
-    "n": 6,
-    "index": 0.3,
+    "n": 14,
+    "index": 0.257,
     "estimate": null
    }
   },

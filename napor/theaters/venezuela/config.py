@@ -1,6 +1,6 @@
 """Venezuela / Caribbean theater: wording, options, flags and rules, all in one place.
 
-The research file (events.py, written separately) holds the facts and is read only. rules.py gives this tab's view of it (see below). This file holds
+The event files (events_pre2019.py for Feb 1999 - Jan 10, 2019 and events.py from Jan 23, 2019, both written separately) hold the facts and are read only. rules.py joins them and gives this tab's view of them (see below). This file holds
 the decisions the engine needs: which options exist, what counts as an act by the other side, which outlets are claims only, how each of the
 five risk categories is defined here, which weeks count as "hold" weeks, and the analyst notes the page shows (notes.py).
 
@@ -12,14 +12,14 @@ The five categories, exactly as defined for this tab (the page shows these words
   people      anyone killed or hurt in the US action itself OR in a Venezuelan reply, as the logged source reports it. Boat-strike deaths count.
   escalation  a hostile act by Venezuela or an armed group within 7 days of the move: an attack, harassment of US assets, or a military
               mobilization announced as a response. Words alone do not count. A diplomatic step or an economic step is not a hostile act here
-              (economic steps have their own category). Taken from the Trigger Census as seen through rules.py: a row the research file marks
-              R-strong or R-weak keeps that status only if such an act is logged 0-7 days after the move; otherwise it counts as N.
+              (economic steps have their own category). Taken from the list of past cases as seen through rules.py: a row the event file marks
+              as a reply keeps that status only if such an act is logged 0-7 days after the move; otherwise it counts as N.
   military    the reply was armed action: an attack on, or armed harassment of, US forces or assets (the logged action type starts with
               "Attack", "Harassment" or "Strike"). A mobilization announcement, a militia call-up or a national exercise does not.
   economic    Venezuelan counter-measures within 14 days of the move: an oil or gas cut-off, an airline ban, or the expulsion of firms or diplomats
               (a Venezuelan act whose action type starts with "Economic act" or "Diplomatic break"). Timing only: the log does not show the
               US move caused it. Only 3 such acts are logged (#4002, #4029, #4041).
-  political   no talks or deal within 14 days (rule changed 2026-10-26 with Sidd's approval): no logged US move of option B (talks, an oil deal or license,
+  political   no talks or deal within 14 days (rule changed 2026-10-26): no logged US move of option B (talks, an oil deal or license,
               a prisoner swap, restored ties, an embassy reopening) in the 14 days after the move. Statements and threats do not count.
 """
 import datetime as dt
@@ -43,9 +43,11 @@ THEATER = dict(
     hold_note="Hold cases are weeks, from Aug 11, 2025 on (the first Monday after the Maduro bounty was doubled), with no logged US sanction, deployment, boat strike, land strike, raid, seizure or talks move. Weeks inside the two stretches of near-daily boat strikes (Oct 27 - Nov 15, 2025 and Dec 15, 2025 - Jan 2, 2026) are left out, and so are weeks where outlet counts show boat strikes that the log does not hold one by one (Sep 22 - Oct 6 and Dec 1, 2025, and Jan 26 - Jun 22, 2026). Be careful: about 70 boat strikes are known and only 8 are logged one by one, so even the weeks that remain may have had an unlogged strike. The log is a sample, so a quiet week may only be a week where nothing was logged. Read option A as a rough sketch and do not compare it number for number with options that rest on well-reported cases.",
     not_measured="Oil output and prices, migration, food and medicine supply, harm to ordinary Venezuelans from sanctions, and strain with Colombia, Cuba, Russia and Caribbean states are not measured. Only the five categories above are counted.",
     presets=[["2025-08-07", "Maduro bounty doubled"], ["2025-09-02", "First boat strike"], ["2025-10-24", "Carrier ordered to SOUTHCOM"],
-             ["2025-12-16", "Tanker blockade ordered"], ["2026-01-03", "Maduro captured"], ["2026-04-01", "Rodriguez delisted"]],
-    under_logged="The log is a sample. Only 8 of about 70 boat strikes are logged one by one, 2020-2024 holds only a few key moves, and Venezuelan state media was not opened, so \"none logged\" is not proof nothing happened.",
-    spark_from="2019-01-01", claim_note="Venezuelan state media (Telesur, VTV)",
+             ["2025-12-16", "Tanker blockade ordered"], ["2026-01-03", "Maduro captured"], ["2026-04-01", "Rodriguez delisted"],
+             ["2002-04-12", "2002 coup attempt"], ["2006-05-15", "US arms-sales ban"], ["2008-09-11", "Ambassadors expelled"],
+             ["2015-03-09", "Emergency order"], ["2017-08-11", "'Military option' remark"]],
+    under_logged="The log is a sample. 1999-2008 is thin and many of its rows rest on one Congressional Research Service report, 2009-2016 holds mostly expulsions and a few sanctions, and the Dec 2017 talks and the Nov 2017 sanctions are missing. 2020-2024 holds only a few key moves, only 8 of about 70 boat strikes are logged one by one, and Venezuelan state media was not opened, so \"none logged\" is not proof nothing happened.",
+    spark_from="1999-02-01", claim_note="Venezuelan state media (Telesur, VTV)",
     small_n="Only 8 of about 70 boat strikes are logged one by one, most Venezuelan replies are statements (which do not count as an escalation reply here), and option G (raids or operations against leaders) has 1 case. Most options have only a handful of counted cases (the exact number is on each option), and options with fewer than 3 show \"too few cases\" instead of a percentage. Read every rate as a hint, not a forecast.",
     us_hurt="Anyone killed or hurt in the US action",
     # ---- per-theater words and rules the page reads (defaults on the page are the Iran / Houthi words) ----
@@ -64,7 +66,7 @@ THEATER = dict(
                         trigger="Share of past cases followed within 7 days by a hostile act from Venezuela or an armed group: an attack, harassment of US assets, or a military mobilization announced as a response. Words alone do not count.",
                         other="Share of past cases followed within 7 days by any logged Venezuelan hostile act (an attack, harassment or a mobilization; timing only).",
                         hold="Share of hold weeks followed within 7 days by a logged Venezuelan hostile act (an attack, harassment or a mobilization; timing only).",
-                        rule=dict(trigger="Counts when Venezuela or an armed group took a hostile act within 7 days of the move: an attack, harassment of US assets, or a military mobilization announced as a response. A statement, a denunciation, a diplomatic step or an economic step does not count (a clear link or timing only, kept only when such an act is logged 0-7 days after the move). Several denunciations that the research file marks as weak replies are counted as no reply here.",
+                        rule=dict(trigger="Counts when Venezuela or an armed group took a hostile act within 7 days of the move: an attack, harassment of US assets, or a military mobilization announced as a response. A statement, a denunciation, a diplomatic step or an economic step does not count (a clear link or timing only, kept only when such an act is logged 0-7 days after the move). Several denunciations that the event file marks as weak replies are counted as no reply here.",
                                   other="Counts when the log holds any Venezuelan hostile act (an attack, harassment or a mobilization) in the 7 days after the move (timing only, not shown to be a reply).")),
         military=dict(name="Military cost", short="Military cost",
                       reply="Share of past cases where the Venezuelan reply was armed action: an attack on, or armed harassment of, US forces or assets.",
@@ -104,7 +106,7 @@ OPTIONS = [
          what="Recognition of an opposition leader, airspace closure and aviation warnings, tanker seizures and a blockade order, and covert-action authorization."),
 ]
 
-# trigger: escalation = "Venezuela or an armed group replied with a hostile act within 7 days" (Trigger Census as seen through rules.py).
+# trigger: escalation = "Venezuela or an armed group replied with a hostile act within 7 days" (the list of past cases as seen through rules.py).
 # military: "reply" = the reply was armed action; "strike" = such an act within 7 days (A, hold weeks).
 # Closing window in days per category: when a case's outcome is final (read by the case builder, the backtest and the page).
 # People and military: linked replies count at any lag, and the longest logged lag of a linked reply is 18 days (#4027 -> #4031, the national
@@ -143,7 +145,7 @@ def adversary_side(actor):
 
 # The shared word list does not know these rows; this tab sorts them by the words at the start of the action type and, for US moves, by option letter.
 def KIND_OF(e):
-    from theaters.venezuela import events as EV
+    from theaters.venezuela import rules as EV      # the two event files joined
     a = e[3]
     if adversary_side(e[2]):
         if acts.is_hostile(a):
@@ -217,10 +219,14 @@ CIVILIAN_HARM = {
 
 # ---- the backtest -----------------------------------------------------------------------------------------
 OOS_CUT = d(2025, 12, 31)
-OOS_LABEL = "2019-2025"
+OOS_LABEL = "1999-2025"
 
 
 def period(day):
+    if day < d(2009, 1, 1):
+        return "1999-2008"
+    if day < d(2019, 1, 1):
+        return "2009-18"
     if day < d(2025, 8, 1):
         return "2019-24"
     if day < d(2026, 1, 3):
@@ -228,8 +234,8 @@ def period(day):
     return "After capture"
 
 
-PERIOD_KEYS = ["2019-24", "Buildup 2025", "After capture"]
-LOOKBACKS = ("2020-04-01", "2025-09-10", "2025-11-20", "2026-01-10", "2026-08-01")      # past dates the page test also checks (no hindsight)
+PERIOD_KEYS = ["1999-2008", "2009-18", "2019-24", "Buildup 2025", "After capture"]
+LOOKBACKS = ("2002-06-01", "2006-06-01", "2010-01-15", "2015-06-01", "2017-12-01", "2018-10-05", "2020-04-01", "2025-09-10", "2025-11-20", "2026-01-10", "2026-08-01")      # past dates the page test also checks (no hindsight)
 
 # ---- plain-language risk lines (the page's "What the log says"; filled in by theaters/common.py) -----------------------
 THREAD_PREFIX = "V"
