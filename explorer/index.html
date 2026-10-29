@@ -987,7 +987,7 @@ function setAsof(v){
   S.asof = v && v < D.asof ? v : null; S.pin = null; LENS = null; MASK = {key:null, map:new Map()}; POOL = {key:null, val:null};
   refresh(); if(!$("#m-int").hidden) renderIntensity();
 }
-const PRESETS = () => TH.presets || [];
+const PRESETS = () => (TH.presets || []).slice().sort((a, b) => a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0);
 function indexAt(o, iso){
   const keep = S.asof; S.asof = iso; MASK = {key:null, map:new Map()};
   const cs = o.cases.map(asofCase).filter(Boolean), ix = riskIndex(o, cs);
@@ -996,7 +996,7 @@ function indexAt(o, iso){
 }
 function spark(o){
   const pts = []; let t = dd("2026-02-01"), end = dd(D.asof);
-  const first = dd(D.series[0][0]); t = new Date(Math.max(first, dd(TH.spark_from || "2019-06-01")));
+  const first = dd(D.series[0][0]); t = new Date(Math.max(first, dd(TH.spark_from || D.series[0][0])));
   const step = 30; while(t <= end){ const iso = t.toISOString().slice(0,10); const ix = indexAt(o, iso); pts.push([iso, ix ? ix.idx : null]); t = new Date(t.getTime() + step*864e5); }
   pts.push([D.asof, (indexAt(o, D.asof) || {}).idx ?? null]);
   const W = 220, H = 34, n = pts.length, x = i => 2 + (W-4) * i / (n-1), y = v => H - 3 - (H-6) * v;
@@ -1179,12 +1179,12 @@ function renderReport(){
   const fst = lc[0], lst = lc[lc.length - 1];
   const take3 = fst && lst ? `${lst.shrunk2 > fst.shrunk2 + 0.03 ? "Scores got worse over time" : "Scores held steady over time"}: ${f3(fst.shrunk2)} in ${periodLabel(fst.period)}, ${f3(lst.shrunk2)} in ${periodLabel(lst.period)}${lst.shrunk2 > 0.24 ? ", close to a coin flip, so the current phase is hard to read from the past" : ""}.` : "";
   const oosb = oos.brier, oBest = ["raw","shrunk2","pooled"].reduce((a, m) => oosb[m] < oosb[a] ? m : a, "raw");
-  const take4 = oosb[oBest] > 0.25 ? `Built on ${oos.train_label || "2019-2025"} only, every method did worse on the 2026 cases than always saying 50% (best ${f3(oosb[oBest])}). The pre-war record alone does not predict this war well; 2026 cases are needed.` : `Built on ${oos.train_label || "2019-2025"} only, ${METHOD_NAME[oBest]} scored ${f3(oosb[oBest])} on the 2026 cases, better than a coin flip.`;
+  const take4 = oosb[oBest] > 0.25 ? `Built on ${oos.train_label || "the earlier years"} only, every method did worse on the 2026 cases than always saying 50% (best ${f3(oosb[oBest])}). The pre-war record alone does not predict this war well; 2026 cases are needed.` : `Built on ${oos.train_label || "the earlier years"} only, ${METHOD_NAME[oBest]} scored ${f3(oosb[oBest])} on the 2026 cases, better than a coin flip.`;
   h += `<h3 style="font-size:16px;margin:22px 0 4px">Backtest of the risk numbers</h3><p class="nodata" style="margin-bottom:12px">${bt.predictions} predictions across all options and categories; ${bt.skipped_no_history} skipped because the option had no closed past case yet. Updated ${fmtDate(bt.generated, true)}.</p><div class="rc-grid">`;
   h += `<div class="rc-card"><h3>Which method predicts best</h3><p class="take">${esc(take1)}</p>${hbars(["raw","shrunk2","pooled","half"].map(m => ({label: METHOD_NAME[m], v: ov[m], hl: m === best})), 0.32)}</div>`;
   h += `<div class="rc-card"><h3>Calibration</h3><p class="take">${esc(take2)}</p>${calibSvg(cal)}</div>`;
   h += `<div class="rc-card"><h3>Over time</h3><p class="take">${esc(take3)}</p>${learnSvg(lc)}</div>`;
-  h += `<div class="rc-card"><h3>Tested on newer cases: built on ${oos.train_label || "2019-2025"}, scored on 2026</h3><p class="take">${esc(take4)}</p>${hbars(["raw","shrunk2","pooled","half"].map(m => ({label: METHOD_NAME[m], v: oosb[m], hl: m === oBest})), 0.34)}<p class="legend">${oos.scored} of ${oos.test_rows} 2026 outcomes scored; ${oos.skipped} had no pre-2026 case of that option.</p></div>`;
+  h += `<div class="rc-card"><h3>Tested on newer cases: built on ${oos.train_label || "the earlier years"}, scored on 2026</h3><p class="take">${esc(take4)}</p>${hbars(["raw","shrunk2","pooled","half"].map(m => ({label: METHOD_NAME[m], v: oosb[m], hl: m === oBest})), 0.34)}<p class="legend">${oos.scored} of ${oos.test_rows} 2026 outcomes scored; ${oos.skipped} had no pre-2026 case of that option.</p></div>`;
   if(bt.weighting){ // recency weights: a plain table, options of the test in fixed order (not sorted by score)
     const wg = bt.weighting, dw = wg.decision, inUse = (D.estimate.weighting || {}).name || "none";
     const bad = Object.entries(dw.worse_by_cat || {}).filter(([, v]) => v > 0.01).map(([c, v]) => `${CAT_NAME[c].toLowerCase()} worse by ${f3(v)}`);
