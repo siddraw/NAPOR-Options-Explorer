@@ -509,6 +509,15 @@ _EDITS.update({
  85: dict(date=d(2026, 9, 29), note="Date corrected to Sep 29 (Al Jazeera; AP via PBS): Treasury announced the sanctions on Tuesday, Sep 29, not Sep 28."),
 })
 
+_EDITS.update({
+ 44: dict(date=d(2026,6,8), note="Date corrected to Jun 8 (AFP via Al Arabiya, published Jun 9): the Israeli strikes were overnight into Monday Jun 8; Iranian state TV (a claim) said at least 2 air-defense personnel were killed (re-sourced Oct 28)."),
+ 45: dict(date=d(2026,6,8), note="Date corrected to Jun 8 (CBS, updated Jun 9): the Apache went down Monday Jun 8 and both crew were rescued about two hours later by an unmanned surface drone; CBS sources say a Shahed drone (re-sourced Oct 28)."),
+ 83: dict(detail="5 men in their 20s are arrested on Sep 27 on suspicion of explosives offences after three suspicious vehicles head toward RAF Fairford (a base used for US bombers); Rubio says it 'clearly involves the hands of a foreign actor', Trump says it 'might be' linked to Iran, and UK PM Burnham says there are 'strong indications that Iran played a part' (Iran denies)",
+     note="Wording corrected (Stars and Stripes, Sep 30): the source does not say the men planned to do 'big damage'; it says they are suspected of planning a terrorist attack near the base. They were released on bail Sep 28 and Trump questioned the bail (re-sourced Oct 28)."),
+ 87: dict(detail="Treasury sanctions Iran's automotive and rail sectors and a shadow banking network, calling the targets 'some of the last significant elements of Iran's failing industrial infrastructure'",
+     note="Wording corrected (Treasury press release, Oct 1): Treasury says 'failing industrial infrastructure', not 'IRGC-linked industrial base', and its release does not tie the banking network to Russia, so the Russia claim was dropped (re-sourced Oct 28)."),
+})
+
 _PENDING_TEXT = "PENDING - no credible source confirmed yet"
 
 

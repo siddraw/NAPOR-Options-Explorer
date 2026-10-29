@@ -1501,6 +1501,42 @@ SOURCES.update({
 })
 
 
+# ---------------------------------------------------------------------------
+# Re-sourcing round, 2026-10-28 (name-only reports). Every URL below came back from a WebSearch or
+# WebFetch in that session; seen="full text" = the page was fetched and read. Each linked event
+# replaces its name-only "named in original row" report(s) (they are skipped automatically once an
+# event has a SOURCES entry).
+# #44/#45: the sources date the strike and the Apache loss to Monday Jun 8 (published Jun 9); the row says Jun 9.
+# #83: Stars and Stripes confirms the Sep 27 arrests, Rubio, Trump and bail, but not the 'big damage' phrase.
+# #87: the Treasury release says "failing industrial infrastructure" and does not link the banking network to Russia.
+# ---------------------------------------------------------------------------
+_AJ_JUL12 = _s('Iran attacks five Gulf nations, shuts Hormuz after US bombing: All to know', 'Al Jazeera', '2026-07-12',
+               'https://aljazeera.com/news/2026/7/12/iran-attacks-five-gulf-nations-shuts-hormuz-after-us-bombing-all-to-know')
+_AJ_SEP26 = _s("Trump 'rejects' Iran's seven-day ceasefire proposal. What's next?", 'Al Jazeera (citing WSJ)', '2026-09-26',
+               'https://www.aljazeera.com/news/2026/9/26/trump-reportedly-rejects-irans-seven-day-ceasefire-proposal-whats-next')
+
+VERDICT.update({44: 'corrected', 45: 'corrected', 62: 'confirmed', 63: 'confirmed', 77: 'confirmed',
+                81: 'confirmed', 82: 'confirmed', 83: 'confirmed', 87: 'confirmed'})
+SOURCES.update({
+ 44: [_s('Iran state media says two military personnel killed in Israeli strikes on Monday', 'AFP (via Al Arabiya)', '2026-06-09',
+         'https://english.alarabiya.net/News/middle-east/2026/06/09/iran-state-media-says-two-military-personnel-killed-in-israeli-strikes-on-monday')],
+ 45: [_s('US Apache helicopter crash over Strait of Hormuz; crew rescued by unmanned surface drone (headline per URL)', 'CBS News', '2026-06-09',
+         'https://www.cbsnews.com/news/us-apache-helicopter-crash-strait-of-hormuz-first-sea-drone-rescue/')],
+ 62: [_AJ_JUL12],
+ 63: [_AJ_JUL12],
+ 77: [_s('CENTCOM Destroys 3 IRGC Oil Tankers After Iran Targets 2 US Navy Warships (headline per URL)', 'CENTCOM (press release)', '2026-09-05',
+         'https://www.centcom.mil/MEDIA/PUBLIC-RELEASES/Article/4591744/centcom-destroys-3-irgc-oil-tankers-after-iran-targets-2-us-navy-warships/')],
+ 81: [_AJ_SEP26],
+ 82: [_AJ_SEP26,
+      _s('Trump rejects Iran ceasefire proposal, expects to renew strikes after midterms - WSJ', 'Times of Israel (WSJ liveblog)', '2026-09-26',
+         'https://timesofisrael.com/liveblog_entry/trump-rejects-iran-ceasefire-proposal-expects-to-renew-strikes-after-midterms-wsj/')],
+ 83: [_s('Iran involvement in RAF Fairford incident (headline per URL)', 'Stars and Stripes', '2026-09-30',
+         'https://www.stripes.com/theaters/europe/2026-09-30/iran-involvement-raf-fairford-incident-23016502.html')],
+ 87: [_s("Operation Economic Outcast Targets Iran's Remaining Industrial Lifelines", 'Treasury (press release)', '2026-10-01',
+         'https://content.govdelivery.com/accounts/USTREAS/bulletins/42d6fab')],
+})
+
+
 # Pre-war record (prewar.py)
 from prewar import SOURCES as _PRE_SOURCES, VERDICT as _PRE_VERDICT
 SOURCES.update(_PRE_SOURCES)
