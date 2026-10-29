@@ -86,7 +86,7 @@
   "asof": "2026-07-24",
   "intensity": 4,
   "band": "Low",
-  "events": 61,
+  "events": 128,
   "options": {
    "A": {
     "n": 0,
@@ -94,28 +94,28 @@
     "estimate": null
    },
    "B": {
-    "n": 3,
+    "n": 21,
     "index": 0.2,
     "estimate": null
    },
    "C": {
-    "n": 1,
+    "n": 2,
     "index": 0.2,
     "estimate": null
    },
    "D": {
-    "n": 10,
-    "index": 0.22,
+    "n": 15,
+    "index": 0.227,
     "estimate": null
    },
    "E": {
-    "n": 4,
-    "index": 0.55,
+    "n": 9,
+    "index": 0.4,
     "estimate": null
    },
    "F": {
-    "n": 5,
-    "index": 0.56,
+    "n": 7,
+    "index": 0.457,
     "estimate": null
    },
    "G": {
@@ -124,8 +124,8 @@
     "estimate": null
    },
    "H": {
-    "n": 0,
-    "index": null,
+    "n": 2,
+    "index": 0.3,
     "estimate": null
    }
   },
