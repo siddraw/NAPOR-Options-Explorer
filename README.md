@@ -1,7 +1,7 @@
 # NAPOR: Options Explorer
 
-An options explorer for the risks behind US national security decisions, built from 450+ events across
-5 active conflicts and information pulled from 500+ credible sources.
+An options explorer for the risks behind US national security decisions, built from 790+ events across
+5 active conflicts (1979 to 2026) and information pulled from 890+ credible sources.
 
 ![tests](https://github.com/siddraw/NAPOR-Options-Explorer/actions/workflows/tests.yml/badge.svg) ![license](https://img.shields.io/badge/license-all%20rights%20reserved-lightgrey)
 
@@ -39,9 +39,9 @@ NAPOR is graded with the Brier score, which measures how close a probability was
 happened. A score of 0 is perfect, and 0.25 is what you get by always guessing 50%, basically a coin
 flip, so anything under 0.25 means the past cases are telling us something real. To test this fairly,
 NAPOR replays history in order and only uses the cases that were known at that time, so it can never
-peek at the future. On the Iran tab, the risk numbers score about **0.17**, which beats a coin flip.
+peek at the future. On the Iran tab, the risk numbers score about **0.13**, which beats a coin flip.
 However, when the model only learns from the years before the 2026 war and is graded on the war itself,
-it scores about **0.27**, slightly worse than a coin flip. Therefore the past is a useful guide, but a
+it scores about **0.28**, slightly worse than a coin flip. Therefore the past is a useful guide, but a
 new war does not always follow old patterns, and I show both numbers on the page's Report Card.
 
 ## Why Iran first
@@ -121,21 +121,21 @@ Run everything with one command: `cd napor && python3 weekly_build.py` (PASS/FAI
 
 ## Theaters
 
-- **Iran** (2019 on, mostly the 2026 war): the main tab, with forecasts and a decision log.
-- **Houthis / Red Sea**: US moves and Houthi replies. Caveat: 2024 was continuous fighting, so few cases count, and the 2025–26 log is thin.
-- **North Korea**: US/South Korea moves and DPRK launches. Caveat: the launch log is a sample; economic harm is not measured.
-- **China / Taiwan**: Taiwan Strait and South China Sea. Caveat: small n; Option A has no cases.
-- **Venezuela / Caribbean**: US moves toward Venezuela and the boat-strike campaign, and Venezuelan or armed-group replies. Caveat: only 8 of about 70 boat strikes are logged one by one, most Venezuelan replies are statements (not counted as escalation), option G has 1 case, and hold weeks may hide unlogged strikes.
+- **Iran** (Nov 1979 on, mostly the 2026 war): the main tab, with forecasts and a decision log. Caveat: older years are logged more thinly.
+- **Houthis / Red Sea** (Sep 2014 on): US moves and Houthi replies. Caveat: 2024 was continuous fighting, so few cases count, and the 2025–26 log is thin.
+- **North Korea** (Mar 1993 on): US/South Korea moves and DPRK launches. Caveat: the launch log is a sample; economic harm is not measured.
+- **China / Taiwan** (May 1995 on): Taiwan Strait and South China Sea. Caveat: small n; Option A has no cases.
+- **Venezuela / Caribbean** (Feb 1999 on): US moves toward Venezuela and the boat-strike campaign, and Venezuelan or armed-group replies. Caveat: only 8 of about 70 boat strikes are logged one by one, most Venezuelan replies are statements (not counted as escalation), option G has 1 case, and hold weeks may hide unlogged strikes.
 
 Each non-Iran theater is a package in `napor/theaters/<id>/`; data goes to `explorer/data/<id>.json`.
 
 ## Data notes (Iran)
 
-- Small samples: options rest on 3–16 past cases (2019 onward; pre-war record in `napor/prewar.py`).
+- Small samples: options rest on 3–30 past cases (1979 onward; the pre-war record is in `napor/prewar.py` and `napor/prewar_early.py`).
 - Hold weeks (option A) are mostly quiet weeks with few logged events; they show what the log records, and an unlogged event would change them.
-- Fitted on 2019-2025 only, every method does worse on 2026 cases than always saying 50% (Report card): the pre-war record alone does not predict this war well.
+- Fitted on 1979-2025 only, every method does worse on 2026 cases than always saying 50% (Report card): the pre-war record alone does not predict this war well.
 - Before 2026 most replies came from Iran-backed militias; they count as replies and are labelled "proxy".
-- Pre-war years are logged less densely than 2026, so war intensity before 2026 is understated.
+- Pre-war years, and older years in every theater, are logged less densely than recent ones, so older numbers and war intensity before 2026 may be understated or thinner.
 - The phase boundaries were drawn with hindsight.
 - July's nightly US strikes and pre-September shipping attacks are under-logged.
 
