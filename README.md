@@ -5,6 +5,8 @@ An options explorer for the risks behind US national security decisions, built f
 
 ![tests](https://github.com/siddraw/NAPOR-Options-Explorer/actions/workflows/tests.yml/badge.svg) ![license](https://img.shields.io/badge/license-all%20rights%20reserved-lightgrey)
 
+**Live Explorer: https://siddraw.github.io/NAPOR-Options-Explorer/**
+
 ![NAPOR Options Explorer](docs/screenshot.png)
 
 NAPOR was inspired by how the Maven Smart System organizes information: it pulls reports from many
