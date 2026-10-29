@@ -1,4 +1,4 @@
-# NAPOR: Risk Assessment
+# NAPOR: Options Explorer
 
 NAPOR was inspired by how the Maven Smart System organizes information: it pulls reports from many
 sources into one picture so a decision-maker can see what is happening and what their options are.
