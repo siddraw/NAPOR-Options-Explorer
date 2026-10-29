@@ -26,13 +26,13 @@
     "estimate": null
    },
    "E": {
-    "n": 8,
-    "index": 0.35,
+    "n": 7,
+    "index": 0.371,
     "estimate": null
    },
    "F": {
-    "n": 2,
-    "index": 0.2,
+    "n": 1,
+    "index": 0.4,
     "estimate": null
    },
    "G": {
@@ -41,8 +41,8 @@
     "estimate": null
    },
    "H": {
-    "n": 8,
-    "index": 0.275,
+    "n": 6,
+    "index": 0.3,
     "estimate": null
    }
   },
