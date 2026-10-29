@@ -10,10 +10,19 @@ Every theater package has the same thin entry points, which the top-level script
 """
 import json
 import os
+import subprocess
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 EXPLORER = os.path.join(HERE, "..", "..", "explorer")
 REGISTRY = os.path.join(EXPLORER, "theaters.json")
+
+
+def build_id():
+    """Short git hash of the code the data was built from ("unknown" if git is not available)."""
+    try:
+        return subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=HERE, capture_output=True, text=True, timeout=10, check=True).stdout.strip() or "unknown"
+    except Exception:
+        return "unknown"
 
 
 def registered():

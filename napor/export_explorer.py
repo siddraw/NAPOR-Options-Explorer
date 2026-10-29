@@ -55,7 +55,7 @@ def build():
     peak = max(p for _, p in series)
     out = dict(
         theater=THEATER,
-        asof=last.isoformat(), generated=dt.date.today().isoformat(), phase=O.CURRENT_PHASE,
+        asof=last.isoformat(), generated=dt.date.today().isoformat(), build=TH_REG.build_id(), phase=O.CURRENT_PHASE,
         intensity=dict(pts=cur, band=INT.band(cur), bands=[[lo, nm] for lo, nm in INT.BANDS], peak=peak,
                        share_days_below=round(sum(1 for _, p in series if p < cur) / len(series), 3), window_days=INT.WINDOW_DAYS),
         series=series,

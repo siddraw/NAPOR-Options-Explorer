@@ -323,15 +323,15 @@
  },
  "robustness": {
   "variants": [
-   "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
-   "Replies by an ally group do not count",
+   "As published (a clear link, timing only, or a reply by a backed group all count; ~7 days)",
+   "Replies by a backed group do not count",
    "Timing-only replies do not count",
    "Only replies with a clear link count",
    "Reply within 3 days (logged reply dates)"
   ],
   "short": [
    "As published",
-   "No ally group",
+   "No backed group",
    "No timing only",
    "Clear link only",
    "Within 3 days"
@@ -342,12 +342,12 @@
     "name": "Sanctions and export controls",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by a backed group all count; ~7 days)",
       "k": 0,
       "n": 2
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by a backed group do not count",
       "k": 0,
       "n": 2
      },
@@ -373,12 +373,12 @@
     "name": "Taiwan Strait transits and FONOPs",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by a backed group all count; ~7 days)",
       "k": 2,
       "n": 15
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by a backed group do not count",
       "k": 2,
       "n": 15
      },
@@ -404,12 +404,12 @@
     "name": "Arms sales to Taiwan",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by a backed group all count; ~7 days)",
       "k": 3,
       "n": 9
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by a backed group do not count",
       "k": 3,
       "n": 9
      },
@@ -435,12 +435,12 @@
     "name": "High-level contact with Taiwan",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by a backed group all count; ~7 days)",
       "k": 5,
       "n": 7
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by a backed group do not count",
       "k": 5,
       "n": 7
      },
@@ -466,12 +466,12 @@
     "name": "Exercises with allies",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by a backed group all count; ~7 days)",
       "k": 1,
       "n": 1
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by a backed group do not count",
       "k": 1,
       "n": 1
      },
@@ -497,12 +497,12 @@
     "name": "Other force posture",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by a backed group all count; ~7 days)",
       "k": 1,
       "n": 2
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by a backed group do not count",
       "k": 1,
       "n": 2
      },

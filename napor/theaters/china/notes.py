@@ -2,7 +2,7 @@
 Numbers are small on every option: see THEATER["small_n"] in config.py."""
 
 PROS = {
-    "A": "Adds no new US act for China to answer. Not measured: hold weeks are not built for China (see the note on option A).",
+    "A": "Adds no new US act for China to answer. Not measured: hold weeks are not counted for China (see the note on option A).",
     "B": "No direct casualties. Talks and leader meetings are logged from Oct 1995 to Jul 2026 (for example #3503, #3516, #3547, #3565, #3035, #3039, #3060, #3061); none of the 21 counted cases was followed by a Chinese drill or counter-sanction within 7 days.",
     "C": "Targets Chinese defense and chip supply without a military clash. The log has the Sep 2018 sanctions on China's Equipment Development Department (#3561), the Oct 2022 chip controls (#3030) and the Aug 2020 Entity List round (#3014, not counted).",
     "D": "Asserts passage rights with no shots fired. The 15 counted transits and FONOPs since 2015 drew protests and shadowing, apart from two close passes at sea: the Decatur on Sep 30, 2018 (#3562, #3563) and the Chung-Hoon on Jun 3, 2023 (#3033, #3034).",

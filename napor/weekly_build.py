@@ -74,7 +74,7 @@ def validate():
             problems.append(f"{rel}: unreadable ({e})"); continue
         if "NaN" in raw or "Infinity" in raw:
             problems.append(f"{rel}: contains NaN/Infinity")
-        for k in ("theater", "asof", "generated", "phase", "intensity", "series", "hostile", "phases", "options", "history", "report_card", "sources", "estimate"):
+        for k in ("theater", "asof", "generated", "build", "phase", "intensity", "series", "hostile", "phases", "options", "history", "report_card", "sources", "estimate"):
             if k not in d:
                 problems.append(f"{rel}: missing key '{k}'")
         if d.get("generated") != dt.date.today().isoformat():

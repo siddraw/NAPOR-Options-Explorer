@@ -10,8 +10,8 @@ THEATER_ID = "iran"
 THEATER = dict(
     id=THEATER_ID, name="Iran", status="active", title="Iran war",
     sub="The options the US has right now in the Iran war, and what followed the last times the US did something like each one.",
-    adversary="Iran", actor="Iran or an Iran-backed group", actor_short="Iran or proxy",
-    proxy_note="Proxy = a militia Iran arms in Iraq or Syria. Before 2026, Iran mostly answered the US through these groups; those replies count and are labelled \"proxy\".",
+    adversary="Iran", actor="Iran or an Iran-backed group", actor_short="Iran or an Iran-backed group",
+    proxy_note="An Iran-backed group is a militia Iran arms in Iraq or Syria. Before 2026, Iran mostly answered the US through these groups; those replies count.",
     salvo=dict(count=O.PATRIOTS_PER_SALVO, weapon="Patriots", when="Sep 8-9"),
     hold_note="Hold cases are weeks of the 2026 war with no logged US sanctions, naval, strike or posture move (Feb 28-Apr 7 and Jul 7-25 left out: US activity there was continuous but logged as a few rows; pre-war weeks left out: too sparsely logged). Most hold weeks have few or no logged events, so they show what the log records in quiet weeks.",
     not_measured="Oil prices, strain with allies and harm to ordinary Iranians are not measured.",

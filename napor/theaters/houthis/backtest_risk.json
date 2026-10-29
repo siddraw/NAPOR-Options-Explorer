@@ -308,15 +308,15 @@
  },
  "robustness": {
   "variants": [
-   "As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)",
-   "Replies by an ally group do not count",
+   "As published (a clear link, timing only, or a reply by a backed group all count; ~5 days)",
+   "Replies by a backed group do not count",
    "Timing-only replies do not count",
    "Only replies with a clear link count",
    "Reply within 3 days (logged reply dates)"
   ],
   "short": [
    "As published",
-   "No ally group",
+   "No backed group",
    "No timing only",
    "Clear link only",
    "Within 3 days"
@@ -327,12 +327,12 @@
     "name": "New sanctions or designations",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)",
+      "variant": "As published (a clear link, timing only, or a reply by a backed group all count; ~5 days)",
       "k": 0,
       "n": 8
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by a backed group do not count",
       "k": 0,
       "n": 8
      },
@@ -358,12 +358,12 @@
     "name": "Naval defense and escort",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)",
+      "variant": "As published (a clear link, timing only, or a reply by a backed group all count; ~5 days)",
       "k": 0,
       "n": 0
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by a backed group do not count",
       "k": 0,
       "n": 0
      },
@@ -389,12 +389,12 @@
     "name": "Block Iranian arms shipments",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)",
+      "variant": "As published (a clear link, timing only, or a reply by a backed group all count; ~5 days)",
       "k": 0,
       "n": 3
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by a backed group do not count",
       "k": 0,
       "n": 3
      },
@@ -420,12 +420,12 @@
     "name": "Strike Houthi military sites (equipment, not people)",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)",
+      "variant": "As published (a clear link, timing only, or a reply by a backed group all count; ~5 days)",
       "k": 3,
       "n": 3
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by a backed group do not count",
       "k": 3,
       "n": 3
      },
@@ -451,12 +451,12 @@
     "name": "Strike that risks killing leaders or personnel",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)",
+      "variant": "As published (a clear link, timing only, or a reply by a backed group all count; ~5 days)",
       "k": 0,
       "n": 0
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by a backed group do not count",
       "k": 0,
       "n": 0
      },

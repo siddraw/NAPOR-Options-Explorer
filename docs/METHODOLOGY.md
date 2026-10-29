@@ -179,12 +179,14 @@ Diplomatic row, plus every US option-B row, plus listed exceptions (`TALK_EXTRA`
   (`decide()` in `backtest_risk.py`): the shrunk value must beat raw by at least 0.005 overall and be no worse
   than raw by more than 0.01 in any category. **Today only Iran passes** (gain 0.0082). Houthis, North Korea and
   China fail on overall gain; Venezuela gains 0.0093 overall but fails because the people category is worse by 0.0115.
-  Where it fails the page shows the raw k of n. Raw k/n and the Wilson range are never shrunk.
+  The page always shows the raw x of n first, as the big number, and the NAPOR estimate (where adopted) as a small second number: "NAPOR estimate: z%".
+  Where it fails the page shows only the raw k of n. Raw k/n and the Wilson range are never shrunk.
 
 ## 8. The risk index
 
 For each option, the **NAPOR risk index** is the plain average of its measured categories, with equal weights
 (`risk_index()` in `export_explorer.py`). Notes:
+- The page shows the raw index (the plain average of the raw category rates) as the big number, with its range; where the estimate is adopted it is shown small beside it. The formula line uses the raw rates.
 - The five categories are separate rates, not slices of 100%. They do not add up to 100% and they overlap.
 - A category that cannot be measured at all (North Korea economic) is left out. A category that is
   assumed 0% because the move cannot draw that kind of reply (military for options B, C, H in Iran) is

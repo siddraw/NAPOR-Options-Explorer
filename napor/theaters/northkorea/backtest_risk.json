@@ -330,15 +330,15 @@
  },
  "robustness": {
   "variants": [
-   "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
-   "Replies by an ally group do not count",
+   "As published (a clear link, timing only, or a reply by a backed group all count; ~7 days)",
+   "Replies by a backed group do not count",
    "Timing-only replies do not count",
    "Only replies with a clear link count",
    "Reply within 3 days (logged reply dates)"
   ],
   "short": [
    "As published",
-   "No ally group",
+   "No backed group",
    "No timing only",
    "Clear link only",
    "Within 3 days"
@@ -349,12 +349,12 @@
     "name": "Talks or summit offer",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by a backed group all count; ~7 days)",
       "k": 1,
       "n": 10
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by a backed group do not count",
       "k": 1,
       "n": 10
      },
@@ -380,12 +380,12 @@
     "name": "New sanctions",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by a backed group all count; ~7 days)",
       "k": 7,
       "n": 11
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by a backed group do not count",
       "k": 7,
       "n": 11
      },
@@ -411,12 +411,12 @@
     "name": "Joint military drills",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by a backed group all count; ~7 days)",
       "k": 10,
       "n": 10
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by a backed group do not count",
       "k": 10,
       "n": 10
      },
@@ -442,12 +442,12 @@
     "name": "Interdiction and ship-to-ship enforcement",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by a backed group all count; ~7 days)",
       "k": 0,
       "n": 1
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by a backed group do not count",
       "k": 0,
       "n": 1
      },
@@ -473,12 +473,12 @@
     "name": "Missile-defense moves",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by a backed group all count; ~7 days)",
       "k": 1,
       "n": 1
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by a backed group do not count",
       "k": 1,
       "n": 1
      },
@@ -504,12 +504,12 @@
     "name": "Strategic-asset deployments",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by a backed group all count; ~7 days)",
       "k": 9,
       "n": 12
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by a backed group do not count",
       "k": 9,
       "n": 12
      },
@@ -535,12 +535,12 @@
     "name": "Other force posture",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~7 days)",
+      "variant": "As published (a clear link, timing only, or a reply by a backed group all count; ~7 days)",
       "k": 3,
       "n": 3
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by a backed group do not count",
       "k": 3,
       "n": 3
      },

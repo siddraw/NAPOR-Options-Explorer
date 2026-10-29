@@ -92,8 +92,8 @@ interactive page, ran the backtests that check whether the numbers hold up, and 
 ## Intended use and limits
 
 **Intended use.** NAPOR is meant to give an accurate picture of the risk behind the current options the
-US has with different actors in different conflicts. For each option it reports the likely outcomes,
-built from patterns in similar past cases. Other uses:
+US has with different actors in different conflicts. For each option it reports what followed
+the last times the US did something like it, built from patterns in similar past cases. The page's big numbers are the raw x of n; the NAPOR estimate (Iran only) is a small second number. Other uses:
 - A starting point for students and analysts studying how US moves and adversary replies have played out.
 - A way to check a claim like "every time the US strikes, they hit back" against the actual record.
 - A record over time: every week is saved, so you can look back at what the options and risks looked

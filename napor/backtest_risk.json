@@ -346,16 +346,16 @@
  },
  "robustness": {
   "variants": [
-   "As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)",
-   "Replies by an ally group do not count",
+   "As published (a clear link, timing only, or a reply by an Iran-backed group all count; ~5 days)",
+   "Replies by an Iran-backed group do not count",
    "Timing-only replies do not count",
    "Only replies with a clear link count",
    "Reply within 3 days (logged reply dates)",
-   "Within 7 days: also any Iran/proxy strike (timing only)"
+   "Within 7 days: also any strike by Iran or an Iran-backed group (timing only)"
   ],
   "short": [
    "As published",
-   "No ally group",
+   "No Iran-backed group",
    "No timing only",
    "Clear link only",
    "Within 3 days",
@@ -367,12 +367,12 @@
     "name": "New sanctions",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)",
+      "variant": "As published (a clear link, timing only, or a reply by an Iran-backed group all count; ~5 days)",
       "k": 0,
       "n": 25
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by an Iran-backed group do not count",
       "k": 0,
       "n": 25
      },
@@ -392,7 +392,7 @@
       "n": 25
      },
      {
-      "variant": "Within 7 days: also any Iran/proxy strike (timing only)",
+      "variant": "Within 7 days: also any strike by Iran or an Iran-backed group (timing only)",
       "k": 0,
       "n": 25
      }
@@ -403,12 +403,12 @@
     "name": "Naval pressure (blockade enforcement, transits, seizures)",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)",
+      "variant": "As published (a clear link, timing only, or a reply by an Iran-backed group all count; ~5 days)",
       "k": 2,
       "n": 6
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by an Iran-backed group do not count",
       "k": 2,
       "n": 6
      },
@@ -428,7 +428,7 @@
       "n": 6
      },
      {
-      "variant": "Within 7 days: also any Iran/proxy strike (timing only)",
+      "variant": "Within 7 days: also any strike by Iran or an Iran-backed group (timing only)",
       "k": 2,
       "n": 6
      }
@@ -439,12 +439,12 @@
     "name": "Strike Iranian shipping (e.g. tankers)",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)",
+      "variant": "As published (a clear link, timing only, or a reply by an Iran-backed group all count; ~5 days)",
       "k": 2,
       "n": 2
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by an Iran-backed group do not count",
       "k": 2,
       "n": 2
      },
@@ -464,7 +464,7 @@
       "n": 1
      },
      {
-      "variant": "Within 7 days: also any Iran/proxy strike (timing only)",
+      "variant": "Within 7 days: also any strike by Iran or an Iran-backed group (timing only)",
       "k": 2,
       "n": 2
      }
@@ -475,12 +475,12 @@
     "name": "Strike military sites (equipment, not people)",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)",
+      "variant": "As published (a clear link, timing only, or a reply by an Iran-backed group all count; ~5 days)",
       "k": 11,
       "n": 12
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by an Iran-backed group do not count",
       "k": 6,
       "n": 12
      },
@@ -500,7 +500,7 @@
       "n": 10
      },
      {
-      "variant": "Within 7 days: also any Iran/proxy strike (timing only)",
+      "variant": "Within 7 days: also any strike by Iran or an Iran-backed group (timing only)",
       "k": 12,
       "n": 12
      }
@@ -511,12 +511,12 @@
     "name": "Strike that risks killing personnel",
     "cells": [
      {
-      "variant": "As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)",
+      "variant": "As published (a clear link, timing only, or a reply by an Iran-backed group all count; ~5 days)",
       "k": 6,
       "n": 7
      },
      {
-      "variant": "Replies by an ally group do not count",
+      "variant": "Replies by an Iran-backed group do not count",
       "k": 5,
       "n": 7
      },
@@ -536,7 +536,7 @@
       "n": 7
      },
      {
-      "variant": "Within 7 days: also any Iran/proxy strike (timing only)",
+      "variant": "Within 7 days: also any strike by Iran or an Iran-backed group (timing only)",
       "k": 6,
       "n": 7
      }

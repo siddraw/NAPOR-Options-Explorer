@@ -542,8 +542,8 @@ class Backtest:
         K, C = self.K, self.C
         rd = K.REPLY_DAYS
         variants = [
-            (f"As published (a clear link, timing only, or a reply by an ally group all count; ~{rd} days)", lambda st, lags: st in K.REPLY),
-            ("Replies by an ally group do not count", lambda st, lags: st in ("R-strong", "R-weak")),
+            (f"As published (a clear link, timing only, or a reply by a backed group all count; ~{rd} days)", lambda st, lags: st in K.REPLY),
+            ("Replies by a backed group do not count", lambda st, lags: st in ("R-strong", "R-weak")),
             ("Timing-only replies do not count", lambda st, lags: st in ("R-strong", "R-proxy")),
             ("Only replies with a clear link count", lambda st, lags: st == "R-strong"),
             ("Reply within 3 days (logged reply dates)", lambda st, lags: st in K.REPLY and any(x <= 3 for x in lags)),
@@ -565,7 +565,7 @@ class Backtest:
                     kk += 1 if f(st, lags) else 0
                 res["cells"].append(dict(variant=label, k=kk, n=n))
             out.append(res)
-        return dict(variants=[v[0] for v in variants], short=["As published", "No ally group", "No timing only", "Clear link only", "Within 3 days"], rows=out)
+        return dict(variants=[v[0] for v in variants], short=["As published", "No backed group", "No timing only", "Clear link only", "Within 3 days"], rows=out)
 
     def _talk_dates(self, legacy=False):
         K = self.K
@@ -648,7 +648,7 @@ class Export:
         peak = max(p for _, p in series)
         from napor_intensity import BANDS, band
         out = dict(
-            theater=C.THEATER, asof=K.LAST.isoformat(), generated=dt.date.today().isoformat(), phase=K.phase_of(K.LAST),
+            theater=C.THEATER, asof=K.LAST.isoformat(), generated=dt.date.today().isoformat(), build=TH_REG.build_id(), phase=K.phase_of(K.LAST),
             intensity=dict(pts=cur, band=band(cur), bands=[[lo, nm] for lo, nm in BANDS], peak=peak,
                            share_days_below=round(sum(1 for _, p in series if p < cur) / len(series), 3), window_days=14),
             series=series,

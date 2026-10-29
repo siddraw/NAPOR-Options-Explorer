@@ -155,12 +155,12 @@ def robustness(ctx=None):
     EV = O.EV
     out = []
     variants = [
-        ("As published (a clear link, timing only, or a reply by an ally group all count; ~5 days)", lambda st, prs, day: st in NC.REPLY, True),
-        ("Replies by an ally group do not count", lambda st, prs, day: st in ("R-strong", "R-weak"), True),
+        ("As published (a clear link, timing only, or a reply by an Iran-backed group all count; ~5 days)", lambda st, prs, day: st in NC.REPLY, True),
+        ("Replies by an Iran-backed group do not count", lambda st, prs, day: st in ("R-strong", "R-weak"), True),
         ("Timing-only replies do not count", lambda st, prs, day: st in ("R-strong", "R-proxy"), True),
         ("Only replies with a clear link count", lambda st, prs, day: st == "R-strong", True),
         ("Reply within 3 days (logged reply dates)", lambda st, prs, day: st in NC.REPLY and any(p_days <= 3 for p_days in prs), "lag"),
-        ("Within 7 days: also any Iran/proxy strike (timing only)", lambda st, prs, day: st in NC.REPLY or bool(O._window(O._irstrike, day, 1, 7)), True),
+        ("Within 7 days: also any strike by Iran or an Iran-backed group (timing only)", lambda st, prs, day: st in NC.REPLY or bool(O._window(O._irstrike, day, 1, 7)), True),
     ]
     for key in ("C", "D", "E", "F", "G"):
         o = [x for x in O.OPTIONS if x["key"] == key][0]
@@ -177,7 +177,7 @@ def robustness(ctx=None):
                 k += 1 if f(st, lags, day) else 0
             res["cells"].append(dict(variant=label, k=k, n=n))
         out.append(res)
-    short = ["As published", "No ally group", "No timing only", "Clear link only", "Within 3 days", "Within 7 days, any strike"]
+    short = ["As published", "No Iran-backed group", "No timing only", "Clear link only", "Within 3 days", "Within 7 days, any strike"]
     return dict(variants=[v[0] for v in variants], short=short, rows=out)
 
 
