@@ -1,16 +1,77 @@
 # NAPOR: Risk Assessment
 
-**NAPOR** is the underlying engine: a clean, credible event log with IDs, credibility scores,
-cause-and-reply chains, war phases, a forecast log and a decision log.
+NAPOR was inspired by how the Maven Smart System organizes information: it pulls reports from many
+sources into one picture so a decision-maker can see what is happening and what their options are.
+NAPOR follows the same idea on a smaller scale, using only public news. NAPOR is simply an acronym for
+the mechanism itself: **Notebook, Arrows, Patterns, Organization, and Report.**
 
-**NAPOR: Risk Assessment** is the project built on top of it. It lays out the options the US has
-in the Iran–US war, and the risks and pros of each one.
-**It does not pick an option.** That is the decision-maker's job.
+- **Notebook** – every event written down once, with an ID, credible sources and a 0–1 credibility score.
+- **Arrows** – links from a US move to the replies that followed it.
+- **Patterns** – what usually follows what, counted as "x of n past cases".
+- **Organization** – war phases, intensity, duplicate checks and a change log.
+- **Report** – predictions locked before the outcome, then graded.
 
-Scope: five theaters: the 2026 Iran–US war, the Houthis / Red Sea, North Korea, China / Taiwan, and Venezuela / Caribbean. Iran is the main one.
+Originally I set out to build a model that predicts the future. I switched it to an **Options
+Explorer**, because the more useful question is "what happened the last times the US did this?"
+The underlying problem was quantifying risk. Risk is perspective based and can be too broad, so
+quantifying it requires a specific definition, and any definition is controversial. Looking at past
+conflicts, NAPOR found the same five kinds of risk across many previous cases:
+
+1. **People** – someone was hurt, by the US action or by the reply.
+2. **Escalation** – the other side struck back within days.
+3. **Military** – the reply used missiles, rockets or drones.
+4. **Economic** – attacks on shipping or other economic damage went up afterward.
+5. **Political** – no talks, meetings or deals followed within 14 days.
+
+The page lays out each option and its risks. **It does not pick the "best" option.** That is the
+decision-maker's job.
+
+![NAPOR Options Explorer](docs/screenshot.png)
+
+## Why Iran first
+
+The US–Iran conflict was first because it is ongoing and has a long record of past cases. In terms of
+US conflicts, Iran is one of the most trending headlines, so it made a good prototype: a current
+conflict that has gone on long enough to have a significant number of past cases. Once the model
+worked for Iran, it was easy to copy it and apply it to other theaters: the Houthis / Red Sea, North
+Korea, China / Taiwan, and Venezuela / Caribbean.
+
+## How I built this
+
+This was my first project where I used AI to build a system for me. I wanted to learn how well AI
+follows instructions and learns from failures. The process took a lot of failure (wrong news sources,
+wrong ways of defining risk, numbers that did not hold up in testing), and I wanted to see how well AI
+could learn from those failures and keep improving the model.
+
+**What I designed:**
+- The source rules: which outlets count as credible and which only count as labelled claims.
+- The core rule that the page presents options and their risk, and never ranks them or picks one.
+- What counts as risk: the five categories (AI helped me spot patterns in the past cases), and the idea
+  that risk is defined by what happened in past cases.
+- The NAPOR structure itself, modeled on how the Maven Smart System organizes information.
+- Connecting the weekly news scan to the live page, so it updates on its own every Monday.
+- The approval rule: the AI can suggest changes to the model, but no rule changes without my OK.
+- The multi-AI workflow described below.
+
+**What Claude did:** Claude helped heavily with researching the past cases, since AI is, in my opinion,
+the fastest and best information processor. It looked into each past case, pulled out the relevant
+information, and sorted it into the five categories. It also wrote most of the code, built the
+interactive page, ran the backtests that check whether the numbers hold up, and runs the weekly news scan.
+
+## Next steps
+
+- **Better news sources.** Public news can be incomplete, so access to better-quality sources would mean
+  more accurate data and more past cases to find patterns in.
+- **More theaters.** Apply the model to more US interactions, so every one has its own tab.
+- **More frequent scans.** Move the weekly scan to twice a week or daily (currently limited by usage).
+- **AI improving the model.** Keep using a team of AI models to find ways to improve it. Opus (max effort)
+  is the "mastermind" that comes up with ideas and does the final review, Opus (medium effort) is the
+  "organizer" that turns them into instructions and checks the work, and Sonnet models are the "workers"
+  that do the research and coding.
 
 ## View the page
-The Options Explorer is `explorer/index.html`. To host it on GitHub Pages: repo Settings → Pages → Source "Deploy from a branch" → branch `main`, folder `/ (root)`. It then opens at https://siddraw.github.io/NAPOR-risk-assessment/ (Pages on a private repo needs a paid GitHub plan; otherwise make the repo public).
+
+The Options Explorer is `explorer/index.html`.
 
 ## How it works
 
