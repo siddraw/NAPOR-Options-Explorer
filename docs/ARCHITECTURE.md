@@ -1,4 +1,4 @@
-# NAPOR: Risk Assessment - architecture
+# NAPOR: Options Explorer - architecture
 
 How data moves through the repository, and where each part lives. The rules behind each step are in
 [METHODOLOGY.md](METHODOLOGY.md). The rules for sources are in [SOURCE_STANDARD.md](SOURCE_STANDARD.md).

@@ -1,4 +1,4 @@
-# NAPOR: Risk Assessment - methodology
+# NAPOR: Options Explorer - methodology
 
 Technical reference for how the numbers on the Options Explorer are made. Numbers quoted here come from the
 files in this repository as built on 2026-10-29; they change as events are added. For the folder layout see
