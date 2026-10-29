@@ -1,5 +1,12 @@
 # NAPOR: Options Explorer
 
+An options explorer for the risks behind US national security decisions, built from 450+ events across
+5 active conflicts and information pulled from 500+ credible sources.
+
+![tests](https://github.com/siddraw/NAPOR-risk-assessment/actions/workflows/tests.yml/badge.svg) ![license](https://img.shields.io/badge/license-all%20rights%20reserved-lightgrey)
+
+![NAPOR Options Explorer](docs/screenshot.png)
+
 NAPOR was inspired by how the Maven Smart System organizes information: it pulls reports from many
 sources into one picture so a decision-maker can see what is happening and what their options are.
 NAPOR follows the same idea on a smaller scale, using only public news. NAPOR is simply an acronym for
@@ -26,7 +33,16 @@ conflicts, NAPOR found the same five kinds of risk across many previous cases:
 The page lays out each option and its risks. **It does not pick the "best" option.** That is the
 decision-maker's job.
 
-![NAPOR Options Explorer](docs/screenshot.png)
+## How accurate is it?
+
+NAPOR is graded with the Brier score, which measures how close a probability was to what actually
+happened. A score of 0 is perfect, and 0.25 is what you get by always guessing 50%, basically a coin
+flip, so anything under 0.25 means the past cases are telling us something real. To test this fairly,
+NAPOR replays history in order and only uses the cases that were known at that time, so it can never
+peek at the future. On the Iran tab, the risk numbers score about **0.17**, which beats a coin flip.
+However, when the model only learns from the years before the 2026 war and is graded on the war itself,
+it scores about **0.27**, slightly worse than a coin flip. Therefore the past is a useful guide, but a
+new war does not always follow old patterns, and I show both numbers on the page's Report Card.
 
 ## Why Iran first
 
@@ -52,6 +68,9 @@ could learn from those failures and keep improving the model.
 - Connecting the weekly news scan to the live page, so it updates on its own every Monday.
 - The approval rule: the AI can suggest changes to the model, but no rule changes without my OK.
 - The multi-AI workflow described below.
+- The credibility rule: after finding events that were not linked to a credible source, I made it a rule
+  that every event must link to at least one credible source, or it does not count. Every event in the
+  numbers now links to a credible source.
 
 **What Claude did:** Claude helped heavily with researching the past cases, since AI is, in my opinion,
 the fastest and best information processor. It looked into each past case, pulled out the relevant
@@ -69,38 +88,36 @@ interactive page, ran the backtests that check whether the numbers hold up, and 
   "organizer" that turns them into instructions and checks the work, and Sonnet models are the "workers"
   that do the research and coding.
 
-## View the page
+## Intended use and limits
 
-The Options Explorer is `explorer/index.html`.
+**Intended use.** NAPOR is meant to give an accurate picture of the risk behind the current options the
+US has with different actors in different conflicts. For each option it reports the likely outcomes,
+built from patterns in similar past cases. Other uses:
+- A starting point for students and analysts studying how US moves and adversary replies have played out.
+- A way to check a claim like "every time the US strikes, they hit back" against the actual record.
+- A record over time: every week is saved, so you can look back at what the options and risks looked
+  like on any past date.
+
+**Limits.**
+- The news is public, so it may be more limited or censored than the information that people with
+  higher clearance have.
+- The risk percentage is built from 5 categories, and there may be other kinds of risk that we don't
+  see from our perspective.
+- The scanner runs once a week, so updates can be delayed by up to a week.
+- Many options rest on a small number of past cases, so the numbers should be read as hints, not facts.
+- "After" is not "because of": a reply that followed a US move was not always caused by it.
+- Older years are logged less densely than recent ones, so early history is less complete.
 
 ## How it works
 
-1. **Event log** – every event, once, with an ID, from credible outlets only (`napor/data.py`,
-   `docs/SOURCE_STANDARD.md`). Every news story gets its own report ID and points to one event.
-2. **Credibility (0–1)** – each event is scored from its reports; only events at 0.50+ count in
-   the statistics (`napor/napor_ids.py`).
-3. **Chains and phases** – cause→reply chains get thread IDs; every event is tagged with the war
-   phase (open war, fragile ceasefire, low-intensity war, holding pattern) and a war-intensity
-   gauge (`napor_threads.py`, `napor_intensity.py`).
-4. **Options** – every US option, on the same five risks (harm to people, escalation, military
-   cost, economic harm, political/diplomatic) plus pros. Every number is "x of n past cases" or
-   "not measured" (`napor_options.py`).
-5. **Forecast log** – predictions written down before the outcome, never edited, then graded
-   with the Brier score (`napor_forecasts.py`, `napor_forecasts.json`).
-6. **Decision log** – for each situation, a snapshot of the options; later, what the US actually
-   picked and what followed (`napor_decisions.py`, `napor_decisions.json`).
-7. **Backtest** – replays the past without peeking ahead (`backtest.py`).
+Every event is written down once with credible sources, linked to what followed it, and counted into
+the five risk categories as "x of n past cases" with a margin of error. The page never ranks options,
+and every number is backtested.
+- [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md) – how risk is defined, counted and tested, step by step.
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) – a diagram of how the pieces connect and a map of the folders.
+- [`docs/SOURCE_STANDARD.md`](docs/SOURCE_STANDARD.md) – which news sources count as credible.
 
-Options Explorer (interactive page): `explorer/index.html` loads `explorer/theaters.json` (one tab per
-conflict; four today) and the theater's data file `explorer/data/iran.json` (fallback: `explorer/data.json`),
-which `napor/export_explorer.py` regenerates every week. Percentages come with 95% (Wilson) ranges; each corner
-is shown as a NAPOR estimate (the x of n pulled toward the all-options rate, chosen by `napor/backtest_risk.py`)
-with the raw x of n beside it. Option A (Hold) uses hold weeks (`napor/hold_weeks.py`). The Report card view
-shows locked forecasts and the backtest of the page's own numbers.
-
-Weekly check, one command: `cd napor && python3 weekly_build.py` (PASS/FAIL checklist; publish only on PASS).
-
-Build the workbook: `cd napor && python3 build.py` → `NAPOR_iran_war.xlsx`.
+Run everything with one command: `cd napor && python3 weekly_build.py` (PASS/FAIL checklist).
 
 ## Theaters
 
@@ -112,10 +129,7 @@ Build the workbook: `cd napor && python3 build.py` → `NAPOR_iran_war.xlsx`.
 
 Each non-Iran theater is a package in `napor/theaters/<id>/`; data goes to `explorer/data/<id>.json`.
 
-## Known limits
-
-The limits below are for Iran unless a theater is named.
-
+## Data notes (Iran)
 
 - Small samples: options rest on 3–16 past cases (2019 onward; pre-war record in `napor/prewar.py`).
 - Hold weeks (option A) are mostly quiet weeks with few logged events; they show what the log records, and an unlogged event would change them.
@@ -124,6 +138,5 @@ The limits below are for Iran unless a theater is named.
 - Pre-war years are logged less densely than 2026, so war intensity before 2026 is understated.
 - The phase boundaries were drawn with hindsight.
 - July's nightly US strikes and pre-September shipping attacks are under-logged.
-- "After" is not "because of".
 
 See `AGENT.md` for the rules the weekly maintenance agent follows.
