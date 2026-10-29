@@ -40,6 +40,14 @@ The full list is in [SOURCE_STANDARD.md](SOURCE_STANDARD.md). In short:
 
 - Allowed: major wire services and newspapers, named defense trade press, and official statements (CENTCOM, DoD, White
   House, Treasury/OFAC, UKMTO, UN, IAEA). Not allowed: Wikipedia, blogs, aggregators, tabloids, think-tank opinion, social media.
+- **Official or primary sources (approved 2026-10-29).** An official or primary source can be the citation and scores like an
+  allowed outlet: government and military sites (.gov, .mil), legislative records (Congressional Record, govinfo.gov,
+  congress.gov, CRS reports), courts and the Justice Department, the UN and other international bodies (IAEA, KEDO, OAS, NATO),
+  a foreign government's own ministry for what it did or said, and official archives such as presidential libraries. A mirror
+  that only hosts a copy (everycrsreport.com, GlobalSecurity.org) is not the official source and keeps the lower score.
+- **Label what was read.** The outlet label names the site the URL points to. A copy of a wire or outlet story read on another
+  site is labelled "AP (via kpax.com)", never with the original outlet's bare name. `tests/test_sources.py` checks every label
+  in every theater against its URL domain.
 - **Claim-only media.** The adversary's state media is allowed only to show what that side claims, and is
   labelled as a claim: Iran (IRNA, Tasnim, Press TV), Houthis (al-Masirah, Saba), North Korea (KCNA,
   Rodong Sinmun), China (Xinhua, Global Times, CGTN, PLA Daily and others), Venezuela (Telesur, VTV).
@@ -54,11 +62,11 @@ The full list is in [SOURCE_STANDARD.md](SOURCE_STANDARD.md). In short:
 Defined in `napor/napor_ids.py` (`credibility_of`) and shared by every theater.
 
 1. Each **report** gets a weight: source score x fit score.
-   - Source score: allowed outlet or official statement 0.80; other outlet 0.60; claim-only outlet 0.30.
+   - Source score: allowed outlet or official/primary source read on its own page 0.80; other outlet, or a mirror of an official page, 0.60; claim-only outlet 0.30.
    - Fit score (how sure the report is about this event): read in full 1.00; snippet only 0.80; outlet
      named but story not saved 0.65.
    - **Link rule (approved 2026-10-28).** A report counts only if it has a working `https://` link to an allowed
-     outlet or an official release. A report that only names an outlet gets weight 0 (`napor_ids.has_link`).
+     outlet or an official or primary source. A report that only names an outlet gets weight 0 (`napor_ids.has_link`).
    - A report with weight under 0.30 is dropped.
 2. An **event** combines its reports, counting each outlet once (its best report):
    `credibility = 1 - (1 - w1) x (1 - w2) x ...`, capped at 0.99. One full-text allowed outlet gives 0.80;
@@ -254,6 +262,10 @@ The old rule is still computed so the Report card can show both.
 - **The log is not the world.** Only events that allowed outlets reported are logged, and later years are logged more thinly
   (Houthis 2025-2026; North Korea launches; Venezuela boat strikes, about 8 of about 70 logged one by one). "None logged" is not
   proof nothing happened. Hold weeks are the most exposed.
+- **Older years are thinner.** The record keeps the older years, but they are logged more thinly than recent ones, so older cases
+  may be missing and numbers that rest on them are softer. Each theater's `thin_before` date (Iran May 2019, Houthis Oct 2016,
+  North Korea Aug 31 2017, China and Venezuela Jan 2019) is where the denser record starts. The page says so under the header of each
+  tab, in "Known limits", and tags cases before that date "older, thinner data".
 - **Judgment calls.** Census statuses, `TALK_EXTRA` rows, civilian-harm entries and hold-week "people hurt" flags are set by hand
   from the logged text (Iran #115 and the Oct 2026 `Unclear` rows are examples).
 - **Lopsided outcomes.** Where nearly every case has the same outcome (Houthis political: 102 of 105 had no talks; North Korea

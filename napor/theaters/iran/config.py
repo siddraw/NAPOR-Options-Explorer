@@ -18,7 +18,7 @@ THEATER = dict(
     presets=[["1979-11-04", "Embassy seized"], ["1988-04-18", "Praying Mantis"], ["2006-12-23", "First UN sanctions"], ["2015-07-14", "Nuclear deal"],
              ["2018-05-08", "US leaves the deal"], ["2020-01-03", "Soleimani strike"], ["2025-06-22", "US strikes nuclear sites"], ["2026-02-28", "2026 war starts"],
              ["2026-04-08", "First ceasefire"], ["2026-06-17", "Interim deal"], ["2026-07-08", "July campaign"], ["2026-09-10", "Holding pattern"]],
-    spark_from="1979-11-01",
+    spark_from="1979-11-01", thin_before="2019-05-01",
     under_logged="The log is a sample. It starts at the Nov 1979 embassy takeover, but 1981-86, 1988-94, 1997-2001, 2003-05 and 2008-09 are thinly logged: before 2019 it holds the big crises, sanctions rounds, UN votes and talks, not every incident, and the Tanker War is logged as a few key clashes. Many pre-1990 rows rest on Washington Post archive pages. Some stretches are logged as one row (for example the nightly US strikes of Jul 9-25, 2026), so \"none logged\" is not proof nothing happened.",
 )
 

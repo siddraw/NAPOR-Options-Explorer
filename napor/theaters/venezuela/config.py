@@ -47,7 +47,7 @@ THEATER = dict(
              ["2002-04-12", "2002 coup attempt"], ["2006-05-15", "US arms-sales ban"], ["2008-09-11", "Ambassadors expelled"],
              ["2015-03-09", "Emergency order"], ["2017-08-11", "'Military option' remark"]],
     under_logged="The log is a sample. 1999-2008 is thin and many of its rows rest on one Congressional Research Service report, 2009-2016 holds mostly expulsions and a few sanctions, and the Dec 2017 talks and the Nov 2017 sanctions are missing. 2020-2024 holds only a few key moves, only 8 of about 70 boat strikes are logged one by one, and Venezuelan state media was not opened, so \"none logged\" is not proof nothing happened.",
-    spark_from="1999-02-01", claim_note="Venezuelan state media (Telesur, VTV)",
+    spark_from="1999-02-01", thin_before="2019-01-01", claim_note="Venezuelan state media (Telesur, VTV)",
     small_n="Only 8 of about 70 boat strikes are logged one by one, most Venezuelan replies are statements (which do not count as an escalation reply here), and option G (raids or operations against leaders) has 1 case. Most options have only a handful of counted cases (the exact number is on each option), and options with fewer than 3 show \"too few cases\" instead of a percentage. Read every rate as a hint, not a forecast.",
     us_hurt="Anyone killed or hurt in the US action",
     # ---- per-theater words and rules the page reads (defaults on the page are the Iran / Houthi words) ----

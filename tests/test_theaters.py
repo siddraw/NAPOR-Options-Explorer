@@ -250,3 +250,13 @@ def test_no_venezuela_case_is_dated_inside_an_exclusion_window():
 def test_n_events_counts_only_events_at_0_50_or_more(log):
     out = load_export(log.tid)
     assert out["n_events"] == sum(1 for e in log.events if log.cred(e[0]) >= N.INCLUDE_AT)
+
+
+# ---- older years are thinner: every theater says where the denser record starts ---------------------------
+def test_export_has_thin_before_date(log):
+    """Each theater config sets thin_before (the date the denser record starts); the page reads it from the data file."""
+    out = load_export(log.tid)
+    tb = out["theater"].get("thin_before")
+    assert tb and dt.date.fromisoformat(tb), f"{log.tid}: theater.thin_before missing or not an ISO date"
+    first = min(e[1] for e in log.events)
+    assert dt.date.fromisoformat(tb) > first, f"{log.tid}: thin_before {tb} is not after the first logged event {first}"

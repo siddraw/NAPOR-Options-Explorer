@@ -45,6 +45,27 @@ def outlet_name(raw):
     return s.strip()
 
 
+# Official or primary sources (approved 2026-10-29): .gov and .mil pages, legislative records, courts and the Justice Department,
+# the UN and other international bodies, a foreign government's own ministry for what it did or said, official archives.
+# The ones above are named in OFFICIAL; these are the rest. They score like an allowed outlet (0.80) only when the page read is
+# the official page itself. A label with "via" means a mirror or copy hosts it (for example "CRS report (via everycrsreport.com)"):
+# that keeps the 0.60 of an outlet that is not on the list.
+OFFICIAL_PRIMARY = {"Congressional Record", "Congress", "CRS report", "Justice Department", "DOJ", "Commerce", "KEDO", "INDOPACOM",
+                    "Japan Ministry of Defense", "Ministry of", "NATO", "OAS", "GAO", "Federal Register", "Presidential Library"}
+
+
+def is_copy(raw):
+    """True when the label says the page read is a copy on another site ("AP (via KPAX)")."""
+    return bool(re.search(r"\bvia\b", raw or "", re.I))
+
+
+def display_label(raw):
+    """Short label the page shows for a source: 'AP (via KPAX; byline X)' -> 'AP (via KPAX)'. Without 'via' it is just the outlet name."""
+    name = outlet_name(raw).rstrip(" ,")
+    m = re.search(r"\bvia\b\s+([^;)]+)", raw or "", re.I)
+    return f"{name} (via {m.group(1).strip()})" if m else name
+
+
 def source_kind(raw, claim_media=None, claim_label="Iranian state media (claim only)"):
     """Kind of outlet. claim_media / claim_label are per theater (Iran: state media; Houthis: al-Masirah, Saba)."""
     n = outlet_name(raw)
@@ -52,6 +73,8 @@ def source_kind(raw, claim_media=None, claim_label="Iranian state media (claim o
     if n in media or any(n.startswith(x) for x in media):
         return claim_label
     if any(n.startswith(x) for x in OFFICIAL):
+        return "Official statement"
+    if any(n.startswith(x) for x in OFFICIAL_PRIMARY) and not is_copy(raw):
         return "Official statement"
     return "Independent outlet"
 
@@ -104,7 +127,7 @@ def corroboration(eid):
 #
 # Each REPORT gets:  source score  x  fit score  = weight
 #   source score - how trustworthy the outlet type is
-#       credible outlet or official statement 0.80, other outlet 0.60,
+#       credible outlet or official/primary source (read on its own page) 0.80, other outlet or a mirror of an official page 0.60,
 #       Iranian state media 0.30 (it can only show what Iran claims)
 #   fit score    - how sure we are this story is about THIS event
 #       story read in full 1.00, only the headline seen 0.80,

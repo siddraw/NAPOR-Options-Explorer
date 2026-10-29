@@ -225,7 +225,7 @@ SOURCES = {
  373: [_s('Remarks to the Media (Pompeo, Oct 3, 2018)', 'State Department', '2018-10-03', 'https://2017-2021.state.gov/remarks-to-the-media-3')],
  374: [_s('Re-imposition of the sanctions on Iran that had been lifted or waived under the JCPOA', 'Treasury (OFAC)', '2018-11-05', 'https://ofac.treasury.gov/sanctions-programs-and-country-information/iran-sanctions/re-imposition-of-the-sanctions-on-iran-that-had-been-lifted-or-waived-under-the-jcpoa')],
  375: [_s('Designation of the Islamic Revolutionary Guard Corps', 'State Department', '2019-04-08', 'https://2017-2021-translations.state.gov/2019/04/08/designation-of-the-islamic-revolutionary-guard-corps/index.html')],
- 376: [_s('Iran Sanctions: oil waivers will not be renewed (CRS In Focus IN11108)', 'CRS (via EveryCRSReport)', '2019-04-22', 'https://www.everycrsreport.com/reports/IN11108.html')],
+ 376: [_s('Iran Sanctions: oil waivers will not be renewed (CRS In Focus IN11108)', 'CRS report (via everycrsreport.com)', '2019-04-22', 'https://www.everycrsreport.com/reports/IN11108.html')],
 }
 VERDICT = {k: 'confirmed' for k in SOURCES}
 PARTLY = set()

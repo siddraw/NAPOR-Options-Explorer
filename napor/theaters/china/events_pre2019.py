@@ -21,9 +21,11 @@ Source rules (docs/SOURCE_STANDARD.md):
 - Only allowed outlets and official releases. Wire stories read on a syndicated page are labelled "NPR (via ...)".
   seen="full text" means the page was opened and read; seen="snippet" means only the search-result line was seen.
 - Several 1995-2008 rows rest on a CRS chronology or report (everycrsreport.com mirror) or on the Congressional Record,
-  because the search tool found few NYT, AP or Reuters archive pages for those years. These are official Congress
-  pages, but the engine scores them 0.60 (an outlet that is not on the news list), so a row on one of them alone is
-  flagged "use with caution". Rows #3500, #3506-#3510, #3514, #3519, #3521, #3536, #3537, #3552 and #3566 are in that group.
+  because the search tool found few NYT, AP or Reuters archive pages for those years. The CRS pages were read on the
+  everycrsreport.com mirror, not on an official Congress page, so they are labelled "CRS report (via everycrsreport.com)" and the
+  engine keeps the 0.60 of an outlet that is not on the news list; a row on one of them alone is flagged "use with caution".
+  Rows #3500, #3506-#3510, #3514, #3519, #3521, #3536 and #3537 are in that group. The Congressional Record is an official page and
+  scores 0.80 (#3552 now does).
 - The "published" date on a CRS page is approximate (the mirror pages show no date), and so is the date on the NBC
   bomber story (#3544), the NBC Impeccable story (#3525) and the NPR anti-satellite page (#3523). Where I did not record
   a page's exact headline, the headline field is a short description of the page.
@@ -129,8 +131,8 @@ EVENTS = [
 (3566, d(2018,12,31), "US", "Legislation (Asia Reassurance Initiative Act signed)", "Taiwan", "The act says it is US policy to support close economic, political and security ties with Taiwan. China's Foreign Ministry says it 'grossly interferes in China's internal affairs' and that the US 'must not implement' the Taiwan provisions (CRS)", None, "n/a", "Medium", "see audit"),
 ]
 
-_CRS_9500 = _s('CRS Report 97-484: dated entries, 1995-2000 (entries to Jul 18, 2000)', 'CRS (via EveryCRSReport)', '2000-07-18', 'https://www.everycrsreport.com/reports/97-484.html')
-_CRS_ARMS = _s('Taiwan: Major U.S. Arms Sales Since 1990 (CRS Report RL30957)', 'CRS (via EveryCRSReport)', '2015-01-05', 'https://www.everycrsreport.com/reports/RL30957.html')
+_CRS_9500 = _s('CRS Report 97-484: dated entries, 1995-2000 (entries to Jul 18, 2000)', 'CRS report (via everycrsreport.com)', '2000-07-18', 'https://www.everycrsreport.com/reports/97-484.html')
+_CRS_ARMS = _s('Taiwan: Major U.S. Arms Sales Since 1990 (CRS Report RL30957)', 'CRS report (via everycrsreport.com)', '2015-01-05', 'https://www.everycrsreport.com/reports/RL30957.html')
 _CR_E1871 = _s('Congressional Record, Extensions of Remarks, Sep 28, 1995 (pp. E1871-E1872)', 'Congressional Record (House)', '1995-09-28', 'https://www.govinfo.gov/link/crec/141/E/1871')
 _NPR_TT = _s('Taiwan Troubles', 'NPR (via WYPR)', '1996-03-10', 'https://www.wypr.org/1996-03-10/taiwan-troubles')
 _NPR_BG = _s('Bush In China', 'NPR', '2002-02-21', 'https://www.npr.org/2002/02/21/1138444/bush-in-china')
@@ -157,7 +159,7 @@ SOURCES = {
  3511: [_CRS_9500, _s('China Reacts', 'NPR', '1999-05-08', 'https://www.npr.org/1999/05/08/1049822/china-reacts')],
  3512: [_s('China Reacts', 'NPR', '1999-05-08', 'https://www.npr.org/1999/05/08/1049822/china-reacts'), _s('China Latest', 'NPR', '1999-05-10', 'https://www.npr.org/1999/05/10/1049853/china-latest'), _s('Chinese Embassy Incident', 'NPR', '1999-05-11', 'https://www.npr.org/1999/05/11/1049909/chinese-embassy-incident'), _CRS_9500],
  3513: [_s('U.S.-China Bilateral WTO Agreement (fact sheet)', 'White House (Clinton archive)', '1999-11-15', 'https://clintonwhitehouse5.archives.gov/textonly/WH/new/WTO-Conf-1999/factsheets/fs-004.html'), _CRS_9500],
- 3514: [_s('Taiwan Security Enhancement Act (CRS Report RS20370)', 'CRS (via EveryCRSReport)', '2000-02-01', 'https://www.everycrsreport.com/reports/RS20370.html')],
+ 3514: [_s('Taiwan Security Enhancement Act (CRS Report RS20370)', 'CRS report (via everycrsreport.com)', '2000-02-01', 'https://www.everycrsreport.com/reports/RS20370.html')],
  3515: [_s('China Agrees to Release U.S. Crew', 'PBS NewsHour', '2001-04-11', 'https://www.pbs.org/newshour/nation/military-jan-june01-plane_04-11'), _s('A US surveillance plane collided with a Chinese jet 25 years ago today, setting off an 11-day standoff', 'NPR (via KPCW)', '2026-04-01', 'https://www.kpcw.org/npr-news/2026-04-01/a-us-surveillance-plane-collided-with-a-chinese-jet-25-years-ago-today-setting-off-an-11-day-standoff')],
  3516: [_s('China Agrees to Release U.S. Crew', 'PBS NewsHour', '2001-04-11', 'https://www.pbs.org/newshour/nation/military-jan-june01-plane_04-11')],
  3517: [_s('CNN transcript, Apr 29, 2001: Taiwan arms sales', 'CNN', '2001-04-29', 'https://www.cnn.com/TRANSCRIPTS/0104/29/wr.01.html'), _CRS_ARMS],
@@ -166,7 +168,7 @@ SOURCES = {
  3520: [_s('Bush Urges Taiwan Status Quo', 'NPR', '2003-12-09', 'https://www.npr.org/2003/12/09/1539586/bush-warns-taiwan-against-independence-movement')],
  3521: [_CRS_ARMS],
  3522: [_s('President Bush Meets with President Hu of the People\'s Republic of China', 'White House (Bush archive)', '2006-04-20', 'https://georgewbush-whitehouse.archives.gov/news/releases/2006/04/20060420-1.html')],
- 3523: [_s('NPR report on China\'s Jan 11, 2007 anti-satellite test (page shows no date)', 'NPR', '2007-01-01', 'https://www.npr.org/transcripts/6915533'), _s('China\'s January 2007 anti-satellite test (CRS Report RS22652)', 'CRS (via EveryCRSReport)', '2007-01-01', 'https://www.everycrsreport.com/reports/RS22652.html')],
+ 3523: [_s('NPR report on China\'s Jan 11, 2007 anti-satellite test (page shows no date)', 'NPR', '2007-01-01', 'https://www.npr.org/transcripts/6915533'), _s('China\'s January 2007 anti-satellite test (CRS Report RS22652)', 'CRS report (via everycrsreport.com)', '2007-01-01', 'https://www.everycrsreport.com/reports/RS22652.html')],
  3524: [_s('China backlash at Taiwan arms sale', 'Al Jazeera', '2008-10-07', 'https://www.aljazeera.com/news/2008/10/7/china-backlash-at-taiwan-arms-sale'), _CRS_ARMS],
  3525: [_s('Pentagon: Five Chinese vessels harass US ship', 'Stars and Stripes', '2009-03-10', 'https://www.stripes.com/news/2009-03-10/pentagon-five-chinese-vessels-harass-us-ship-1988887.html'), _s('Chinese ships harass US Navy vessel (Impeccable)', 'NBC News', '2009-03-09', 'https://www.nbcnews.com/news/amp/wbna29596179')],
  3526: [_s('In full: U.S.-China joint statement', 'CBS News', '2009-11-17', 'https://www.cbsnews.com/news/in-full-us-china-joint-statement/')],
@@ -179,8 +181,8 @@ SOURCES = {
  3533: [_AJ_ADIZ],
  3534: [_s('Beijing near-miss: U.S. warship harassed Chinese vessel', 'NPR (via APR)', '2013-12-18', 'https://www.apr.org/2013-12-18/beijing-near-miss-as-u-s-warship-harassed-chinese-vessel?_amp=true')],
  3535: [_s('Chinese fighter buzzed U.S. Navy plane in dangerous intercept', 'NPR', '2014-08-22', 'https://www.npr.org/sections/thetwo-way/2014/08/22/342465620/chinese-fighter-buzzed-u-s-navy-plane-in-dangerous-intercept')],
- 3536: [_s('CRS Insight IN10181: President Obama\'s November 2014 visit to China', 'CRS (via EveryCRSReport)', '2014-11-01', 'https://www.everycrsreport.com/reports/IN10181.html')],
- 3537: [_s('Chinese President Xi\'s September 2015 State Visit (CRS In Focus IF10291)', 'CRS (via EveryCRSReport)', '2015-10-01', 'https://www.everycrsreport.com/reports/IF10291.html')],
+ 3536: [_s('CRS Insight IN10181: President Obama\'s November 2014 visit to China', 'CRS report (via everycrsreport.com)', '2014-11-01', 'https://www.everycrsreport.com/reports/IN10181.html')],
+ 3537: [_s('Chinese President Xi\'s September 2015 State Visit (CRS In Focus IF10291)', 'CRS report (via everycrsreport.com)', '2015-10-01', 'https://www.everycrsreport.com/reports/IF10291.html')],
  3538: [_USNI_P1],
  3539: [_s('U.S. Plans Modest $1.83B Taiwan Arms Deal', 'USNI News', '2015-12-16', 'https://news.usni.org/2015/12/16/breaking-u-s-plans-modest-1-83b-taiwan-arms-deal-little-offensive-power-in-proposed-package'), _s('China summons US envoy over sale of warships to Taiwan', 'Al Jazeera', '2015-12-17', 'https://www.aljazeera.com/news/2015/12/17/china-summons-us-envoy-over-sale-of-warships-to-taiwan')],
  3540: [_s('China summons US envoy over sale of warships to Taiwan', 'Al Jazeera', '2015-12-17', 'https://www.aljazeera.com/news/2015/12/17/china-summons-us-envoy-over-sale-of-warships-to-taiwan')],
@@ -209,7 +211,7 @@ SOURCES = {
  3563: [_TWZ_DEC],
  3564: [_s('USS Stockdale and USNS Pecos transit the Taiwan Strait', 'USNI News', '2018-11-28', 'https://news.usni.org/2018/11/28/39064')],
  3565: [_s('Trump, Xi agree to a temporary trade truce', 'CNN', '2018-12-01', 'https://edition.cnn.com/2018/12/01/politics/trump-china-tariffs/index.html')],
- 3566: [_s('Asia Reassurance Initiative Act (CRS In Focus IF11148)', 'CRS (via EveryCRSReport)', '2019-03-20', 'https://www.everycrsreport.com/files/2019-03-20_IF11148_bd48f7c8b4fc29fb9b4356802351649f037897a5.html')],
+ 3566: [_s('Asia Reassurance Initiative Act (CRS In Focus IF11148)', 'CRS report (via everycrsreport.com)', '2019-03-20', 'https://www.everycrsreport.com/files/2019-03-20_IF11148_bd48f7c8b4fc29fb9b4356802351649f037897a5.html')],
 }
 VERDICT = {k: 'confirmed' for k in SOURCES}
 # Rows where an allowed outlet or official page confirms the event but not every detail in the row (day inferred, year inferred, date set from a page address).
@@ -230,13 +232,13 @@ US_OPTION = {
 
 def cred_estimate():
     """My own estimate of the engine's credibility score (official release or allowed outlet, full text 0.80;
-    CRS and the Congressional Record 0.60; two different outlets combine; 'Partly' x0.8). For spot checks only."""
+    a CRS mirror 0.60; two different outlets combine; 'Partly' x0.8). For spot checks only."""
     out = {}
     for eid, srcs in SOURCES.items():
         best = {}
         for s in srcs:
             outlet = s['outlet'].split(' (')[0].strip()
-            w = 0.60 if outlet.startswith(('CRS', 'Congress')) else 0.80
+            w = 0.60 if outlet.startswith('CRS') else 0.80
             w *= 1.0 if s['seen'].startswith('full') else 0.8
             best[outlet] = max(best.get(outlet, 0), w)
         p = 1.0

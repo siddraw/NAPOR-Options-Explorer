@@ -38,7 +38,7 @@ def sources_for(ids):
             if not r["url"] or r["outlet"] in seen:
                 continue
             seen.add(r["outlet"])
-            links.append(dict(o=r["outlet"], u=r["url"], claim=r["kind"].startswith("Iranian state media")))
+            links.append(dict(o=N.display_label(r["outlet_raw"]), u=r["url"], claim=r["kind"].startswith("Iranian state media")))
         out[str(i)] = dict(cred=N.event_credibility(i), links=links)
     return out
 

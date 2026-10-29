@@ -620,7 +620,7 @@ class Export:
                 if not r["url"] or r["outlet"] in seen:
                     continue
                 seen.add(r["outlet"])
-                links.append(dict(o=r["outlet"], u=r["url"], claim=r["kind"].endswith("(claim only)")))
+                links.append(dict(o=N.display_label(r["outlet_raw"]), u=r["url"], claim=r["kind"].endswith("(claim only)")))
             out[str(i)] = dict(cred=K.CRED[i], links=links)
         return out
 

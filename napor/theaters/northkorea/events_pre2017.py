@@ -21,7 +21,8 @@ Source rules (docs/SOURCE_STANDARD.md):
   wire story read through a syndicated copy. Where the page I read has no clear date, the headline is taken from
   the page URL and the row is in PARTLY.
 - #2502 rests on a State Department (USIA) text read on a GlobalSecurity.org mirror and #2514 on KEDO's own page
-  (not an allowed outlet, scored 0.60 as an independent source). Both are weaker than a White House or Treasury page.
+  (an international body's official page, which scores 0.80 like an allowed outlet). #2502 is a mirror of a State Department text, so it
+  is labelled "via GlobalSecurity.org".
 - The 2016 and 2017 launch rows (#2562, #2564, #2567, #2574, #2586) rest on one CBS News launch timeline
   (published Sep 6, 2017, built from NTI and the Joint Chiefs). Its dates are US dates and may be a day
   earlier than the Korea date. Those rows are in PARTLY.
@@ -155,7 +156,7 @@ SOURCES = {
  2500: [_s('Letter dated 12 March 1993 from the Permanent Representative of the DPRK to the UN (S/25407)', 'UN (Digital Library record)', '1993-03-12', 'https://digitallibrary.un.org/record/164463', 'full text'),
         _s('Letters dated 12 and 19 March 1993 (Security Council Repertoire)', 'UN (Security Council Repertoire)', '1993-03-12', 'https://www.un.org/french/docs/cs/repertoire/93-95/CHAPTER 8/ASIA/15 - Letters dated 12 and 19 March 93.pdf', 'full text')],
  2501: [_s('Statement on the Nuclear Nonproliferation Talks With North Korea', 'White House (via American Presidency Project)', '1993-06-11', _UCSB + 'documents/statement-nuclear-nonproliferation-talks-with-north-korea', 'full text')],
- 2502: [_s('State Department statement: Geneva talks Mar 21; Team Spirit suspended (USIA text)', 'State Department (USIA text, read on a GlobalSecurity.org mirror)', '1994-03-03', 'https://www.globalsecurity.org/wmd/library/news/dprk/1994/940303-dprk-usia.htm', 'full text')],
+ 2502: [_s('State Department statement: Geneva talks Mar 21; Team Spirit suspended (USIA text)', 'State Department (via GlobalSecurity.org; USIA text)', '1994-03-03', 'https://www.globalsecurity.org/wmd/library/news/dprk/1994/940303-dprk-usia.htm', 'full text')],
  2503: [_s('Remarks and an Exchange With Reporters on North Korea', 'White House (via American Presidency Project)', '1994-06-22', _UCSB + 'documents/remarks-and-exchange-with-reporters-north-korea', 'full text')],
  2504: [_s("President's Statement on North Korea", 'White House (archived)', '1994-10-18', 'https://clintonwhitehouse6.archives.gov/1994/10/1994-10-18-presidents-statement-on-north-korea.html', 'full text')],
  2505: [_s('President statement on helicopter downing in Korea', 'White House (archived)', '1994-12-19', 'https://clintonwhitehouse6.archives.gov/1994/12/1994-12-19-president-statement-on-helicopter-downing-in-korea.html', 'full text'),
@@ -163,7 +164,7 @@ SOURCES = {
  2506: [_s("The President's News Conference With President Kim Yong-sam of South Korea in Cheju", 'White House (via American Presidency Project)', '1996-04-16', _UCSB + 'documents/the-presidents-news-conference-with-president-kim-yong-sam-south-korea-cheju', 'full text')],
  2507: [_NPR_CHRON],
  2508: [_s('Press briefing on easing sanctions on North Korea', 'White House (via American Presidency Project)', '1999-09-17', _UCSB + 'node/271181', 'full text'), _NPR_CHRON],
- 2509: [_s('US-DPRK Joint Communique (Washington File EPF407)', 'State Department (Washington File)', '2000-10-12', 'https://usinfo.org/wf-archive/2000/001012/epf407.htm', 'full text')],
+ 2509: [_s('US-DPRK Joint Communique (Washington File EPF407)', 'State Department (via usinfo.org; Washington File)', '2000-10-12', 'https://usinfo.org/wf-archive/2000/001012/epf407.htm', 'full text')],
  2510: [_s('Albright Ends Historic N. Korea Visit', 'ABC News', '2000-10-24', 'https://abcnews.go.com/International/story?id=82290', 'full text')],
  2511: [_s('Statement on the Completion of the North Korea Policy Review', 'White House (via American Presidency Project)', '2001-06-06', _UCSB + 'documents/statement-completion-the-north-korea-policy-review', 'full text')],
  2512: [_s('Address Before a Joint Session of the Congress on the State of the Union', 'White House (via American Presidency Project)', '2002-01-29', _UCSB + 'documents/address-before-joint-session-the-congress-the-state-the-union-22', 'full text')],
@@ -222,7 +223,7 @@ SOURCES = {
  2553: [_s('Treasury Imposes Sanctions Against the Government of North Korea (Sony)', 'Treasury/OFAC (official release)', '2015-01-02', 'https://home.treasury.gov/news/press-releases/jl9733', 'full text')],
  2554: [_s('US, South Korea ignore North Korea\'s protests, launch war games', 'Stars and Stripes', '2015-08-17', 'https://www.stripes.com/news/2015-08-17/us-south-korea-ignore-north-koreas-protests-launch-war-games-1804473.html', 'full text')],
  2555: [_s('North and South Korea trade shots', 'NPR (via NHPR)', '2015-08-20', 'https://www.nhpr.org/2015-08-20/north-and-south-korea-trade-shots', 'full text')],
- 2556: [_s('N. Korea claims successful hydrogen bomb test', 'ABC News', '2016-01-06', 'https://abc13.com/post/n-korea-claims-successful-hydrogen-bomb-test/1147964/', 'full text')],
+ 2556: [_s('N. Korea claims successful hydrogen bomb test', 'ABC News (via ABC13)', '2016-01-06', 'https://abc13.com/post/n-korea-claims-successful-hydrogen-bomb-test/1147964/', 'full text')],
  2557: [_s('US flies bomber over South Korea in show of force', 'NPR (via KPBS)', '2016-01-10', 'https://www.kpbs.org/news/2016/01/10/us-flies-bomber-over-south-korea-in-show-of', 'full text')],
  2558: [_s('North Korea rocket launch, United Nations', 'AP (via ABC7)', '2016-02-07', 'https://abc7.com/north-korea-missile-rocket-launch-united-nations/1189986/', 'full text')],
  2559: [_s('North Korea sanctions act', 'AP (via ABC11)', '2016-02-18', 'https://abc11.com/news/1206064', 'full text')],
@@ -236,7 +237,7 @@ SOURCES = {
         _s('ROK-US Alliance agrees to deploy THAAD', 'DoD (US Forces Korea press release)', '2016-07-08', 'https://www.usfk.mil/Media/Press-Products/Press-Releases/Article/831166/rok-us-alliance-agrees-to-deploy-thaad/', 'full text')],
  2567: [_CBS_TL],
  2568: [_s("North Korea's fifth and biggest nuclear test draws global outrage", 'PBS NewsHour', '2016-09-09', 'https://www.pbs.org/newshour/world/north-koreas-fifth-and-biggest-nuclear-test-draws-global-outrage', 'full text')],
- 2569: [_s('US flies bombers in show of force against North Korea', 'ABC News', '2016-09-13', 'https://abc30.com/news/us-flies-bombers-in-show-of-force-against-north-korea/1509603/', 'full text')],
+ 2569: [_s('US flies bombers in show of force against North Korea', 'ABC News (via ABC30)', '2016-09-13', 'https://abc30.com/news/us-flies-bombers-in-show-of-force-against-north-korea/1509603/', 'full text')],
  2570: [_s('Security Council tightens sanctions on North Korea (Resolution 2321)', 'UN (UN News)', '2016-11-30', 'https://news.un.org/en/story/2016/11/546622', 'full text')],
  2571: [_s('North Korea missile launch', 'CNN', '2017-02-12', 'https://edition.cnn.com/2017/02/11/asia/north-korea-missile', 'full text'), _CBS_TL],
  2572: [_s('After North Korean missiles fly, THAAD missile defense suddenly arrives', 'The War Zone', '2017-03-06', 'https://www.twz.com/8134/after-north-korean-missiles-fly-thaad-missile-defense-suddenly-arrives', 'full text'), _CBS_TL],
@@ -278,13 +279,13 @@ US_OPTION = {
 # CRED_ESTIMATE: filled in below by cred_estimate(); see the function.
 def cred_estimate():
     """My own estimate of the engine's credibility score (full-text allowed outlet 0.80, two outlets 0.96, 'Partly' x0.8,
-    independent outlet not on the list 0.60). For spot checks only."""
+    independent outlet not on the list 0.60; KEDO and other official pages 0.80). For spot checks only."""
     out = {}
     for eid, srcs in SOURCES.items():
         best = {}
         for s in srcs:
             outlet = s['outlet'].split(' (')[0].strip()
-            w = 0.60 if outlet.startswith('KEDO') or outlet.startswith('Los Angeles') else 0.80
+            w = 0.60 if outlet.startswith('Los Angeles') else 0.80
             w *= 1.0 if s['seen'].startswith('full') else 0.8
             best[outlet] = max(best.get(outlet, 0), w)
         p = 1.0

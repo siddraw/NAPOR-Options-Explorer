@@ -39,7 +39,7 @@ THEATER = dict(
              ["2017-09-03", "Sixth nuclear test"], ["2018-06-12", "Singapore summit"], ["2019-06-30", "DMZ meeting"], ["2022-11-02", "23 missiles in one day"],
              ["2023-07-18", "Submarine visits Busan"], ["2025-11-07", "Launch after carrier and DMZ visits"], ["2026-08-17", "Scaled-down Ulchi Freedom Shield"]],
     under_logged="The log is a sample. It starts in March 1993, but 1995-97, 2004, 2007-08, 2011 and 2014-15 are thinly logged, and the 1993-2015 years hold only a few Treasury rounds and short-range launches. 2020 and most of 2021 are empty, and many launches from 2022 on are missing, so \"none logged\" is not proof nothing happened.",
-    spark_from="1993-03-01", claim_note="North Korean state media (KCNA, Rodong Sinmun)",
+    spark_from="1993-03-01", thin_before="2017-08-31", claim_note="North Korean state media (KCNA, Rodong Sinmun)",
     # ---- per-theater words and rules the page reads (defaults on the page are the Iran / Houthi words) ----
     reply_days=7,
     intensity=dict(name="Tension level", note="Tension level counts logged North Korean launches, tests and provocations (not threatening statements) in the 14 days before each date: 2 points each, +2 if someone died. The log is a sample, so quiet stretches are understated."),

@@ -9,7 +9,10 @@ Five theaters are live (`explorer/theaters.json`): `iran`, `houthis`, `northkore
 are done once per theater. Steps 3-5 are Iran only.
 
 1. **Scan, per theater.** Find the past week's events using only allowed credible outlets and official
-   statements (`docs/SOURCE_STANDARD.md`). No Wikipedia, blogs or tabloids as sources. Never invent URLs.
+   or primary sources (government and military sites, legislative records, courts, the UN and other international bodies, a
+   government's own ministry for what it did or said, official archives; `docs/SOURCE_STANDARD.md`). Label and link only
+   the page you read: a copy on another site is labelled "AP (via kpax.com)", never with the original outlet's bare name
+   (`tests/test_sources.py` fails otherwise). No Wikipedia, blogs or tabloids as sources. Never invent URLs.
    Each theater has its own claim-only media, shown only as labelled claims (score 0.30): Iran: Iranian state
    media; Houthis: al-Masirah and Houthi statements; North Korea: KCNA and Rodong Sinmun; China: Xinhua,
    Global Times, CGTN, PLA Daily, Chinese MND/MFA; Venezuela: Telesur and VTV (Venezuelan state media). The list is in each theater's `config.py`.
@@ -21,7 +24,7 @@ are done once per theater. Steps 3-5 are Iran only.
    - China: `napor/theaters/china/events.py`, IDs 3001-3999 (earlier years in `events_pre2019.py`, 3500+).
    - Venezuela / Caribbean: `napor/theaters/venezuela/events.py`, IDs 4001-4999 (event and pair IDs; earlier years in `events_pre2019.py`, 4500+). Venezuela's escalation rule is stricter than the census: `rules.py` keeps a census reply only if a hostile act (attack, harassment, mobilization) is logged within 7 days; statements do not count.
    **Link rule (approved 2026-10-28): only add events that have a link.** Every new event needs at least one source with
-   a working https URL from an allowed outlet or an official release. A name-only report gets zero credit, and an event
+   a working https URL from an allowed outlet or an official or primary source. A name-only report gets zero credit, and an event
    with no linked source is excluded from every count (credibility 0). Treat any existing link-less event as excluded;
    find a link for it or leave it out.
    Uncertain matches go to the Review Queue for Sidd; do not guess.

@@ -122,7 +122,8 @@ Paths below are used by the weekly update. Do not move or rename them without up
 | **`tests/`** | |
 | `tests/conftest.py` | Puts `napor/` on the import path; helper to load exported data |
 | `tests/test_stats.py` | Wilson ranges, m=2 estimate, Brier score, equal-weight index |
-| `tests/test_theaters.py` | Per theater: export keys and A-H order, sources, 0.50 cut, no-hindsight check, recount |
+| `tests/test_theaters.py` | Per theater: export keys and A-H order, sources, 0.50 cut, no-hindsight check, recount, thin_before date |
+| `tests/test_sources.py` | Every source label names the site its URL points to (or says "via"), in every theater |
 | `tests/test_resolver.py` | Headline-matching test (moved from `napor/`; also run by `weekly_build.py`) |
 
 ## Adding a theater

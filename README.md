@@ -60,7 +60,7 @@ wrong ways of defining risk, numbers that did not hold up in testing), and I wan
 could learn from those failures and keep improving the model.
 
 **What I designed:**
-- The source rules: which outlets count as credible and which only count as labelled claims.
+- The source rules: which outlets and official sources count as credible and which only count as labelled claims.
 - The core rule that the page presents options and their risk, and never ranks them or picks one.
 - What counts as risk: the five categories (AI helped me spot patterns in the past cases), and the idea
   that risk is defined by what happened in past cases.
@@ -69,7 +69,8 @@ could learn from those failures and keep improving the model.
 - The approval rule: the AI can suggest changes to the model, but no rule changes without my OK.
 - The multi-AI workflow described below.
 - The credibility rule: after finding events that were not linked to a credible source, I made it a rule
-  that every event must link to at least one credible source, or it does not count. Every event in the
+  that every event must link to at least one credible source (an allowed outlet, or an official or primary
+  source such as a government, military, legislative or UN page), or it does not count. Every event in the
   numbers now links to a credible source.
 
 **What Claude did:** Claude helped heavily with researching the past cases, since AI is, in my opinion,
@@ -106,7 +107,7 @@ built from patterns in similar past cases. Other uses:
 - The scanner runs once a week, so updates can be delayed by up to a week.
 - Many options rest on a small number of past cases, so the numbers should be read as hints, not facts.
 - "After" is not "because of": a reply that followed a US move was not always caused by it.
-- Older years are logged less densely than recent ones, so early history is less complete.
+- Older years are logged less densely than recent ones, so early history is less complete. The page says so on every tab and marks those cases "older, thinner data".
 
 ## How it works
 
@@ -115,7 +116,7 @@ the five risk categories as "x of n past cases" with a margin of error. The page
 and every number is backtested.
 - [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md) – how risk is defined, counted and tested, step by step.
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) – a diagram of how the pieces connect and a map of the folders.
-- [`docs/SOURCE_STANDARD.md`](docs/SOURCE_STANDARD.md) – which news sources count as credible.
+- [`docs/SOURCE_STANDARD.md`](docs/SOURCE_STANDARD.md) – which news and official sources count as credible, and how a copy of a story is labelled.
 
 Run everything with one command: `cd napor && python3 weekly_build.py` (PASS/FAIL checklist).
 
@@ -135,7 +136,7 @@ Each non-Iran theater is a package in `napor/theaters/<id>/`; data goes to `expl
 - Hold weeks (option A) are mostly quiet weeks with few logged events; they show what the log records, and an unlogged event would change them.
 - Fitted on 1979-2025 only, every method does worse on 2026 cases than always saying 50% (Report card): the pre-war record alone does not predict this war well.
 - Before 2026 most replies came from Iran-backed militias; they count as replies and are labelled "proxy".
-- Pre-war years, and older years in every theater, are logged less densely than recent ones, so older numbers and war intensity before 2026 may be understated or thinner.
+- Pre-war years, and older years in every theater, are logged less densely than recent ones, so older numbers and war intensity before 2026 may be understated or thinner. The page says so under each tab's header and marks cases before each theater's denser period "older, thinner data".
 - The phase boundaries were drawn with hindsight.
 - July's nightly US strikes and pre-September shipping attacks are under-logged.
 

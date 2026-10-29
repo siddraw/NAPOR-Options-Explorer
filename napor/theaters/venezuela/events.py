@@ -189,7 +189,7 @@ SOURCES = {
  4047: [_AJ_CENTURIES, _AP_CENTURIES],
  4048: [_s('CIA behind strike at Venezuelan dock that Trump claims was used by drug smugglers, AP sources say', 'AP (via News4JAX)', '2025-12-30', 'https://www.news4jax.com/news/politics/2025/12/31/cia-behind-strike-at-venezuelan-dock-that-trump-claims-was-used-by-drug-smugglers-ap-sources-say/', 'full text')],
  4049: [_AP_CAPTURE, _NPR_OIL, _AP_CUBA],
- 4050: [_s('venezuela delcy rodriguez (swearing-in as interim leader)', 'New York Times (via Boston Globe)', '2026-01-05', 'https://www.bostonglobe.com/2026/01/05/world/venezuela-delcy-rodriguez/', 'full text')],
+ 4050: [_s('venezuela delcy rodriguez (swearing-in as interim leader)', 'Boston Globe', '2026-01-05', 'https://www.bostonglobe.com/2026/01/05/world/venezuela-delcy-rodriguez/', 'full text')],
  4051: [_AP_CUBA],
  4052: [_NPR_OIL,
         _s('US oil, Trump, Venezuela, Maduro (oil announcement)', 'Axios', '2026-01-07', 'https://www.axios.com/2026/01/07/us-oil-trump-venezuela-maduro', 'full text')],

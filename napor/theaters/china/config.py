@@ -40,7 +40,7 @@ THEATER = dict(
              ["2019-07-08", "$2.2B arms sale"], ["2020-08-09", "Azar visit to Taipei"], ["2022-08-02", "Pelosi visit"], ["2023-04-05", "Tsai-McCarthy meeting"],
              ["2024-12-10", "Largest maritime deployment"], ["2025-12-29", "Justice Mission 2025 drills"]],
     under_logged="The log is a sample of named events. It starts in May 1995, but 1997-2000, 2002-2007, 2012 and 2014 are thinly logged: the 1995-2018 years hold the big crises, summits, arms sales and tariff rounds, not the routine patrols and transits. Many 1995-2008 rows rest on a CRS chronology or the Congressional Record. 2021 and 2022-2023 US FONOPs are mostly missing, routine PLA flights are not logged, and some Chinese counter-sanctions were found only on outlets that are not allowed, so \"none logged\" is not proof nothing happened.",
-    spark_from="1995-05-01", claim_note="Chinese state media (Xinhua, Global Times, CGTN, PLA Daily)",
+    spark_from="1995-05-01", thin_before="2019-01-01", claim_note="Chinese state media (Xinhua, Global Times, CGTN, PLA Daily)",
     small_n="Small numbers: Taiwan-specific US moves are few. Most options here have only a handful of counted cases (the exact number is on each option), and options with fewer than 3 show \"too few cases\" instead of a percentage. Even the larger ones (D) are mostly cases where China answered with words and shadowing. Read every rate as a hint, not a forecast.",
     # ---- per-theater words and rules the page reads (defaults on the page are the Iran / Houthi words) ----
     reply_days=7,

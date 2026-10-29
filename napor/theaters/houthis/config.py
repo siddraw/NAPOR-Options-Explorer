@@ -25,7 +25,7 @@ THEATER = dict(
     presets=[["2014-09-21", "Houthis take Sanaa"], ["2015-03-25", "US backs the Saudi-led war"], ["2016-10-13", "First US strikes (radar sites)"], ["2023-11-19", "Galaxy Leader seized"], ["2024-01-12", "First US-UK strikes"],
              ["2025-03-15", "Operation Rough Rider"], ["2025-05-06", "US-Houthi ceasefire"], ["2026-10-10", "Riyadh airport attack"]],
     under_logged="Some stretches are logged more thinly than others (2025-2026 far less than 2024, and the Sep 2014 - Oct 2016 years only log the big Houthi acts, not the daily fighting with Saudi and Yemeni forces), so \"none logged\" is not proof nothing happened.",
-    spark_from="2014-09-01", claim_note="Houthi media (al-Masirah, Saba)",
+    spark_from="2014-09-01", thin_before="2016-10-01", claim_note="Houthi media (al-Masirah, Saba)",
     # Exact rule for the political category (what theaters/common.py counts; changed 2026-10-26): only logged talks, a meeting,
     # a proposal, a ceasefire or a deal. Statements, threats and appeals do not count.
     cats=dict(political=dict(

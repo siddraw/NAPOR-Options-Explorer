@@ -22,8 +22,10 @@ Judgment calls on letters and kinds:
 Source rules (docs/SOURCE_STANDARD.md):
 - Only allowed outlets and official releases. Wire stories read on a syndicated page are labelled "AP (via ...)", "Reuters (via ...)", "NPR (via ...)".
   seen="full text" means the page was opened and read; every row here was read that way.
-- Several 2002-2009 rows rest on a CRS report (everycrsreport.com mirror), which is an official Congress page that the engine scores 0.60
-  (an outlet that is not on the news list), so a row on one of them alone is flagged "use with caution". Rows #4506, #4521 and #4542 are in that group.
+- Several 2002-2009 rows rest on a CRS report read on the everycrsreport.com mirror. A mirror is not the official page, so the label is
+  "CRS report (via everycrsreport.com)" and the engine keeps the 0.60 of an outlet that is not on the news list; a row on one of them alone
+  is flagged "use with caution". Rows #4506 and #4521 are in that group. (Official and primary pages, such as a Congressional Record page
+  on govinfo.gov, score 0.80; #4542 now does.)
   The "published" date of a CRS page is the version date from the page address.
 - Some pages carry no date in their text. Where the date comes from the page address, from the day of the week in the text or from the
   publication day, the row is in PARTLY below.
@@ -56,10 +58,10 @@ def _s(headline, outlet, published, url, seen="full text"):
     return {'headline': headline, 'outlet': outlet, 'published': published, 'seen': seen, 'url': url}
 
 
-_CRS05 = _s('Venezuela: Political Conditions and U.S. Policy (CRS Report RL32488, 2005 version)', 'CRS (via EveryCRSReport)', '2005-04-01', 'https://www.everycrsreport.com/files/20050401_RL32488_6fe3a6534b668b075a9cfc1654132b699d98692f.html')
-_CRS07 = _s('Venezuela: Political Conditions and U.S. Policy (CRS Report RL32488, 2007 version)', 'CRS (via EveryCRSReport)', '2007-06-08', 'https://www.everycrsreport.com/files/20070608_RL32488_62f7562a398c9d5cf8b471380bbe69f652082422.html')
-_CRS09 = _s('Venezuela: Political Conditions and U.S. Policy, 2003-2009 (CRS Report RL32488)', 'CRS (via EveryCRSReport)', '2009-07-28', 'https://www.everycrsreport.com/files/20090728_RL32488_21b7532ab19812cfba4244603c93497b71cb067a.html')
-_CRS19 = _s('Venezuela: Background and U.S. Relations (CRS Report R44841, Jan 2019 version)', 'CRS (via EveryCRSReport)', '2019-01-21', 'https://www.everycrsreport.com/files/20190121_R44841_01751feeef096c5aeb2bb3d47c1a538d8f492a2f.html')
+_CRS05 = _s('Venezuela: Political Conditions and U.S. Policy (CRS Report RL32488, 2005 version)', 'CRS report (via everycrsreport.com)', '2005-04-01', 'https://www.everycrsreport.com/files/20050401_RL32488_6fe3a6534b668b075a9cfc1654132b699d98692f.html')
+_CRS07 = _s('Venezuela: Political Conditions and U.S. Policy (CRS Report RL32488, 2007 version)', 'CRS report (via everycrsreport.com)', '2007-06-08', 'https://www.everycrsreport.com/files/20070608_RL32488_62f7562a398c9d5cf8b471380bbe69f652082422.html')
+_CRS09 = _s('Venezuela: Political Conditions and U.S. Policy, 2003-2009 (CRS Report RL32488)', 'CRS report (via everycrsreport.com)', '2009-07-28', 'https://www.everycrsreport.com/files/20090728_RL32488_21b7532ab19812cfba4244603c93497b71cb067a.html')
+_CRS19 = _s('Venezuela: Background and U.S. Relations (CRS Report R44841, Jan 2019 version)', 'CRS report (via everycrsreport.com)', '2019-01-21', 'https://www.everycrsreport.com/files/20190121_R44841_01751feeef096c5aeb2bb3d47c1a538d8f492a2f.html')
 _CNN_COUP = _s('Chavez back in power after two days (CNN, Apr 14, 2002)', 'CNN', '2002-04-14', 'https://edition.cnn.com/2002/WORLD/americas/04/14/venezuela/index.html')
 _AJ_DUDDY = _s('Venezuela, U.S. ambassadors (Al Jazeera, Apr 19, 2009)', 'Al Jazeera', '2009-04-19', 'https://www.aljazeera.com/news/2009/4/19/caracas-will-restore-envoy-to-us')
 _NBC_PALMER = _s('U.S., Venezuela evict ambassadors in diplomatic spat', 'NBC News', '2010-12-29', 'https://www.nbcnews.com/id/40851907/ns/politics-more_politics')
@@ -260,7 +262,7 @@ def _cred(k):
     best = {}
     for s in SOURCES[k]:
         outlet = s['outlet'].split(' (')[0].strip()
-        w = 0.60 if outlet.startswith(('CRS', 'Congress')) else 0.80
+        w = 0.60 if outlet.startswith('CRS') else 0.80
         best[outlet] = max(best.get(outlet, 0), w)
     p = 1.0
     for w in best.values():
