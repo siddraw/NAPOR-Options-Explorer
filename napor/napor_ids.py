@@ -149,7 +149,7 @@ def corroboration(eid):
 ALLOWED = {"AP", "Reuters", "AFP", "BBC", "NPR", "PBS NewsHour", "PBS", "The New York Times", "NYT", "WSJ", "Washington Post",
            "Bloomberg", "Financial Times", "CBS News", "ABC News", "NBC News", "CNN", "Al Jazeera", "Axios", "Politico",
            "Times of Israel", "Haaretz", "USNI News", "Defense News", "Breaking Defense", "The War Zone", "Stars and Stripes",
-           "AAP", "TIME"}
+           "AAP", "TIME", "Bloomberg Government"}
 INCLUDE_AT = 0.50
 CAUTION_BELOW = 0.65
 MIN_REPORT_WEIGHT = 0.30
@@ -158,7 +158,7 @@ MIN_REPORT_WEIGHT = 0.30
 def source_score(r):
     if r["kind"].endswith("(claim only)"): return 0.30
     if r["kind"] == "Official statement": return 0.80
-    return 0.80 if any(r["outlet"].startswith(a) for a in ALLOWED) else 0.60
+    return 0.80 if r["outlet"] in ALLOWED else 0.60
 
 
 def fit_score(r):
