@@ -1035,8 +1035,8 @@ function renderExplore(){
   }
   h += `</div><div class="panel detail"><div class="head"><h3>${o.key}. ${esc(o.name)}</h3><p class="what">${esc(o.what)}</p>${situationBlock(o)}` +
     `<div class="meter"><span>${S.phase || S.band ? cntLabel(st.cases, st.total, o.is_hold) + " match the condition you picked" : cntLabel(st.cases, st.total, o.is_hold) + (S.asof ? " known on that date" : " in the log")}</span><span class="bar"><i style="width:${Math.min(100, st.cases / 8 * 100)}%"></i></span><span>8+ cases is a fair sample</span></div></div>`;
-  h += `<section><h2>Likely outcomes if the US does this</h2>${outcomesBlock(o, st, ix)}</section>`;
   h += `<section><h2>NAPOR risk assessment</h2>${indexPanel(o, cs)}</section>`;
+  h += `<section><h2>Likely outcomes if the US does this</h2>${outcomesBlock(o, st, ix)}</section>`;
   h += `<section><h2>Pros and other harms (analyst notes, not data)</h2><div class="three"><div class="box"><b>Pros</b>${esc(o.pros)}</div><div class="box"><b>Other harms</b>${esc(o.harms)}</div><div class="box"><b>What the data cannot tell us</b>${esc(o.unknown)}</div></div></section>`;
   h += `<section><h2>Past cases behind these numbers</h2>${o.cases.length ? `<details class="cases"><summary>Show the ${o.cases.length} past case${o.cases.length === 1 ? "" : "s"}, one row each</summary>${caseTable(o)}</details>` : caseTable(o)}</section>`;
   h += '</div></div>';
