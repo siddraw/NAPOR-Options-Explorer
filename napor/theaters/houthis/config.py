@@ -1,6 +1,6 @@
 """Houthis / Red Sea theater: wording, options, flags and rules, all in one place.
 
-The research files (events_early.py, events_late.py) hold the facts and are read only. This file holds the
+The research files (events_2014.py, events_early.py, events_late.py) hold the facts and are read only. This file holds the
 decisions the engine needs: which options exist, what counts as an attack by the other side, which outlets are
 claims only, which weeks count as "hold" weeks, and the analyst notes the page shows.
 """
@@ -22,10 +22,10 @@ THEATER = dict(
     salvo=None,
     hold_note="Hold cases are weeks, from Nov 20, 2023 on, with no logged US sanctions, naval, strike or posture move. Weeks inside the long stretches of fighting (Jan 12, 2024 - Jan 19, 2025 and Mar 15 - May 6, 2025) are left out, because US activity there was continuous. Most hold weeks fall in 2025-2026 and most have no logged event at all. The log for 2025-2026 records only major events, so a week where \"nothing happened\" may only be a week where nothing was logged. Read option A as a rough sketch, and do not compare it number-for-number with options that rest on a few well-reported cases.",
     not_measured="Oil and freight prices, ship insurance costs, harm to ordinary Yemenis and strain with Saudi Arabia are not measured.",
-    presets=[["2016-10-13", "First US strikes (radar sites)"], ["2023-11-19", "Galaxy Leader seized"], ["2024-01-12", "First US-UK strikes"],
+    presets=[["2014-09-21", "Houthis take Sanaa"], ["2015-03-25", "US backs the Saudi-led war"], ["2016-10-13", "First US strikes (radar sites)"], ["2023-11-19", "Galaxy Leader seized"], ["2024-01-12", "First US-UK strikes"],
              ["2025-03-15", "Operation Rough Rider"], ["2025-05-06", "US-Houthi ceasefire"], ["2026-10-10", "Riyadh airport attack"]],
-    under_logged="Some stretches are logged more thinly than others (2025-2026 far less than 2024), so \"none logged\" is not proof nothing happened.",
-    spark_from="2016-10-01", claim_note="Houthi media (al-Masirah, Saba)",
+    under_logged="Some stretches are logged more thinly than others (2025-2026 far less than 2024, and the Sep 2014 - Oct 2016 years only log the big Houthi acts, not the daily fighting with Saudi and Yemeni forces), so \"none logged\" is not proof nothing happened.",
+    spark_from="2014-09-01", claim_note="Houthi media (al-Masirah, Saba)",
     # Exact rule for the political corner (what theaters/common.py counts; changed 2026-10-26 with Sidd's approval): only logged talks, a meeting,
     # a proposal, a ceasefire or a deal. Statements, threats and appeals do not count.
     cats=dict(political=dict(
@@ -35,7 +35,9 @@ THEATER = dict(
 )
 
 # The UN Security Council resolution 2722 (#1020, Jan 2024) is a multilateral act, not talks or a proposal to or by the Houthis, so it does not count.
-TALK_EXCLUDE = (1020,)
+# The 2014-2016 UN rows are not US-Houthi talks either: the Sep 2014 power-sharing deal (#1051), resolution 2216 (#1060), the Geneva talks (#1066),
+# the Apr 2016 truce (#1069) and the Kuwait talks (#1070, #1072) were run by the UN between Yemeni parties; the US was not a party. Kerry's plan (#1074) is a US proposal and counts.
+TALK_EXCLUDE = (1020, 1051, 1060, 1066, 1069, 1070, 1072)
 
 # A tab needs at least this many counted cases to show a risk index; below it the page says "too few cases".
 MIN_CASES = 3
@@ -104,6 +106,7 @@ SHIP_ATTACK_EXTRA = {
 
 # The log's action-type words put a few rows in the wrong kind. Fixed by event ID, with the reason.
 KIND_OVERRIDE = {
+    1078: "Other",    # Saudi-led coalition airstrike on a Sanaa funeral hall: context for #1077; the coalition's air campaign is not otherwise logged, so it is not scored
     1308: "Kinetic",   # Houthis CLAIM missiles and a drone at the Truman group; the US confirmed an attempted attack (USNI)
     1302: "Kinetic",   # claimed attack on the Truman group (not confirmed, so not counted anyway)
     1330: "Other",     # a threat to restart attacks, not an attack
@@ -135,10 +138,12 @@ CIVILIAN_HARM = {}        # no civilian harm reported in an allowed outlet for a
 
 # ---- the backtest -----------------------------------------------------------------------------------------
 OOS_CUT = d(2025, 12, 31)
-OOS_LABEL = "2016-2025"
+OOS_LABEL = "2014-2025"
 
 
 def period(day):
+    if day < d(2016, 10, 9):
+        return "2014-16"
     if day < d(2023, 10, 1):
         return "2016-23"
     if day < d(2025, 1, 1):
@@ -148,18 +153,18 @@ def period(day):
     return "2025 H2+"
 
 
-PERIOD_KEYS = ["2016-23", "2024", "2025 H1", "2025 H2+"]
+PERIOD_KEYS = ["2014-16", "2016-23", "2024", "2025 H1", "2025 H2+"]
 
 # ---- analyst notes (judgement, not data; every line is labelled that way on the page) -----------------------
 PROS = {
     "A": "No new US act for the Houthis to answer. Keeps the May 2025 US-Houthi ceasefire in place; since May 6, 2025 the log shows no US strike on the Houthis and no Houthi attack on US forces.",
-    "B": "No direct casualties. The May 6, 2025 Oman-brokered ceasefire ended the US bombing campaign, and US officials met Houthi officials in Muscat on Sep 12-13, 2026 (Reuters).",
-    "C": "Financial pressure with no casualties and no risk to US forces. Rounds have come every few months (Jan, Apr, Jul and Sep 2025; Jan 2026).",
+    "B": "No direct casualties. The May 6, 2025 Oman-brokered ceasefire ended the US bombing campaign, and US officials met Houthi officials in Muscat on Sep 12-13, 2026 (Reuters). Secretary of State Kerry put a peace plan on the table on Aug 25, 2016 (Al Jazeera).",
+    "C": "Financial pressure with no casualties and no risk to US forces. Rounds have come every few months (Jan, Apr, Jul and Sep 2025; Jan 2026); the first Treasury designations of Houthi commanders were in Nov 2014.",
     "D": "Aims directly at the attacks on shipping. US and UK ships shot down 21 Houthi drones and missiles on Jan 9, 2024 without any injuries reported.",
-    "E": "Takes weapons away before they reach Yemen: 150 missiles (2020), 2,116 rifles (2023) and 750+ tons of arms (Jul 2025, by Yemeni partners) are in the log.",
+    "E": "Takes weapons away before they reach Yemen: 1,500 rifles (2016), 150 missiles (2020), 2,116 rifles (2023) and 750+ tons of arms (Jul 2025, by Yemeni partners) are in the log.",
     "F": "Aims at the launch, radar and storage sites that make the attacks possible (the military effect is claimed by CENTCOM, not independently measured).",
     "G": "Can remove commanders and units; CENTCOM says Operation Rough Rider killed \"numerous Houthi leaders\" (a US claim, not independently measured).",
-    "H": "No direct harm. Adding forces strengthens defense; the log has the Mar 2025 second carrier and US advisers in Saudi Arabia (Sep 2026).",
+    "H": "No direct harm. Adding forces strengthens defense; the log has the Mar 2025 second carrier, US advisers in Saudi Arabia (Sep 2026), and in 2015-2016 the pullout from Al Anad, the carrier sent toward Yemen and the Joint Planning Cell with Saudi Arabia.",
 }
 HARMS = {
     "A": "Houthi attacks on shipping and on Saudi Arabia can go on without a US move (the Jul 2025 sinkings of Magic Seas and Eternity C; the Oct 2026 Riyadh airport attacks). Whether holding back changes what the Houthis do cannot be measured from this log.",
@@ -173,13 +178,13 @@ HARMS = {
 }
 UNKNOWNS = {
     "A": "No Houthi attack on US forces or on non-Saudi shipping is logged after Sep 29, 2025 (the Houthis signalled a pause on Nov 11, 2025); Houthi attacks on Saudi targets are logged from Jul 2026. Whether the pause with the US holds if the Saudi-Houthi fighting grows is not in the data.",
-    "B": "Few diplomatic moves are logged, so there is no reliable reply rate for talks. What the Muscat meeting (Sep 12-13, 2026) produced is not reported.",
-    "C": "The Jan 2025 and Mar 2025 designation steps came during a Houthi pause; the effect of each on later attacks cannot be told apart from the pause itself.",
+    "B": "Few diplomatic moves are logged, so there is no reliable reply rate for talks. What the Muscat meeting (Sep 12-13, 2026) produced is not reported. The UN-run talks of 2014-2016 (Geneva, Kuwait) are logged but are not US-Houthi talks, so they are not counted here.",
+    "C": "The Apr 14, 2015 designations (#1061) are logged but not counted: the Saudi-led war was already 19 days old, so a Houthi reply cannot be separated. The Jan 2025 and Mar 2025 designation steps came during a Houthi pause; the effect of each on later attacks cannot be told apart from the pause itself.",
     "D": "Every naval-defense row sits inside the Dec 2023 - Dec 2024 fighting, where a reply cannot be told apart from the fighting that was already going on, so no case is counted.",
-    "E": "Only 3 counted cases, none drew a logged Houthi attack within 5 days. Seizures may be under-reported.",
+    "E": "Only 3 counted cases (Apr 2016, Feb 2020, Jan 2023), none drew a logged Houthi attack within 5 days. Seizures may be under-reported.",
     "F": "Only 3 counted cases: the strikes that opened a new round of fighting (2016, Jan 2024, Mar 2025). Later strikes are context only.",
     "G": "No counted case: the leader and casualty strikes (Dec 31, 2023; Apr 2025) all happened inside continuous fighting.",
-    "H": "Only 2 posture cases. How the Houthis read deployments or advisers is not measured.",
+    "H": "Only 8 posture cases, 6 of them from 2015-2016, when the US backed the Saudi-led war and only the big Houthi acts are logged (the daily fighting is not), so \"no Houthi attack within 7 days\" is weak evidence for those. How the Houthis read deployments or advisers is not measured.",
 }
 
 # ---- constraint periods (limit which options are open); notes are per option letter -------------------------
@@ -190,7 +195,7 @@ NOW_FILE = "now.json"
 
 # ---- plain-language risk lines (the page's "What the log says"; filled in by theaters/common.py) -----------------------
 THREAD_PREFIX = "H"
-LOOKBACKS = ("2016-10-14", "2023-12-31", "2024-06-30", "2025-05-06", "2026-09-10")      # past dates the page test also checks (no hindsight)
+LOOKBACKS = ("2015-04-13", "2016-10-08", "2016-10-14", "2023-12-31", "2024-06-30", "2025-05-06", "2026-09-10")      # past dates the page test also checks (no hindsight)
 RISK_TEXT = dict(
     people_trigger="Replies that hurt people: {hurt} of {n} logged{detail}. Civilian harm reported in the US act itself: none in an allowed outlet.",
     people_hold="Ship crews: attacks on shipping have been logged at about {per_week} a week in the current phase. No new US act to answer.",
