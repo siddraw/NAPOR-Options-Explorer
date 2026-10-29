@@ -2,7 +2,7 @@
 
 Run from napor/:  python3 weekly_build.py
 Exit code 0 = PASS (safe to publish), 1 = FAIL (do not publish; fix the first failing step).
-Steps: build.py -> recalc (0 formula errors) -> backtest.py -> test_resolver.py -> for every theater in explorer/theaters.json:
+Steps: build.py -> recalc (0 formula errors) -> backtest.py -> tests/test_resolver.py (via pytest) -> for every theater in explorer/theaters.json:
        backtest_risk.py (no-hindsight check), export_explorer.py (+ its two self-checks), verify_explorer.py -> page-data validator.
 """
 import datetime as dt
@@ -128,7 +128,7 @@ if __name__ == "__main__":
     else:
         results.append(("recalc: 0 formula errors", False, f"{RECALC} not found"))
     step("backtest.py (reply prediction)", [PY, "backtest.py"], must_contain=("TEST 1", "TEST 2"))
-    step("test_resolver.py (matcher)", [PY, "test_resolver.py"], must_contain=("headlines.",))
+    step("tests/test_resolver.py (matcher)", [PY, "-m", "pytest", "-q", os.path.join(REPO, "tests", "test_resolver.py")], must_contain=("1 passed",))
     import theaters
     for tid in theaters.registered():       # every theater in explorer/theaters.json gets the same three steps
         step(f"[{tid}] backtest_risk.py (risk numbers, no-hindsight check)", [PY, "backtest_risk.py", tid],
