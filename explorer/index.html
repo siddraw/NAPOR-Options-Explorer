@@ -153,7 +153,7 @@ details.fold li{margin:3px 0}
 .stack{display:flex;height:22px;border-radius:6px;overflow:hidden;background:var(--soft);border:1px solid var(--line)}
 .stack i{display:block;height:100%;transition:width .3s}
 .stackaxis{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);font-family:var(--f-mono);margin-top:2px}
-.cat{display:grid;grid-template-columns:14px minmax(0,1fr) 78px 88px;gap:4px 12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.cat{display:grid;grid-template-columns:14px minmax(0,1fr) 185px 88px;gap:4px 12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
 .cat .sw{width:12px;height:12px;border-radius:3px}
 .cat .cn{font-weight:600}
 .cat .cd{grid-column:2/-1;font-size:12px;color:var(--muted)}
@@ -164,7 +164,7 @@ details.fold li{margin:3px 0}
 .cat .ivw{grid-column:2/-1}
 .cat details{grid-column:2/-1;font-size:13px;color:var(--muted)}
 .cat summary{cursor:pointer;color:var(--accent);font-size:12px}
-@media(max-width:560px){.cat{grid-template-columns:14px minmax(0,1fr) 70px}.cat .cc{display:none}}
+@media(max-width:560px){.cat{grid-template-columns:14px minmax(0,1fr) 150px}.cat .cc{display:none}}
 .weights{margin-top:12px;font-size:13px}
 .weights summary{cursor:pointer;color:var(--accent)}
 .wgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px 18px;margin-top:10px}
@@ -775,7 +775,7 @@ function gaugeSvg(ix){
     (ix.idx > 0.005 ? `<path d="${arc(100,100,78,180,a(ix.idx))}" fill="none" stroke="var(--accent)" stroke-width="16" stroke-linecap="round"/>` : '') +
     `<text x="100" y="92" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="38" font-weight="500" fill="var(--ink)">${Math.round(ix.idx*100)}%</text>` +
     `<text x="22" y="116" font-size="10" fill="var(--muted)" font-family="IBM Plex Mono,monospace">0</text><text x="178" y="116" font-size="10" fill="var(--muted)" font-family="IBM Plex Mono,monospace" text-anchor="end">100%</text></svg>` +
-    `<div class="rng">NAPOR risk index${useEst() ? " (NAPOR estimate)" : ""}<br>${useEst() ? "Without the NAPOR estimate: " + Math.round(ix.raw*100) + "% · " : ""}range ${Math.round(ix.lo*100)}–${Math.round(ix.hi*100)}% · ${ix.n} past ${ix.n === 1 ? "case" : "cases"}</div></div>`;
+    `<div class="rng"><b>NAPOR risk index</b><br>${useEst() ? "Plain average, no estimate: " + Math.round(ix.raw*100) + "%<br>" : ""}Range ${Math.round(ix.lo*100)}–${Math.round(ix.hi*100)}% · ${ix.n} past ${ix.n === 1 ? "case" : "cases"}</div></div>`;
 }
 const SHORT = {};   /* not used: one set of category names (CAT_NAME) everywhere */
 function radarSvg(ix){
@@ -790,7 +790,7 @@ function radarSvg(ix){
     const [x,y] = pt(i, vals[i]), [lx,ly0] = pt(i, 1.1), sn = Math.sin(ang(i)), cs = Math.cos(ang(i));
     const anchor = Math.abs(cs) < .2 ? "middle" : cs > 0 ? "start" : "end";
     const ly = sn < -.9 ? ly0 - 14 : sn > .5 ? ly0 + 8 : ly0 - 2;
-    const val = !p.ok ? (p.s.nm ? "not measured" : "no data") : p.s.assumed ? "0% (assumed)" : Math.round(p.p*100) + "% · " + p.s.k + "/" + p.s.n;
+    const val = !p.ok ? (p.s.nm ? "not measured" : "no data") : p.s.assumed ? "0% (assumed)" : Math.round(p.p*100) + "% · " + p.s.k + " of " + p.s.n;
     const clk = p.ok && !p.s.assumed ? ` data-cat="${p.c}"` : "";
     g += `<g${clk}><title>${CAT_NAME[p.c]}: click to see the cases</title><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6" fill="var(--k${i+1})" stroke="var(--panel)" stroke-width="1.5"/>` +
       `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anchor}" font-size="10.5" font-weight="600" fill="var(--ink)">${CAT_NAME[p.c]}</text>` +
@@ -844,7 +844,7 @@ function outcomesBlock(o, st, ix){
   else { const cv = st.civ; h += flowRow(USH("Civilians reported hurt in the US action itself"), "share of past cases", pc(cv), P(cv.k, cv.n), cv.k + " of " + cv.n, "", "var(--k2)"); }
   h += '</div>';
   const sb = cs.reduce((a,c) => a + c.ship_b, 0), sa = cs.reduce((a,c) => a + c.ship_a, 0), mx = Math.max(1, sb, sa);
-  h += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,420px));gap:16px;margin-top:16px">` + (em.mode !== "ships" ? "" : `<div><h2>Shipping attacks, 7 days before vs after</h2><div class="pair"><div><i style="height:${sb/mx*100}%"></i>before ${sb}</div><div><i style="height:${sa/mx*100}%"></i>after ${sa}</div></div><p class="legend">Total across ${cs.length} past cases${sb ? " (" + (sa >= sb ? "+" : "") + Math.round((sa-sb)/sb*100) + "%)" : ""}. Not shown to be caused by the US action.</p></div>`);
+  h += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,420px));gap:16px;margin-top:16px">` + (em.mode !== "ships" ? "" : `<div><h2>Economic harm: shipping attacks ${EDAYS()} days before vs after</h2><div class="pair"><div><i style="height:${sb/mx*100}%"></i>before ${sb}</div><div><i style="height:${sa/mx*100}%"></i>after ${sa}</div></div><p class="legend">Attacks on shipping in the ${EDAYS()} days before and after each past case, added up across ${cs.length} cases. The Economic harm category counts the cases where attacks rose. Total${sb ? " (" + (sa >= sb ? "+" : "") + Math.round((sa-sb)/sb*100) + "%)" : ""}. Not shown to be caused by the US action.</p></div>`);
   if(o.is_hold) h += `<div><h2>${esc(BASEN())} per week (logged)</h2>${weeklyShipping()}<p class="legend">The real count is higher: big clusters are logged as one row.</p></div>`;
   if(fcs(o).length) h += `<div><h2>NAPOR's open forecasts</h2>` + fcs(o).map(f => `<div class="fgauge"><div class="q">${esc(f.question)}<small>${esc(f.id)} · by ${fmtDate(f.deadline)}</small></div><div class="big">${Math.round(f.p*100)}%</div><div class="bar"><i style="width:${f.p*100}%"></i></div></div>`).join("") + `</div>`;
   return h + '</div>';
@@ -882,13 +882,13 @@ function indexPanel(o, cs){
   const holdNote = o.is_hold && TH.hold_note ? `<p class="note" style="margin-bottom:10px">${esc(TH.hold_note)}</p>` : "";
   const ix = riskIndex(o, cs);
   if(!ix) return `<p class="nodata">No past cases of this option match the condition you picked, so there is no index to show. Clear the condition above or pick another.</p>`;
-  const thin = (ix.n <= 3 ? "Very thin evidence: a rough sketch." : ix.n <= 7 ? "Thin evidence: wide range." : "Fair sample.") + (useEst() ? ` Each category is a NAPOR estimate: its x of n pulled a little toward the same category across all options (${EST_M()} cases' worth), which scored better in the backtest.` : "");
+  const thin = (ix.n <= 3 ? "Very thin evidence: a rough sketch." : ix.n <= 7 ? "Thin evidence: wide range." : "Fair sample.") + (useEst() ? ` Why a raw 0 of 11 can show as 1%: each category's x of n is blended a little with the same category across all options (${EST_M()} cases' worth), so a handful of cases never reads as a flat 0% or 100%. This scored better in the backtest.` : "");
   let h = holdNote + `<div class="vis">${gaugeSvg(ix)}${radarSvg(ix)}<div class="stackcol"><div class="nodata" style="margin-bottom:4px">What makes up the ${Math.round(ix.idx*100)}%</div>${stackBar(ix)}<div class="stackaxis"><span>0%</span><span>50%</span><span>100%</span></div><div class="formula">${esc(formulaText(ix))}</div>${katLegend()}<p class="nodata">${esc(thin)} ${ix.used} of 5 categories measured.</p></div></div><div style="margin-top:10px">`;
   ix.parts.forEach((p, i) => {
     const s = p.s;
     h += `<div class="cat"><span class="sw" style="background:var(--k${i+1})"></span><div class="cn">${CAT_NAME[p.c]}</div>`;
     if(!p.ok) h += `<div class="cv"><span class="nodata">not measured</span></div><div class="cc"></div>`;
-    else h += `<div class="cv">${s.assumed ? "0%" : pct(p.p)}<small>${s.assumed ? "assumed" : s.k + " of " + s.n + (useEst() ? " · raw " + P(s.k, s.n) : "")}</small></div><div class="cc">+${(p.contrib*100).toFixed(1)}<small>points of index</small></div>`;
+    else h += `<div class="cv">${s.assumed ? "0%" : pct(p.p)}<small>${s.assumed ? "assumed" : (useEst() ? "estimate<br>" : "") + s.k + " of " + s.n + " cases" + (useEst() ? " (raw " + P(s.k, s.n) + ")" : "")}</small></div><div class="cc">+${(p.contrib*100).toFixed(1)}<small>points of index</small></div>`;
     h += `<div class="cd">${esc(CAT_DEF[p.c](o))}${s.n ? " Range " + R(s.k, s.n) + "." : ""}</div>`;
     if(s.n) h += `<div class="ivw">${iv(s)}</div>`;
     if(p.ok && !s.assumed) h += `<button class="catbtn" data-cat="${p.c}">See the ${s.n} case${s.n === 1 ? "" : "s"} behind this ${pct(p.p)} ›</button>`;
