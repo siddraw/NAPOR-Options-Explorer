@@ -1,6 +1,6 @@
 """Venezuela / Caribbean theater: wording, options, flags and rules, all in one place.
 
-The research file (events.py, written by W10) holds the facts and is read only. rules.py gives this tab's view of it (see below). This file holds
+The research file (events.py, written separately) holds the facts and is read only. rules.py gives this tab's view of it (see below). This file holds
 the decisions the engine needs: which options exist, what counts as an act by the other side, which outlets are claims only, how each of the
 five risk categories is defined here, which weeks count as "hold" weeks, and the analyst notes the page shows (notes.py).
 

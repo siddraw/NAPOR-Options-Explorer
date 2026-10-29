@@ -1,8 +1,8 @@
 # Changelog
 
-## 2026-10-26 - Model rule change: "political" corner is now "talks only" (Sidd approved on 2026-10-26)
+## 2026-10-26 - Model rule change: "political" corner is now "talks only" (I approved on 2026-10-26)
 - **Rule, every theater.** Old: risk = no diplomatic event of any kind (statements and threats by any side included) logged within 14 days. New: risk = no actual talks, meeting, negotiation, formal proposal, ceasefire or deal between the US and the adversary (directly or through a mediator) logged within 14 days. Statements, threats and appeals do not count. This is the "P2: talks only, 14 days" rule tested in round 2 (same words as the "Diplomacy" option's past moves: `napor_options.TALK_WORDS`).
-- **Reason.** The old rule let a single public threat or warning cancel a political risk, so the corner mostly measured how often officials talk, not whether talks were happening. Sidd approved the talks-only rule after the round-2 backtest.
+- **Reason.** The old rule let a single public threat or warning cancel a political risk, so the corner mostly measured how often officials talk, not whether talks were happening. I approved the talks-only rule after the round-2 backtest.
 - **Follow-up fixes (same day, coordinator).** (1) Every US option-B (talks/deals) row counts, so Venezuela's oil deals and license, prisoner swap, restored ties, embassy reopening and normalization flight now count as deals; an adversary row that is a negotiation counts too: Iran #99 (Oct 9, "talks continue through mediators") and #127 (Oct 25, messages still passed to the US through intermediaries) were added (`TALK_EXTRA`); #115 (Iran reviewing US comments) and rejections were left out. (2) Houthis: UN Security Council Resolution 2722 (#1020) is a multilateral act, not talks or a proposal to or by the Houthis, so it no longer counts (`TALK_EXCLUDE`); "proposal" counts only when made to or by the adversary.
 - **Political Brier (old to new, walk-forward, NAPOR estimate):** Iran 0.3084 to 0.2989; Houthis 0.1100 to 0.0225; North Korea 0.0233 to 0.0233 (no change); China 0.0000 to 0.0000 (no change); Venezuela 0.0730 to 0.0730 (no change: every logged Venezuelan diplomatic row is an option-B row, so the new rule equals the old one there).
 - **Index Brier (old to new):** Iran 0.1816 to 0.1797 (new Iran index Brier 0.1797); Houthis 0.0770 to 0.0595; North Korea 0.0495 to 0.0495; China 0.0813 to 0.0813; Venezuela 0.0829 to 0.0829. A lower score means the new rule is easier to predict, not that it measures political risk better.
@@ -17,7 +17,7 @@
 
 ## 2026-10-24 — Round 2, stages 3–5
 - **Per-theater engine** (`napor/theaters/common.py`): shared code for cases, export, verify and backtest. Each theater is a package `napor/theaters/<id>/` (config, events, now.json, wrappers). `weekly_build.py` now loops over every theater in `explorer/theaters.json`. Page data goes to `explorer/data/<id>.json`, `<id>-history.json` and `explorer/verify-<id>.json`. Iran has a wrapper package too; its numbers are unchanged.
-- **Houthi tab** (88 events, IDs 1001–1599): Red Sea crisis, US strikes and Houthi replies. The organizer fixed problems found in review. Weak spots: 2024 was continuous fighting, so few cases count as separate cases; the 2025–26 log is thin.
+- **Houthi tab** (88 events, IDs 1001–1599): Red Sea crisis, US strikes and Houthi replies. Problems found in review were fixed. Weak spots: 2024 was continuous fighting, so few cases count as separate cases; the 2025–26 log is thin.
 - **North Korea tab** (76 events, IDs 2001–2999): US/South Korea drills, deployments, sanctions and talks, and DPRK launches and tests as replies. Weak spots: the launch log is a sample, not every launch; economic harm is not measured; routine launch seasons are hard to tell from replies.
 - **China tab** (63 events, IDs 3001–3999): Taiwan Strait transits, arms sales, visits, sanctions, and PLA drills as replies. Weak spots: small n, so wide ranges; Option A (Hold) has no cases; background PLA activity vs a real reply is a judgment call.
 - Chinese, Houthi and DPRK state media are used only as labelled claims.
@@ -173,5 +173,5 @@ Data updates only; no model rules changed.
 ## 2026-10-22 - Availability changes with the date
 - Added `napor/napor_context.py`: ceasefires and the no-strike pledge, each bounded by logged events. On past dates each option is "In use" (US did it in the 14 days before), "Constrained" (a ceasefire or pledge in force ruled it out, including when it began after the last use) or "Open". Hold shows "Current course" when no US strike, sanctions or naval move is logged in the 14 days before. Only the US's own moves count (not Israel alone). The weekly hand-written status still applies to its own week.
 
-## 2026-10-22 - Mastermind review of round 1
+## 2026-10-22 - Review of round 1
 - Reviewed round 1 (weekly build PASS, page test 73/73, numbers and sources spot-checked). Corrected #59 to Jul 7 (NPR dates the remark to Tuesday). Merged to main.

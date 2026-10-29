@@ -1,7 +1,7 @@
-"""NAPOR Houthis / Red Sea: the US-Houthi record, Oct 2016 - Dec 31, 2024 (research file, W2).
+"""NAPOR Houthis / Red Sea: the US-Houthi record, Oct 2016 - Dec 31, 2024 (research file).
 
 Same shape as napor/prewar.py. Event IDs 1001-1299 and pair IDs 1001-1299 belong to this file.
-W3 (events_late.py) continues from Jan 1, 2025 with IDs 1301-1599.
+events_late.py continues from Jan 1, 2025 with IDs 1301-1599.
 
 Rules used here (docs/SOURCE_STANDARD.md):
 - Only allowed outlets and official statements (CENTCOM, Treasury, UN count as official). Wire stories
@@ -14,7 +14,7 @@ Rules used here (docs/SOURCE_STANDARD.md):
   H force posture). No sourced H event was found for this era.
 - Continuous-fighting rule: from the first US strikes (Jan 12, 2024) the Houthis attacked ships or
   US forces almost every week, so every US strike in the window has a "reply" by default. US strikes in
-  the window are logged as context and are not counted in the census. W3 continues the window.
+  the window are logged as context and are not counted in the census. events_late.py continues the window.
 - Events 1005 and 1009 are also in the Iran log (prewar #264 and #265).
 - Dates follow the announcement date when a seizure was announced days later (as in prewar).
 """
@@ -160,7 +160,7 @@ US_OPTION = {
 }
 
 # My own estimate of the engine's credibility score (full-text allowed outlet 0.80, two outlets 0.96,
-# claim-only 0.30; under 0.50 is not counted). For the organizer's spot check only.
+# claim-only 0.30; under 0.50 is not counted). For spot checks only.
 CRED_ESTIMATE = {
  1001: 0.96, 1002: 0.96, 1003: 0.96, 1004: 0.96, 1005: 0.80, 1006: 0.96, 1007: 0.80, 1008: 0.80,
  1009: 0.96, 1011: 0.80, 1012: 0.80, 1013: 0.80, 1014: 0.80, 1015: 0.80, 1016: 0.96, 1017: 0.80,
@@ -206,7 +206,7 @@ PAIRS = [
 ]
 
 # Continuous-fighting windows (US strikes inside are context only) and the acts that started them.
-# W3 continues this window to its real end (Jan 19, 2025 pause, if confirmed).
+# events_late.py continues this window to its real end (Jan 19, 2025 pause, if confirmed).
 WINDOWS = [(d(2024, 1, 12), d(2024, 12, 31))]
 START_ACTS = {1021}
 
@@ -215,7 +215,7 @@ PHASES = [
  ("First missile attacks", d(2016, 10, 9), d(2016, 10, 15), "#1001-#1002 missiles at USS Mason; #1003 the first US strikes; #1004 a third incident"),
  ("Quiet years: designations and arms seizures", d(2016, 10, 16), d(2023, 10, 18), "Arms seizures (#1005, #1009), the terrorist designation and its reversal (#1006, #1008), Biden's Yemen policy change (#1007)"),
  ("Red Sea shipping attacks begin", d(2023, 10, 19), d(2024, 1, 11), "Galaxy Leader seized (#1012), missiles near US ships, Operation Prosperity Guardian (#1016), helicopters sink boats (#1018)"),
- ("US-UK strikes and the shipping war", d(2024, 1, 12), d(2024, 12, 31), "Strikes from #1021 on, ship sinkings (#1032, #1035), lost drones, sanctions rounds and the B-2 strike (#1042); W3 continues from Jan 2025"),
+ ("US-UK strikes and the shipping war", d(2024, 1, 12), d(2024, 12, 31), "Strikes from #1021 on, ship sinkings (#1032, #1035), lost drones, sanctions rounds and the B-2 strike (#1042); events_late.py continues from Jan 2025"),
 ]
 
 CHAIN_NAMES = {

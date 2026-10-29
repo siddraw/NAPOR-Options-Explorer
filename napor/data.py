@@ -503,7 +503,7 @@ _EDITS.update({
           note="Confirmed (Axios, Reuters): at least three commercial ships hit Jul 6-7. The old '49 to 25 vessels a day' traffic figure was not found in an allowed outlet and was dropped."),
  58: dict(detail="Treasury withdraws the general license allowing Iranian oil sales (wind-down to Jul 17) after the tanker attacks",
           note="Confirmed (Reuters via Honolulu Star-Advertiser, Jul 7)."),
- 59: dict(note="Confirmed (NPR, published Jul 8): NPR dates Trump's remark to Tuesday, Jul 7, so the row date was moved from Jul 8 to Jul 7 (mastermind review, Oct 22)."),
+ 59: dict(note="Confirmed (NPR, published Jul 8): NPR dates Trump's remark to Tuesday, Jul 7, so the row date was moved from Jul 8 to Jul 7 (review, Oct 22)."),
  60: dict(detail="About 90 targets along Iran's coast (air defenses, coastal surveillance, missile and drone storage, naval and logistics sites), the second night in a row after ~80 on Jul 7 (CENTCOM)",
           note="Corrected (CENTCOM, Bloomberg): no allowed outlet puts bridges among the Jul 8 targets. The bridge strikes (two bridges in Hormozgan, 3 killed per Iranian state TV) were on Jul 16-17 (AFP), inside the nightly campaign that is excluded from the census."),
  85: dict(date=d(2026, 9, 29), note="Date corrected to Sep 29 (Al Jazeera; AP via PBS): Treasury announced the sanctions on Tuesday, Sep 29, not Sep 28."),

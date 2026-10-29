@@ -1,4 +1,4 @@
-"""NAPOR North Korea: the US/allied-move and DPRK-reply record, Aug 2017 - Oct 12, 2026 (research file, W5).
+"""NAPOR North Korea: the US/allied-move and DPRK-reply record, Aug 2017 - Oct 12, 2026 (research file).
 
 Same shape as napor/prewar.py and napor/theaters/houthis/events_early.py. Event IDs and pair IDs
 2001-2999 belong to this file (2001-2076 used).
@@ -11,8 +11,7 @@ Option letters used for US (and US-allied) moves, tagged in US_OPTION. A (hold) 
   F  Missile-defense moves (THAAD, trilateral missile-warning data sharing)
   G  Strategic-asset deployments (bombers, carriers, nuclear-powered submarine visits)
   H  Other force-posture or alliance-posture changes (summit pledges, defense-chief visits)
-These letters follow the W5 research brief. docs/round_plan.md (wave 3, W5) lists E and G the other way
-round (E strategic asset, G interdiction); the organizer should pick one before config.py is written.
+These letters match config.py.
 
 Source rules (docs/SOURCE_STANDARD.md):
 - Only allowed outlets and official statements (Treasury/OFAC, White House, INDOPACOM, Japan MoD).
@@ -27,7 +26,7 @@ Source rules (docs/SOURCE_STANDARD.md):
 - Statements that threaten action (2045, 2049, 2051) are logged as replies of kind "statement". They are
   facts about what was said, confirmed by the allowed outlet; the content is a North Korean claim.
 
-Thin or open spots (the organizer should read these):
+Thin or open spots (worth reading):
 - Only 2 interdiction moves (E) and 5 sanctions moves (C) were confirmed. Many more Treasury rounds exist.
 - Census "N" rows (2005, 2006, 2007, 2010, 2011) rest on AP/PBS context that the next DPRK launch came
   weeks later (first launch of 2019 on May 4, 2019, then May 9, then Jul 25). No full launch list was
@@ -263,8 +262,8 @@ US_OPTION = {
 }
 
 # My own estimate of the engine's credibility score (full-text allowed outlet 0.80, two outlets 0.96,
-# claim-only 0.30; under 0.50 is not counted; a single snippet-only source is a guess at 0.60). For the
-# organizer's spot check only.
+# claim-only 0.30; under 0.50 is not counted; a single snippet-only source is a guess at 0.60). For
+# spot checks only.
 CRED_ESTIMATE = {
  2001: 0.80, 2002: 0.80, 2003: 0.96, 2004: 0.80, 2005: 0.80, 2006: 0.80, 2007: 0.80, 2008: 0.80,
  2009: 0.80, 2010: 0.96, 2011: 0.80, 2012: 0.80, 2013: 0.80, 2014: 0.80, 2015: 0.80, 2016: 0.96,
@@ -280,7 +279,7 @@ CRED_ESTIMATE = {
 
 # Trigger Census rows: one per US move (reply window: 7 days, DPRK launch / test / provocation / threatening statement).
 # Category = what the move was: Economic/Blockade (sanctions, seizures), Military/Property (drills, deployments,
-# missile defense, posture), Political/Diplomatic (talks; not in W2's list, flagged for the organizer).
+# missile defense, posture), Political/Diplomatic (talks; not in the Houthi list, flagged for review).
 # Status: R-strong (North Korea itself ties the act to the move), R-weak (act within 7 days, link plausible),
 # N (no DPRK act found in the 7 days), Unclear (cannot be separated), Unverified (window not searched).
 # 2065 (THAAD report) is not_confirmed and has no row. Moves inside a dense-launch window (2023, 2026) are context only.
@@ -307,8 +306,8 @@ CENSUS = [
  (2038, "Military/Property", "Unverified", "B-1B joins trilateral air drill Dec 20, 2023, two days after the ICBM. DPRK acts in Dec 21-27, 2023 were not searched."),
  (2041, "Military/Property", "R-weak", "Roosevelt carrier arrives Busan Jun 22, 2024 -> failed launch Jun 26 (JCS), a day before Freedom Edge began."),
  (2043, "Military/Property", "R-strong", "Freedom Edge begins Jun 27, 2024 -> two ballistic missiles Jul 1 (JCS). A day earlier North Korea CLAIMED it would give an 'offensive and overwhelming' response to the drills (Al Jazeera)."),
- (2048, "Military/Property", "R-weak", "USS Alexandria docks Busan Feb 10, 2025 -> North Korea's defense ministry statement Feb 11 vowing to punish 'provokers' (KCNA via Al Jazeera). The statement names the submarine, but it is the only North Korean act: no launch, test or drill was found inside the 7 days in the sources read. The header rule gives R-strong only when a North Korean act is tied to the move; a statement alone is R-weak (W9 audit; was R-strong)."),
- (2050, "Military/Property", "R-weak", "USS Carl Vinson visits Busan Mar 2, 2025 -> Kim Yo Jong statement Mar 4 threatening options against the 'security of the enemy' (KCNA via Stripes). The reply is a statement and the only North Korean act inside the 7 days; the next launch was Mar 10, 8 days after. A statement alone is R-weak under the header rule (W9 audit; was R-strong)."),
+ (2048, "Military/Property", "R-weak", "USS Alexandria docks Busan Feb 10, 2025 -> North Korea's defense ministry statement Feb 11 vowing to punish 'provokers' (KCNA via Al Jazeera). The statement names the submarine, but it is the only North Korean act: no launch, test or drill was found inside the 7 days in the sources read. The header rule gives R-strong only when a North Korean act is tied to the move; a statement alone is R-weak (source audit; was R-strong)."),
+ (2050, "Military/Property", "R-weak", "USS Carl Vinson visits Busan Mar 2, 2025 -> Kim Yo Jong statement Mar 4 threatening options against the 'security of the enemy' (KCNA via Stripes). The reply is a statement and the only North Korean act inside the 7 days; the next launch was Mar 10, 8 days after. A statement alone is R-weak under the header rule (source audit; was R-strong)."),
  (2052, "Military/Property", "R-weak", "Freedom Shield begins Mar 10, 2025 -> several close-range ballistic missiles the same day (JCS via AP). North Korea had warned of 'physical conflict'."),
  (2054, "Military/Property", "Unverified", "B-1B drill Apr 15, 2025. AP reports no North Korean response as of publication; Apr 16-22 was not searched."),
  (2056, "Political/Diplomatic", "Unclear", "Trump repeats his wish to meet Kim, Oct 28, 2025. North Korea CLAIMED a cruise-missile test the same day (2057, claim only, not counted); the Oct 22 SRBMs (2055) came before. No counted reply."),

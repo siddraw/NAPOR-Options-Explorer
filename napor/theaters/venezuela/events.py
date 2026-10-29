@@ -1,4 +1,4 @@
-"""NAPOR Caribbean / Venezuela: the US-Venezuela record, 2019 - Oct 26, 2026 (research file, W10).
+"""NAPOR Caribbean / Venezuela: the US-Venezuela record, 2019 - Oct 26, 2026 (research file).
 
 Same shape as napor/theaters/houthis/events_early.py. Event IDs 4001-4999 and pair IDs 4001-4999 belong to this file.
 
@@ -236,7 +236,7 @@ def _cred(k):
 
 
 # My own estimate of the engine's credibility score (full-text allowed outlet 0.80, two distinct outlets 0.96,
-# claim-only 0.30; under 0.50 is not counted). For the organizer's spot check only.
+# claim-only 0.30; under 0.50 is not counted). For spot checks only.
 CRED_ESTIMATE = {e[0]: _cred(e[0]) for e in EVENTS}
 
 # Trigger Census rows for US moves of kinds B-H (window: 7 days for a reply).

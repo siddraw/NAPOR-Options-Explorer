@@ -1,4 +1,4 @@
-"""NAPOR Houthis / Red Sea: the record from Jan 1, 2025 to Oct 24, 2026 (research file, W3).
+"""NAPOR Houthis / Red Sea: the record from Jan 1, 2025 to Oct 24, 2026 (research file).
 
 Same source standard as the rest of NAPOR (docs/SOURCE_STANDARD.md):
 - Only allowed outlets and official statements. A wire story read on a syndicated page is labelled

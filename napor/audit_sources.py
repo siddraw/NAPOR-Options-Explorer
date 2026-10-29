@@ -1417,7 +1417,7 @@ SOURCES.update({
 
 
 # ---------------------------------------------------------------------------
-# Re-sourcing round, 2026-10-22 (organizer session). Every URL below came back from a WebSearch or
+# Re-sourcing round, 2026-10-22 (review session). Every URL below came back from a WebSearch or
 # WebFetch in that session; seen="full text" = the page was fetched and read.
 # ---------------------------------------------------------------------------
 _NPR_JUN8 = _s('Iran and Israel trade attacks for the first time since April ceasefire', 'NPR (via KGOU)', '2026-06-08',
