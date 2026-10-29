@@ -39,10 +39,19 @@ NAPOR is graded with the Brier score, which measures how close a probability was
 happened. A score of 0 is perfect, and 0.25 is what you get by always guessing 50%, basically a coin
 flip, so anything under 0.25 means the past cases are telling us something real. To test this fairly,
 NAPOR replays history in order and only uses the cases that were known at that time, so it can never
-peek at the future. On the Iran tab, the risk numbers score about **0.13**, which beats a coin flip.
+peek at the future. On the Iran tab, the risk numbers score about **0.14**, which beats a coin flip.
 However, when the model only learns from the years before the 2026 war and is graded on the war itself,
 it scores about **0.28**, slightly worse than a coin flip. Therefore the past is a useful guide, but a
 new war does not always follow old patterns, and I show both numbers on the page's Report Card.
+
+Next to every number on the page you will also see a range, like 14-84%. This is the margin of error.
+With only a few past cases, a rate such as 1 of 3 could easily be off, so the range shows how high or
+low the true rate could plausibly be. It comes from a standard small-sample method (the Wilson 95%
+interval, the same kind of math behind poll margins of error) and does not add or invent any cases. More
+cases make the range narrower: 1 of 3 gives about 6-79%, while 10 of 30 (the same 33%) gives about
+19-51%. A wide range just means the number is a hint and not a conclusion. The big number on the page is
+always the raw "x of n"; the small NAPOR estimate beside it only nudges rates built on a few cases
+slightly toward the all-options average, and the Report Card shows how both scored.
 
 ## Why Iran first
 
