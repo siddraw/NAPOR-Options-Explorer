@@ -125,9 +125,8 @@ details.fold li{margin:3px 0}
 .dot.no{background:transparent}
 .dot.open{border-style:dashed;border-color:var(--open);background:transparent}
 /* explorer */
-.main{display:grid;grid-template-columns:290px minmax(0,1fr);gap:16px;align-items:start}
-@media(max-width:860px){.main{grid-template-columns:1fr}}
-.list{display:flex;flex-direction:column;gap:6px}
+.pickhint{margin:0 0 10px;font-size:14px;color:var(--muted)}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
 .list button{text-align:left;display:grid;grid-template-columns:28px 1fr;gap:3px 8px;background:var(--panel);
   border:1px solid var(--line);border-radius:8px;padding:9px 10px;cursor:pointer}
 .list button[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--accent-soft)}
@@ -136,12 +135,18 @@ details.fold li{margin:3px 0}
 .list .ev{font-size:12px;color:var(--muted)}
 .list .row2{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .detail{display:flex;flex-direction:column;gap:22px}
-@media(min-width:861px){.list{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow-y:auto}}
-@media(max-width:860px){.list{flex-direction:row;overflow-x:auto;position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 0;gap:8px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
-.list button{flex:0 0 auto;width:min(78vw,260px);scroll-snap-align:start}.list .ev{display:none}}
-@keyframes fadein{from{opacity:.35}to{opacity:1}}
-.detail{animation:fadein .18s ease-out}
-@media(prefers-reduced-motion:reduce){.detail{animation:none}}
+#wins .win{position:fixed;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 34px rgba(0,0,0,.35);min-width:320px;min-height:220px;max-width:100vw;max-height:calc(100vh - 44px);resize:both;overflow:hidden}
+#wins .wbar{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--line);background:var(--bg);cursor:grab;touch-action:none;user-select:none}
+#wins .wbar b{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+#wins .wbar button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-size:18px;cursor:pointer;flex:none}
+#wins .wbody{flex:1;overflow:auto;padding:14px 16px;min-height:0}
+#wins .wbody .detail{gap:22px}
+#wtray{position:fixed;left:0;right:0;bottom:0;z-index:19;display:flex;gap:6px;padding:6px 10px;background:var(--bg);border-top:1px solid var(--line);overflow-x:auto}
+#wtray[hidden]{display:none}
+#wtray button{flex:none;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:16px;padding:6px 12px;cursor:pointer;font-size:13px}
+#wtray button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+@media(max-width:860px){#wins .win{inset:0 0 44px 0!important;width:auto!important;height:auto!important;border-radius:0;resize:none;max-height:none}#wins .wbar{cursor:default}}
+
 
 .head{display:flex;flex-direction:column;gap:8px}
 .head .what{color:var(--muted)}
@@ -377,6 +382,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
   <div class="modal" id="m-cat" hidden><div class="sheet" role="dialog" aria-modal="true" aria-label="Why this percentage" tabindex="-1"><button class="x" data-close aria-label="Close">×</button><section id="catview"></section></div></div>
   <div class="modal" id="m-how" hidden><div class="sheet" role="dialog" aria-modal="true" aria-label="How this works" tabindex="-1"><button class="x" data-close aria-label="Close">×</button><section id="howview" class="how"></section></div></div>
   <div class="modal" id="m-gloss" hidden><div class="sheet" role="dialog" aria-modal="true" aria-label="Glossary" tabindex="-1"><button class="x" data-close aria-label="Close">×</button><section id="glossview" class="gloss"></section></div></div>
+  <div id="wins"></div><div id="wtray" hidden></div>
   <footer id="footer">
     <p>Percentages are x of n past cases in the NAPOR log, with the 95% range the true rate could plausibly sit in. Small samples give wide ranges, so read each number as a hint. "After" is not "because of".</p>
     <p>The risk index summarizes how past cases of that kind went. It is not a forecast and not a recommendation, and the options are not ranked. See "How this works".</p>
@@ -403,7 +409,7 @@ let PHASE_ORDER = [], PHASE_VAR = {};
 function setPhases(){ PHASE_ORDER = [...new Set(D.phases.map(p => p.name))]; PHASE_ORDER.forEach((p, i) => PHASE_VAR[p] = "--ph" + (i % 8)); }
 const CATS = ["people","escalation","military","economic","political"];
 const CAT_NAME = {people:"Harm to people", escalation:"Escalation", military:"Military cost", economic:"Economic harm", political:"Political / diplomatic"};
-const S = {asof:null, sel:"D", mode:"explore", metric:"index", phase:null, band:null, pin:null, w:{people:1,escalation:1,military:1,economic:1,political:1}};
+const S = {asof:null, sel:"D", open:[], mode:"explore", metric:"index", phase:null, band:null, pin:null, w:{people:1,escalation:1,military:1,economic:1,political:1}};
 try { S.sel = localStorage.getItem("napor-opt") || S.sel; } catch(e) {}
 const pick = k => { S.sel = k; try { localStorage.setItem("napor-opt", k); } catch(e) {} };
 
@@ -1056,24 +1062,62 @@ function renderTime(){
   $("#asof-today").onclick = () => setAsof(null);
   document.querySelectorAll("[data-asof]").forEach(b => b.onclick = () => setAsof(b.dataset.asof));
 }
-function renderExplore(){
-  const o = D.options.find(x => x.key === S.sel) || D.options[0], st = stats(o), cs = activeCases(o), ix = riskIndex(o, cs);
-  let h = smallNote() + '<div class="main"><div class="list" role="group" aria-label="Options">';
-  for(const x of D.options){
-    const c2 = activeCases(x), xi = riskIndex(x, c2);
-    h += `<button data-k="${x.key}" aria-pressed="${x.key === S.sel}"><span class="key">${x.key}</span><span class="nm">${esc(x.name)}</span><span class="row2">${stPill(x)}</span><span class="ev">${!x.cases.length || (!c2.length && !S.phase && !S.band) ? "No past cases" + (x.cases.length && S.asof ? " known on that date" : "") : (xi ? "Risk index " + Math.round(xi.raw*100) + "% · " : x.too_few ? "Too few cases · " : "") + cntLabel(c2.length, x.cases.length, x.is_hold) + (S.phase || S.band ? " in this condition" : "") + (c2.length > 0 && c2.length <= 3 && !x.too_few ? ' <span class="oldtag">very few cases</span>' : "")}</span></button>`;
-  }
-  h += `</div><div class="panel detail"><div class="head"><h3>${o.key}. ${esc(o.name)}</h3><p class="what">${esc(o.what)}</p>${situationBlock(o)}` +
+function detailHtml(o){
+  const st = stats(o), cs = activeCases(o), ix = riskIndex(o, cs);
+  let h = '';
+  h += `<div class="head"><h3>${o.key}. ${esc(o.name)}</h3><p class="what">${esc(o.what)}</p>${situationBlock(o)}` +
     (o.cases.length ? `<div class="meter"><span>${S.phase || S.band ? cntLabel(st.cases, st.total, o.is_hold) + " match the condition you picked" : cntLabel(st.cases, st.total, o.is_hold) + (S.asof ? " known on that date" : " in the log")}${st.cases > 0 && st.cases <= 3 ? ' <span class="oldtag">very few cases</span>' : ""}</span><span class="bar"><i style="width:${Math.min(100, st.cases / 8 * 100)}%"></i></span><span>8+ cases is a fair sample</span></div>` : "") + `</div>`;
   h += `<section><h2 title="${esc(RISKDEF)}">NAPOR risk assessment</h2><p class="legend idxdef">${esc(RISKDEF)}</p>${indexPanel(o, cs)}</section>`;
   h += `<section><h2><span class="h2l">What followed the last times the US did this</span><span class="h2s">What followed past cases</span></h2>${outcomesBlock(o, st, ix)}</section>`;
   h += `<section><h2>Pros and other harms (written by the weekly agent, not data; as of ${fmtDate(D.now && D.now.as_of ? D.now.as_of : D.generated)})</h2><div class="three"><div class="box"><b>Pros</b>${esc(o.pros)}</div><div class="box"><b>Other harms</b>${esc(o.harms)}</div><div class="box"><b>What the data cannot tell us</b>${esc(o.unknown)}</div></div></section>`;
   h += `<section><h2>Past cases behind these numbers</h2>${o.cases.length ? `<details class="cases"><summary>Show the ${o.cases.length} past case${o.cases.length === 1 ? "" : "s"}, one row each</summary>${caseTable(o)}</details>` : caseTable(o)}</section>`;
-  h += '</div></div>';
+  return h;
+}
+function renderExplore(){
+  let h = smallNote() + '<p class="pickhint">Pick an option to open it in its own window. Open several to compare them.</p><div class="list" role="group" aria-label="Options">';
+  for(const x of D.options){
+    const c2 = activeCases(x), xi = riskIndex(x, c2);
+    h += `<button data-k="${x.key}" aria-pressed="${S.open.includes(x.key)}"><span class="key">${x.key}</span><span class="nm">${esc(x.name)}</span><span class="row2">${stPill(x)}</span><span class="ev">${!x.cases.length || (!c2.length && !S.phase && !S.band) ? "No past cases" + (x.cases.length && S.asof ? " known on that date" : "") : (xi ? "Risk index " + Math.round(xi.raw*100) + "% · " : x.too_few ? "Too few cases · " : "") + cntLabel(c2.length, x.cases.length, x.is_hold) + (S.phase || S.band ? " in this condition" : "") + (c2.length > 0 && c2.length <= 3 && !x.too_few ? ' <span class="oldtag">very few cases</span>' : "")}</span></button>`;
+  }
+  h += '</div>';
   $("#view").innerHTML = h;
-  document.querySelectorAll(".list button").forEach(b => b.onclick = () => { const y = window.scrollY, lst = $(".list"), lx = lst ? lst.scrollLeft : 0, ly = lst ? lst.scrollTop : 0; pick(b.dataset.k); refresh(); const l2 = $(".list"); if(l2){ l2.scrollLeft = lx; l2.scrollTop = ly; const a = l2.querySelector('[aria-pressed="true"]'); if(a && a.scrollIntoView) a.scrollIntoView({block:"nearest", inline:"nearest"}); } window.scrollTo(0, y); });
-  document.querySelectorAll("input[data-w]").forEach(i => i.oninput = () => { S.w[i.dataset.w] = +i.value; renderExplore(); const w = $(".weights"); if(w) w.open = true; const f = $("#w-" + i.dataset.w); if(f) f.focus(); });
-  const wr = $("#w-reset"); if(wr) wr.onclick = () => { CATS.forEach(c => S.w[c] = 1); renderExplore(); const w = $(".weights"); if(w) w.open = true; };
+  document.querySelectorAll(".list button").forEach(b => b.onclick = () => openWin(b.dataset.k));
+  renderWins();
+}
+const WG = {};
+function openWin(k){
+  pick(k);
+  if(!S.open.includes(k)){ S.open.push(k); const n = S.open.length - 1, big = window.innerWidth > 860;
+    WG[k] = WG[k] || {x: Math.min(40 + n*32, Math.max(0, window.innerWidth - 700)), y: 70 + n*32, w: Math.min(680, window.innerWidth - 20), h: Math.round(window.innerHeight * .8)}; }
+  else S.open.push(S.open.splice(S.open.indexOf(k), 1)[0]);
+  renderExplore();
+}
+function closeWin(k){ S.open = S.open.filter(x => x !== k); renderExplore(); }
+function frontWin(k){ if(S.open[S.open.length-1] === k) return; S.open.push(S.open.splice(S.open.indexOf(k), 1)[0]); S.open.forEach((q, i) => { const e = document.querySelector('.win[data-k="' + q + '"]'); if(e) e.style.zIndex = 10 + i; }); document.querySelectorAll("#wtray button").forEach(b => b.setAttribute("aria-pressed", b.dataset.k === k)); }
+function renderWins(){
+  const box = $("#wins"), tray = $("#wtray"), keep = {};
+  box.querySelectorAll(".win").forEach(w => { const b = w.querySelector(".wbody"); keep[w.dataset.k] = {top: b.scrollTop, w: w.offsetWidth, h: w.offsetHeight, l: w.offsetLeft, t: w.offsetTop}; });
+  if(S.mode !== "explore" || !S.open.length){ box.innerHTML = ""; tray.hidden = true; document.body.classList.remove("winlock"); return; }
+  box.innerHTML = S.open.map((k, i) => {
+    const o = D.options.find(q => q.key === k); if(!o) return "";
+    const g = WG[k] = Object.assign(WG[k] || {x: 40, y: 70, w: 680, h: 560}, keep[k] ? {x: keep[k].l, y: keep[k].t, w: keep[k].w, h: keep[k].h} : {});
+    let body = detailHtml(o).replace(/ id="w-/g, ' id="' + k + '-w-').replace(/ for="w-/g, ' for="' + k + '-w-');
+    return `<div class="win" data-k="${k}" role="dialog" aria-label="Option ${k}: ${esc(o.name)}" style="left:${g.x}px;top:${g.y}px;width:${g.w}px;height:${g.h}px;z-index:${10 + i}"><div class="wbar"><b>${k}. ${esc(o.name)}</b><button data-wclose="${k}" aria-label="Close option ${k}">×</button></div><div class="wbody"><div class="detail">${body}</div></div></div>`; }).join("");
+  tray.hidden = false; tray.innerHTML = S.open.map(k => `<button data-k="${k}" aria-pressed="${k === S.open[S.open.length-1]}">${k}. ${esc((D.options.find(q => q.key === k) || {}).name || "")}</button>`).join("");
+  tray.querySelectorAll("button").forEach(b => b.onclick = () => { frontWin(b.dataset.k); });
+  box.querySelectorAll(".win").forEach(w => {
+    const k = w.dataset.k, b = w.querySelector(".wbody"); if(keep[k]) b.scrollTop = keep[k].top;
+    w.addEventListener("pointerdown", () => { S.sel = k; frontWin(k); }, true);
+    w.querySelector("[data-wclose]").onclick = () => closeWin(k);
+    const bar = w.querySelector(".wbar");
+    bar.addEventListener("pointerdown", ev => { if(ev.target.closest("button") || window.innerWidth <= 860) return;
+      const sx = ev.clientX, sy = ev.clientY, ox = w.offsetLeft, oy = w.offsetTop; bar.setPointerCapture(ev.pointerId); bar.style.cursor = "grabbing";
+      const mv = e => { w.style.left = Math.max(-w.offsetWidth + 80, Math.min(window.innerWidth - 80, ox + e.clientX - sx)) + "px"; w.style.top = Math.max(0, Math.min(window.innerHeight - 40, oy + e.clientY - sy)) + "px"; };
+      const up = () => { bar.removeEventListener("pointermove", mv); bar.removeEventListener("pointerup", up); bar.style.cursor = ""; WG[k] = Object.assign(WG[k], {x: w.offsetLeft, y: w.offsetTop}); };
+      bar.addEventListener("pointermove", mv); bar.addEventListener("pointerup", up); });
+    w.querySelectorAll("input[data-w]").forEach(i => i.oninput = () => { S.w[i.dataset.w] = +i.value; renderExplore(); const w2 = document.querySelector('.win[data-k="' + k + '"]'); if(w2){ const d = w2.querySelector(".weights"); if(d) d.open = true; const f = w2.querySelector('[id="' + k + '-w-' + i.dataset.w + '"]'); if(f) f.focus(); } });
+    const wr = w.querySelector('[id="' + k + '-w-reset"]'); if(wr) wr.onclick = () => { CATS.forEach(c => S.w[c] = 1); renderExplore(); const w2 = document.querySelector('.win[data-k="' + k + '"]'); if(w2){ const d = w2.querySelector(".weights"); if(d) d.open = true; } };
+  });
 }
 const econHead = () => { const em = ECONM(); return em.mode === "none" ? "" : em.mode === "events" ? `<th class="c">Counter-measure ≤${em.days}d</th><th>Counter-measures logged</th>` : '<th class="c">Shipping up</th><th>Shipping attacks 7d before → after</th>'; };
 const econCells = (c, tri) => { const em = ECONM(); return em.mode === "none" ? "" : em.mode === "events" ? `<td class="c">${tri(c.ship_a === null ? null : c.ship_a > 0)}</td><td class="mono">${c.ship_a === null ? "…" : c.ship_a}</td>` : `<td class="c">${tri(c.ship_a === null ? null : c.ship_a > c.ship_b)}</td><td class="mono">${c.ship_b} → ${c.ship_a === null ? "…" : c.ship_a}</td>`; };
@@ -1107,7 +1151,7 @@ function renderCompare(){
   }
   $("#view").innerHTML = h + '</div>';
   document.querySelectorAll("[data-m]").forEach(b => b.onclick = () => { S.metric = b.dataset.m; renderCompare(); });
-  document.querySelectorAll(".frow").forEach(r => r.onclick = () => { pick(r.dataset.k); setMode("explore"); });
+  document.querySelectorAll(".frow").forEach(r => r.onclick = () => { setMode("explore"); openWin(r.dataset.k); });
 }
 function renderView(){ const tn = $("#thin"); if(tn){ tn.textContent = thinNote(); tn.hidden = S.mode !== "explore" || !tn.textContent; } S.mode === "explore" ? renderExplore() : S.mode === "report" ? renderReport() : renderCompare(); }
 function renderToolbar(){
@@ -1147,10 +1191,10 @@ document.addEventListener("click", ev => {
   if(ev.target.id === "tb-clear"){ S.phase = S.band = null; refresh(); }
   if(ev.target.id === "tb-today" || ev.target.id === "tb-today2"){ setAsof(null); }
 });
-document.addEventListener("keydown", ev => { if(ev.key === "Escape" && document.querySelector(".modal:not([hidden])")) closeModal(); });
+document.addEventListener("keydown", ev => { if(ev.key !== "Escape") return; if(document.querySelector(".modal:not([hidden])")) closeModal(); else if(S.mode === "explore" && S.open.length) closeWin(S.open[S.open.length-1]); });
 function refresh(){ renderToolbar(); if(!$("#m-time").hidden) renderTime(); if(!$("#m-lens").hidden) renderLens(); renderView(); if(!$("#m-int").hidden) drawChart(); }
 function setMode(m){
-  S.mode = m;
+  S.mode = m; if(m !== "explore") renderWins();
   ["explore","compare","report"].forEach(k => $("#tab-" + k).setAttribute("aria-pressed", m === k));
   renderView();
 }
@@ -1343,7 +1387,7 @@ function boot(d){
   applyWords();
   if(!S.theater) S.theater = TH.id || "main";
   setMetrics(); setPhases();
-  S.asof = null; S.phase = S.band = null; S.pin = null; LENS = null; MASK = {key:null, map:new Map()}; POOL = {key:null, val:null};
+  S.asof = null; S.phase = S.band = null; S.pin = null; S.open = []; LENS = null; MASK = {key:null, map:new Map()}; POOL = {key:null, val:null};
   if(!D.options.some(x => x.key === S.sel)) S.sel = D.options[0].key;
   $("#tsub").textContent = TH.sub || "";
   $("#verline").textContent = "Version: data built " + fmtDate(D.generated, true) + " · code " + (D.build || "unknown");
