@@ -2,7 +2,7 @@
 
 ## 2026-10-30 - Chart labels and option picker (display only)
 - I widened the report-card "Over time" chart and split long period labels so the x-axis no longer overlaps on any theater.
-- Options now open in their own pop-up window when you click them. On a laptop you can drag and resize each window and keep several open at once; on a phone each opens full screen, with a bar at the bottom to switch between the ones you have open. Each window has red (close), yellow (minimize to the bottom bar) and green (maximize or restore) buttons, a drag handle in the bottom-right corner to resize, and a double-click on the title bar also maximizes.
+- Options now open in their own pop-up window when you click them. On a laptop you can drag and resize each window and keep several open at once; on a phone each opens full screen, with a bar at the bottom to switch between the ones you have open. Each window has red (close), yellow (minimize to the bottom bar) and green (maximize or restore) buttons, a drag handle in the bottom-right corner to resize, and a double-click on the title bar also maximizes. The page now also treats a touch phone as a phone when the browser is set to "desktop site", so windows still open full screen.
 
 ## 2026-10-29 - Explorer wording and layout cleanup
 - I made the raw x of n the big number everywhere on the page (the NAPOR estimate is now small text), renamed "Likely outcomes" to "What followed the last times the US did this", added a Glossary, simpler wording in the pop-ups and report card, and a version line (data date and code hash) in the footer. No counts, rules or data changed.
