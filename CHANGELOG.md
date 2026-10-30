@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-30 - Chart labels and option picker (display only)
+- I widened the report-card "Over time" chart and split long period labels so the x-axis no longer overlaps on any theater.
+- I made the option list stay in view (sticky on laptops, a swipeable bar on phones) and keep your scroll position when you pick an option.
+
 ## 2026-10-29 - Explorer wording and layout cleanup
 - I made the raw x of n the big number everywhere on the page (the NAPOR estimate is now small text), renamed "Likely outcomes" to "What followed the last times the US did this", added a Glossary, simpler wording in the pop-ups and report card, and a version line (data date and code hash) in the footer. No counts, rules or data changed.
 
