@@ -7,7 +7,7 @@ An options explorer for the risks behind US national security decisions, built f
 
 **Live Explorer: https://siddraw.github.io/NAPOR-Options-Explorer/**
 
-![NAPOR Options Explorer](docs/screenshot.png)
+![NAPOR: Options Explorer](docs/screenshot.png)
 
 NAPOR was inspired by how the Maven Smart System organizes information: it pulls reports from many
 sources into one picture so a decision-maker can see what is happening and what their options are.

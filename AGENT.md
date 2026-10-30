@@ -1,6 +1,6 @@
-# NAPOR: Risk Assessment – weekly agent instructions and rules
+# NAPOR: Options Explorer – weekly agent instructions and rules
 
-You maintain NAPOR: Risk Assessment (NAPOR is the underlying engine; this project applies it to risk assessment). Read `README.md` and `docs/SOURCE_STANDARD.md` first. Sidd (the owner) wants
+You maintain NAPOR: Options Explorer (NAPOR is the underlying engine; this project applies it to risk assessment). Read `README.md` and `docs/SOURCE_STANDARD.md` first. Sidd (the owner) wants
 reports in simple, plain language.
 
 ## Every week

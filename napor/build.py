@@ -38,8 +38,8 @@ ws = wb.active
 ws.title = "Read Me"
 ws.sheet_view.showGridLines = False
 lines = [
-    ("NAPOR: Risk Assessment - Iran-US War", BOLD, 14),
-    ("NAPOR is the underlying engine (event log, credibility, chains, phases, forecasts). NAPOR: Risk Assessment applies it to lay out the options and the risks and pros of each one. It does not pick an option. Built by Sidd.", BASE_FONT, 11),
+    ("NAPOR: Options Explorer - Iran-US War", BOLD, 14),
+    ("NAPOR is the underlying engine (event log, credibility, chains, phases, forecasts). NAPOR: Options Explorer applies it to lay out the options and the risks and pros of each one. It does not pick an option. Built by Sidd.", BASE_FONT, 11),
     ("", BASE_FONT, 10),
     ("What this is", BOLD, 11),
     ("A structured, dated log of US/Israel-Iran war events from Feb 28, 2026 to Oct 26, 2026, built for computing base rates (how often does X follow Y, and how fast) rather than for narrative reading.", BASE_FONT, 10),
