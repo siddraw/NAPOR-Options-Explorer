@@ -136,6 +136,13 @@ details.fold li{margin:3px 0}
 .list .ev{font-size:12px;color:var(--muted)}
 .list .row2{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .detail{display:flex;flex-direction:column;gap:22px}
+@media(min-width:861px){.list{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow-y:auto}}
+@media(max-width:860px){.list{flex-direction:row;overflow-x:auto;position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 0;gap:8px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+.list button{flex:0 0 auto;width:min(78vw,260px);scroll-snap-align:start}.list .ev{display:none}}
+@keyframes fadein{from{opacity:.35}to{opacity:1}}
+.detail{animation:fadein .18s ease-out}
+@media(prefers-reduced-motion:reduce){.detail{animation:none}}
+
 .head{display:flex;flex-direction:column;gap:8px}
 .head .what{color:var(--muted)}
 .avail{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--bg);font-size:13px;display:flex;flex-direction:column;gap:4px}
@@ -1064,7 +1071,7 @@ function renderExplore(){
   h += `<section><h2>Past cases behind these numbers</h2>${o.cases.length ? `<details class="cases"><summary>Show the ${o.cases.length} past case${o.cases.length === 1 ? "" : "s"}, one row each</summary>${caseTable(o)}</details>` : caseTable(o)}</section>`;
   h += '</div></div>';
   $("#view").innerHTML = h;
-  document.querySelectorAll(".list button").forEach(b => b.onclick = () => { pick(b.dataset.k); refresh(); });
+  document.querySelectorAll(".list button").forEach(b => b.onclick = () => { const y = window.scrollY, lst = $(".list"), lx = lst ? lst.scrollLeft : 0, ly = lst ? lst.scrollTop : 0; pick(b.dataset.k); refresh(); const l2 = $(".list"); if(l2){ l2.scrollLeft = lx; l2.scrollTop = ly; const a = l2.querySelector('[aria-pressed="true"]'); if(a && a.scrollIntoView) a.scrollIntoView({block:"nearest", inline:"nearest"}); } window.scrollTo(0, y); });
   document.querySelectorAll("input[data-w]").forEach(i => i.oninput = () => { S.w[i.dataset.w] = +i.value; renderExplore(); const w = $(".weights"); if(w) w.open = true; const f = $("#w-" + i.dataset.w); if(f) f.focus(); });
   const wr = $("#w-reset"); if(wr) wr.onclick = () => { CATS.forEach(c => S.w[c] = 1); renderExplore(); const w = $(".weights"); if(w) w.open = true; };
 }
@@ -1175,11 +1182,11 @@ function calibSvg(cal){
   return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Calibration: what NAPOR said versus what happened">${g}</svg><div class="klegend"><span><i style="background:var(--open)"></i>Raw x of n</span><span><i style="background:var(--accent)"></i>NAPOR estimate</span><span>dashed = perfect</span><span>bigger dot = more predictions</span></div>`;
 }
 function learnSvg(lc){
-  const W = 300, H = 204, L = 36, B = 150, T = 10, R = 12, n = lc.length, x = i => L + (W - L - R) * (n > 1 ? i / (n - 1) : .5);
+  const W = 420, H = 204, L = 36, B = 150, T = 10, R = 14, n = lc.length, x = i => L + (W - L - R) * (n > 1 ? i / (n - 1) : .5);
   const mx = Math.max(0.3, ...lc.flatMap(r => [r.raw, r.shrunk2, r.pooled].filter(v => v != null))) , y = v => B - (B - T) * v / mx;
   let g = `<line x1="${L}" x2="${W-R}" y1="${y(.25)}" y2="${y(.25)}" stroke="var(--ink)" stroke-dasharray="3 3" opacity=".5"/><text x="${L+4}" y="${y(.25)-4}" font-size="10" fill="var(--muted)">coin flip 0.25</text>`;
   [0, .1, .2, .3].filter(v => v <= mx).forEach(v => { g += `<text x="${L-5}" y="${y(v)+3}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="IBM Plex Mono,monospace">${v.toFixed(1)}</text>`; });
-  lc.forEach((r, i) => { const pl = periodLabel(r.period), sp = pl.length > 8 ? pl.lastIndexOf(" ") : -1, ln = sp > 0 ? [pl.slice(0, sp), pl.slice(sp + 1)] : [pl];
+  lc.forEach((r, i) => { const pl = periodLabel(r.period), sp = pl.length > 8 ? pl.lastIndexOf(" ") : -1, hy = sp < 0 && pl.length > 7 ? pl.indexOf("-") : -1, ln = sp > 0 ? [pl.slice(0, sp), pl.slice(sp + 1)] : hy > 0 ? [pl.slice(0, hy + 1), pl.slice(hy + 1)] : [pl];
     g += ln.map((t, j) => `<text x="${x(i)}" y="${B+14+j*11}" text-anchor="middle" font-size="9.5" fill="var(--muted)">${esc(t)}</text>`).join("") + `<text x="${x(i)}" y="${B+14+ln.length*11}" text-anchor="middle" font-size="9.5" fill="var(--muted)" font-family="IBM Plex Mono,monospace">n=${r.n}</text>`; });
   [["raw","var(--open)"],["shrunk2","var(--accent)"],["pooled","var(--k3)"]].forEach(([m, col]) => {
     g += `<polyline points="${lc.map((r, i) => x(i).toFixed(1) + "," + y(r[m]).toFixed(1)).join(" ")}" fill="none" stroke="${col}" stroke-width="2"/>` + lc.map((r, i) => `<circle cx="${x(i).toFixed(1)}" cy="${y(r[m]).toFixed(1)}" r="3.5" fill="${col}"><title>${METHOD_NAME[m]} ${esc(periodLabel(r.period))}: ${f3(r[m])}</title></circle>`).join(""); });
