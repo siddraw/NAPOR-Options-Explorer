@@ -130,7 +130,7 @@ REPLY_DAYS = 7
 ECON = dict(mode="events", days=14, kinds=("Sanctions",))     # a Venezuelan counter-measure within 14 days (the "Sanctions" kind on the adversary's side)
 
 # ---- sources and actors -----------------------------------------------------------------------------------
-CLAIM_MEDIA = {"Telesur", "TeleSUR", "VTV", "Venezolana de Televisión", "Venezolana de Television", "Venezuelan state media"}   # allowed only as labelled claims, scored 0.30
+CLAIM_MEDIA = {"Telesur", "TeleSUR", "VTV", "Venezolana de Televisión", "Venezolana de Television", "Venezuelan state media", "AVN", "Agencia Venezolana de Noticias", "Prensa Latina", "Granma", "Cubadebate"}   # blocked: never collected, score 0
 CLAIM_LABEL = "Venezuelan state media (claim only)"
 
 

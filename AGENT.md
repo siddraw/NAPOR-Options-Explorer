@@ -13,9 +13,14 @@ are done once per theater. Steps 3-5 are Iran only.
    government's own ministry for what it did or said, official archives; `docs/SOURCE_STANDARD.md`). Label and link only
    the page you read: a copy on another site is labelled "AP (via kpax.com)", never with the original outlet's bare name
    (`tests/test_sources.py` fails otherwise). No Wikipedia, blogs or tabloids as sources. Never invent URLs.
-   Each theater has its own claim-only media, shown only as labelled claims (score 0.30): Iran: Iranian state
-   media; Houthis: al-Masirah and Houthi statements; North Korea: KCNA and Rodong Sinmun; China: Xinhua,
-   Global Times, CGTN, PLA Daily, Chinese MND/MFA; Venezuela: Telesur and VTV (Venezuelan state media). The list is in each theater's `config.py`.
+   BLOCKED SOURCES (owner rule, 2026-11-02): never collect, cite or link state-run or armed-group media. They score 0
+   and `tests/test_sources.py` fails if one appears. Iran: Tasnim, IRNA, Press TV, Fars, Mehr, IRIB, ISNA, Al-Alam and
+   similar; Houthis: al-Masirah, Saba, Al-Manar; North Korea: KCNA, Rodong Sinmun, KCTV; China: Xinhua, Global Times,
+   CGTN, CCTV, PLA Daily, China Daily, People's Daily; Venezuela: Telesur, VTV, AVN, Prensa Latina, Granma; everywhere:
+   RT, Sputnik, TASS. A claim from that side is logged only when a credible outlet reports it, labelled like
+   "AP; reports a KCNA claim". A government's own ministry for what it did or said is an official source, not blocked.
+   If you meet a new outlet of this kind, add it to `BLOCKED_EVERYWHERE` in `napor/napor_ids.py` (or the theater's
+   `CLAIM_MEDIA`) and its domain to `BLOCKED_DOMAINS` in `tests/test_sources.py`.
 2. **File events, per theater.** Add confirmed new events in that theater's file and ID block, in the same
    record format as the rows already there, with sources:
    - Iran: `data.py` (+ `audit_sources.py`); run each story through `napor_ids.intake()`. Pre-war: `prewar.py` (201+, May 2019 on) and `prewar_early.py` (300+, Nov 1979 - May 2019).
@@ -76,7 +81,7 @@ are done once per theater. Steps 3-5 are Iran only.
 ## Adding a new theater (only with Sidd's go-ahead)
 
 1. Copy a finished package, for example `napor/theaters/northkorea/`, to `napor/theaters/<id>/`.
-2. Write `config.py` in plain words: options, the five risk categories, claim-only outlets, the Option A
+2. Write `config.py` in plain words: options, the five risk categories, blocked state media, the Option A
    rule, and where n is small.
 3. Write `events*.py` in a new ID block (next free thousand: 4001-4999 and so on), same record format, allowed
    sources only. Write `now.json`.

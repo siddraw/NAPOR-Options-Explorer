@@ -48,7 +48,7 @@ waters near Taiwan's Pratas Islands. ([Reuters via TimesLIVE, Oct 20](https://ww
   datable PLA replies (large drills after the 2022 Pelosi visit and 2023-2024 events). Most replies are
   non-kinetic.
 - **Data difficulty:** medium. Good coverage; PLA "routine" activity makes it hard to tell a reply from
-  background; Chinese state media only as claims.
+  background; Chinese state media never cited.
 - **Fit:** good; needs new categories (drills, incursions) rather than strikes.
 
 ## 4. Caribbean / Eastern Pacific boat strikes and Venezuela ("Operation Southern Spear")

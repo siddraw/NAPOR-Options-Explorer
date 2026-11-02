@@ -34,7 +34,15 @@ SUGGEST = {
  (73, 74): "Keep both, linked: #74 is one strike inside the #73 wave, logged separately because it caused casualties.",
 }
 
-STATE_MEDIA = {"Tasnim", "IRNA", "Press TV", "Fars", "Mehr"}
+# BLOCKED SOURCES (owner rule, 2026-11-02): state-run or armed-group media score 0 and are never collected.
+# A credible outlet that REPORTS their claim ("AP; reports a KCNA claim") is fine; a direct citation of these outlets is not.
+STATE_MEDIA = {"Tasnim", "IRNA", "Press TV", "Fars", "Mehr", "IRIB", "ISNA", "Al-Alam", "Al Alam", "Nour News", "Kayhan", "SNN",
+               "Young Journalists Club", "YJC", "Iranian state media", "Iranian state TV"}
+# Blocked in every theater, whatever the conflict (state media of governments that are a party or a backer).
+BLOCKED_EVERYWHERE = {"RT", "Russia Today", "Sputnik", "TASS", "Al-Manar", "Al Manar", "KCNA", "Rodong Sinmun", "KCTV",
+                      "Uriminzokkiri", "Korean Central News Agency", "Xinhua", "Global Times", "CGTN", "CCTV", "PLA Daily",
+                      "China Daily", "People's Daily", "al-Masirah", "Al-Masirah", "Saba", "Telesur", "TeleSUR", "VTV", "AVN",
+                      "Agencia Venezolana de Noticias", "Prensa Latina", "Granma", "Cubadebate"} | STATE_MEDIA
 OFFICIAL = {"CENTCOM", "NAVCENT", "DoD", "Pentagon", "White House", "Treasury", "OFAC", "UKMTO", "IAEA", "UN", "State Department", "Petra", "Army.mil"}
 
 
@@ -42,6 +50,7 @@ def outlet_name(raw):
     """'AFP (via Ahram Online)' -> 'AFP'; 'AAP (...) via Newcastle Herald' -> 'AAP'."""
     s = re.sub(r"\s*\(.*?\)", "", raw or "")
     s = re.split(r"\s+via\s+", s)[0]
+    s = s.split(";")[0]                      # 'AP; reports a KCNA claim' -> 'AP' (a credible outlet reporting a claim)
     return s.strip()
 
 
@@ -70,7 +79,7 @@ def source_kind(raw, claim_media=None, claim_label="Iranian state media (claim o
     """Kind of outlet. claim_media / claim_label are per theater (Iran: state media; Houthis: al-Masirah, Saba)."""
     n = outlet_name(raw)
     media = STATE_MEDIA if claim_media is None else claim_media
-    if n in media or any(n.startswith(x) for x in media):
+    if n in media or any(n.startswith(x) for x in media) or n in BLOCKED_EVERYWHERE:
         return claim_label
     if any(n.startswith(x) for x in OFFICIAL):
         return "Official statement"
@@ -128,7 +137,7 @@ def corroboration(eid):
 # Each REPORT gets:  source score  x  fit score  = weight
 #   source score - how trustworthy the outlet type is
 #       credible outlet or official/primary source (read on its own page) 0.80, other outlet or a mirror of an official page 0.60,
-#       Iranian state media 0.30 (it can only show what Iran claims)
+#       blocked state or armed-group media 0 (never collected; rule 2026-11-02)
 #   fit score    - how sure we are this story is about THIS event
 #       story read in full 1.00, only the headline seen 0.80,
 #       outlet named but story not saved 0.65; a new story the matcher filed
@@ -138,7 +147,7 @@ def corroboration(eid):
 # Each EVENT combines its reports, counting each outlet once (its best report), as
 #   1 - (1 - w1) x (1 - w2) x ...
 # i.e. "the chance that not every one of these outlets got it wrong". One full-text
-# credible story = 0.80; two different outlets = 0.96; Iranian state media alone = 0.30.
+# credible story = 0.80; two different outlets = 0.96; blocked state or armed-group media = 0 (never counts).
 # Then the source check adjusts it: Partly verified x 0.8; Not supported -> at most 0.20.
 #
 # LINK RULE (approved 2026-10-28): a report with no https link has weight 0, so an event with no linked
@@ -149,14 +158,18 @@ def corroboration(eid):
 ALLOWED = {"AP", "Reuters", "AFP", "BBC", "NPR", "PBS NewsHour", "PBS", "The New York Times", "NYT", "WSJ", "Washington Post",
            "Bloomberg", "Financial Times", "CBS News", "ABC News", "NBC News", "CNN", "Al Jazeera", "Axios", "Politico",
            "Times of Israel", "Haaretz", "USNI News", "Defense News", "Breaking Defense", "The War Zone", "Stars and Stripes",
-           "AAP", "TIME", "Bloomberg Government"}
+           "AAP", "TIME", "Bloomberg Government",
+           # added 2026-11-02: established outlets with their own reporters and corrections policies
+           "The Wall Street Journal", "Wall Street Journal", "New York Times", "The Guardian", "The Economist",
+           "Boston Globe", "Los Angeles Times", "Euronews", "Army Times", "Military Times", "Navy Times", "Air Force Times",
+           "Kyodo News", "NHK", "Nikkei Asia", "Deutsche Welle", "France 24", "Christian Science Monitor", "The Atlantic"}
 INCLUDE_AT = 0.50
 CAUTION_BELOW = 0.65
 MIN_REPORT_WEIGHT = 0.30
 
 
 def source_score(r):
-    if r["kind"].endswith("(claim only)"): return 0.30
+    if r["kind"].endswith("(claim only)"): return 0.0   # blocked state or armed-group media: never counts (rule 2026-11-02)
     if r["kind"] == "Official statement": return 0.80
     return 0.80 if r["outlet"] in ALLOWED else 0.60
 

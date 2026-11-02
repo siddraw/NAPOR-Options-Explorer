@@ -184,3 +184,39 @@ def test_every_outlet_label_matches_its_link():
 if __name__ == "__main__":
     for k, o, u, why, where in mismatches():
         print(f"{k}\t{o}\t{u}\t{where}")
+
+
+# ---- Blocked sources (owner rule, 2026-11-02) --------------------------------------------------------
+# State-run or armed-group media (Tasnim, IRNA, KCNA, Xinhua, al-Masirah, Telesur, RT ...) score 0 and are
+# never collected. A credible outlet that reports their claim is fine ("AP; reports a KCNA claim").
+BLOCKED_DOMAINS = ["tasnimnews.com", "tasnimnews.ir", "irna.ir", "presstv.ir", "presstv.com", "farsnews.ir", "mehrnews.com",
+                   "isna.ir", "iribnews.ir", "kcna.kp", "kcnawatch.org", "rodong.rep.kp", "xinhuanet.com", "news.cn",
+                   "globaltimes.cn", "cgtn.com", "chinadaily.com.cn", "people.com.cn", "81.cn", "almasirah.net",
+                   "saba.ye", "telesurtv.net", "telesurenglish.net", "vtv.gob.ve", "rt.com", "sputniknews.com", "tass.com",
+                   "almanar.com.lb", "prensa-latina.cu", "granma.cu"]
+
+
+def _blocked(label, url):
+    import napor_ids as N
+    h = host_of(url) if url else ""
+    if h and on_domain(h, BLOCKED_DOMAINS):
+        return f"link is on blocked state/group media ({h})"
+    n = N.outlet_name(label)
+    media = N.BLOCKED_EVERYWHERE
+    if n in media or any(n.startswith(x) for x in N.STATE_MEDIA):
+        return f"label names blocked state/group media ({n})"
+    return ""
+
+
+def test_blocked_media_are_scored_zero():
+    import napor_ids as N
+    for raw in ["Tasnim", "IRNA", "Xinhua", "KCNA", "Telesur", "al-Masirah", "RT"]:
+        r = dict(outlet=N.outlet_name(raw), kind=N.source_kind(raw), seen="full text", url="https://x.example/")
+        assert N.report_weight(r) == 0.0, raw
+    r = dict(outlet=N.outlet_name("AP; reports a KCNA claim"), kind=N.source_kind("AP; reports a KCNA claim"), seen="full text", url="https://apnews.com/x")
+    assert N.report_weight(r) == 0.8
+
+
+def test_no_blocked_media_in_the_log():
+    bad = sorted({(key, s["outlet"], s["url"], why) for where, key, s in collect_sources() if (why := _blocked(s["outlet"], s["url"]))})
+    assert not bad, "blocked state or armed-group media are cited (remove them; find a credible outlet instead):\n" + "\n".join(map(str, bad))

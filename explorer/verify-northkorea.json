@@ -9,7 +9,7 @@
  "pooled": {
   "people": 0.0,
   "escalation": 0.29411764705882354,
-  "military": 0.19327731092436976,
+  "military": 0.20168067226890757,
   "economic": null,
   "political": 0.9658119658119658
  },
@@ -148,9 +148,9 @@
     11.0
    ],
    "military": [
-    6,
+    7,
     11,
-    6.0,
+    7.0,
     11.0
    ],
    "economic": [
@@ -169,7 +169,7 @@
    "estimate": {
     "people": 0.0,
     "escalation": 1.0,
-    "military": 0.5454545454545454,
+    "military": 0.6363636363636364,
     "economic": null,
     "political": 0.9
    }

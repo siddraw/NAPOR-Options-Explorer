@@ -7,7 +7,7 @@ How data moves through the repository, and where each part lives. The rules behi
 
 ```mermaid
 flowchart TD
-    NEWS["Allowed news outlets and official statements<br/>(claim-only state media labelled as claims)"]
+    NEWS["Allowed news outlets and official statements<br/>(state and armed-group media blocked)"]
     LOG["Event logs, one per theater<br/>ID, date, actor, action, target, damage, sources"]
     CRED["Credibility score per event<br/>events under 0.50 are dropped"]
     CASES["Cases and links<br/>Trigger Census, reply pairs, chains, hold weeks,<br/>continuous-fighting windows"]
@@ -70,7 +70,7 @@ Paths below are used by the weekly update. Do not move or rename them without up
 | `.nojekyll`, `.gitignore`, `LICENSE` | Hosting, ignore rules, license |
 | `.github/workflows/tests.yml` | Workflow "tests": installs requirements on Python 3.11 and runs pytest |
 | **`docs/`** | |
-| `docs/SOURCE_STANDARD.md` | Which outlets may be cited, which are claim-only, which are banned |
+| `docs/SOURCE_STANDARD.md` | Which outlets may be cited, which are blocked |
 | `docs/METHODOLOGY.md` | Technical reference for the numbers |
 | `docs/ARCHITECTURE.md` | This file |
 | `docs/THEATERS.md` | Research memo on the theaters built and candidates for later tabs |
@@ -110,7 +110,7 @@ Paths below are used by the weekly update. Do not move or rename them without up
 | `napor/theaters/common.py` | Shared engine: `Theater` (cases), `Backtest`, `Export`, `Recount` |
 | `napor/theaters/iran/` | Thin wrappers that point the shared scripts at the Iran modules above |
 | `napor/theaters/<id>/events*.py` | Event log for houthis, northkorea, china, venezuela (read only for the engine) |
-| `napor/theaters/<id>/config.py` | Wording, options A-H, flags, claim-only outlets, rules, hold weeks, closing windows |
+| `napor/theaters/<id>/config.py` | Wording, options A-H, flags, blocked state media, rules, hold weeks, closing windows |
 | `napor/theaters/<id>/cases.py, export.py, verify.py, backtest.py` | A few lines each; call the shared classes |
 | `napor/theaters/<id>/now.json` | "Right now" notes for that theater |
 | `napor/theaters/<id>/backtest_risk.json` | Backtest result for that theater |

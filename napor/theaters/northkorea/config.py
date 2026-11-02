@@ -119,7 +119,7 @@ REPLY_DAYS = 7
 ECON = dict(mode="none", days=7)             # the economic category is not measured for North Korea
 
 # ---- sources and actors -----------------------------------------------------------------------------------
-CLAIM_MEDIA = {"KCNA", "Rodong Sinmun", "Korean Central News Agency"}      # North Korean outlets: allowed only as labelled claims, scored 0.30
+CLAIM_MEDIA = {"KCNA", "Rodong Sinmun", "Korean Central News Agency", "KCTV", "Uriminzokkiri"}      # blocked: never collected, score 0
 CLAIM_LABEL = "North Korean state media (claim only)"
 
 

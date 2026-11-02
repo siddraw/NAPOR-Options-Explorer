@@ -77,7 +77,7 @@ FLAGS = {
 US_MOVE_KINDS = ("Sanctions", "Maritime", "Kinetic", "Posture")     # kinds of act that make a week "not a hold week"
 
 # ---- sources and actors -----------------------------------------------------------------------------------
-CLAIM_MEDIA = {"al-Masirah", "Saba"}                    # Houthi outlets: allowed only as labelled claims, scored 0.30
+CLAIM_MEDIA = {"al-Masirah", "Al-Masirah", "Saba", "Al-Manar", "Al Manar"}   # blocked: never collected, score 0
 CLAIM_LABEL = "Houthi media (claim only)"
 
 

@@ -97,7 +97,7 @@ def test_theaters_json_lists_the_exported_file(log):
 # ---- c. every event has a source, every URL is https ---------------------------------------------------
 # Known gap, kept visible on purpose: Iran #67 (an IRGC claim) has no source recorded at all. Its credibility is 0.0, so the
 # 0.50 cut keeps it out of every count. Any other event without a source, or this one gaining a count, fails the test.
-UNSOURCED_AND_EXCLUDED = {"iran": {67}}
+UNSOURCED_AND_EXCLUDED = {"iran": {64, 67, 101}}   # 64 and 101 lost their only source (Tasnim) when blocked state media were removed, 2026-11-02
 
 
 def test_every_event_has_at_least_one_source(log):
@@ -161,7 +161,7 @@ def test_credibility_rules():
     assert N.credibility_of([full]) == 0.80
     assert N.credibility_of([full, dict(full, outlet="AP")]) == 0.96             # two different outlets
     assert N.credibility_of([full, dict(full, headline="again")]) == 0.80       # the same outlet counts once
-    assert N.credibility_of([claim]) == 0.30                                     # a claim-only outlet alone is below the cut
+    assert N.credibility_of([claim]) == 0.0                                      # blocked state media never counts (rule 2026-11-02)
     assert N.credibility_of([full], "Partly verified") == 0.64
     assert N.credibility_of([full], "Not supported") == 0.20
     assert N.credibility_of([]) == 0.0

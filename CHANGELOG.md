@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-02 - Blocked state media; more allowed outlets
+- Sidd's rule: state-run or armed-group media (Tasnim, IRNA, KCNA, Xinhua, al-Masirah, Telesur, RT and others) now score 0 and are never collected. A test fails if one is cited. I removed the 3 citations that were left (Tasnim on #64 and #101, IRNA on #58). #64 and #101 had no other source and were already below the 0.50 cut, so no numbers moved from this.
+- I added established outlets to the allowed list (WSJ and NYT full names, The Guardian, The Economist, Boston Globe, LA Times, Euronews, Military Times papers, Kyodo, NHK, Nikkei Asia, DW, France 24, CSM, The Atlantic).
+- I fixed a label quirk: "AP; reports a KCNA claim" was read as an unknown outlet (0.60) instead of AP (0.80). This moved one number: North Korea option D (joint drills), military cost 6 of 11 -> 7 of 11 (case #2071 now counts the missile launch that followed it).
+- Chinese ministry statements are no longer on China's state-media list; a ministry speaking for its own government counts as an official source.
+
 ## 2026-11-02 (weekly agent)
 Data updates, plus one fix to a self-check (below). No model rules changed.
 - **Iran**: I added new events #129-#140 (news Oct 25-Nov 1) to data.py, with sources in audit_sources.py. Every URL came from this session's searches and fetches (CBS live blog, Al Jazeera, NYT via the Inquirer). Reason: the weekly scan. They cover the Vance letter proposing talks (#129), the reported US warning to Gulf allies (#130), Qatari and Pakistani mediation and indirect talks in Doha (#133, #139), statements from both sides (#131, #137, #138), and UKMTO-reported ship hits (#132, #134-#136, #140). #130 and #134 are only partly confirmed.

@@ -48,10 +48,11 @@ The full list is in [SOURCE_STANDARD.md](SOURCE_STANDARD.md). In short:
 - **Label what was read.** The outlet label names the site the URL points to. A copy of a wire or outlet story read on another
   site is labelled "AP (via kpax.com)", never with the original outlet's bare name. `tests/test_sources.py` checks every label
   in every theater against its URL domain.
-- **Claim-only media.** The adversary's state media is allowed only to show what that side claims, and is
-  labelled as a claim: Iran (IRNA, Tasnim, Press TV), Houthis (al-Masirah, Saba), North Korea (KCNA,
-  Rodong Sinmun), China (Xinhua, Global Times, CGTN, PLA Daily and others), Venezuela (Telesur, VTV).
-  The lists are in each theater's `config.py`.
+- **Blocked media (rule 2026-11-02).** State-run or armed-group media are never cited and score 0: Iran
+  (Tasnim, IRNA, Press TV, Fars and similar), Houthis (al-Masirah, Saba), North Korea (KCNA, Rodong Sinmun),
+  China (Xinhua, Global Times, CGTN, PLA Daily and others), Venezuela (Telesur, VTV), and Russian state media
+  everywhere. A claim by that side is logged only when an allowed outlet reports it. The lists are in
+  `napor/napor_ids.py` and each theater's `config.py`; `tests/test_sources.py` fails if one is cited.
 - Every source records the outlet, headline, publish date, URL and whether the article was read in full
   (`full text`) or only the search snippet was seen (`snippet`). A URL is never made up. Test
   `tests/test_theaters.py` checks that every URL starts with `https://` and none is a Wikipedia page. A claim that no
@@ -62,7 +63,7 @@ The full list is in [SOURCE_STANDARD.md](SOURCE_STANDARD.md). In short:
 Defined in `napor/napor_ids.py` (`credibility_of`) and shared by every theater.
 
 1. Each **report** gets a weight: source score x fit score.
-   - Source score: allowed outlet or official/primary source read on its own page 0.80; other outlet, or a mirror of an official page, 0.60; claim-only outlet 0.30.
+   - Source score: allowed outlet or official/primary source read on its own page 0.80; other outlet, or a mirror of an official page, 0.60; blocked state or armed-group media 0 (never cited).
    - Fit score (how sure the report is about this event): read in full 1.00; snippet only 0.80; outlet
      named but story not saved 0.65.
    - **Link rule (approved 2026-10-28).** A report counts only if it has a working `https://` link to an allowed
@@ -70,7 +71,7 @@ Defined in `napor/napor_ids.py` (`credibility_of`) and shared by every theater.
    - A report with weight under 0.30 is dropped.
 2. An **event** combines its reports, counting each outlet once (its best report):
    `credibility = 1 - (1 - w1) x (1 - w2) x ...`, capped at 0.99. One full-text allowed outlet gives 0.80;
-   two different outlets give 0.96; a claim-only outlet alone gives 0.30.
+   two different outlets give 0.96.
 3. The source check adjusts it: "Partly verified" x 0.8; "Date conflict" x 0.9; "Not supported" capped at 0.20.
 4. **The cut.** An event with no linked source has credibility 0, so it is always under the cut and is left out of
    every count, rate, backtest and recount, in all five theaters. Otherwise an event is used in the statistics only if credibility is **0.50 or more**
@@ -275,5 +276,5 @@ The old rule is still computed so the Report card can show both.
 - **Backtest scope.** Scores are retrospective and use definitions tuned on this same data; the shrinkage and weighting choices
   were made after earlier backtests. Iran's out-of-sample score is worse than 50%.
 - **Not measured.** Oil and freight prices, harm to ordinary people in the adversary country, strain with allies, and North Korea's
-  economic harm. Sources are public news only; state-media claims are labelled and scored 0.30.
+  economic harm. Sources are public news only; state-run and armed-group media are never cited.
 - **Known gaps.** Iran #67 has no source. About 20 Iran reports are names without a link (flagged not re-checked); they get zero credit under the link rule, and four events (#84, #86, #88, #89) relied on them alone and are now excluded. The exported `n_events` counts only events at credibility 0.50 or more in every theater, Iran included (Iran logs 267, so its `n_events`, 259, is lower by the 8 under the cut).

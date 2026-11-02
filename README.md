@@ -71,7 +71,7 @@ wrong ways of defining risk, numbers that did not hold up in testing), and I wan
 could learn from those failures and keep improving the model.
 
 **What I designed:**
-- The source rules: which outlets and official sources count as credible and which only count as labelled claims.
+- The source rules: which outlets and official sources count as credible and which are blocked (state-run and armed-group media are never cited).
 - The core rule that the page presents options and their risk, and never ranks them or picks one.
 - What counts as risk: the five categories (AI helped me spot patterns in the past cases), and the idea
   that risk is defined by what happened in past cases.

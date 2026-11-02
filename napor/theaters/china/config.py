@@ -120,7 +120,7 @@ REPLY_DAYS = 7
 ECON = dict(mode="events", days=14, kinds=("Sanctions",))     # a Chinese counter-sanction or trade measure within 14 days
 
 # ---- sources and actors -----------------------------------------------------------------------------------
-CLAIM_MEDIA = {"Xinhua", "Global Times", "CGTN", "PLA Daily", "China Daily", "People's Daily", "Chinese Ministry"}   # allowed only as labelled claims, scored 0.30
+CLAIM_MEDIA = {"Xinhua", "Global Times", "CGTN", "PLA Daily", "China Daily", "People's Daily", "CCTV"}   # blocked: never collected, score 0 (a ministry's own statement counts as official instead)
 CLAIM_LABEL = "Chinese state media (claim only)"
 
 
