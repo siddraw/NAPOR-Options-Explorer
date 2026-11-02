@@ -209,15 +209,15 @@
   "asof": "2026-11-01",
   "intensity": 9,
   "band": "Medium",
-  "events": 271,
+  "events": 275,
   "options": {
    "A": {
     "n": 11,
     "index": 0.164,
-    "estimate": 0.19
+    "estimate": 0.189
    },
    "B": {
-    "n": 24,
+    "n": 25,
     "index": 0.192,
     "estimate": 0.196
    },
@@ -247,9 +247,9 @@
     "estimate": 0.563
    },
    "H": {
-    "n": 13,
+    "n": 14,
     "index": 0.2,
-    "estimate": 0.206
+    "estimate": 0.205
    }
   },
   "status": {

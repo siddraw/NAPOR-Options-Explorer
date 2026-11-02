@@ -97,7 +97,8 @@ def test_theaters_json_lists_the_exported_file(log):
 # ---- c. every event has a source, every URL is https ---------------------------------------------------
 # Known gap, kept visible on purpose: Iran #67 (an IRGC claim) has no source recorded at all. Its credibility is 0.0, so the
 # 0.50 cut keeps it out of every count. Any other event without a source, or this one gaining a count, fails the test.
-UNSOURCED_AND_EXCLUDED = {"iran": {64, 67, 101}}   # 64 and 101 lost their only source (Tasnim) when blocked state media were removed, 2026-11-02
+import source_gaps as SG   # the one list of open source gaps (each with its last search date); see napor/source_gaps.py
+UNSOURCED_AND_EXCLUDED = {t: set(g) for t, g in SG.KNOWN_GAPS.items()}
 
 
 def test_every_event_has_at_least_one_source(log):

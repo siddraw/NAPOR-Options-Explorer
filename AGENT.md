@@ -13,6 +13,11 @@ are done once per theater. Steps 3-5 are Iran only.
    government's own ministry for what it did or said, official archives; `docs/SOURCE_STANDARD.md`). Label and link only
    the page you read: a copy on another site is labelled "AP (via kpax.com)", never with the original outlet's bare name
    (`tests/test_sources.py` fails otherwise). No Wikipedia, blogs or tabloids as sources. Never invent URLs.
+   SOURCE GAPS ARE BUGS (owner rule, 2026-11-02): every event needs at least one linked source from an allowed outlet
+   or an official source, or it cannot be classified or counted. `python3 napor/source_gaps.py` (also a weekly_build
+   step) lists every event without one. Each week, before anything else: search again for every open gap in
+   `KNOWN_GAPS`, add the source when found (and remove the entry), otherwise update its search date. A new event is
+   never filed with only an outlet's name and no link. The build FAILS on a new gap or on a gap not searched in 8 days.
    BLOCKED SOURCES (owner rule, 2026-11-02): never collect, cite or link state-run or armed-group media. They score 0
    and `tests/test_sources.py` fails if one appears. Iran: Tasnim, IRNA, Press TV, Fars, Mehr, IRIB, ISNA, Al-Alam and
    similar; Houthis: al-Masirah, Saba, Al-Manar; North Korea: KCNA, Rodong Sinmun, KCTV; China: Xinhua, Global Times,

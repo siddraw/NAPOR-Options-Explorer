@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-02 - Source gaps are now checked every week
+- Sidd's rule: an event without a usable source is a bug and must be caught every week, not found by accident. I added `napor/source_gaps.py` and made it a weekly-build step. It fails when any event in any theater has no linked allowed or official source and is not on the open-gaps list, when an open gap has not been searched again for 8 days, or when a listed gap has since been sourced.
+- Its first run found 4 Iran rows that only named an outlet (no link, never re-checked), so they had silently been left out of every count. I found sources and corrected them: #84 (three ships hit on Sep 29, not Sep 28; Al Jazeera), #86 (US feedback on Iran's 7-day plan via Qatar; Reuters; the "US insists on nuclear talks" wording was not in the source), #88 (Trump's TIME interview; CNN and Al Jazeera; "ready to fold up" was not in either account and was removed), #89 (Theodore Roosevelt strike group and 2,000+ Marines; Al Jazeera; the "7,000 sailors" and "above 20,000" figures were not in the source). These four now count.
+- #101 (IRGC claim of hitting the LPG carrier NV Sunshine) now has AFP and AAP links, but the ship's owner told AAP there was no attack and no fire, so it is marked "Not supported" and stays out of the counts.
+- Still open, searched today: #64 (claimed radar strikes in Bahrain, Jul 13-14) and #67 (claimed radar and F-15 in Jordan, Jul 21). Only blocked or non-allowed sites carry them.
+
 ## 2026-11-02 - Blocked state media; more allowed outlets
 - Sidd's rule: state-run or armed-group media (Tasnim, IRNA, KCNA, Xinhua, al-Masirah, Telesur, RT and others) now score 0 and are never collected. A test fails if one is cited. I removed the 3 citations that were left (Tasnim on #64 and #101, IRNA on #58). #64 and #101 had no other source and were already below the 0.50 cut, so no numbers moved from this.
 - I added established outlets to the allowed list (WSJ and NYT full names, The Guardian, The Economist, Boston Globe, LA Times, Euronews, Military Times papers, Kyodo, NHK, Nikkei Asia, DW, France 24, CSM, The Atlantic).

@@ -505,7 +505,7 @@ _EDITS.update({
 })
 _EDITS.update({
  84: dict(note="Caution (Oct 11 check): trade press says one ship was hit the evening of Sep 28 and three tankers on Sep 29, so this row may merge two days. Not yet checked against UKMTO."),
- 101: dict(note="Iranian claim only (Tasnim); no allowed outlet confirms the hit."),
+ 101: dict(note="IRGC claim reported by AFP (Oct 9) and AAP (Oct 10). The owner, NVTrans, told AAP the tanker was not attacked, there was no fire and the crew is safe. Disputed, so not counted."),
  103: dict(note="Iranian claim reported by Al Jazeera; the mine strike is not independently confirmed."),
  98: dict(note="Context row: Saudi-Houthi front, not a direct Iran-US act. Kept because an American was killed on Oct 10 and Trump said he is weighing a response."),
  102: dict(note="Context row: Saudi-Houthi front. One American killed; Trump said he is weighing a response. CNN read as a snippet only."),
@@ -515,8 +515,8 @@ _EDITS.update({
  113: dict(note="Iranian claim reported by Al Jazeera/AFP; CENTCOM disputes the mine account. Iran's army separately said two tankers caught fire in its 'prohibited zone' in the Gulf of Oman on Oct 15-16 (not logged; in the review queue)."),
 })
 _DATE_CONFLICT = set()
-_NOT_SUPPORTED = {22, 29, 67, 76}
-_PARTLY = {5, 6, 9, 10, 32, 64, 66, 101, 103, 113}
+_NOT_SUPPORTED = {22, 29, 67, 76, 101}   # 101 added 2026-11-02: the ship owner (NVTrans, via AAP) says no attack or fire happened
+_PARTLY = {5, 6, 9, 10, 32, 64, 66, 103, 113}
 # Re-sourcing round, 2026-10-22: corrections found while re-checking low-credibility rows (see CHANGELOG).
 _EDITS.update({
  43: dict(atype="Ceasefire (restored)", detail="Iran agrees to halt attacks on Israel after the two traded fire on Jun 6-7, the first exchange since the April ceasefire",
@@ -540,6 +540,14 @@ _EDITS.update({
  45: dict(date=d(2026,6,8), note="Date corrected to Jun 8 (CBS, updated Jun 9): the Apache went down Monday Jun 8 and both crew were rescued about two hours later by an unmanned surface drone; CBS sources say a Shahed drone (re-sourced Oct 28)."),
  83: dict(detail="5 men in their 20s are arrested on Sep 27 on suspicion of explosives offences after three suspicious vehicles head toward RAF Fairford (a base used for US bombers); Rubio says it 'clearly involves the hands of a foreign actor', Trump says it 'might be' linked to Iran, and UK PM Burnham says there are 'strong indications that Iran played a part' (Iran denies)",
      note="Wording corrected (Stars and Stripes, Sep 30): the source does not say the men planned to do 'big damage'; it says they are suspected of planning a terrorist attack near the base. They were released on bail Sep 28 and Trump questioned the bail (re-sourced Oct 28)."),
+ 84: dict(date=d(2026,9,29), detail="UKMTO says unknown projectiles struck three ships in the Strait of Hormuz, including a crude tanker; next day IRGC spokesman Mohebbi says there is an ongoing 'military conflict' in the strait",
+     note="Re-sourced 2026-11-02 (Al Jazeera, Sep 30): the strikes were on Tuesday Sep 29, not Sep 28; the source does not say 'daily'. Attacker not confirmed."),
+ 86: dict(detail="Qatari mediators relay US feedback on Iran's seven-day trust-building plan; FM Araqchi receives it in Doha on Sep 29. The plan includes nuclear steps; the dispute is over sequencing",
+     note="Re-sourced 2026-11-02 (Reuters, Sep 30): the source says the US sent feedback through Qatar; it does not say the US insists on nuclear talks."),
+ 88: dict(detail="Trump tells TIME 'With Iran, I don't think you could ever have peace' and says it is 'possible' he ramps up bombing after the midterms",
+     note="Re-sourced 2026-11-02 (CNN, Oct 1; Al Jazeera, Oct 2): 'ready to fold up' is not in either account, so it was removed."),
+ 89: dict(detail="The USS Theodore Roosevelt carrier strike group and the Makin Island Marine Expeditionary Unit (2,000+ Marines) leave San Diego for the region; the WSJ reports 9,000-10,000 troops in total",
+     note="Re-sourced 2026-11-02 (Al Jazeera, Oct 2): the '3 ships, 7,000+ sailors' and 'above 20,000' figures are not in the source and were replaced."),
  87: dict(detail="Treasury sanctions Iran's automotive and rail sectors and a shadow banking network, calling the targets 'some of the last significant elements of Iran's failing industrial infrastructure'",
      note="Wording corrected (Treasury press release, Oct 1): Treasury says 'failing industrial infrastructure', not 'IRGC-linked industrial base', and its release does not tie the banking network to Russia, so the Russia claim was dropped (re-sourced Oct 28)."),
 })

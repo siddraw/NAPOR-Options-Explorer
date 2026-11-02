@@ -1017,7 +1017,16 @@ SOURCES = {1: [{'headline': 'How the US-Israeli strikes on Iran unfolded, moment
         'published': '2026-10-09',
         'seen': 'full text',
         'url': 'https://news.usni.org/2026/10/09/october-sees-near-daily-strikes-on-ships-in-hormuz'}],
- 101: [],   # only source was Tasnim (blocked state media, rule 2026-11-02); no credible source found yet
+ 101: [{'headline': "Iran Guards say they struck tanker transiting Hormuz via 'illegal route'",
+        'outlet': 'AFP (via Times of Israel liveblog)',
+        'published': '2026-10-09',
+        'seen': 'full text',
+        'url': 'https://www.timesofisrael.com/liveblog_entry/iran-guards-say-they-struck-tanker-transiting-hormuz-via-illegal-route/'},
+       {'headline': 'Iran claims it struck gas tanker in Strait of Hormuz',
+        'outlet': 'AAP (via Newcastle Herald)',
+        'published': '2026-10-10',
+        'seen': 'full text',
+        'url': 'https://www.newcastleherald.com.au/story/9365979/iran-strikes-gas-tanker-in-strait-of-hormuz/'}],   # re-sourced 2026-11-02 after Tasnim was blocked
  102: [{'headline': 'Saudi Arabia says 12 killed, 300 wounded in Houthi attack on Riyadh airport',
         'outlet': 'Al Jazeera',
         'published': '2026-10-10',
@@ -1563,4 +1572,20 @@ SOURCES.update({
  138: [_CBS_NOV1],
  139: [_CBS_NOV1],
  140: [_CBS_NOV1],
+})
+
+# Re-sourcing round, 2026-11-02: four rows that only NAMED an outlet (no link, never re-checked), found by source_gaps.py.
+_AJ_SEP30 = _s('Economic war: Is Iran losing its leverage over the Strait of Hormuz?', 'Al Jazeera', '2026-09-30',
+               'https://www.aljazeera.com/news/2026/9/30/economic-war-is-iran-losing-its-leverage-over-the-strait-of-hormuz', 'full text')
+_RTR_SEP30 = _s('Iran receives US feedback on seven-day trust-building plan', 'Reuters (via The Star, Malaysia)', '2026-09-30',
+                'https://www.thestar.com.my/news/world/2026/09/30/iran-receives-us-feedback-on-seven-day-trust-building-plan', 'full text')
+_CNN_OCT1 = _s("Takeaways from Trump's TIME interview", 'CNN (via KEYT)', '2026-10-01', 'https://keyt.com/?p=1481640', 'full text')
+_AJ_OCT2 = _s('New aircraft carrier, 10,000 US troops: Is the Iran war about to escalate?', 'Al Jazeera', '2026-10-02',
+              'https://www.aljazeera.com/news/2026/10/2/new-aircraft-carrier-10000-us-troops-is-the-iran-war-about-to-escalate', 'full text')
+VERDICT.update({84: 'corrected', 86: 'corrected', 88: 'corrected', 89: 'corrected'})
+SOURCES.update({
+ 84: [_AJ_SEP30],
+ 86: [_RTR_SEP30],
+ 88: [_CNN_OCT1, _AJ_OCT2],
+ 89: [_AJ_OCT2],
 })
