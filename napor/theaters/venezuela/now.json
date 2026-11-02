@@ -1,66 +1,99 @@
 {
- "as_of": "2026-10-14",
- "note": "Analyst reading of the news, written from logged events. Not data. The weekly agent replaces it every week. The log is a sample of named events (only 8 of about 70 boat strikes are logged one by one) and nothing is logged after Oct 14, 2026.",
+ "as_of": "2026-11-02",
+ "note": "Analyst reading of the news, written from logged events. Not data. The weekly agent replaces it every week. The log is a sample of named events (only 9 of more than 70 boat strikes are logged one by one) and nothing is logged after Oct 27, 2026.",
  "headline": [
-  "On Oct 14 the US removed Jorge Rodriguez, head of the National Assembly, from the sanctions list; a source told Al Jazeera it is part of wider recognition of the interim government and a three-phase transition plan, and Rubio said a new round of negotiations on Venezuela's future began that day (#4066).",
-  "On Oct 8 prosecutors added a conspiracy-to-commit-torture charge to the indictment of Maduro and Cilia Flores (#4065). Maduro was captured on Jan 2-3, 2026 (#4049); since then the interim government under Delcy Rodriguez has cooperated with Washington (#4057, #4058, #4063).",
-  "Boat strikes continue at a slower pace. The latest logged strike was on Oct 4 and killed four (SOUTHCOM, #4064); Stripes puts the toll at least 235 across 70 strikes since September 2025, with no source named for the totals.",
-  "No Venezuelan hostile act (an attack, harassment of US assets or a mobilization) is logged since Nov 16, 2025 (#4034). No new US deployment is logged in 2026; the last is the carrier's entry into the Caribbean on Nov 16, 2025 (#4033).",
-  "Small numbers: most options have only a handful of counted cases, the log holds only 8 of about 70 boat strikes, and options F and G are too thin to measure."
+  "On Oct 27 the US struck a boat in the eastern Pacific and killed five, SOUTHCOM said, without showing evidence it carried drugs; AP puts the campaign toll at at least 240 dead in more than 70 strikes (#4067). The strike before it in the log was on Oct 4 (#4064).",
+  "Rubio said on Oct 14 that a new round of negotiations on Venezuela's future had begun, the same day the US lifted sanctions on National Assembly head Jorge Rodriguez (#4066). Opposition leader Maria Corina Machado returned to Venezuela on Oct 25; Rubio credited US-supported reconciliation talks (not logged; not confirmed as US-Venezuela talks).",
+  "The judge in the Maduro case, Alvin Hellerstein, died on Oct 28; no replacement has been named (not logged). The last logged step in the case is the Oct 8 torture charge (#4065).",
+  "No Venezuelan hostile act (an attack, harassment of US assets or a mobilization) is logged since Nov 2025, and no new US deployment is logged in 2026.",
+  "Small numbers: most options have only a handful of counted cases, and options F and G are too thin to measure."
  ],
- "key_dates": [],
+ "key_dates": [
+  {
+   "date": "2026-11-03",
+   "label": "The 7-day reply window after the Oct 27 boat strike closes (#4067)"
+  }
+ ],
  "pending": [
-  "Whether the new round of negotiations announced on Oct 14 leads to further sanctions relief or a deal (#4066)",
-  "Whether the US keeps striking boats while it deals with the interim government (#4064)"
+  "Whether the negotiations announced on Oct 14 lead to more sanctions relief, a deal or an election date (#4066)",
+  "Who takes over the Maduro case after Judge Hellerstein's death, and when a trial is set (not logged; #4065)",
+  "Whether the US keeps striking boats while it deals with the interim government (#4064, #4067)"
  ],
  "options": {
   "A": {
    "status": "open",
    "label": "Open",
-   "reason": "Not a hold stretch right now: the latest logged US moves are the Oct 4 boat strike (#4064), the Oct 8 indictment (#4065) and the Oct 14 delisting (#4066). Hold weeks are a rough sketch because most boat strikes are not logged.",
-   "events": [4064, 4065, 4066]
+   "reason": "Not a hold stretch right now: the latest logged US move is the Oct 27 boat strike (#4067); the week of Oct 19 had no logged US move.",
+   "events": [
+    4067,
+    4066
+   ]
   },
   "B": {
    "status": "active",
    "label": "In use now",
-   "reason": "Diplomatic ties were restored on Mar 5 (#4057) and the embassy reopened on Mar 30 (#4058). The latest deal logged is the Aug 28 oil deal (#4063), and Rubio said new negotiations began on Oct 14 (#4066).",
-   "events": [4066, 4063, 4058, 4057]
+   "reason": "Rubio said new negotiations on Venezuela's future began on Oct 14 (#4066); the latest logged deal is the Aug 28 oil deal (#4063), and ties and the embassy were restored in March (#4057, #4058).",
+   "events": [
+    4066,
+    4063,
+    4058,
+    4057
+   ]
   },
   "C": {
-   "status": "active",
-   "label": "In use now",
-   "reason": "Two US sanctions or indictment moves in the past ten days: the Oct 8 superseding indictment of Maduro (#4065) and the Oct 14 delisting of Jorge Rodriguez (#4066). Delcy Rodriguez was delisted on Apr 1 (#4059).",
-   "events": [4066, 4065, 4059]
+   "status": "open",
+   "label": "Open",
+   "reason": "No new sanctions, delisting or indictment is logged since the Oct 14 delisting of Jorge Rodriguez (#4066) and the Oct 8 superseding indictment of Maduro (#4065); an Oct 16 earthquake-relief license change is not logged.",
+   "events": [
+    4066,
+    4065
+   ]
   },
   "D": {
    "status": "active",
    "label": "In use now",
-   "reason": "The latest logged boat strike was on Oct 4 and killed four (#4064). The Aug 24 strike was described by AP as the first in two months (#4062), so the pace is slower than in 2025.",
-   "events": [4064, 4062]
+   "reason": "The latest logged boat strike was on Oct 27 in the eastern Pacific and killed five (#4067), after one on Oct 4 that killed four (#4064).",
+   "events": [
+    4067,
+    4064,
+    4062
+   ]
   },
   "E": {
    "status": "open",
    "label": "Open",
    "reason": "No deployment is logged in 2026. The last is the carrier USS Gerald R. Ford entering the Caribbean on Nov 16, 2025 (#4033); the Southern Spear operation was announced on Nov 13, 2025 (#4032). Not confirmed whether forces remain in place.",
-   "events": [4033, 4032]
+   "events": [
+    4033,
+    4032
+   ]
   },
   "F": {
    "status": "open",
    "label": "Open",
    "reason": "The last land strike in the log is the Jun 2026 strike on a Tren de Aragua compound in Venezuela, announced Jun 12 (#4061); before it the Dec 2025 dock strike (#4048).",
-   "events": [4061, 4048]
+   "events": [
+    4061,
+    4048
+   ]
   },
   "G": {
    "status": "open",
    "label": "Open",
    "reason": "The only case in the log is the Jan 2-3, 2026 raid that captured Maduro (#4049). The Oct 8 superseding indictment concerns the same case (#4065).",
-   "events": [4049, 4065]
+   "events": [
+    4049,
+    4065
+   ]
   },
   "H": {
    "status": "open",
    "label": "Open",
    "reason": "The last move of this kind in the log is the Jan 7, 2026 seizure of two Venezuela-linked tankers (#4053); the blockade order of Dec 16, 2025 (#4044) is the last declaration. Not confirmed whether the blockade still applies.",
-   "events": [4053, 4044]
+   "events": [
+    4053,
+    4044
+   ]
   }
  }
 }

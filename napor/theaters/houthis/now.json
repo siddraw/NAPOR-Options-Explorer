@@ -1,31 +1,32 @@
 {
- "as_of": "2026-10-26",
+ "as_of": "2026-11-02",
  "note": "Analyst reading of the news, written from logged events. Not data. The weekly agent replaces it every week.",
  "headline": [
-  "The Saudi-Houthi fighting widened: a drone at Saudi Aramco's Shaybah oilfield (Oct 20, 2 killed by debris) and an attack on Dammam airport (Oct 21, 1 killed, 8 injured) (#1345, #1346). The Houthis claim more attacks on Riyadh, Dammam, Najran, Khamis Mushait, pipelines and Aden (Oct 24, #1348).",
-  "The US is pulling people back, not joining: State ordered non-emergency staff and families out of Saudi Arabia on Oct 21 (#1347), after an unprecedented wave of embassy security alerts across 9 countries on Oct 18-19 (#1344).",
-  "Still no US strike on the Houthis since the May 6, 2025 ceasefire (#1319). ABC (Oct 20) says the administration is wary of opening a second front while the Iran conflict is unsettled; US help to Saudi Arabia stays at intelligence and targeting (#1335).",
-  "No Houthi attack on US forces or on non-Saudi shipping was found this week. Saudi-led forces say they destroyed two missile launchers in Sanaa on Oct 26 (#1349)."
+  "Houthi missiles and drones kept coming at Saudi Arabia: the Houthis claim hits on the East-West pipeline and Riyadh airport (Oct 26, not confirmed, #1350); the coalition says it intercepted two missiles over Riyadh on Oct 29 with no casualties reported (#1351), and more drones and a missile on Oct 30-31 (#1352, #1354).",
+  "Inside Yemen the Houthis fired two missiles at the presidential palace in Aden on Oct 30, a police official says; no casualty figures were given (#1353).",
+  "No US move against the Houthis was found this week: no strike, sanctions, naval action, posture change or talks. The last US strike on the Houthis is still before the May 6, 2025 ceasefire (#1319), and the last Treasury round was Jan 16, 2026 (#1329).",
+  "No Houthi attack on US forces or on non-Saudi shipping was found this week."
  ],
  "key_dates": [],
  "pending": [
-  "Whether the US joins the Saudi strikes (#1341)",
+  "Whether the US joins the Saudi strikes (#1341); no decision found by Nov 2",
   "Whether the Houthis carry out their warning against US interests (#1342)"
  ],
  "options": {
   "A": {
    "status": "open",
    "label": "Open",
-   "reason": "This is the current course: no US strike on the Houthis is logged since May 6, 2025 (#1319); the Oct 21 departure order is a precaution, not a move against the Houthis (#1347).",
+   "reason": "The current course: no US move against the Houthis is logged this week and no US strike since May 6, 2025 (#1319); Houthi fire this week was on Saudi and Yemeni government targets (#1351, #1353).",
    "events": [
     1319,
-    1347
+    1351,
+    1353
    ]
   },
   "B": {
-   "status": "active",
-   "label": "In use now",
-   "reason": "US officials met Houthi officials in Muscat on Sep 12-13 (#1337), and Trump has said 'We have communication with the Houthis' (quoted by CBS on Oct 21); no new meeting is confirmed this week.",
+   "status": "open",
+   "label": "Open",
+   "reason": "US officials met Houthi officials in Muscat on Sep 12-13 (#1337); no new meeting or proposal has been found since, so ongoing talks are not confirmed.",
    "events": [
     1337
    ]
@@ -33,7 +34,7 @@
   "C": {
    "status": "open",
    "label": "Open",
-   "reason": "Treasury added Houthi sanctions on Jan 16, 2026 (#1329); nothing newer is logged.",
+   "reason": "Treasury's last Houthi sanctions round is Jan 16, 2026 (#1329); no new Houthi designation was found Oct 26 - Nov 2.",
    "events": [
     1329
    ]
@@ -58,7 +59,7 @@
   "F": {
    "status": "constrained",
    "label": "Constrained",
-   "reason": "Trump declined Saudi requests for US strikes (#1336) and said on Oct 10 only 'We may' (#1341); ABC reports the administration is wary of a second front (#1344). The May 2025 ceasefire is the last US-Houthi agreement (#1319).",
+   "reason": "Trump declined Saudi requests for US strikes (#1336) and said on Oct 10 only 'We may' (#1341); no decision found by Nov 2, and ABC reports the administration is wary of a second front (#1344).",
    "events": [
     1319,
     1336,
@@ -78,7 +79,7 @@
   "H": {
    "status": "active",
    "label": "In use now",
-   "reason": "US advisers remain in Saudi Arabia (#1335, CNN). Separately, the US ordered diplomats out of Saudi Arabia and officials say the military is quietly reducing its footprint (#1347).",
+   "reason": "US advisers remain in Saudi Arabia (#1335) and the Oct 21 ordered departure of non-emergency staff still stands (#1347); nothing new found this week.",
    "events": [
     1335,
     1347

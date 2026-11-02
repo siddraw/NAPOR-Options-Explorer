@@ -1,190 +1,190 @@
 {
- "generated": "2026-10-30",
- "rows": 368,
- "predictions": 313,
+ "generated": "2026-11-02",
+ "rows": 381,
+ "predictions": 326,
  "skipped_no_history": 55,
  "brier": {
   "overall": {
-   "raw": 0.0688,
-   "shrunk1": 0.0609,
-   "shrunk2": 0.0595,
-   "shrunk4": 0.0596,
-   "pooled": 0.0702,
+   "raw": 0.0663,
+   "shrunk1": 0.0588,
+   "shrunk2": 0.0573,
+   "shrunk4": 0.0575,
+   "pooled": 0.0678,
    "half": 0.25,
-   "w_none": 0.0595,
-   "w_era25": 0.0593,
-   "w_era50": 0.0587,
-   "w_hl180": 0.0685,
-   "w_hl365": 0.0664,
-   "w_hl730": 0.0636,
-   "n": 313
+   "w_none": 0.0573,
+   "w_era25": 0.0572,
+   "w_era50": 0.0566,
+   "w_hl180": 0.0662,
+   "w_hl365": 0.0642,
+   "w_hl730": 0.0615,
+   "n": 326
   },
   "people": {
    "raw": 0.0,
-   "shrunk1": 0.0047,
-   "shrunk2": 0.0115,
-   "shrunk4": 0.0232,
-   "pooled": 0.0853,
+   "shrunk1": 0.0045,
+   "shrunk2": 0.011,
+   "shrunk4": 0.0222,
+   "pooled": 0.0821,
    "half": 0.25,
-   "w_none": 0.0115,
-   "w_era25": 0.0345,
-   "w_era50": 0.0221,
-   "w_hl180": 0.0228,
-   "w_hl365": 0.0172,
-   "w_hl730": 0.0139,
-   "n": 62
-  },
-  "escalation": {
-   "raw": 0.1352,
-   "shrunk1": 0.0986,
-   "shrunk2": 0.0871,
-   "shrunk4": 0.0782,
-   "pooled": 0.0683,
-   "half": 0.25,
-   "w_none": 0.0871,
-   "w_era25": 0.0694,
-   "w_era50": 0.0761,
-   "w_hl180": 0.1182,
-   "w_hl365": 0.1137,
-   "w_hl730": 0.1054,
+   "w_none": 0.011,
+   "w_era25": 0.033,
+   "w_era50": 0.0211,
+   "w_hl180": 0.0222,
+   "w_hl365": 0.0167,
+   "w_hl730": 0.0134,
    "n": 65
   },
+  "escalation": {
+   "raw": 0.1296,
+   "shrunk1": 0.0947,
+   "shrunk2": 0.0837,
+   "shrunk4": 0.0752,
+   "pooled": 0.0658,
+   "half": 0.25,
+   "w_none": 0.0837,
+   "w_era25": 0.0666,
+   "w_era50": 0.073,
+   "w_hl180": 0.113,
+   "w_hl365": 0.1088,
+   "w_hl730": 0.1009,
+   "n": 68
+  },
   "military": {
-   "raw": 0.0105,
-   "shrunk1": 0.0055,
-   "shrunk2": 0.0036,
-   "shrunk4": 0.002,
+   "raw": 0.01,
+   "shrunk1": 0.0053,
+   "shrunk2": 0.0034,
+   "shrunk4": 0.0019,
    "pooled": 0.0002,
    "half": 0.25,
-   "w_none": 0.0036,
+   "w_none": 0.0034,
    "w_era25": 0.0009,
-   "w_era50": 0.0019,
-   "w_hl180": 0.0041,
-   "w_hl365": 0.0044,
-   "w_hl730": 0.0043,
-   "n": 62
+   "w_era50": 0.0018,
+   "w_hl180": 0.004,
+   "w_hl365": 0.0042,
+   "w_hl730": 0.0041,
+   "n": 65
   },
   "economic": {
-   "raw": 0.1628,
-   "shrunk1": 0.162,
-   "shrunk2": 0.1618,
-   "shrunk4": 0.162,
-   "pooled": 0.1657,
+   "raw": 0.1583,
+   "shrunk1": 0.1574,
+   "shrunk2": 0.1573,
+   "shrunk4": 0.1574,
+   "pooled": 0.1613,
    "half": 0.25,
-   "w_none": 0.1618,
-   "w_era25": 0.1596,
-   "w_era50": 0.1608,
-   "w_hl180": 0.1632,
-   "w_hl365": 0.1625,
-   "w_hl730": 0.1607,
-   "n": 62
+   "w_none": 0.1573,
+   "w_era25": 0.1548,
+   "w_era50": 0.1561,
+   "w_hl180": 0.1588,
+   "w_hl365": 0.1586,
+   "w_hl730": 0.1569,
+   "n": 64
   },
   "political": {
-   "raw": 0.0323,
-   "shrunk1": 0.0321,
-   "shrunk2": 0.032,
-   "shrunk4": 0.0319,
-   "pooled": 0.0317,
+   "raw": 0.0316,
+   "shrunk1": 0.0314,
+   "shrunk2": 0.0313,
+   "shrunk4": 0.0311,
+   "pooled": 0.0307,
    "half": 0.25,
-   "w_none": 0.032,
-   "w_era25": 0.0318,
-   "w_era50": 0.0319,
-   "w_hl180": 0.0319,
-   "w_hl365": 0.0319,
-   "w_hl730": 0.0319,
-   "n": 62
+   "w_none": 0.0313,
+   "w_era25": 0.0315,
+   "w_era50": 0.0314,
+   "w_hl180": 0.0317,
+   "w_hl365": 0.0314,
+   "w_hl730": 0.0313,
+   "n": 64
   }
  },
  "brier_2026": {
   "overall": {
-   "raw": 0.0194,
-   "shrunk1": 0.0181,
-   "shrunk2": 0.0186,
-   "shrunk4": 0.0205,
-   "pooled": 0.0434,
+   "raw": 0.018,
+   "shrunk1": 0.0169,
+   "shrunk2": 0.0172,
+   "shrunk4": 0.019,
+   "pooled": 0.0398,
    "half": 0.25,
-   "w_none": 0.0186,
-   "w_era25": 0.0186,
-   "w_era50": 0.0179,
-   "w_hl180": 0.0338,
-   "w_hl365": 0.031,
-   "w_hl730": 0.0279,
-   "n": 108
+   "w_none": 0.0172,
+   "w_era25": 0.0173,
+   "w_era50": 0.0166,
+   "w_hl180": 0.0313,
+   "w_hl365": 0.0288,
+   "w_hl730": 0.0259,
+   "n": 121
   },
   "people": {
    "raw": 0.0,
-   "shrunk1": 0.0026,
-   "shrunk2": 0.0077,
-   "shrunk4": 0.0193,
-   "pooled": 0.1182,
+   "shrunk1": 0.0023,
+   "shrunk2": 0.0068,
+   "shrunk4": 0.0171,
+   "pooled": 0.1059,
    "half": 0.25,
-   "w_none": 0.0077,
-   "w_era25": 0.0275,
-   "w_era50": 0.0163,
-   "w_hl180": 0.0291,
-   "w_hl365": 0.0181,
-   "w_hl730": 0.0131,
-   "n": 22
+   "w_none": 0.0068,
+   "w_era25": 0.0244,
+   "w_era50": 0.0144,
+   "w_hl180": 0.0267,
+   "w_hl365": 0.0167,
+   "w_hl730": 0.012,
+   "n": 25
   },
   "escalation": {
-   "raw": 0.0355,
-   "shrunk1": 0.0272,
-   "shrunk2": 0.0233,
-   "shrunk4": 0.0199,
-   "pooled": 0.0177,
+   "raw": 0.0325,
+   "shrunk1": 0.0251,
+   "shrunk2": 0.0217,
+   "shrunk4": 0.0187,
+   "pooled": 0.017,
    "half": 0.25,
-   "w_none": 0.0233,
-   "w_era25": 0.0082,
-   "w_era50": 0.0136,
-   "w_hl180": 0.0128,
-   "w_hl365": 0.0179,
-   "w_hl730": 0.021,
-   "n": 22
+   "w_none": 0.0217,
+   "w_era25": 0.0078,
+   "w_era50": 0.0129,
+   "w_hl180": 0.0114,
+   "w_hl365": 0.016,
+   "w_hl730": 0.0188,
+   "n": 25
   },
   "military": {
-   "raw": 0.004,
-   "shrunk1": 0.003,
-   "shrunk2": 0.0024,
-   "shrunk4": 0.0016,
+   "raw": 0.0035,
+   "shrunk1": 0.0026,
+   "shrunk2": 0.0021,
+   "shrunk4": 0.0014,
    "pooled": 0.0003,
    "half": 0.25,
-   "w_none": 0.0024,
-   "w_era25": 0.0007,
-   "w_era50": 0.0014,
-   "w_hl180": 0.0012,
-   "w_hl365": 0.0018,
-   "w_hl730": 0.0021,
-   "n": 22
+   "w_none": 0.0021,
+   "w_era25": 0.0006,
+   "w_era50": 0.0012,
+   "w_hl180": 0.001,
+   "w_hl365": 0.0016,
+   "w_hl730": 0.0019,
+   "n": 25
   },
   "economic": {
-   "raw": 0.0105,
-   "shrunk1": 0.0118,
-   "shrunk2": 0.0134,
-   "shrunk4": 0.0162,
-   "pooled": 0.0345,
+   "raw": 0.011,
+   "shrunk1": 0.0122,
+   "shrunk2": 0.0137,
+   "shrunk4": 0.0164,
+   "pooled": 0.0335,
    "half": 0.25,
-   "w_none": 0.0134,
-   "w_era25": 0.0114,
-   "w_era50": 0.0128,
-   "w_hl180": 0.0824,
-   "w_hl365": 0.0735,
-   "w_hl730": 0.059,
-   "n": 21
+   "w_none": 0.0137,
+   "w_era25": 0.0111,
+   "w_era50": 0.0127,
+   "w_hl180": 0.0774,
+   "w_hl365": 0.0704,
+   "w_hl730": 0.0572,
+   "n": 23
   },
   "political": {
-   "raw": 0.0476,
-   "shrunk1": 0.0472,
-   "shrunk2": 0.047,
-   "shrunk4": 0.0466,
-   "pooled": 0.0458,
+   "raw": 0.0444,
+   "shrunk1": 0.0439,
+   "shrunk2": 0.0435,
+   "shrunk4": 0.0431,
+   "pooled": 0.042,
    "half": 0.25,
-   "w_none": 0.047,
-   "w_era25": 0.0462,
-   "w_era50": 0.0465,
-   "w_hl180": 0.0465,
-   "w_hl365": 0.0465,
-   "w_hl730": 0.0466,
-   "n": 21
+   "w_none": 0.0435,
+   "w_era25": 0.0442,
+   "w_era50": 0.0438,
+   "w_hl180": 0.0447,
+   "w_hl365": 0.0439,
+   "w_hl730": 0.0436,
+   "n": 23
   }
  },
  "calibration": {
@@ -192,9 +192,9 @@
    {
     "lo": 0,
     "hi": 0.2,
-    "n": 218,
-    "predicted": 0.026,
-    "observed": 0.06
+    "n": 229,
+    "predicted": 0.027,
+    "observed": 0.057
    },
    {
     "lo": 0.2,
@@ -220,18 +220,18 @@
    {
     "lo": 0.8,
     "hi": 1,
-    "n": 71,
-    "predicted": 1.0,
-    "observed": 0.93
+    "n": 73,
+    "predicted": 0.998,
+    "observed": 0.932
    }
   ],
   "shrunk2": [
    {
     "lo": 0,
     "hi": 0.2,
-    "n": 224,
+    "n": 235,
     "predicted": 0.039,
-    "observed": 0.058
+    "observed": 0.055
    },
    {
     "lo": 0.2,
@@ -257,9 +257,9 @@
    {
     "lo": 0.8,
     "hi": 1,
-    "n": 63,
-    "predicted": 0.994,
-    "observed": 0.968
+    "n": 65,
+    "predicted": 0.992,
+    "observed": 0.969
    }
   ]
  },
@@ -298,24 +298,24 @@
   },
   {
    "period": "After capture",
-   "n": 108,
-   "raw": 0.0194,
-   "shrunk2": 0.0186,
-   "pooled": 0.0434,
+   "n": 121,
+   "raw": 0.018,
+   "shrunk2": 0.0172,
+   "pooled": 0.0398,
    "half": 0.25
   }
  ],
  "out_of_sample": {
   "train_rows": 248,
-  "test_rows": 118,
-  "scored": 108,
+  "test_rows": 131,
+  "scored": 121,
   "skipped": 10,
   "brier": {
-   "raw": 0.0427,
-   "shrunk1": 0.0327,
-   "shrunk2": 0.0305,
-   "shrunk4": 0.031,
-   "pooled": 0.0483,
+   "raw": 0.0409,
+   "shrunk1": 0.0311,
+   "shrunk2": 0.0288,
+   "shrunk4": 0.0291,
+   "pooled": 0.0447,
    "half": 0.25
   },
   "train_label": "1999-2025"
@@ -374,27 +374,27 @@
      {
       "variant": "As published (a clear link, timing only, or a reply by a backed group all count; ~7 days)",
       "k": 2,
-      "n": 18
+      "n": 20
      },
      {
       "variant": "Replies by a backed group do not count",
       "k": 2,
-      "n": 18
+      "n": 20
      },
      {
       "variant": "Timing-only replies do not count",
       "k": 1,
-      "n": 18
+      "n": 20
      },
      {
       "variant": "Only replies with a clear link count",
       "k": 1,
-      "n": 18
+      "n": 20
      },
      {
       "variant": "Reply within 3 days (logged reply dates)",
       "k": 1,
-      "n": 18
+      "n": 20
      }
     ]
    },
@@ -558,11 +558,11 @@
  "decision": {
   "adopt": false,
   "m": 2,
-  "gain": 0.0093,
+  "gain": 0.009,
   "worse_by_cat": {
-   "people": 0.0115,
-   "escalation": -0.0481,
-   "military": -0.0069,
+   "people": 0.011,
+   "escalation": -0.0459,
+   "military": -0.0066,
    "economic": -0.001,
    "political": -0.0003
   },
@@ -574,144 +574,144 @@
     "name": "none",
     "scheme": "none",
     "param": null,
-    "overall": 0.0595,
-    "y2026": 0.0186,
+    "overall": 0.0573,
+    "y2026": 0.0172,
     "by_cat": {
-     "people": 0.0115,
-     "escalation": 0.0871,
-     "military": 0.0036,
-     "economic": 0.1618,
-     "political": 0.032
+     "people": 0.011,
+     "escalation": 0.0837,
+     "military": 0.0034,
+     "economic": 0.1573,
+     "political": 0.0313
     },
     "by_cat_2026": {
-     "people": 0.0077,
-     "escalation": 0.0233,
-     "military": 0.0024,
-     "economic": 0.0134,
-     "political": 0.047
+     "people": 0.0068,
+     "escalation": 0.0217,
+     "military": 0.0021,
+     "economic": 0.0137,
+     "political": 0.0435
     }
    },
    {
     "name": "era25",
     "scheme": "era",
     "param": 0.25,
-    "overall": 0.0593,
-    "y2026": 0.0186,
+    "overall": 0.0572,
+    "y2026": 0.0173,
     "by_cat": {
-     "people": 0.0345,
-     "escalation": 0.0694,
+     "people": 0.033,
+     "escalation": 0.0666,
      "military": 0.0009,
-     "economic": 0.1596,
-     "political": 0.0318
+     "economic": 0.1548,
+     "political": 0.0315
     },
     "by_cat_2026": {
-     "people": 0.0275,
-     "escalation": 0.0082,
-     "military": 0.0007,
-     "economic": 0.0114,
-     "political": 0.0462
+     "people": 0.0244,
+     "escalation": 0.0078,
+     "military": 0.0006,
+     "economic": 0.0111,
+     "political": 0.0442
     }
    },
    {
     "name": "era50",
     "scheme": "era",
     "param": 0.5,
-    "overall": 0.0587,
-    "y2026": 0.0179,
+    "overall": 0.0566,
+    "y2026": 0.0166,
     "by_cat": {
-     "people": 0.0221,
-     "escalation": 0.0761,
-     "military": 0.0019,
-     "economic": 0.1608,
-     "political": 0.0319
+     "people": 0.0211,
+     "escalation": 0.073,
+     "military": 0.0018,
+     "economic": 0.1561,
+     "political": 0.0314
     },
     "by_cat_2026": {
-     "people": 0.0163,
-     "escalation": 0.0136,
-     "military": 0.0014,
-     "economic": 0.0128,
-     "political": 0.0465
+     "people": 0.0144,
+     "escalation": 0.0129,
+     "military": 0.0012,
+     "economic": 0.0127,
+     "political": 0.0438
     }
    },
    {
     "name": "hl180",
     "scheme": "halflife",
     "param": 180,
-    "overall": 0.0685,
-    "y2026": 0.0338,
+    "overall": 0.0662,
+    "y2026": 0.0313,
     "by_cat": {
-     "people": 0.0228,
-     "escalation": 0.1182,
-     "military": 0.0041,
-     "economic": 0.1632,
-     "political": 0.0319
+     "people": 0.0222,
+     "escalation": 0.113,
+     "military": 0.004,
+     "economic": 0.1588,
+     "political": 0.0317
     },
     "by_cat_2026": {
-     "people": 0.0291,
-     "escalation": 0.0128,
-     "military": 0.0012,
-     "economic": 0.0824,
-     "political": 0.0465
+     "people": 0.0267,
+     "escalation": 0.0114,
+     "military": 0.001,
+     "economic": 0.0774,
+     "political": 0.0447
     }
    },
    {
     "name": "hl365",
     "scheme": "halflife",
     "param": 365,
-    "overall": 0.0664,
-    "y2026": 0.031,
+    "overall": 0.0642,
+    "y2026": 0.0288,
     "by_cat": {
-     "people": 0.0172,
-     "escalation": 0.1137,
-     "military": 0.0044,
-     "economic": 0.1625,
-     "political": 0.0319
+     "people": 0.0167,
+     "escalation": 0.1088,
+     "military": 0.0042,
+     "economic": 0.1586,
+     "political": 0.0314
     },
     "by_cat_2026": {
-     "people": 0.0181,
-     "escalation": 0.0179,
-     "military": 0.0018,
-     "economic": 0.0735,
-     "political": 0.0465
+     "people": 0.0167,
+     "escalation": 0.016,
+     "military": 0.0016,
+     "economic": 0.0704,
+     "political": 0.0439
     }
    },
    {
     "name": "hl730",
     "scheme": "halflife",
     "param": 730,
-    "overall": 0.0636,
-    "y2026": 0.0279,
+    "overall": 0.0615,
+    "y2026": 0.0259,
     "by_cat": {
-     "people": 0.0139,
-     "escalation": 0.1054,
-     "military": 0.0043,
-     "economic": 0.1607,
-     "political": 0.0319
+     "people": 0.0134,
+     "escalation": 0.1009,
+     "military": 0.0041,
+     "economic": 0.1569,
+     "political": 0.0313
     },
     "by_cat_2026": {
-     "people": 0.0131,
-     "escalation": 0.021,
-     "military": 0.0021,
-     "economic": 0.059,
-     "political": 0.0466
+     "people": 0.012,
+     "escalation": 0.0188,
+     "military": 0.0019,
+     "economic": 0.0572,
+     "political": 0.0436
     }
    }
   ],
-  "n": 313,
-  "n_2026": 108,
+  "n": 326,
+  "n_2026": 121,
   "decision": {
    "scheme": "none",
    "param": null,
    "name": "none",
    "adopt": false,
    "best_candidate": "era50",
-   "gain": 0.0008,
+   "gain": 0.0007,
    "worse_by_cat": {
-    "people": 0.0106,
-    "escalation": -0.011,
-    "military": -0.0017,
-    "economic": -0.001,
-    "political": -0.0001
+    "people": 0.0101,
+    "escalation": -0.0107,
+    "military": -0.0016,
+    "economic": -0.0012,
+    "political": 0.0001
    },
    "rule": "Adopt the recency weight with the lowest overall Brier only if it beats no weighting by at least 0.003 overall and is not worse by more than 0.01 in any category; otherwise keep no recency weighting."
   }
@@ -723,20 +723,20 @@
   "old": {
    "label": "Old rule: any diplomatic event within 14 days, statements and threats included",
    "legacy": true,
-   "rows": 73,
-   "predictions": 62,
-   "risk_cases": 70,
-   "est": 0.032,
-   "index_brier": 0.0592
+   "rows": 75,
+   "predictions": 64,
+   "risk_cases": 72,
+   "est": 0.0313,
+   "index_brier": 0.0573
   },
   "new": {
    "label": "New rule: only talks, a meeting, a proposal, a ceasefire or a deal within 14 days",
    "legacy": false,
-   "rows": 73,
-   "predictions": 62,
-   "risk_cases": 70,
-   "est": 0.032,
-   "index_brier": 0.0592
+   "rows": 75,
+   "predictions": 64,
+   "risk_cases": 72,
+   "est": 0.0313,
+   "index_brier": 0.0573
   },
   "note": "Brier of the estimate the page shows, same replay in date order (only rows closed before each date). Index Brier = average of the category Brier scores. The two rules define the outcome differently, so a lower Brier means the new rule is easier to predict, not that it is a better measure."
  }

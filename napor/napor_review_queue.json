@@ -749,5 +749,441 @@
   "seen": "full text",
   "received": "2026-10-26",
   "status": "needs human check: the IRGC's claim of seven tankers hit overnight into Oct 22 (#121) may include the UKMTO-confirmed tanker hit off Bukha on Oct 21 (#118); duplicate_watch scores the pair 0.64. Both kept as separate rows; not merged."
+ },
+ {
+  "report_id": "R0489",
+  "published": "2026-10-29",
+  "outlet": "NYT (via Philadelphia Inquirer)",
+  "kind": "Independent outlet",
+  "headline": "Vance proposes restarting peace talks in outreach to Iranian official",
+  "url": "https://www.inquirer.com/news/nation-world/jd-vance-peace-talks-iran-20261029.html",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 377,
+  "candidates": [
+   {
+    "score": 0.473,
+    "event_id": 133,
+    "date": "2026-10-30",
+    "detail": "Qatari mediators, led by a senior adviser to PM Sheikh Mohammed bin Abdulrahman, arrive in"
+   },
+   {
+    "score": 0.426,
+    "event_id": 130,
+    "date": "2026-10-28",
+    "detail": "The US reportedly tells Gulf allies to prepare for a brief, high-intensity military campai"
+   },
+   {
+    "score": 0.312,
+    "event_id": 132,
+    "date": "2026-10-29",
+    "detail": "UKMTO: a tanker is struck by a projectile while leaving by the southern route (evening of "
+   }
+  ],
+  "match_score": 0.473,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-02: logged as new event #129 (sources in audit_sources.py; checked against all older events, no duplicate above 0.46)",
+  "received": "2026-11-02"
+ },
+ {
+  "report_id": "R0490",
+  "published": "2026-10-30",
+  "outlet": "Al Jazeera",
+  "kind": "Independent outlet",
+  "headline": "Qatari officials in Iran in bid to revive ceasefire deal with US (WSJ report of US warning to Gulf allies)",
+  "url": "https://www.aljazeera.com/news/2026/10/30/qatari-officials-in-iran-in-bid-to-revive-ceasefire-deal-with-us",
+  "decision": "POSSIBLE MATCH - human should check",
+  "matched_event": 130,
+  "proposed_new_event_id": null,
+  "candidates": [
+   {
+    "score": 0.608,
+    "event_id": 130,
+    "date": "2026-10-28",
+    "detail": "The US reportedly tells Gulf allies to prepare for a brief, high-intensity military campai"
+   },
+   {
+    "score": 0.537,
+    "event_id": 133,
+    "date": "2026-10-30",
+    "detail": "Qatari mediators, led by a senior adviser to PM Sheikh Mohammed bin Abdulrahman, arrive in"
+   },
+   {
+    "score": 0.374,
+    "event_id": 137,
+    "date": "2026-10-31",
+    "detail": "Trump says the US still has 'one or two' targets left, naming the suspected nuclear site '"
+   }
+  ],
+  "match_score": 0.608,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-02: logged as new event #130 (sources in audit_sources.py; checked against all older events, no duplicate above 0.46)",
+  "received": "2026-11-02"
+ },
+ {
+  "report_id": "R0491",
+  "published": "2026-10-29",
+  "outlet": "NYT (via Philadelphia Inquirer)",
+  "kind": "Independent outlet",
+  "headline": "Vance proposes restarting peace talks (Araghchi: still giving diplomacy a chance)",
+  "url": "https://www.inquirer.com/news/nation-world/jd-vance-peace-talks-iran-20261029.html",
+  "decision": "POSSIBLE MATCH - human should check",
+  "matched_event": 131,
+  "proposed_new_event_id": null,
+  "candidates": [
+   {
+    "score": 0.601,
+    "event_id": 131,
+    "date": "2026-10-28",
+    "detail": "FM Araghchi says Iran is still giving diplomacy a chance and is in contact with intermedia"
+   },
+   {
+    "score": 0.373,
+    "event_id": 128,
+    "date": "2026-10-26",
+    "detail": "Saudi, Pakistani and Turkish officials meet in Tehran with Iran's security chief to discus"
+   },
+   {
+    "score": 0.312,
+    "event_id": 132,
+    "date": "2026-10-29",
+    "detail": "UKMTO: a tanker is struck by a projectile while leaving by the southern route (evening of "
+   }
+  ],
+  "match_score": 0.601,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-02: logged as new event #131 (sources in audit_sources.py; checked against all older events, no duplicate above 0.46)",
+  "received": "2026-11-02"
+ },
+ {
+  "report_id": "R0492",
+  "published": "2026-11-01",
+  "outlet": "CBS News",
+  "kind": "Independent outlet",
+  "headline": "Trump says war in Iran will be put away very soon \"one way or the other\" (#132 item)",
+  "url": "https://www.cbsnews.com/live-updates/iran-war-us-trump-diplomacy-threat-resume-attacks/",
+  "decision": "SAME EVENT",
+  "matched_event": 132,
+  "proposed_new_event_id": null,
+  "candidates": [
+   {
+    "score": 0.776,
+    "event_id": 132,
+    "date": "2026-10-29",
+    "detail": "UKMTO: a tanker is struck by a projectile while leaving by the southern route (evening of "
+   },
+   {
+    "score": 0.72,
+    "event_id": 140,
+    "date": "2026-11-01",
+    "detail": "UKMTO reports a mayday from a vessel 'struck by an unknown projectile' in the Strait of Ho"
+   },
+   {
+    "score": 0.544,
+    "event_id": 138,
+    "date": "2026-10-31",
+    "detail": "Supreme Leader Mojtaba Khamenei warns any new attack would get an 'immediate, impactful an"
+   }
+  ],
+  "match_score": 0.776,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-02: logged as new event #132 (sources in audit_sources.py; checked against all older events, no duplicate above 0.46)",
+  "received": "2026-11-02"
+ },
+ {
+  "report_id": "R0493",
+  "published": "2026-10-30",
+  "outlet": "Al Jazeera",
+  "kind": "Independent outlet",
+  "headline": "Qatari officials in Iran in bid to revive ceasefire deal with US",
+  "url": "https://www.aljazeera.com/news/2026/10/30/qatari-officials-in-iran-in-bid-to-revive-ceasefire-deal-with-us",
+  "decision": "SAME EVENT",
+  "matched_event": 133,
+  "proposed_new_event_id": null,
+  "candidates": [
+   {
+    "score": 0.763,
+    "event_id": 133,
+    "date": "2026-10-30",
+    "detail": "Qatari mediators, led by a senior adviser to PM Sheikh Mohammed bin Abdulrahman, arrive in"
+   },
+   {
+    "score": 0.32,
+    "event_id": 136,
+    "date": "2026-10-30",
+    "detail": "Qatar News Agency says the Qatari LNG carrier Al Mayeda was attacked on Friday evening Oct"
+   },
+   {
+    "score": 0.31,
+    "event_id": 135,
+    "date": "2026-10-30",
+    "detail": "UKMTO: a vessel is struck by an 'unknown projectile' south of Lavan Island"
+   }
+  ],
+  "match_score": 0.763,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-02: logged as new event #133 (sources in audit_sources.py; checked against all older events, no duplicate above 0.46)",
+  "received": "2026-11-02"
+ },
+ {
+  "report_id": "R0494",
+  "published": "2026-11-01",
+  "outlet": "CBS News",
+  "kind": "Independent outlet",
+  "headline": "Trump says war in Iran will be put away very soon \"one way or the other\" (#134 item)",
+  "url": "https://www.cbsnews.com/live-updates/iran-war-us-trump-diplomacy-threat-resume-attacks/",
+  "decision": "SAME EVENT",
+  "matched_event": 134,
+  "proposed_new_event_id": null,
+  "candidates": [
+   {
+    "score": 0.916,
+    "event_id": 134,
+    "date": "2026-10-30",
+    "detail": "A Panama-flagged tanker catches fire about 1.6 nautical miles off Musandam and Oman evacua"
+   },
+   {
+    "score": 0.594,
+    "event_id": 138,
+    "date": "2026-10-31",
+    "detail": "Supreme Leader Mojtaba Khamenei warns any new attack would get an 'immediate, impactful an"
+   },
+   {
+    "score": 0.55,
+    "event_id": 140,
+    "date": "2026-11-01",
+    "detail": "UKMTO reports a mayday from a vessel 'struck by an unknown projectile' in the Strait of Ho"
+   }
+  ],
+  "match_score": 0.916,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-02: logged as new event #134 (sources in audit_sources.py; checked against all older events, no duplicate above 0.46)",
+  "received": "2026-11-02"
+ },
+ {
+  "report_id": "R0495",
+  "published": "2026-11-01",
+  "outlet": "CBS News",
+  "kind": "Independent outlet",
+  "headline": "Trump says war in Iran will be put away very soon \"one way or the other\" (#135 item)",
+  "url": "https://www.cbsnews.com/live-updates/iran-war-us-trump-diplomacy-threat-resume-attacks/",
+  "decision": "SAME EVENT",
+  "matched_event": 135,
+  "proposed_new_event_id": null,
+  "candidates": [
+   {
+    "score": 0.8,
+    "event_id": 135,
+    "date": "2026-10-30",
+    "detail": "UKMTO: a vessel is struck by an 'unknown projectile' south of Lavan Island"
+   },
+   {
+    "score": 0.54,
+    "event_id": 140,
+    "date": "2026-11-01",
+    "detail": "UKMTO reports a mayday from a vessel 'struck by an unknown projectile' in the Strait of Ho"
+   },
+   {
+    "score": 0.366,
+    "event_id": 136,
+    "date": "2026-10-30",
+    "detail": "Qatar News Agency says the Qatari LNG carrier Al Mayeda was attacked on Friday evening Oct"
+   }
+  ],
+  "match_score": 0.8,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-02: logged as new event #135 (sources in audit_sources.py; checked against all older events, no duplicate above 0.46)",
+  "received": "2026-11-02"
+ },
+ {
+  "report_id": "R0496",
+  "published": "2026-11-01",
+  "outlet": "CBS News",
+  "kind": "Independent outlet",
+  "headline": "Trump says war in Iran will be put away very soon \"one way or the other\" (#136 item)",
+  "url": "https://www.cbsnews.com/live-updates/iran-war-us-trump-diplomacy-threat-resume-attacks/",
+  "decision": "SAME EVENT",
+  "matched_event": 136,
+  "proposed_new_event_id": null,
+  "candidates": [
+   {
+    "score": 0.846,
+    "event_id": 136,
+    "date": "2026-10-30",
+    "detail": "Qatar News Agency says the Qatari LNG carrier Al Mayeda was attacked on Friday evening Oct"
+   },
+   {
+    "score": 0.515,
+    "event_id": 139,
+    "date": "2026-11-01",
+    "detail": "Qatari and Pakistani mediators meet an Iranian delegation in Doha from Oct 30; Reuters say"
+   },
+   {
+    "score": 0.45,
+    "event_id": 140,
+    "date": "2026-11-01",
+    "detail": "UKMTO reports a mayday from a vessel 'struck by an unknown projectile' in the Strait of Ho"
+   }
+  ],
+  "match_score": 0.846,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-02: logged as new event #136 (sources in audit_sources.py; checked against all older events, no duplicate above 0.46)",
+  "received": "2026-11-02"
+ },
+ {
+  "report_id": "R0497",
+  "published": "2026-11-01",
+  "outlet": "CBS News",
+  "kind": "Independent outlet",
+  "headline": "Trump says war in Iran will be put away very soon \"one way or the other\" (#137 item)",
+  "url": "https://www.cbsnews.com/live-updates/iran-war-us-trump-diplomacy-threat-resume-attacks/",
+  "decision": "POSSIBLE MATCH - human should check",
+  "matched_event": 137,
+  "proposed_new_event_id": null,
+  "candidates": [
+   {
+    "score": 0.601,
+    "event_id": 137,
+    "date": "2026-10-31",
+    "detail": "Trump says the US still has 'one or two' targets left, naming the suspected nuclear site '"
+   },
+   {
+    "score": 0.45,
+    "event_id": 140,
+    "date": "2026-11-01",
+    "detail": "UKMTO reports a mayday from a vessel 'struck by an unknown projectile' in the Strait of Ho"
+   },
+   {
+    "score": 0.366,
+    "event_id": 136,
+    "date": "2026-10-30",
+    "detail": "Qatar News Agency says the Qatari LNG carrier Al Mayeda was attacked on Friday evening Oct"
+   }
+  ],
+  "match_score": 0.601,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-02: logged as new event #137 (sources in audit_sources.py; checked against all older events, no duplicate above 0.46)",
+  "received": "2026-11-02"
+ },
+ {
+  "report_id": "R0498",
+  "published": "2026-11-01",
+  "outlet": "CBS News",
+  "kind": "Independent outlet",
+  "headline": "Trump says war in Iran will be put away very soon \"one way or the other\" (#138 item)",
+  "url": "https://www.cbsnews.com/live-updates/iran-war-us-trump-diplomacy-threat-resume-attacks/",
+  "decision": "SAME EVENT",
+  "matched_event": 138,
+  "proposed_new_event_id": null,
+  "candidates": [
+   {
+    "score": 0.668,
+    "event_id": 138,
+    "date": "2026-10-31",
+    "detail": "Supreme Leader Mojtaba Khamenei warns any new attack would get an 'immediate, impactful an"
+   },
+   {
+    "score": 0.389,
+    "event_id": 139,
+    "date": "2026-11-01",
+    "detail": "Qatari and Pakistani mediators meet an Iranian delegation in Doha from Oct 30; Reuters say"
+   },
+   {
+    "score": 0.31,
+    "event_id": 140,
+    "date": "2026-11-01",
+    "detail": "UKMTO reports a mayday from a vessel 'struck by an unknown projectile' in the Strait of Ho"
+   }
+  ],
+  "match_score": 0.668,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-02: logged as new event #138 (sources in audit_sources.py; checked against all older events, no duplicate above 0.46)",
+  "received": "2026-11-02"
+ },
+ {
+  "report_id": "R0499",
+  "published": "2026-11-01",
+  "outlet": "CBS News",
+  "kind": "Independent outlet",
+  "headline": "Trump says war in Iran will be put away very soon \"one way or the other\" (#139 item)",
+  "url": "https://www.cbsnews.com/live-updates/iran-war-us-trump-diplomacy-threat-resume-attacks/",
+  "decision": "SAME EVENT",
+  "matched_event": 139,
+  "proposed_new_event_id": null,
+  "candidates": [
+   {
+    "score": 0.95,
+    "event_id": 139,
+    "date": "2026-11-01",
+    "detail": "Qatari and Pakistani mediators meet an Iranian delegation in Doha from Oct 30; Reuters say"
+   },
+   {
+    "score": 0.565,
+    "event_id": 133,
+    "date": "2026-10-30",
+    "detail": "Qatari mediators, led by a senior adviser to PM Sheikh Mohammed bin Abdulrahman, arrive in"
+   },
+   {
+    "score": 0.409,
+    "event_id": 136,
+    "date": "2026-10-30",
+    "detail": "Qatar News Agency says the Qatari LNG carrier Al Mayeda was attacked on Friday evening Oct"
+   }
+  ],
+  "match_score": 0.95,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-02: logged as new event #139 (sources in audit_sources.py; checked against all older events, no duplicate above 0.46)",
+  "received": "2026-11-02"
+ },
+ {
+  "report_id": "R0500",
+  "published": "2026-11-01",
+  "outlet": "CBS News",
+  "kind": "Independent outlet",
+  "headline": "Trump says war in Iran will be put away very soon \"one way or the other\" (#140 item)",
+  "url": "https://www.cbsnews.com/live-updates/iran-war-us-trump-diplomacy-threat-resume-attacks/",
+  "decision": "SAME EVENT",
+  "matched_event": 140,
+  "proposed_new_event_id": null,
+  "candidates": [
+   {
+    "score": 0.887,
+    "event_id": 140,
+    "date": "2026-11-01",
+    "detail": "UKMTO reports a mayday from a vessel 'struck by an unknown projectile' in the Strait of Ho"
+   },
+   {
+    "score": 0.575,
+    "event_id": 132,
+    "date": "2026-10-29",
+    "detail": "UKMTO: a tanker is struck by a projectile while leaving by the southern route (evening of "
+   },
+   {
+    "score": 0.551,
+    "event_id": 138,
+    "date": "2026-10-31",
+    "detail": "Supreme Leader Mojtaba Khamenei warns any new attack would get an 'immediate, impactful an"
+   }
+  ],
+  "match_score": 0.887,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-02: logged as new event #140 (sources in audit_sources.py; checked against all older events, no duplicate above 0.46)",
+  "received": "2026-11-02"
+ },
+ {
+  "report_id": "R0501",
+  "published": "2026-11-01",
+  "outlet": "CBS News",
+  "kind": "Independent outlet",
+  "headline": "IRGC claims a supertanker hit a mine and caught fire (Oct 30); Oman evacuates 25 crew from a burning tanker off Musandam (Oct 30)",
+  "url": "https://www.cbsnews.com/live-updates/iran-war-us-trump-diplomacy-threat-resume-attacks/",
+  "decision": "POSSIBLE OVERLAP",
+  "matched_event": 134,
+  "proposed_new_event_id": null,
+  "candidates": [],
+  "match_score": 0.0,
+  "seen": "full text",
+  "received": "2026-11-02",
+  "status": "needs human check: CBS does not say whether the IRGC-claimed mine-hit supertanker (6:01 PM) is the Panama-flagged tanker Oman evacuated off Musandam. Logged together as #134 (partly confirmed). Split into two rows if a source shows two ships."
  }
 ]

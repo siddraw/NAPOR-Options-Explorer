@@ -157,7 +157,8 @@ MONTHS = [
     ("Jul 2026", d(2026,7,1), d(2026,7,31)),
     ("Aug 2026", d(2026,8,1), d(2026,8,31)),
     ("Sep 2026", d(2026,9,1), d(2026,9,30)),
-    ("Oct 2026 (to Oct 26)", d(2026,10,1), d(2026,10,31)),
+    ("Oct 2026", d(2026,10,1), d(2026,10,31)),
+    ("Nov 2026 (to Nov 2)", d(2026,11,1), d(2026,11,30)),
 ]
 
 
@@ -318,6 +319,27 @@ events.extend([
 (126, d(2026,10,25), 'US', 'Diplomatic statement', 'Iran', "Trump: 'do I make a deal with them, or do I finish them off?' and, asked about a strike, 'No. There will not be a strike today'", 97, 'n/a', 'Medium', 'see audit'),
 (127, d(2026,10,25), 'Iran', 'Diplomatic contact (via intermediaries)', 'US', "Iran's foreign ministry says messages are still being passed to the US through intermediaries; FM Araghchi says that with or without war 'our policies remain the same'", 86, 'n/a', 'Medium', 'see audit'),
 (128, d(2026,10,26), 'Saudi Arabia/Pakistan/Turkey', 'Diplomatic talks (regional)', 'Iran', "Saudi, Pakistani and Turkish officials meet in Tehran with Iran's security chief to discuss the fallout of the war and the fighting in Yemen; the US is not part of the meeting (a day after an eight-country foreign ministers' meeting in Istanbul on Oct 23 without the US or Iran)", None, 'n/a', 'Medium', 'see audit'),
+])
+
+# ---------------------------------------------------------------------------
+# Weekly update, Nov 2 (weekly agent; credible-outlet research covering Oct 26-Nov 1). No US strike
+# on Iranian territory and no Iranian attack on US forces or bases was found. UKMTO reported new
+# projectile hits on ships on Oct 29, Oct 30 (two) and Nov 1; the IRGC claimed more (mines). Talks
+# resumed through Qatari and Pakistani mediators (Vance letter delivered Oct 25; Doha, Oct 30-Nov 1).
+# ---------------------------------------------------------------------------
+events.extend([
+(129, d(2026,10,25), 'US', 'Diplomatic proposal (letter via Qatari mediators)', 'Iran', "VP Vance's letter to security chief Mohsen Rezaei, delivered by Qatari mediators on Sunday Oct 25, proposes that US and Iranian officials meet soon, with Vance leading the US side, and says Iran's nuclear program must be on the table; an Iranian official says it was received well; reply expected by Oct 29 (NYT). A WSJ source says it set only a 'framework for negotiations'", 127, 'n/a', 'Medium', 'see audit'),
+(130, d(2026,10,28), 'US', 'Diplomatic statement (warning to allies)', 'Iran', "The US reportedly tells Gulf allies to prepare for a brief, high-intensity military campaign against Iran after the Nov 3 midterms (WSJ, as reported by Al Jazeera); the NYT says the military has drawn up an expanded target list that includes energy infrastructure", 97, 'n/a', 'Medium', 'see audit'),
+(131, d(2026,10,28), 'Iran', 'Diplomatic statement', 'US', "FM Araghchi says Iran is still giving diplomacy a chance and is in contact with intermediaries on its seven-day plan (blockade lifted, some frozen assets released), which the US has rejected; Iran warns it would retaliate against regional infrastructure and undersea cables if attacked (NYT)", 129, 'n/a', 'Medium', 'see audit'),
+(132, d(2026,10,29), 'Unknown', 'Strike (shipping)', 'Strait of Hormuz', "UKMTO: a tanker is struck by a projectile while leaving by the southern route (evening of Oct 29). Iran's armed forces separately CLAIM at least four tankers were stopped after hitting sea mines in the strait (unconfirmed)", None, 'No injuries or environmental impact reported (UKMTO, via CBS)', 'Medium', 'see audit'),
+(133, d(2026,10,30), 'Qatar (mediator, coordinating with the US)', 'Diplomatic talks (via Qatari mediators)', 'Iran', "Qatari mediators, led by a senior adviser to PM Sheikh Mohammed bin Abdulrahman, arrive in Tehran with edits to a draft deal presented the previous Sunday and to collect Iran's answer to the Vance letter; a CBS source sees 'indications of progress'; a meeting could follow within a week in Doha or Istanbul (Al Jazeera). Tasnim says Tehran has not answered and will not drop its conditions, including lifting the blockade", 129, 'n/a', 'Medium', 'see audit'),
+(134, d(2026,10,30), 'Unknown (IRGC claims a mine)', 'Strike (shipping)', 'Strait of Hormuz (off Musandam, Oman)', "A Panama-flagged tanker catches fire about 1.6 nautical miles off Musandam and Oman evacuates its 25 crew; the IRGC CLAIMS a supertanker hit a mine and caught fire, and says two tankers were halted after 'incidents' on an 'unauthorized route'", None, 'Fire; 25 crew evacuated by Oman (no injuries stated)', 'Medium', 'see audit'),
+(135, d(2026,10,30), 'Unknown', 'Strike (shipping)', 'Gulf (south of Lavan Island, Iran)', "UKMTO: a vessel is struck by an 'unknown projectile' south of Lavan Island", None, 'Crew safe (UKMTO, via CBS)', 'Medium', 'see audit'),
+(136, d(2026,10,30), 'Unknown', 'Strike (shipping)', 'Gulf (Qatari LNG carrier)', "Qatar News Agency says the Qatari LNG carrier Al Mayeda was attacked on Friday evening Oct 30 (reported by CBS); attacker not named", None, 'No crew injured (QNA, via CBS)', 'Medium', 'see audit'),
+(137, d(2026,10,31), 'US', 'Diplomatic statement (threat)', 'Iran', "Trump says the US still has 'one or two' targets left, naming the suspected nuclear site 'Pickaxe Mountain' (Iran denies nuclear work there); Rubio says Trump 'hasn't made a decision' on new strikes and the US 'would prefer to do it peacefully'; CENTCOM says the blockade has redirected 144 vessels. On Nov 1 Trump says 'Either they'll make a deal, or we'll just end it'", 97, 'n/a', 'Medium', 'see audit'),
+(138, d(2026,10,31), 'Iran', 'Diplomatic statement (threat)', 'US', "Supreme Leader Mojtaba Khamenei warns any new attack would get an 'immediate, impactful and geographically unrestricted response'; FM Araghchi says there are 'no plans for meetings with American officials' but that a new mediator proposal could reopen Hormuz within two days if the US meets Iran's conditions", 137, 'n/a', 'Medium', 'see audit'),
+(139, d(2026,11,1), 'Qatar/Pakistan (mediators)', 'Diplomatic talks (indirect, Doha)', 'Iran/US', "Qatari and Pakistani mediators meet an Iranian delegation in Doha from Oct 30; Reuters says Nov 1 is the third straight day of indirect talks. Araghchi says Iran hopes the US chooses 'diplomacy over other paths'", 133, 'n/a', 'Medium', 'see audit'),
+(140, d(2026,11,1), 'Unknown', 'Strike (shipping)', 'Strait of Hormuz', "UKMTO reports a mayday from a vessel 'struck by an unknown projectile' in the Strait of Hormuz", None, 'Not stated by allowed sources', 'Medium', 'see audit'),
 ])
 
 # ---------------------------------------------------------------------------
@@ -661,9 +683,9 @@ census += [
  (107, "Economic/Blockade", "Unclear", "US shadow-fleet sanctions, Oct 8. Shipping attacks continued Oct 9-13 (#100, #101, #103, #105, #109); no outlet ties them to these sanctions specifically. [Proposed: N, as for #85/#87.]"),
  (110, "Economic/Blockade", "Unclear", "US shadow-banking sanctions, Oct 15 (checked Oct 26). No Iranian attack on US forces, bases or US-flagged ships Oct 15-20. Shipping attacks continued (#112, #113, #114, #117); no outlet ties them to these sanctions. [Proposed: N, as for #85/#87.]"),
 ]
-# Weekly update, Oct 26: new US sanctions whose window is still open.
+# Weekly update, Oct 26: new US sanctions (window closed; moved to Unclear on Nov 2, waiting on Sidd as for #104-#110).
 census += [
- (119, "Economic/Blockade", "Unverified", "US shadow-fleet sanctions, Oct 21. Window runs to Oct 26; check next week. So far: IRGC claims of tanker hits Oct 22-23 (#121, #123) and a threat against US bases, no attack on US forces found."),
+ (119, "Economic/Blockade", "Unclear", "US shadow-fleet sanctions, Oct 21 (checked Nov 2). No Iranian attack on US forces, bases or US-flagged ships Oct 21-26. The IRGC claimed tanker hits Oct 22-23 (#121, #123) and threatened US bases; no outlet ties them to these sanctions. [Proposed: N, as for #85/#87.]"),
 ]
 
 # Continuous-war rule: while both sides were striking each other daily, every act is

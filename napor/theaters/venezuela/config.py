@@ -4,7 +4,7 @@ The event files (events_pre2019.py for Feb 1999 - Jan 10, 2019 and events.py fro
 the decisions the engine needs: which options exist, what counts as an act by the other side, which outlets are claims only, how each of the
 five risk categories is defined here, which weeks count as "hold" weeks, and the analyst notes the page shows (notes.py).
 
-SMALL NUMBERS: only 8 of about 70 US boat strikes are logged one by one, most Venezuelan replies are statements (which do not count as an
+SMALL NUMBERS: only 9 of more than 70 US boat strikes are logged one by one, most Venezuelan replies are statements (which do not count as an
 escalation reply here), and option G (raids or operations against leaders) has one case (the Jan 2-3, 2026 Maduro capture). The page says so
 on every option (THEATER["small_n"]). Options with fewer than 3 counted cases show "too few cases" instead of a percentage.
 
@@ -40,15 +40,15 @@ THEATER = dict(
     adversary="Venezuela or armed groups", actor="Venezuela or an armed group", actor_short="Venezuela",
     proxy_note="Every reply here is an act by Venezuela itself (its government, ministers or armed forces) or by an armed group. Venezuelan state media (Telesur, VTV) is used only as labelled claims of what the government says. Cuban, Russian and Trinidadian statements are not replies. After the Jan 3, 2026 capture of Maduro the interim government has cooperated with Washington; cooperative answers are not replies.",
     salvo=None,
-    hold_note="Hold cases are weeks, from Aug 11, 2025 on (the first Monday after the Maduro bounty was doubled), with no logged US sanction, deployment, boat strike, land strike, raid, seizure or talks move. Weeks inside the two stretches of near-daily boat strikes (Oct 27 - Nov 15, 2025 and Dec 15, 2025 - Jan 2, 2026) are left out, and so are weeks where outlet counts show boat strikes that the log does not hold one by one (Sep 22 - Oct 6 and Dec 1, 2025, and Jan 26 - Jun 22, 2026). Be careful: about 70 boat strikes are known and only 8 are logged one by one, so even the weeks that remain may have had an unlogged strike. The log is a sample, so a quiet week may only be a week where nothing was logged. Read option A as a rough sketch and do not compare it number for number with options that rest on well-reported cases.",
+    hold_note="Hold cases are weeks, from Aug 11, 2025 on (the first Monday after the Maduro bounty was doubled), with no logged US sanction, deployment, boat strike, land strike, raid, seizure or talks move. Weeks inside the two stretches of near-daily boat strikes (Oct 27 - Nov 15, 2025 and Dec 15, 2025 - Jan 2, 2026) are left out, and so are weeks where outlet counts show boat strikes that the log does not hold one by one (Sep 22 - Oct 6 and Dec 1, 2025, and Jan 26 - Jun 22, 2026). Be careful: more than 70 boat strikes are known and only 9 are logged one by one, so even the weeks that remain may have had an unlogged strike. The log is a sample, so a quiet week may only be a week where nothing was logged. Read option A as a rough sketch and do not compare it number for number with options that rest on well-reported cases.",
     not_measured="Oil output and prices, migration, food and medicine supply, harm to ordinary Venezuelans from sanctions, and strain with Colombia, Cuba, Russia and Caribbean states are not measured. Only the five categories above are counted.",
     presets=[["2025-08-07", "Maduro bounty doubled"], ["2025-09-02", "First boat strike"], ["2025-10-24", "Carrier ordered to SOUTHCOM"],
              ["2025-12-16", "Tanker blockade ordered"], ["2026-01-03", "Maduro captured"], ["2026-04-01", "Rodriguez delisted"],
              ["2002-04-12", "2002 coup attempt"], ["2006-05-15", "US arms-sales ban"], ["2008-09-11", "Ambassadors expelled"],
              ["2015-03-09", "Emergency order"], ["2017-08-11", "'Military option' remark"]],
-    under_logged="The log is a sample. 1999-2008 is thin and many of its rows rest on one Congressional Research Service report, 2009-2016 holds mostly expulsions and a few sanctions, and the Dec 2017 talks and the Nov 2017 sanctions are missing. 2020-2024 holds only a few key moves, only 8 of about 70 boat strikes are logged one by one, and Venezuelan state media was not opened, so \"none logged\" is not proof nothing happened.",
+    under_logged="The log is a sample. 1999-2008 is thin and many of its rows rest on one Congressional Research Service report, 2009-2016 holds mostly expulsions and a few sanctions, and the Dec 2017 talks and the Nov 2017 sanctions are missing. 2020-2024 holds only a few key moves, only 9 of more than 70 boat strikes are logged one by one, and Venezuelan state media was not opened, so \"none logged\" is not proof nothing happened.",
     spark_from="1999-02-01", thin_before="2019-01-01", claim_note="Venezuelan state media (Telesur, VTV)",
-    small_n="Only 8 of about 70 boat strikes are logged one by one, most Venezuelan replies are statements (which do not count as an escalation reply here), and option G (raids or operations against leaders) has 1 case. Most options have only a handful of counted cases (the exact number is on each option), and options with fewer than 3 show \"too few cases\" instead of a percentage. Read every rate as a hint, not a forecast.",
+    small_n="Only 9 of more than 70 boat strikes are logged one by one, most Venezuelan replies are statements (which do not count as an escalation reply here), and option G (raids or operations against leaders) has 1 case. Most options have only a handful of counted cases (the exact number is on each option), and options with fewer than 3 show \"too few cases\" instead of a percentage. Read every rate as a hint, not a forecast.",
     us_hurt="Anyone killed or hurt in the US action",
     # ---- per-theater words and rules the page reads (defaults on the page are the Iran / Houthi words) ----
     reply_days=7,
@@ -186,7 +186,7 @@ BASELINE_TEST = HOSTILE_TEST
 # ---- hold weeks (option A) -------------------------------------------------------------------------------
 HOLD_START = d(2025, 8, 11)                              # first Monday after the Maduro bounty was doubled (Aug 7, 2025)
 MIN_HOLD_WEEKS = 3                                       # fewer than this: option A shows "too few cases", no weeks are invented
-# Monday ISO date -> reason (allowed outlets' own running counts show boat strikes that are not logged one by one; only 8 of about 70 are).
+# Monday ISO date -> reason (allowed outlets' own running counts show boat strikes that are not logged one by one; only 9 of more than 70 are).
 # A week is marked uncertain only where those counts show unlogged strikes in the stretch. Weeks the counts show as quiet stay hold weeks.
 _REASON_2025 = "Outlet counts show boat strikes in this stretch that are not logged one by one: AP counted five boats destroyed by Oct 15, 2025 (#4024) against two logged strikes before it (#4017, #4022); NPR counted about 20 strikes by Nov 16 (#4033) and 25 by Dec 16 (#4044) against the logged ones. A strike may have fallen in this week."
 _REASON_2026 = "AP counted 36 known strikes by Jan 23, 2026 (#4055) and more than 60 by Aug 24 (#4062), calling that strike the first in two months, so about two dozen boat strikes fell between late January and late June 2026 and only #4055 is logged. A strike may have fallen in this week."
@@ -215,6 +215,7 @@ CIVILIAN_HARM = {
     4061: "Tren de Aragua leader Hector Guerrero Flores killed (Trump); no other deaths reported",
     4062: "2 killed (Pentagon, per AP)",
     4064: "4 killed (SOUTHCOM)",
+    4067: "5 killed (SOUTHCOM, per AP and Stripes)",
 }
 
 # ---- the backtest -----------------------------------------------------------------------------------------

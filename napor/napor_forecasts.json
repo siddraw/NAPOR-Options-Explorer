@@ -145,6 +145,53 @@
    121,
    123
   ],
+  "outcome": "YES",
+  "resolved_on": "2026-11-02",
+  "resolution_note": "YES. UKMTO reported a tanker struck by a projectile while leaving by the southern route on the evening of Oct 29 (no injuries), a vessel struck by an 'unknown projectile' south of Lavan Island on Oct 30 (crew safe), and a mayday from a vessel struck by an unknown projectile in Hormuz on Nov 1 (CBS live blog, #132, #135, #140). Oman also evacuated 25 crew from a burning tanker off Musandam on Oct 30 (#134). IRGC mine claims are not needed for the YES.",
+  "brier": 0.008,
+  "sources": [
+   "https://www.cbsnews.com/live-updates/iran-war-us-trump-diplomacy-threat-resume-attacks/"
+  ]
+ },
+ {
+  "id": "F007",
+  "made_on": "2026-11-02",
+  "news_through": "2026-11-01",
+  "question": "Will there be at least one new attack on a commercial ship in or near the Strait of Hormuz / Gulf (by Iran or an unidentified attacker) during Nov 2-8?",
+  "resolves_yes_if": "An allowed outlet, UKMTO or CENTCOM reports at least one new projectile, drone, mine or boarding attack on a commercial vessel in the Gulf, Strait of Hormuz or Gulf of Oman dated Nov 2-8, not attributed to the US. IRGC claims alone (not confirmed by UKMTO, CENTCOM or an allowed outlet's own reporting) do not count. Houthi attacks in the Red Sea do not count.",
+  "deadline": "2026-11-08",
+  "probability": 0.94,
+  "basis": "Baseline: 21 logged attack rows in 7.6 weeks of the current phase (Sep 10-Nov 1) = 2.8 per week; chance of at least one in a week (Poisson) = 1 - e^-2.8 = 94%. Same method as F002/F004/F006. Caution: some logged rows are IRGC claims, and a deal from the Doha talks (#139) could reduce attacks; neither is in the model.",
+  "option": "A",
+  "related_events": [
+   132,
+   134,
+   135,
+   136,
+   140
+  ],
+  "outcome": null,
+  "resolved_on": null,
+  "resolution_note": null,
+  "brier": null
+ },
+ {
+  "id": "F008",
+  "made_on": "2026-11-02",
+  "news_through": "2026-11-01",
+  "question": "Will the US strike a target on Iranian land or in Iranian territorial waters between Nov 4 and Nov 17 (inclusive)?",
+  "resolves_yes_if": "An allowed outlet or an official US statement reports a US strike (air, missile, drone or naval gunfire) on a target on Iranian soil, an Iranian island, or in an Iranian port or territorial waters, dated Nov 4-17. Blockade enforcement against ships at sea outside Iranian territorial waters, seizures, and strikes by Israel alone do not count.",
+  "deadline": "2026-11-17",
+  "probability": 0.21,
+  "basis": "Phase base rate (same method as F003): in the holding pattern (since Sep 10) there have been 0 US strikes on Iranian land in 7 full weeks -> weekly chance (0+1)/(7+2) = 11%; over 14 days 1-(1-0.11)^2 = 21%. Not in the model: Trump's no-strike pledge ends with the Nov 3 midterms (#97); the US reportedly told Gulf allies to prepare for a short, intense campaign after them (#130) and Trump says 'one or two' targets are left (#137); against that, indirect talks are under way in Doha (#133, #139) after Vance's offer (#129).",
+  "option": "F",
+  "related_events": [
+   97,
+   129,
+   130,
+   137,
+   139
+  ],
   "outcome": null,
   "resolved_on": null,
   "resolution_note": null,

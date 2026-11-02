@@ -874,8 +874,10 @@ class Recount:
                         self.add(ppl, w, bool(flag[0]))
                 else:
                     prs = [p for p in self.PAIRS if p[1] == tid and EV[p[2]][1] <= T]
-                    if s7 is not None:
-                        self.add(ppl, w, (tid in _cfg(C, "CIVILIAN_HARM", {})) or any(p[4] == "Y" for p in prs))
+                    hurt = (tid in _cfg(C, "CIVILIAN_HARM", {})) or any(p[4] == "Y" for p in prs)
+                    # An attack inside a 7-day window that is still open does not settle "no one hurt" yet (2026-11-02 fix).
+                    if s7 is not None and (hurt or done(day, 7)):
+                        self.add(ppl, w, hurt)
                     if fl["trigger"]:
                         st = [c[2] for c in self.CENSUS if c[0] == tid][0]
                         rep = (st in REPLY) if done(day, self.RD) else (True if prs else None)

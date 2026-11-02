@@ -1,27 +1,106 @@
 {
-  "as_of": "2026-10-26",
+  "as_of": "2026-11-02",
   "note": "Analyst reading of the news, written by the weekly agent from logged events. Not data. Replace every week.",
   "headline": [
-    "Trump is openly weighing a return to war: 'do I make a deal with them, or do I finish them off?' (Oct 25), after saying the US 'may do another little Epic Fury' (Oct 23). He also said 'There will not be a strike today' (#122, #126).",
-    "The US is thinning out in the Gulf: non-emergency diplomats ordered out of Saudi Arabia (Oct 21), staff cuts in Jordan, Lebanon, Qatar and the UAE (Oct 23), and officials say the military is quietly reducing its footprint (#120). A US intelligence memo warns of Iranian plots against US personnel (#124).",
-    "Shipping: UKMTO confirmed two tanker hits (Oct 20 off Iraq, Oct 21 off Oman, no one hurt) (#117, #118). The IRGC claims nine more hits Oct 22-23 and threatens US bases; Trump calls them 'fake hits' (#121, #123). Brent oil rose to about $117.",
-    "Talks: no deal. Iran says messages still go through intermediaries and it is open to talks under the June interim deal (#125, #127). Saudi, Pakistani and Turkish officials are in Tehran on Oct 26; the US is not part of that meeting (#128).",
-    "New sanctions on Oct 21 (shadow fleet, #119). No US strike on Iran and no Iranian attack on US forces was found this week."
+    "Talks are back on through go-betweens: VP Vance sent Iran's security chief a letter (delivered Oct 25) proposing a meeting led by Vance, with Iran's nuclear program on the table (#129). Qatari mediators took a draft to Tehran on Oct 30, and Qatari and Pakistani mediators held indirect talks with an Iranian delegation in Doha on Oct 30-Nov 1 (#133, #139). No deal yet.",
+    "Trump's no-strike pledge runs out with the Nov 3 midterms. The US reportedly told Gulf allies to get ready for a short, intense campaign after them (#130), and Trump says 'one or two' targets are left; on Nov 1 he said 'Either they'll make a deal, or we'll just end it' (#137). Rubio says no decision has been made.",
+    "Iran's Supreme Leader warned any new attack would get an 'immediate' and 'geographically unrestricted' response; FM Araghchi says there are no plans to meet US officials until the US meets Iran's conditions (#138).",
+    "Shipping: UKMTO reported projectile hits on ships on Oct 29, Oct 30 (south of Lavan) and Nov 1; Oman rescued 25 crew from a burning tanker off Musandam, and a Qatari LNG carrier was attacked (#132, #134, #135, #136, #140). No injuries were reported. The IRGC claims more ships hit mines.",
+    "No US strike on Iran, no Iranian attack on US forces, and no new US sanctions were found this week. CENTCOM says the blockade has turned back 144 ships (#137)."
   ],
   "key_dates": [
-    {"date": "2026-11-01", "label": "Forecast F006 (shipping attacks Oct 26-Nov 1) closes"},
-    {"date": "2026-11-03", "label": "Midterm elections; end of Trump's no-strike pledge; forecasts F003, F005 and situation S003 close"},
-    {"date": "2026-11-17", "label": "Situation S002 window closes (what the US does Nov 4-17)"}
+    {
+      "date": "2026-11-03",
+      "label": "Midterm elections; end of Trump's no-strike pledge; forecasts F003, F005 and situation S003 close"
+    },
+    {
+      "date": "2026-11-08",
+      "label": "Forecast F007 (shipping attacks Nov 2-8) closes"
+    },
+    {
+      "date": "2026-11-17",
+      "label": "Situation S002 window (what the US does Nov 4-17) and forecast F008 (US strike on Iran Nov 4-17) close"
+    }
   ],
-  "pending": ["Whether Trump picks a deal or renewed strikes after Nov 3 (#126)", "Whether the IRGC carries out its threat against US bases (#121)", "Iran's formal answer to the US counter-offer (#86, #127)"],
+  "pending": [
+    "Iran's formal answer to the Vance letter and whether the Doha talks lead to a meeting (#129, #139)",
+    "Whether Trump resumes strikes after Nov 3 (#130, #137)",
+    "Whether Iran carries out its threat of a wide response if attacked (#138)"
+  ],
   "options": {
-    "A": {"status": "open", "label": "Open", "reason": "Still the current course on strikes: no US strike since Sep 9; Trump said on Oct 25 'There will not be a strike today'.", "events": [97, 126]},
-    "B": {"status": "active", "label": "In use now", "reason": "Messages are still passed through intermediaries (#127) and Iran says it is open to talks under the June deal (#125); no direct talks or deal confirmed.", "events": [125, 127]},
-    "C": {"status": "active", "label": "In use now", "reason": "Treasury added shadow-fleet sanctions on Oct 21, after the Oct 15 round.", "events": [110, 119]},
-    "D": {"status": "active", "label": "In use now", "reason": "The blockade and US-supported transits continue (Iran threatens action if US escorts resume, #123); no new blockade strike is logged since Oct 10-11 (#104).", "events": [104, 123]},
-    "E": {"status": "constrained", "label": "Constrained", "reason": "Trump's pledge covers attacks on Iran before Nov 3 (#97). Whether strikes on Iranian boats at sea fall outside it is not confirmed.", "events": [97, 104]},
-    "F": {"status": "constrained", "label": "Constrained until Nov 3", "reason": "Ruled out by Trump's pledge before the midterms (#97); he says he is weighing renewed strikes (#122, #126).", "events": [97, 122, 126]},
-    "G": {"status": "constrained", "label": "Constrained until Nov 3", "reason": "Ruled out by Trump's pledge before the midterms (#97); strike plans are reported ready (#111).", "events": [97, 111]},
-    "H": {"status": "active", "label": "In use now", "reason": "The US is pulling diplomats and, per officials, some military staff from Gulf posts (#120); earlier, bombers left RAF Fairford and a carrier left the region (#91, #92).", "events": [91, 92, 120]}
+    "A": {
+      "status": "open",
+      "label": "Open",
+      "reason": "Still the current course on strikes: no US strike on Iran since Sep 9, and Rubio says no decision on new strikes has been made (#137).",
+      "events": [
+        97,
+        137
+      ]
+    },
+    "B": {
+      "status": "active",
+      "label": "In use now",
+      "reason": "Vance offered a meeting by letter (#129) and indirect talks through Qatari and Pakistani mediators ran in Doha Oct 30-Nov 1 (#133, #139); no direct meeting or deal yet.",
+      "events": [
+        129,
+        133,
+        139
+      ]
+    },
+    "C": {
+      "status": "active",
+      "label": "In use now",
+      "reason": "Sanctions rounds on Oct 15 and Oct 21 remain in force; no new round was found this week (not confirmed whether one is coming).",
+      "events": [
+        110,
+        119
+      ]
+    },
+    "D": {
+      "status": "active",
+      "label": "In use now",
+      "reason": "The blockade of Iranian ports continues; CENTCOM says it has turned back 144 ships (#137). No new blockade strike is logged since Oct 10-11 (#104).",
+      "events": [
+        104,
+        137
+      ]
+    },
+    "E": {
+      "status": "constrained",
+      "label": "Constrained until Nov 3",
+      "reason": "Trump's pledge covers attacks on Iran before Nov 3 (#97); whether strikes on Iranian boats at sea fall outside it is not confirmed.",
+      "events": [
+        97,
+        104
+      ]
+    },
+    "F": {
+      "status": "constrained",
+      "label": "Constrained until Nov 3",
+      "reason": "Ruled out by Trump's pledge before the midterms (#97); the US reportedly warned Gulf allies of a short, intense campaign after them (#130) and Trump says 'one or two' targets are left (#137).",
+      "events": [
+        97,
+        130,
+        137
+      ]
+    },
+    "G": {
+      "status": "constrained",
+      "label": "Constrained until Nov 3",
+      "reason": "Ruled out by Trump's pledge before the midterms (#97); an expanded target list including energy sites is reported (#130).",
+      "events": [
+        97,
+        111,
+        130
+      ]
+    },
+    "H": {
+      "status": "active",
+      "label": "In use now",
+      "reason": "The drawdown of US diplomats and some military staff from Gulf posts announced Oct 21-23 still stands (#120); nothing new found this week.",
+      "events": [
+        120
+      ]
+    }
   }
 }

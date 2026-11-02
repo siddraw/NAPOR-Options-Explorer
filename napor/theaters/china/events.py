@@ -1,4 +1,4 @@
-"""NAPOR China: Taiwan Strait and South China Sea, Jan 2019 - Oct 24, 2026 (research file).
+"""NAPOR China: Taiwan Strait and South China Sea, Jan 2019 - Nov 2, 2026 (research file).
 
 Same shape as napor/theaters/houthis/events_early.py. Event IDs 3001-3999 and pair IDs 3001-3999
 belong to this file. Config, export and page data are not built yet (that comes after the engine).
@@ -11,7 +11,7 @@ Option letters used in US_OPTION (A, hold, is never tagged):
   F  high-level visits or contacts with Taiwan
   G  joint exercises with allies in the region
   H  other deployments / posture
-G has one real case (3040) and H has one (3011): both are "very thin evidence".
+G has two cases (3040, 3067) and H has one (3011): both are "very thin evidence".
 
 Rules used here (docs/SOURCE_STANDARD.md):
 - Only allowed outlets and official statements. Wire stories read through a syndicated copy are labelled
@@ -28,13 +28,13 @@ Rules used here (docs/SOURCE_STANDARD.md):
   Routine PLA activity near Taiwan (daily ADIZ flights, joint combat readiness patrols with no named link) is background,
   not a reply, unless an allowed outlet ties it to a US move or it is a clear step up on a named day.
 - The 7-day window is counted from the date of the US move as logged.
-- SMALL N: Taiwan-specific US moves are few. Per option: E 7 and F 7 (only 2 of the E moves and 5 of the F moves have a reply inside 7 days), G 1, H 1, C 2.
-  Do not read a rate from G, H or C. D (16 moves) is the only option with a usable count, and almost all are N
+- SMALL N: Taiwan-specific US moves are few. Per option: E 7 and F 7 (only 2 of the E moves and 5 of the F moves have a reply inside 7 days), G 2, H 1, C 2.
+  Do not read a rate from G, H or C. D (18 moves) is the only option with a usable count, and almost all are N
   because China answers a transit with words and shadowing.
 - CENSUS covers US moves of kinds C-H (as in the Houthi log). B moves (talks) are logged but not censused.
 - Event 3048 is NOT confirmed (only outlets not on the allowed list were found); it is not counted.
 - Gaps (searched, no allowed source found, so left out): Oct 30 2025 Trump-Xi Busan meeting; Nov 13 2025 $330M
-  arms sale; Sep 24 2026 Xi visit to the White House; the Dec 2024 US entity-list action (date not in any
+  arms sale; the Dec 2024 US entity-list action (date not in any
   allowed article read); 2021 (only 3022 logged); 2022-2023 US SCS FONOPs; Balikatan and other allied drills.
 - Dates follow the announcement date for arms sales. Where a date was inferred it is in PARTLY.
 """
@@ -114,6 +114,13 @@ EVENTS = [
 (3061, d(2026,7,22), "US", "Talks (Secretary Rubio and Foreign Minister Wang Yi)", "China", "Rubio and Wang Yi discuss areas of cooperation to prepare for Xi's Sept 24 visit; Reuters reports no agreement or other outcome and does not mention Taiwan", None, "n/a", "Medium", "see audit"),
 (3062, d(2026,7,23), "China (PLA, maritime notice)", "Live-fire drills (two days, near Dongshan Island, Fujian)", "Taiwan Strait near the Fujian coast", "Maritime authorities announce live-fire drills on Jul 23-24 in two areas within about 7 miles of the Chinese coast. Reuters notes they follow the Rubio-Wang talks the day before and gives no stated reason; this is treated as background", None, "No clash reported", "Medium", "see audit"),
 (3063, d(2026,7,24), "China (Coast Guard)", "Coast guard confrontation (water cannon, second day)", "Philippine vessels, Scarborough Shoal", "The Philippines accuses China of using water cannon on its vessels on a second day, Fri Jul 24, at Scarborough Shoal (first day Thursday, inferred as Jul 23). Water cannon hit two Philippine ships; China says it used 'control measures'. A separate Second Thomas Shoal confrontation the Monday before left a Filipino sailor hurt by a baton. Rubio, in Manila, calls China's actions 'disturbing' and reaffirms support", None, "Water cannon hit two ships; no Scarborough injuries reported", "Medium", "see audit"),
+(3064, d(2026,5,23), "US", "Arms sale paused (record $14 billion package)", "Taiwan", "After the May Beijing summit the US pauses a record $14 billion arms package for Taiwan (Washington Post headline). AP (Sep 28) says Trump called Taiwan arms sales a 'very good negotiating chip' and Ambassador David Perdue said Trump and Xi continue to discuss future US weapons sales to Taiwan. Date taken from the Washington Post report; AP does not say whether the pause has ended", None, "n/a", "Medium", "see audit"),
+(3065, d(2026,8,21), "US", "Taiwan Strait transit (Navy P-8A patrol aircraft)", "Taiwan Strait", "A US Navy P-8A Poseidon flies through the Taiwan Strait, the first publicly reported Navy P-8A transit since Mar 11. Stars and Stripes, citing Global Times, says the Chinese military monitored the flight; no PLA drill reported", None, "n/a", "Medium", "see audit"),
+(3066, d(2026,9,24), "US", "Talks (Trump-Xi summit, Washington)", "China", "Xi arrives Sep 23 for a three-day state visit; talks and a state dinner on Sep 24. Taiwan, trade and AI are discussed; no agreement is reported (Al Jazeera). Trump says Sep 25 he will meet Xi again in November in China and in December at the G20 in Florida (Reuters)", None, "n/a", "Medium", "see audit"),
+(3067, d(2026,10,19), "US (with Japan and partners)", "Joint exercise (Keen Sword 27, Oct 19-29)", "Japan's southwestern islands, about 110 km from Taiwan", "About 45,000 Japanese and 12,000 US troops, with seven other nations including the Philippines, hold the biennial exercise; US NMESIS anti-ship missiles and MADIS air defense go to Yonaguni for the first time and a HIMARS to Ishigaki (AP). USNI: the Theodore Roosevelt strike group took part. AP reports no direct Chinese reaction", None, "n/a", "Medium", "see audit"),
+(3068, d(2026,10,20), "US", "Naval operation (littoral combat ship, near Sabina Shoal)", "Sabina Shoal (Spratlys)", "USS Charleston operates in waters next to Sabina Shoal early Oct 20. China's Southern Theater Command says it 'illegally intruded' and sends naval forces to track and monitor it; the 7th Fleet says it was routine operations in international waters. Reuters does not call it a FONOP", None, "No damage; verbal protest", "Medium", "see audit"),
+(3069, d(2026,10,20), "China (Coast Guard, per Taiwan's coast guard)", "Coast guard confrontation (standoff, restricted waters near Pratas)", "Taiwan coast guard, Pratas Islands", "Taiwan's coast guard says a Chinese coast guard ship entered restricted waters near the Pratas Islands; the standoff was continuing when Reuters filed. Not tied to the same-day Charleston operation by any allowed outlet; background", None, "No clash reported", "Medium", "see audit"),
+(3070, d(2026,11,1), "China (Coast Guard, per Taiwan's coast guard)", "Coast guard confrontation (standoff near Pratas, patrol east of Taiwan)", "Taiwan coast guard, Pratas Islands; waters east of Taiwan", "A Chinese coast guard ship enters waters near Pratas and a Taiwanese ship confronts it, about 1 nautical mile apart at the closest; Taiwan says it is the 13th such intrusion this year. China's coast guard announces a 'routine law enforcement patrol' east of Taiwan and vows to intensify patrols. AP does not mention the US; background", None, "No clash reported", "Medium", "see audit"),
 ]
 
 # ---------------------------------------------------------------------------------------------
@@ -129,6 +136,9 @@ _AJ_ENTITY = _s('US hits Chinese companies, individuals over South China Sea spa
 _AJ_SANC20 = _s('China to sanction Boeing, other US firms over Taiwan arms sales', 'Al Jazeera', '2020-10-26', 'https://www.aljazeera.com/economy/2020/10/26/china-to-sanction-boeing-and-raytheon-over-taiwan-arms-sales', 'full text')
 _AJ_JS24A = _s("'Strong punishment': China starts two days of military drills around Taiwan", 'Al Jazeera', '2024-05-23', 'https://www.aljazeera.com/news/2024/5/23/china-starts-military-drills-around-the-self-governed-island-of-taiwan', 'full text')
 
+_AP_PERDUE = _s("Trump asked China's president if he wants to buy US arms, ambassador says", 'AP (via AJC)', '2026-09-28', 'https://www.ajc.com/news/2026/09/trump-asked-chinas-president-if-he-wants-to-buy-us-arms-ambassador-says/', 'full text')
+_USNI_PULSE1030 = _s('USNI News Western Pacific Pulse: Oct. 30, 2026', 'USNI News', '2026-10-30', 'https://news.usni.org/2026/10/30/usni-news-western-pacific-pulse-oct-30-2026', 'full text')
+_REUT_SABINA = _s('China sends naval forces to monitor US warship near disputed shoal', 'Reuters (via AOL)', '2026-10-20', 'https://www.aol.com/articles/chinese-navy-says-us-ship-051306000.html', 'full text')
 SOURCES = {
  3001: [_s('USS McCampbell FONOP Past Paracel Islands Irks China', 'USNI News', '2019-01-07', 'https://news.usni.org/2019/01/07/40202', 'full text')],
  3002: [_USNI_TBL],
@@ -196,11 +206,20 @@ SOURCES = {
  3061: [_REUT_RUBIO],
  3062: [_s('China begins two days of live-fire drills in Taiwan Strait', 'Reuters (via internazionale.it)', '2026-07-23', 'https://www.internazionale.it/ultime-notizie-reuters/2026/07/23/china-announces-live-fire-drills-in-taiwan-strait', 'full text')],
  3063: [_s('Philippines accuses China of using water cannon on vessels for second day', 'Al Jazeera', '2026-07-24', 'https://aljazeera.com/news/2026/7/24/philippines-accuses-china-of-using-water-cannon-on-vessels-for-second-day', 'full text')],
+ # weekly update 2026-11-02: every URL came from a search result or fetch in that session
+ 3064: [_s('U.S. pauses $14 billion Taiwan arms sale after China summit', 'Washington Post', '2026-05-23', 'https://www.washingtonpost.com/national-security/2026/05/23/us-pauses-14-billion-taiwan-arms-sale-after-china-summit/'), _AP_PERDUE],
+ 3065: [_s('US Navy surveillance aircraft completes rare flight over Taiwan Strait', 'Stars and Stripes', '2026-08-24', 'https://www.stripes.com/branches/navy/2026-08-24/taiwan-strait-navy-p8-poseidon-22644147.html', 'full text')],
+ 3066: [_s('Trump praises US-China friendship at state dinner with Xi Jinping', 'Al Jazeera', '2026-09-25', 'https://www.aljazeera.com/news/2026/9/25/trump-praises-us-china-friendship-at-state-dinner-with-xi-jinping', 'full text'),
+        _s('Trump says he will meet Xi in China in November', 'Reuters (via internazionale.it)', '2026-09-25', 'https://www.internazionale.it/ultime-notizie-reuters/2026/09/25/trump-says-he-will-meet-xi-in-china-in-november', 'full text'), _AP_PERDUE],
+ 3067: [_s('Japan and the US kick off joint drills around islands as regional tensions rise', 'AP (via ABC News)', '2026-10-19', 'https://abcnews.com/International/wireStory/japan-us-kick-off-joint-drills-islands-regional-137376718', 'full text'), _USNI_PULSE1030],
+ 3068: [_REUT_SABINA],
+ 3069: [_REUT_SABINA],
+ 3070: [_s('Taiwan accuses China of harassment after standoff between coast guard ships', 'AP (via WISN)', '2026-11-01', 'https://www.wisn.com/article/taiwan-accuses-china-harassment-standoff-coast-guard-ships/74304938', 'full text')],
 }
 VERDICT = {k: 'confirmed' for k in SOURCES}
 VERDICT[3048] = 'not_confirmed'   # only a non-allowed outlet found; not counted
 # Rows where an allowed outlet confirms the event but not every detail in the row (date inferred, number from one side, etc.)
-PARTLY = {3037, 3007, 3011, 3014, 3015, 3017, 3019, 3024, 3026, 3030, 3032, 3046, 3054, 3057, 3060, 3012}
+PARTLY = {3037, 3007, 3011, 3014, 3015, 3017, 3019, 3024, 3026, 3030, 3032, 3046, 3054, 3057, 3060, 3012, 3064, 3065, 3068}
 
 # Which option letter each US move belongs to (see header).
 US_OPTION = {
@@ -208,7 +227,7 @@ US_OPTION = {
  3011: 'H', 3012: 'F', 3014: 'C', 3016: 'D', 3017: 'F', 3019: 'E', 3021: 'D', 3022: 'F', 3023: 'E',
  3025: 'F', 3028: 'D', 3029: 'E', 3030: 'C', 3031: 'F', 3033: 'D', 3035: 'B', 3036: 'E', 3037: 'F',
  3039: 'B', 3040: 'G', 3045: 'E', 3046: 'F', 3050: 'D', 3054: 'D', 3055: 'D', 3056: 'E', 3059: 'D',
- 3060: 'B', 3061: 'B',
+ 3060: 'B', 3061: 'B', 3065: 'D', 3066: 'B', 3067: 'G', 3068: 'D',
 }
 
 # My own estimate of the engine's credibility score (full-text allowed outlet 0.80, two outlets 0.96, claim-only 0.30;
@@ -221,6 +240,7 @@ CRED_ESTIMATE = {
  3037: 0.80, 3038: 0.80, 3039: 0.80, 3040: 0.80, 3041: 0.80, 3042: 0.80, 3043: 0.80, 3044: 0.80, 3045: 0.80,
  3046: 0.80, 3047: 0.80, 3048: 0.30, 3049: 0.80, 3050: 0.80, 3051: 0.80, 3052: 0.80, 3053: 0.80, 3054: 0.80,
  3055: 0.96, 3056: 0.80, 3057: 0.96, 3058: 0.80, 3059: 0.80, 3060: 0.96, 3061: 0.80, 3062: 0.80, 3063: 0.80,
+ 3064: 0.96, 3065: 0.80, 3066: 0.96, 3067: 0.96, 3068: 0.80, 3069: 0.80, 3070: 0.80,
 }
 
 # Trigger Census rows for US moves of kinds C-H (window: 7 days for a reply, counted from the logged date).
@@ -260,6 +280,9 @@ CENSUS = [
  (3055, "Military/Property", "N", "US-UK transit Sept 12, 2025. USNI and Stars and Stripes: the Eastern Theater Command tracked it and said it undermined peace. Southern Theater Command patrols Sept 12-13 were linked by China to Philippine patrols, not to this transit. Source audit: USNI (Sep 16) mentions the carrier Fujian passing through the Strait on Sep 12 during sea trials, with no link to the transit; searched Sep 13-19, 2025 for a PLA drill, ADIZ spike or coast-guard action, none found in allowed outlets."),
  (3056, "Military/Property", "N", "$11.1B arms sale Dec 18, 2025. China's replies came late: sanctions on 20 US defense firms and 10 executives on Dec 26 (day 8, 3057) and 'Justice Mission 2025' drills on Dec 29-30 (day 11, 3058). USNI says the drills protested the sale. Counted N for the strict 7-day window; both later replies are linked in PAIRS."),
  (3059, "Military/Property", "N", "Strait transit Jan 16-17, 2026. USNI: the Eastern Theater Command said it monitored the ships. Taiwan's MND counted 25 sorties on Jan 16 (6 over the median line), a normal level. A web search for late Jan 2026 found no named PLA drill. Source audit: USNI (Jan 17) reports the Eastern Theater Command only tracked the ships; no drill or coast-guard action tied to the transit; searched Jan 17-23, none found."),
+ (3065, "Military/Property", "N", "P-8A Strait flight Aug 21, 2026. Stars and Stripes: China monitored it (Global Times); no PLA drill, ADIZ spike or coast-guard action reported in the sources read."),
+ (3067, "Military/Property", "N", "Keen Sword 27 from Oct 19, 2026. AP reports no direct Chinese reaction. The Liaoning group was at sea from before the exercise and a Chinese navy/coast guard group passed the Osumi Strait Oct 27 (USNI citing Japan); no allowed outlet ties either to the exercise. The Oct 20 Pratas standoff (#3069) was with Taiwan and is not linked."),
+ (3068, "Military/Property", "N", "USS Charleston near Sabina Shoal Oct 20, 2026. Reuters: the Southern Theater Command protested and tracked it (words and shadowing). No allowed-outlet report of a PLA drill or coast-guard action tied to it Oct 21-27."),
 ]
 
 # Reply pairs (pair id, trigger, reply, category, reply caused casualties Y/N, note)
@@ -288,7 +311,7 @@ PHASES = [
  ("Visits, sales and sanctions on arms makers", d(2020, 7, 4), d(2022, 7, 31), "Carriers (#3011), Azar and Krach visits (#3012, #3017), Oct 2020 sale and sanctions (#3019-#3020), Feb 2022 sanctions (#3024)"),
  ("Pelosi crisis", d(2022, 8, 1), d(2022, 8, 31), "Pelosi visit (#3025), six-zone drills (#3026), sanctions and suspended talks (#3027), transit (#3028)"),
  ("Named drills after leader visits", d(2022, 9, 1), d(2024, 12, 31), "Tsai-McCarthy and the April 2023 drills (#3031-#3032), Lai's August 2023 stops (#3037-#3038), Joint Sword 2024A/B (#3042, #3044), talks with Biden (#3035, #3039)"),
- ("Trump second term", d(2025, 1, 1), d(2026, 10, 24), "Transits (#3050, #3055, #3059), Strait Thunder 2025A (#3052), the $11.1B sale, sanctions and Justice Mission 2025 (#3056-#3058), Beijing summit (#3060), July 2026 talks and drills (#3061-#3062)"),
+ ("Trump second term", d(2025, 1, 1), d(2026, 11, 2), "Transits (#3050, #3055, #3059), Strait Thunder 2025A (#3052), the $11.1B sale, sanctions and Justice Mission 2025 (#3056-#3058), Beijing summit (#3060), July 2026 talks and drills (#3061-#3062)"),
 ]
 
 CHAIN_NAMES = {

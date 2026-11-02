@@ -1545,3 +1545,35 @@ VERDICT.update(_PRE_VERDICT)
 from prewar_early import SOURCES as _EARLY_SOURCES, VERDICT as _EARLY_VERDICT
 SOURCES.update(_EARLY_SOURCES)
 VERDICT.update(_EARLY_VERDICT)
+
+
+# ---------------------------------------------------------------------------
+# Weekly update, 2026-11-02 (weekly agent). Every URL below came from a search result or a fetch
+# in that session. seen="full text" = the article was read; "snippet" = headline/snippet only.
+# The CBS live blog (Oct 30 - Nov 1) relays UKMTO, CENTCOM, QNA and Reuters items; it is labelled CBS
+# because that is the page that was read.
+# ---------------------------------------------------------------------------
+_CBS_NOV1 = _s('Trump says war in Iran will be put away very soon "one way or the other"', 'CBS News', '2026-11-01',
+               'https://www.cbsnews.com/live-updates/iran-war-us-trump-diplomacy-threat-resume-attacks/', 'full text')
+_AJ30 = _s('Qatari officials in Iran in bid to revive ceasefire deal with US', 'Al Jazeera', '2026-10-30',
+           'https://www.aljazeera.com/news/2026/10/30/qatari-officials-in-iran-in-bid-to-revive-ceasefire-deal-with-us', 'full text')
+_NYT29 = _s('Vance proposes restarting peace talks in outreach to Iranian official', 'NYT (via Philadelphia Inquirer)', '2026-10-29',
+            'https://www.inquirer.com/news/nation-world/jd-vance-peace-talks-iran-20261029.html', 'full text')
+
+VERDICT.update({129: 'confirmed', 130: 'partly_confirmed', 131: 'confirmed', 132: 'confirmed', 133: 'confirmed',
+                134: 'partly_confirmed', 135: 'confirmed', 136: 'confirmed', 137: 'confirmed', 138: 'confirmed',
+                139: 'confirmed', 140: 'confirmed'})
+SOURCES.update({
+ 129: [_NYT29, _AJ30],
+ 130: [_AJ30, _NYT29],
+ 131: [_NYT29],
+ 132: [_CBS_NOV1],
+ 133: [_AJ30, _CBS_NOV1],
+ 134: [_CBS_NOV1],
+ 135: [_CBS_NOV1],
+ 136: [_CBS_NOV1],
+ 137: [_CBS_NOV1],
+ 138: [_CBS_NOV1],
+ 139: [_CBS_NOV1],
+ 140: [_CBS_NOV1],
+})

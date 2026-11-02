@@ -1,49 +1,59 @@
 {
- "as_of": "2026-10-12",
+ "as_of": "2026-11-02",
  "note": "Analyst reading of the news, written from logged events. Not data. The weekly agent replaces it every week. The log is a sample: it ends with the Oct 12, 2026 launch (#2076) and many launches are missing.",
  "headline": [
-  "North Korea has launched or provoked five times since Sep 12: ballistic missiles on Sep 12 (#2072) and Sep 20 (#2073), mine blasts at the DMZ that wounded three South Korean soldiers on Sep 21 (#2074), a hypersonic missile on Oct 3 (#2075) and multiple ballistic missiles on Oct 12 (#2076).",
-  "In August the US scaled down Ulchi Freedom Shield after Trump cited his relationship with Kim (#2068). On Aug 19 Trump said he will meet Kim, and Kim Yo Jong denied any communication (#2069). About 10 short-range missiles were fired the next day (#2070).",
-  "Freedom Edge 26, the trilateral exercise, began Sep 7 (#2071). The last Treasury sanctions round in the log is Mar 12, 2026 (#2066).",
-  "Hold-week caveat for option A: hold weeks are weeks since Jan 20, 2025 with no logged US move. The log is a sample, so a quiet-looking week may only be an unlogged one."
+  "North Korea launched five times in October: ballistic missiles on Oct 3 and Oct 12 (#2075, #2076), submarine-launched cruise missiles on Oct 14 (#2077), about 10 short-range ballistic missiles on Oct 29 (#2082) and a tactical ballistic missile it says carried a cluster-bomb warhead on Oct 31 (#2083). No damage was reported.",
+  "The US and South Korea began the Freedom Flag air exercise at Kunsan on Oct 26, running to Nov 6 (#2080). On Oct 28 the US joined coordinated sanctions with the EU, Australia and other partners on North Korea's overseas workers, cyber activity and Russia ties (#2081).",
+  "No talks are logged. Trump said he may meet Kim on his November Asia trip, then said 'I'm not sure that anybody's asking for a meeting'; North Korea has not answered publicly (#2079).",
+  "Tension on the inter-Korean border is rising: Kim Yo Jong threatened more 'tactical strike means' along the DMZ on Oct 19 and Seoul voiced 'grave concerns' (#2078)."
  ],
- "key_dates": [],
+ "key_dates": [
+  {
+   "date": "2026-11-06",
+   "label": "Freedom Flag air exercise scheduled to end (#2080)"
+  }
+ ],
  "pending": [
-  "Whether Trump and Kim meet (#2069)",
-  "Whether the run of launches continues after Oct 12 (#2076)"
+  "Trump's November Asia trip (APEC in China): date not confirmed in an allowed outlet (#2079)",
+  "Whether Trump and Kim meet during Trump's November Asia trip (#2079)",
+  "Whether North Korea launches again before Freedom Flag ends on Nov 6 (#2080, #2083)",
+  "Whether North Korea carries out its border threats along the DMZ (#2078)"
  ],
  "options": {
   "A": {
    "status": "open",
    "label": "Open",
-   "reason": "No US sanctions, drill, deployment or posture move is logged in the 14 days before Oct 12; the last was Freedom Edge 26 on Sep 7 (#2071). The hold-week numbers are a rough sketch: the log is a sample.",
+   "reason": "The US took new steps in the week of Oct 26 (Freedom Flag #2080, sanctions #2081), so no hold week is under way; holding back stays available.",
    "events": [
-    2071
+    2080,
+    2081
    ]
   },
   "B": {
    "status": "open",
    "label": "Open",
-   "reason": "Trump said on Aug 19 he will meet Kim (#2069); Kim Yo Jong denied any communication. No talks are logged.",
+   "reason": "Trump said he may meet Kim on his Asia trip but later doubted anyone was asking; no talks or formal offer are logged and North Korea has not answered (#2079).",
    "events": [
+    2079,
     2069
    ]
   },
   "C": {
-   "status": "open",
-   "label": "Open",
-   "reason": "The last Treasury round in the log is Mar 12, 2026 (#2066).",
+   "status": "active",
+   "label": "In use now",
+   "reason": "The US joined a coordinated sanctions round on Oct 28 (#2081); the US targets were not read.",
    "events": [
+    2081,
     2066
    ]
   },
   "D": {
-   "status": "open",
-   "label": "Open",
-   "reason": "Freedom Edge 26 began Sep 7 (#2071); the Aug 2026 Ulchi Freedom Shield was scaled down (#2068).",
+   "status": "active",
+   "label": "In use now",
+   "reason": "The Freedom Flag air exercise with South Korea runs Oct 26 - Nov 6 (#2080).",
    "events": [
-    2071,
-    2068
+    2080,
+    2071
    ]
   },
   "E": {

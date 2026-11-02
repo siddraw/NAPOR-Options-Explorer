@@ -22,7 +22,7 @@ Rules used here (docs/SOURCE_STANDARD.md):
 - Casualties are recorded as the source states them. No totals of my own. Running boat-strike tolls are quoted
   as the outlet gave them; they come from different outlets on different days and do not always agree
   (for example AP counted 13 strikes on Oct 28, 2025; USNI counted 10 on Oct 24).
-- Boat strikes: only 8 of the roughly 70 strikes are logged one by one (the ones read in full). The rest are
+- Boat strikes: only 9 of the more than 70 strikes are logged one by one (the ones read in full). The rest are
   covered by the running tolls and the two exclusion windows below.
 - Exclusion windows: two stretches where the strike count rose by about one strike every two days (derived
   from outlet counts, see WINDOWS). Strikes inside them are context only, not separate cases.
@@ -112,6 +112,7 @@ EVENTS = [
 (4064, d(2026,10,4), "US", "Strike (alleged drug boat, Caribbean)", "Go-fast boat, Caribbean Sea", "SOUTHCOM says confirmed intelligence showed the vessel's active involvement in narcotrafficking. Stripes: the toll is at least 235 across 70 strikes since September 2025 (no source named for the totals)", None, "4 killed (SOUTHCOM)", "Medium", "see audit"),
 (4065, d(2026,10,8), "US", "Indictment (superseding, torture conspiracy)", "Maduro and Cilia Flores", "Prosecutors in the Southern District of New York add conspiracy to commit torture to the narco-terrorism and cocaine-importation charges; the 30-page indictment alleges torture of more than a dozen American citizens in Venezuelan custody", None, "n/a", "Medium", "see audit"),
 (4066, d(2026,10,14), "US", "Sanctions relief (Jorge Rodriguez delisted)", "Jorge Rodriguez (National Assembly head)", "OFAC removes Jorge Rodriguez from the SDN list; a source tells Al Jazeera it is part of wider recognition of the interim government and a three-phase transition plan. Rubio says a new round of negotiations on Venezuela's future begins the same day", None, "n/a", "Medium", "see audit"),
+(4067, d(2026,10,27), "US", "Strike (alleged drug boat, eastern Pacific)", "Go-fast vessel, eastern Pacific", "SOUTHCOM says Joint Task Force Western Hemisphere struck a go-fast vessel and that 'confirmed intelligence revealed the vessel's active involvement in narco-trafficking'; no evidence of drugs given. AP: at least 240 killed in more than 70 strikes; Stripes: at least 230 after more than 70 (neither names a source for the totals). Neither mentions a Venezuelan link or response", None, "5 killed (SOUTHCOM, per AP and Stripes)", "Medium", "see audit"),
 ]
 
 # ---------------------------------------------------------------------------------------------
@@ -207,6 +208,9 @@ SOURCES = {
  4064: [_s('us strike caribbean kills 4', 'Stars and Stripes', '2026-10-05', 'https://www.stripes.com/theaters/americas/2026-10-05/us-strike-caribbean-kills-4-23061506.html', 'full text')],
  4065: [_s('Nicolas Maduro, Cilia Flores new torture charge', 'CBS News', '2026-10-08', 'https://cbsnews.com/news/nicolas-maduro-cilia-flores-new-torture-charge', 'full text')],
  4066: [_s("US lifts sanctions on Venezuela's top legislator", 'Al Jazeera', '2026-10-14', 'https://www.aljazeera.com/news/2026/10/14/us-lifts-sanctions-on-venezuelas-top-legislator', 'full text')],
+ # weekly update 2026-11-02: every URL came from a search result or fetch in that session
+ 4067: [_s('U.S. military says 5 were killed by a strike on an alleged drug smuggling boat in the eastern Pacific', 'AP (via PBS NewsHour)', '2026-10-27', 'https://www.pbs.org/newshour/world/u-s-military-says-5-were-killed-by-a-strike-on-an-alleged-drug-smuggling-boat-in-the-eastern-pacific', 'full text'),
+        _s('US forces strike suspected drug boat in Eastern Pacific, killing 5', 'Stars and Stripes', '2026-10-27', 'https://www.stripes.com/theaters/americas/2026-10-27/us-strike-pacific-kills-5-23278633.html', 'full text')],
 }
 VERDICT = {k: 'confirmed' for k in SOURCES}
 # Venezuelan state-media claim relayed by an allowed outlet; no allowed outlet confirms the details.
@@ -224,7 +228,7 @@ US_OPTION = {
  4027: 'E', 4028: 'E', 4030: 'D', 4032: 'E', 4033: 'E', 4035: 'B', 4036: 'H', 4037: 'C',
  4039: 'H', 4042: 'H', 4043: 'D', 4044: 'H', 4046: 'H', 4048: 'F', 4049: 'G', 4052: 'B',
  4053: 'H', 4055: 'D', 4057: 'B', 4058: 'B', 4059: 'C', 4060: 'B', 4061: 'F', 4062: 'D',
- 4063: 'B', 4064: 'D', 4065: 'C', 4066: 'C',
+ 4063: 'B', 4064: 'D', 4065: 'C', 4066: 'C', 4067: 'D',
 }
 
 
@@ -288,6 +292,7 @@ CENSUS = [
  (4064, "Personnel/Casualty", "N", "Boat strike, Oct 4, 2026 (4 killed). Stripes mentions no Venezuelan connection or response."),
  (4065, "Political/Diplomatic", "N", "Superseding torture indictment, Oct 8, 2026. No Venezuelan reply found in the CBS article."),
  (4066, "Economic/Blockade", "N", "Jorge Rodriguez delisted, Oct 14, 2026. Sanctions relief within a cooperative phase; no hostile reply."),
+ (4067, "Personnel/Casualty", "Unverified", "Boat strike, Oct 27, 2026 (5 killed). 7-day window runs to Nov 3; check next week. No Venezuelan act reported in AP or Stripes so far."),
 ]
 
 # Reply pairs (pair id, trigger, reply, category, reply caused casualties Y/N, note)
@@ -330,7 +335,7 @@ PHASES = [
  ("Bounty, naval buildup and first boat strikes", d(2025, 8, 7), d(2025, 10, 23), "Bounty (#4010), destroyers and amphibious group (#4013-#4014), militia and border troops (#4012, #4016), first strike (#4017), F-35s (#4020), CIA authorization (#4024)"),
  ("Carrier and Southern Spear", d(2025, 10, 24), d(2025, 11, 30), "Ford ordered and arrives (#4027, #4033), Trinidad energy cutoff (#4029), Venezuelan exercise (#4031), Southern Spear (#4032), Maduro call (#4035), FTO designation (#4037), airspace post (#4039)"),
  ("Blockade and tanker seizures", d(2025, 12, 1), d(2026, 1, 2), "Skipper and Centuries seizures (#4042, #4046), blockade order (#4044), dock strike (#4048); second boat-strike cluster"),
- ("Maduro captured; interim government cooperates", d(2026, 1, 3), d(2026, 10, 26), "Capture (#4049), oil deals (#4052, #4063), ties and embassy (#4057, #4058), delistings (#4059, #4066), Tren de Aragua strike (#4061); boat strikes continue at a slower pace"),
+ ("Maduro captured; interim government cooperates", d(2026, 1, 3), d(2026, 11, 2), "Capture (#4049), oil deals (#4052, #4063), ties and embassy (#4057, #4058), delistings (#4059, #4066), Tren de Aragua strike (#4061); boat strikes continue at a slower pace"),
 ]
 
 CHAIN_NAMES = {
