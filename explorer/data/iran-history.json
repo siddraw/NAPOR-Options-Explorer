@@ -204,5 +204,88 @@
    }
   },
   "status_as_of": "2026-10-26"
+ },
+ {
+  "asof": "2026-11-01",
+  "intensity": 9,
+  "band": "Medium",
+  "events": 271,
+  "options": {
+   "A": {
+    "n": 11,
+    "index": 0.164,
+    "estimate": 0.19
+   },
+   "B": {
+    "n": 24,
+    "index": 0.192,
+    "estimate": 0.196
+   },
+   "C": {
+    "n": 30,
+    "index": 0.193,
+    "estimate": 0.197
+   },
+   "D": {
+    "n": 7,
+    "index": 0.238,
+    "estimate": 0.261
+   },
+   "E": {
+    "n": 3,
+    "index": 0.5,
+    "estimate": 0.417
+   },
+   "F": {
+    "n": 12,
+    "index": 0.583,
+    "estimate": 0.547
+   },
+   "G": {
+    "n": 7,
+    "index": 0.629,
+    "estimate": 0.563
+   },
+   "H": {
+    "n": 13,
+    "index": 0.2,
+    "estimate": 0.206
+   }
+  },
+  "status": {
+   "A": {
+    "status": "open",
+    "label": "Open"
+   },
+   "B": {
+    "status": "active",
+    "label": "In use now"
+   },
+   "C": {
+    "status": "active",
+    "label": "In use now"
+   },
+   "D": {
+    "status": "active",
+    "label": "In use now"
+   },
+   "E": {
+    "status": "constrained",
+    "label": "Constrained until Nov 3"
+   },
+   "F": {
+    "status": "constrained",
+    "label": "Constrained until Nov 3"
+   },
+   "G": {
+    "status": "constrained",
+    "label": "Constrained until Nov 3"
+   },
+   "H": {
+    "status": "active",
+    "label": "In use now"
+   }
+  },
+  "status_as_of": "2026-11-02"
  }
 ]

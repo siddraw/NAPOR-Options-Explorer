@@ -164,5 +164,88 @@
    }
   },
   "status_as_of": "2026-07-23"
+ },
+ {
+  "asof": "2026-11-01",
+  "intensity": 4,
+  "band": "Low",
+  "events": 135,
+  "options": {
+   "A": {
+    "n": 0,
+    "index": null,
+    "estimate": null
+   },
+   "B": {
+    "n": 23,
+    "index": 0.209,
+    "estimate": null
+   },
+   "C": {
+    "n": 2,
+    "index": 0.2,
+    "estimate": null
+   },
+   "D": {
+    "n": 17,
+    "index": 0.224,
+    "estimate": null
+   },
+   "E": {
+    "n": 9,
+    "index": 0.4,
+    "estimate": null
+   },
+   "F": {
+    "n": 7,
+    "index": 0.457,
+    "estimate": null
+   },
+   "G": {
+    "n": 2,
+    "index": 0.3,
+    "estimate": null
+   },
+   "H": {
+    "n": 2,
+    "index": 0.3,
+    "estimate": null
+   }
+  },
+  "status": {
+   "A": {
+    "status": "open",
+    "label": "Open"
+   },
+   "B": {
+    "status": "active",
+    "label": "In use now"
+   },
+   "C": {
+    "status": "open",
+    "label": "Open"
+   },
+   "D": {
+    "status": "open",
+    "label": "Open"
+   },
+   "E": {
+    "status": "constrained",
+    "label": "Limited"
+   },
+   "F": {
+    "status": "open",
+    "label": "Open"
+   },
+   "G": {
+    "status": "open",
+    "label": "Open"
+   },
+   "H": {
+    "status": "open",
+    "label": "Open"
+   }
+  },
+  "status_as_of": "2026-11-02"
  }
 ]
