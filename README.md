@@ -20,8 +20,6 @@ the mechanism itself: **Notebook, Arrows, Patterns, Organization, and Report.**
 - **Organization** – war phases, intensity, duplicate checks and a change log.
 - **Report** – predictions locked before the outcome, then graded.
 
-On the page, you can also ask about a US action that is not on the list ("Your own options"). When the page is opened in Claude, Claude picks the past cases that are the same kind of action and the page counts them with the same five categories. Claude never writes a number, it never sees how past cases turned out, and the result is saved only in your browser (it is not part of NAPOR's counts or the weekly build).
-
 Originally I set out to build a model that predicts the future. I switched it to an **Options
 Explorer**, because the more useful question is "what happened the last times the US did this?"
 The underlying problem was quantifying risk. Risk is perspective based and can be too broad, so

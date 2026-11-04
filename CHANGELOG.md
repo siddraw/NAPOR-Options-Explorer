@@ -1,12 +1,5 @@
 # Changelog
 
-## 2026-11-04 - Ask about your own option (in-page AI)
-- Sidd asked for a way to look at a US action that is not one of the lettered options. Under the option list there is now a "Your own options" box. You type a US action (for example "cyber attack on Iranian ports") and press Assess. Claude picks the past cases in the log that are the same kind of US action, and the page counts them with the same five categories and the same risk index as every listed option. The result opens in its own window, marked "(yours)" with a banner that says it is not one of NAPOR's options.
-- Claude never writes a number. It is shown only what the US did in each past case (date, listed option, kind of action, what the US did), never how it turned out, so it cannot pick cases because they went a certain way. It must return case ids from the log; anything else it returns is thrown away, and it can pick at most 40.
-- Everything is personal. The option is saved only in your own browser (as case ids), never changes NAPOR's data, other viewers or the weekly build, and is not in Compare all, the Report card, the NAPOR estimate or the backtest. You can remove any case Claude picked (and put it back), ask again, or delete the option. With fewer than 3 cases it says "too few cases" instead of an index.
-- It only works when the page is opened inside Claude (that is where the AI is). Elsewhere the box says so, and options already saved in that browser still open. The AI is called only when you press the button, once, never in a loop.
-- I added a paragraph to "How this works", a Glossary entry, and corrected the Privacy note: the words you type and the list of past actions go to Claude when you press Assess. No Python or pipeline code changed and no number moved.
-
 ## 2026-11-04 - War phases grouped under era headings
 - Sidd asked for the "How much did the conditions matter?" panel to be less of a wall of 17 tiles. War phases now sit under era headings with the years, number of phases and number of US actions (Iran: Revolution and proxy war; Quiet years and containment; Sanctions and the nuclear deal; Maximum pressure and shadow conflict; The 2025-26 war). Every theater has its own headings. Tile numbers, click-to-filter and the intensity section are unchanged.
 - The headings live in the new `napor/phase_groups.py` and are added to each phase as `group` in the page data by both exporters. A phase with no heading joins the one before it, so a new phase named by the weekly agent never breaks the page. Presentation only: no risk number reads it.

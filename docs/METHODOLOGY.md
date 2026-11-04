@@ -278,13 +278,3 @@ The old rule is still computed so the Report card can show both.
 - **Not measured.** Oil and freight prices, harm to ordinary people in the adversary country, strain with allies, and North Korea's
   economic harm. Sources are public news only; state-run and armed-group media are never cited.
 - **Known gaps.** Iran #67 has no source. About 20 Iran reports are names without a link (flagged not re-checked); they get zero credit under the link rule, and four events (#84, #86, #88, #89) relied on them alone and are now excluded. The exported `n_events` counts only events at credibility 0.50 or more in every theater, Iran included (Iran logs 267, so its `n_events`, 259, is lower by the 8 under the cut).
-
-## 13. Personal options ("Your own options")
-
-A viewer can type a US action that is not one of the lettered options. This is a personal, in-browser tool; it is not part of NAPOR's data.
-
-- **Claude picks cases by the kind of US action, and never sees outcomes.** The page sends Claude the viewer's text and one line per past case of the current theater: id, date, the listed option it belongs to, the kind of action and what the US did. It sends no note, reply, harm, talks, shipping count or anything else about what followed, so cases cannot be picked because of how they turned out. Hold weeks are not sent. Claude is told to be strict, to pick only ids from the list, and to refuse text that is not a US action in this conflict.
-- **The page computes everything.** The reply is checked: only ids that exist are kept, duplicates are dropped, at most 40 are kept, and text is trimmed. The personal option copies the rules (reply test or not, military test) of the listed option Claude names as closest (never the hold option), then the existing code counts the five categories and the risk index from the picked cases. The look-back date and the condition lens apply as for any option. Claude writes no number.
-- **Under 3 cases is "too few".** The page then shows "too few cases" instead of an index, like the listed options that have too few cases. The viewer can remove any picked case; the numbers update at once.
-- **Not part of NAPOR.** Personal options are stored only in that viewer's browser (as case ids). They are not in Compare all, the Report card, the all-options rate behind the NAPOR estimate, the weekly agent's checks or the backtest, and they never change the data files.
-- **Limits.** Which cases count as "the same kind of action" is Claude's judgement, so two askings can differ; the viewer sees each pick with Claude's reason and can change it.
