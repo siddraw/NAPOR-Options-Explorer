@@ -42,6 +42,7 @@ import data                      # only for act_kind(), the shared word list tha
 import napor_ids as N
 import napor_intensity as INT    # only for the shared bands and the "someone died" test
 import theaters as TH_REG
+import phase_groups as PG
 import napor_options as _IRAN   # only for TALK_WORDS, the one word list every theater's political category uses
 
 TALK_WORDS = _IRAN.TALK_WORDS
@@ -653,7 +654,7 @@ class Export:
                            share_days_below=round(sum(1 for _, p in series if p < cur) / len(series), 3), window_days=14),
             series=series,
             hostile=[dict(id=e[0], date=e[1].isoformat(), actor=e[2], kind=K.KIND[e[0]], pts=K.points_for(e), deadly=bool(K.INT._deadly(e)), title=e[5]) for e in K.HOSTILE],
-            phases=[dict(name=p[0], start=p[1].isoformat(), end=min(p[2], K.LAST).isoformat()) for p in K.PHASES if p[1] <= K.LAST],
+            phases=PG.tag(C.THEATER_ID, [dict(name=p[0], start=p[1].isoformat(), end=min(p[2], K.LAST).isoformat()) for p in K.PHASES if p[1] <= K.LAST]),
             baseline=K.baseline_hold(), n_events=len([e for e in K.EVENTS if K.counts(e[0])]),
             chain=dict(n=chain.get("chains"), longer=round(1 - chain["share_stopped_after_one_reply"], 3) if chain else None),
             options=[])

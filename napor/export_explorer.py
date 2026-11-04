@@ -15,6 +15,7 @@ import data, napor_options as O, napor_ids as N, napor_threads as T, napor_inten
 import napor_cases as NC, backtest_risk as BR
 from theaters.iran.config import THEATER, THEATER_ID   # wording dict now lives in the theater package
 import theaters as TH_REG
+import phase_groups as PG
 
 EV = O.EV
 last = max(e[1] for e in data.events)
@@ -60,7 +61,7 @@ def build():
                        share_days_below=round(sum(1 for _, p in series if p < cur) / len(series), 3), window_days=INT.WINDOW_DAYS),
         series=series,
         hostile=[dict(id=e[0], date=e[1].isoformat(), actor=e[2], kind=data.event_kind[e[0]], pts=INT.points_for(e), deadly=bool(INT._deadly(e)), title=e[5]) for e in INT.HOSTILE],
-        phases=[dict(name=p[0], start=p[1].isoformat(), end=min(p[2], last).isoformat()) for p in T.PHASES if p[1] <= last],
+        phases=PG.tag(THEATER_ID, [dict(name=p[0], start=p[1].isoformat(), end=min(p[2], last).isoformat()) for p in T.PHASES if p[1] <= last]),
         baseline=O.baseline_hold(), n_events=len([e for e in data.events if e[0] not in data.MERGED and N.counts(e[0])]),   # events at credibility 0.50+ only, as in the other theaters
         chain=dict(n=chain.get("chains"), longer=round(1 - chain["share_stopped_after_one_reply"], 3) if chain else None),
         patriots=O.PATRIOTS_PER_SALVO, options=[])

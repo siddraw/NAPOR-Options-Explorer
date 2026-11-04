@@ -85,6 +85,7 @@ Paths below are used by the weekly update. Do not move or rename them without up
 | **`napor/`** (engine and Iran data) | |
 | `napor/data.py` | Iran 2026 event log (IDs 1-128), pairs, Trigger Census, merged duplicates, kind of act |
 | `napor/prewar.py` | Iran events from May 2019 to Feb 2026 (IDs 201-265), windows, phases |
+| `napor/phase_groups.py` | Era headings the page shows over the war-phase tiles (presentation only) |
 | `napor/prewar_early.py` | Iran events from Nov 1979 to May 2019 (IDs 300-376), the 1987-88 Tanker War window, early phases |
 | `napor/audit_sources.py` | Source citations (outlet, headline, date, URL) for the Iran events |
 | `napor/napor_ids.py` | Report IDs, credibility scoring, the 0.50 cut, intake of new stories |

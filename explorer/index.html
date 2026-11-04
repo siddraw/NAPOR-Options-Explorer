@@ -97,6 +97,7 @@ details.fold li{margin:3px 0}
 /* lens */
 .lens-group{margin-bottom:14px}
 .lens-group .gl{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.era{margin:0 0 12px}.era .eh{display:flex;gap:4px 10px;align-items:baseline;flex-wrap:wrap;margin:0 0 6px;padding:0 0 4px;border-bottom:1px solid var(--line)}.era .eh b{font-size:13px;letter-spacing:0;text-transform:none;color:var(--ink)}.era .eh span{font-size:12px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--muted)}
 .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 @media(max-width:760px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .tile{text-align:left;border:1px solid var(--line);border-radius:8px;padding:10px 11px;background:var(--panel);cursor:pointer;display:flex;flex-direction:column;gap:3px;min-width:0;border-top-width:6px}
@@ -766,7 +767,19 @@ function renderLens(){
   const sel = S.phase ? ["phase", S.phase] : S.band ? ["band", S.band] : null;
   const total = D.options.reduce((a,o) => a + o.cases.length, 0), shown = D.options.reduce((a,o) => a + activeCases(o).length, 0);
   let h = `<h2 style="padding-right:44px">How much did the conditions matter?</h2><p class="note" style="margin-bottom:12px">Click a war phase or an intensity level. You see how much it played a role in the past, and every option below recalculates using only cases from that condition. Click it again to clear.</p>`;
-  h += `<div class="lens-group"><div class="gl"><span>War phase</span></div><div class="tiles">${PHASE_ORDER.map((p,i) => tileHtml("phase", p, i)).join("")}</div></div>`;
+  /* war phases sit under era headings (group comes from phase_groups.py); the years are worked out from the phase dates */
+  const eras = [], seen = new Set();
+  D.phases.forEach(p => {
+    let e = eras.find(x => x.name === (p.group || "Phases"));
+    if(!e){ e = {name: p.group || "Phases", start: p.start, end: p.end, phases: []}; eras.push(e); }
+    e.end = p.end > e.end ? p.end : e.end;
+    if(!seen.has(p.name)){ seen.add(p.name); e.phases.push(p.name); }
+  });
+  const yr = iso => iso.slice(0, 4), span = e => { const a = yr(e.start), b = e.end >= D.asof ? "now" : yr(e.end); return a === b ? a : a + "–" + b; };
+  h += `<div class="lens-group"><div class="gl"><span>War phase</span></div>` + eras.map(e => {
+    const cs = e.phases.reduce((a, n) => a + (LENS.phase[n] ? LENS.phase[n].cases : 0), 0);
+    return `<div class="era"><div class="eh"><b>${esc(e.name)}</b><span>${span(e)} · ${e.phases.length} ${e.phases.length === 1 ? "phase" : "phases"} · ${cs} US actions</span></div><div class="tiles">${e.phases.map(n => tileHtml("phase", n, PHASE_ORDER.indexOf(n))).join("")}</div></div>`;
+  }).join("") + `</div>`;
   h += `<div class="lens-group"><div class="gl"><span>Intensity at the time of the US action</span></div><div class="tiles">${BAND_NAMES.map((b,i) => tileHtml("band", b, i)).join("")}</div></div>`;
   if(S.phase) h += lensDetail("phase", S.phase);
   if(S.band) h += lensDetail("band", S.band);
