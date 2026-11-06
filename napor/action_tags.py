@@ -148,3 +148,38 @@ def check(theater, tags, case_ids):
 def page_vocab():
     """What the exporter writes to the page data: labels, values, synonyms and widening order."""
     return dict(fields=FIELDS, labels=LABELS, vocab=VOCAB, synonyms=SYNONYMS, widen=WIDEN_ORDER)
+
+
+def load_tags(theater_id):
+    """The TAGS dict of napor/tags/<theater_id>.py, or None when the theater has no tag file yet."""
+    import importlib, importlib.util
+    try:
+        if importlib.util.find_spec(f"tags.{theater_id}") is None:
+            return None
+    except ModuleNotFoundError:
+        return None
+    return importlib.import_module(f"tags.{theater_id}").TAGS
+
+
+def counted_case_ids(out):
+    """Ids of every counted (non-hold-week) case in one theater's page data."""
+    return sorted({c["id"] for o in out["options"] for c in o["cases"] if not c.get("week")})
+
+
+def annotate(out, theater_id):
+    """Write each non-week case's tags (the TAGS row without `why`, plus `why` only if non-empty) and the top-level
+    `matcher` into the page data. A theater with no tag file gets neither (the page then hides the matcher)."""
+    tags = load_tags(theater_id)
+    if tags is None:
+        return out
+    for o in out["options"]:
+        for c in o["cases"]:
+            if c.get("week") or c["id"] not in tags:
+                continue
+            row = tags[c["id"]]
+            t = {f: (list(row[f]) if f == "target" else row[f]) for f in FIELDS}
+            if row.get("why"):
+                t["why"] = row["why"]
+            c["tags"] = t
+    out["matcher"] = page_vocab()
+    return out

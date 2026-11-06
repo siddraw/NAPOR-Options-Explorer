@@ -692,6 +692,8 @@ class Export:
         ids.update(e["id"] for e in out["week_events"])
         out["sources"] = self.sources_for(ids)
         out["history"] = self.update_history(out)
+        import action_tags
+        action_tags.annotate(out, C.THEATER_ID)      # tags on every counted case + the matcher's word lists
         return out
 
     def update_history(self, out):

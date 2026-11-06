@@ -18,6 +18,12 @@ are done once per theater. Steps 3-5 are Iran only.
    step) lists every event without one. Each week, before anything else: search again for every open gap in
    `KNOWN_GAPS`, add the source when found (and remove the entry), otherwise update its search date. A new event is
    never filed with only an outlet's name and no link. The build FAILS on a new gap or on a gap not searched in 8 days.
+   TAG EVERY NEW CASE (owner rule, 2026-11-06): every new counted US-action case (not hold weeks) needs a row in
+   `napor/tags/<theater>.py` (`TAGS = {event id: dict(move, target=[...], where, scale, who, open, why)}`), using only
+   the words in `napor/action_tags.py`. Tag what the US DID (method, target, place, scale, partners, openness) from the
+   event's own title and sources, never from what followed; use `why` for a judgment call. The viewer's "Your own
+   option" matcher finds past cases by these tags. `python3 napor/tag_check.py` (a weekly_build step) FAILS the
+   build when a counted case has no tags or uses a word outside the list.
    BLOCKED SOURCES (owner rule, 2026-11-02): never collect, cite or link state-run or armed-group media. They score 0
    and `tests/test_sources.py` fails if one appears. Iran: Tasnim, IRNA, Press TV, Fars, Mehr, IRIB, ISNA, Al-Alam and
    similar; Houthis: al-Masirah, Saba, Al-Manar; North Korea: KCNA, Rodong Sinmun, KCTV; China: Xinhua, Global Times,
@@ -63,7 +69,8 @@ are done once per theater. Steps 3-5 are Iran only.
 8. **Run the weekly build (one command).** `cd napor && python3 weekly_build.py`. It loops over every
    theater in `theaters.json` and runs, in order: build.py, the workbook recalc (0 formula errors),
    backtest.py, backtest_risk.py (with its no-hindsight check), test_resolver.py, then for each theater the
-   export (+ its workbook and independent-recount self-checks), verify and a validator for the page data. It
+   export (+ its workbook and independent-recount self-checks) and verify, then source_gaps.py, tag_check.py and a
+   validator for the page data. It
    prints a PASS/FAIL checklist. **Publish only on PASS.** On FAIL, fix the first failing step and run it
    again; if you cannot fix it, do not publish and say why in the report. A `[WARN]` line (e.g. a hold week
    without a people-hurt flag) does not block publishing but must be fixed or reported.

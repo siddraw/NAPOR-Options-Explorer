@@ -137,6 +137,7 @@ if __name__ == "__main__":
              must_contain=("page counts match", "risk rates match the independent recount"), must_not_contain=("MISMATCH",))
         step(f"[{tid}] verify_explorer.py (independent recount)", [PY, "verify_explorer.py", tid])
     step("source_gaps.py (every event has a usable source; open gaps re-searched weekly)", [PY, "source_gaps.py"], must_contain=("Source gaps: PASS",))
+    step("tag_check.py (every counted case has action tags)", [PY, "tag_check.py"], must_contain=("Tag check: PASS",))
     probs, warns = validate()
     results.append(("page-data validator", not probs, "; ".join(probs[:5]) + (f" (+{len(probs) - 5} more)" if len(probs) > 5 else "")))
     print("Checklist:")

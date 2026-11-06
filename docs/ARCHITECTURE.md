@@ -100,6 +100,9 @@ Paths below are used by the weekly update. Do not move or rename them without up
 | `napor/backtest.py` | Earlier backtest of reply timing (Trigger Census and pairs) |
 | `napor/export_explorer.py` | Builds and writes the Iran page data and runs the self-checks; shared risk-index helpers |
 | `napor/verify_explorer.py` | Independent recount for Iran |
+| `napor/action_tags.py` | The six "Your own option" settings: allowed words, plain labels, synonyms, widening order, `check()`; adds tags to the page data |
+| `napor/tags/<theater>.py` | One tag row per counted US-action case (what the US did, never what followed) |
+| `napor/tag_check.py` | Fails the build when a counted case has no valid tags |
 | `napor/weekly_build.py` | One command that runs every check and prints PASS or FAIL |
 | `napor/build.py`, `napor/NAPOR_iran_war.xlsx` | Builds the Iran workbook (events, census, options) |
 | `napor/napor_now.json` | Iran "right now" notes: status of each option, key dates, what is pending |
