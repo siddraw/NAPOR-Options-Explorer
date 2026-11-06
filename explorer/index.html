@@ -382,7 +382,15 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 .mycase button{grid-column:2;grid-row:1/3;align-self:center}
 .mycase.gone .mct,.mycase.gone .rw{opacity:.5}
 .myact{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px}
-.mine .mgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px 18px;margin-top:12px}
+.mine .mtop{display:flex;gap:12px 18px;align-items:center;justify-content:space-between;flex-wrap:wrap}.mine .mtop>div{flex:1 1 320px;min-width:0}.mine .mtop .note{margin:0}.mine .mtop h2{margin-bottom:6px}
+.mgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px 18px}
+#m-mine .sheet{max-width:780px;padding:0;display:flex;flex-direction:column;max-height:calc(100vh - 48px);overflow:hidden}
+#mform{display:flex;flex-direction:column;min-height:0;flex:1}
+#mform .mhead{padding:18px 60px 12px 22px;border-bottom:1px solid var(--line)}#mform .mhead h2{margin:0 0 6px}#mform .mhead .note{margin:0}
+#mform .mbody{overflow:auto;padding:16px 22px 8px;flex:1;min-height:0;overscroll-behavior:contain}
+.mgroup{margin:0 0 20px}.mgroup .eh{display:flex;gap:4px 10px;align-items:baseline;flex-wrap:wrap;margin:0 0 10px;padding:0 0 5px;border-bottom:1px solid var(--line)}.mgroup .eh b{font-size:13px;color:var(--ink)}.mgroup .eh span{font-size:12px;color:var(--muted)}
+#mform .mfoot{border-top:1px solid var(--line);padding:12px 22px calc(12px + env(safe-area-inset-bottom,0px));background:var(--bg)}#mform .mfoot .mprev{margin:0 0 10px}
+.mclear{margin-left:auto}
 .mf{min-width:0}.mf.wide{grid-column:1/-1}
 .mf label{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
 .mf input[type=text]{width:100%;box-sizing:border-box;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink)}
@@ -393,16 +401,16 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 .mchip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .mread{font-size:12.5px;color:var(--muted);margin-top:4px;min-height:0;overflow-wrap:anywhere}.mread:empty{display:none}
 .mign{color:var(--ink);background:var(--b1);border:1px solid var(--b2);border-radius:4px;padding:0 5px}
-.mprev{margin-top:14px;font-size:14px;font-weight:500;overflow-wrap:anywhere}
-.mine .myrow{align-items:center;flex-wrap:wrap}.mupd{font-size:13px;font-weight:600}
+.mprev{font-size:14px;font-weight:500;overflow-wrap:anywhere}
+.mupd{font-size:13px;font-weight:600}#mform .myrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0}
 .mset{border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:13.5px}
 .mset dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:3px 12px;margin:6px 0}.mset dt{font-weight:600}.mset dd{margin:0;overflow-wrap:anywhere}
 .mset p{font-size:13px;color:var(--muted);margin-top:4px}
 .str{display:inline-block;font-size:11px;font-weight:600;border:1px solid var(--line);border-radius:4px;padding:0 5px}
 .str.s-exact{border-color:var(--accent);color:var(--accent)}.str.s-loose{color:var(--muted);border-style:dashed}
-@media(max-width:700px){.mine .mgrid{grid-template-columns:minmax(0,1fr)}.mdescrow{flex-wrap:wrap}.mdescrow input{flex-basis:100%}}
-html.phone .mine .mgrid{grid-template-columns:minmax(0,1fr)}html.phone .mdescrow{flex-wrap:wrap}html.phone .mdescrow input{flex-basis:100%}
-html.phone .mchip{padding:5px 11px;font-size:13px}html.phone .mset dl{grid-template-columns:minmax(0,1fr)}html.phone .mset dt{margin-top:4px}
+@media(max-width:700px){.mgrid{grid-template-columns:minmax(0,1fr)}.mdescrow{flex-wrap:wrap}.mdescrow input{flex-basis:100%}}
+html.phone .mgrid{grid-template-columns:minmax(0,1fr)}html.phone .mdescrow{flex-wrap:wrap}html.phone .mdescrow input{flex-basis:100%}
+html.phone .mchip{padding:7px 13px;font-size:14px;min-height:36px}html.phone .mf input[type=text]{font-size:16px;padding:11px 12px}html.phone #m-mine{padding:0}html.phone #m-mine .sheet{max-width:none;width:100%;height:100%;max-height:none;border-radius:0;border:0;padding-top:env(safe-area-inset-top,0px)}html.phone #m-mine .x{width:calc(34px*var(--z,1));height:calc(34px*var(--z,1));font-size:calc(20px*var(--z,1));top:calc(10px + env(safe-area-inset-top,0px))}html.phone #mform .mhead{padding:14px 64px 10px 16px}html.phone #mform .mbody{padding:14px 16px 8px}html.phone #mform .mfoot{padding:10px 16px calc(12px + env(safe-area-inset-bottom,0px))}html.phone #mform .mybtn{flex:1 1 100%;min-height:48px;font-size:16px}html.phone .mine .mybtn{width:100%;min-height:48px;font-size:16px}html.phone .mclear{margin-left:0}html.phone .mset dl{grid-template-columns:minmax(0,1fr)}html.phone .mset dt{margin-top:4px}
 @media(max-width:560px){.mybtn{padding:10px 16px}}
 </style>
 
@@ -435,6 +443,7 @@ html.phone .mchip{padding:5px 11px;font-size:13px}html.phone .mset dl{grid-templ
   <div class="modal" id="m-cat" hidden><div class="sheet" role="dialog" aria-modal="true" aria-label="Why this percentage" tabindex="-1"><button class="x" data-close aria-label="Close">×</button><section id="catview"></section></div></div>
   <div class="modal" id="m-how" hidden><div class="sheet" role="dialog" aria-modal="true" aria-label="How this works" tabindex="-1"><button class="x" data-close aria-label="Close">×</button><section id="howview" class="how"></section></div></div>
   <div class="modal" id="m-gloss" hidden><div class="sheet" role="dialog" aria-modal="true" aria-label="Glossary" tabindex="-1"><button class="x" data-close aria-label="Close">×</button><section id="glossview" class="gloss"></section></div></div>
+  <div class="modal" id="m-mine" hidden><div class="sheet" role="dialog" aria-modal="true" aria-label="Build your own option" tabindex="-1"><button class="x" data-close aria-label="Close">×</button><section id="mform"></section></div></div>
   <div id="wins"></div><div id="wtray" hidden></div>
   <footer id="footer">
     <p>Percentages are x of n past cases in the NAPOR log, with the 95% range the true rate could plausibly sit in. Small samples give wide ranges, so read each number as a hint. "After" is not "because of".</p>
@@ -1263,7 +1272,8 @@ let lastOpener = null;
 function openModal(id, opener){
   const m = $("#" + id); lastOpener = opener || document.activeElement;
   m.hidden = false; document.body.classList.add("locked");
-  if(id === "m-int") { renderIntensity(); } else if(id === "m-time") { renderTime(); } else if(id === "m-how") { renderHow(); } else if(id === "m-gloss") { renderGloss(); } else { renderLens(); }
+  if(id === "m-int") { renderIntensity(); } else if(id === "m-time") { renderTime(); } else if(id === "m-how") { renderHow(); } else if(id === "m-gloss") { renderGloss(); } else if(id === "m-mine") { renderForm(); } else { renderLens(); }
+  if(id === "m-mine"){ const f = $("#mf-" + (MFIELDS()[0] || "desc")); if(f) f.focus({preventScroll: true}); else $(".sheet", m).focus(); return; }
   $(".sheet", m).focus();
 }
 function closeModal(){
@@ -1629,7 +1639,7 @@ function aiError(e){   /* a plain message for the viewer, or null when they pres
   if(code === "refused") return "Claude declined that request — try rewording it.";
   return "Something went wrong — try again.";
 }
-function renderMine(){ if(D && S.mode === "explore") renderExplore(); }
+function renderMine(){ if(D && S.mode === "explore") renderExplore(); renderForm(); }
 async function fillWithClaude(){   /* only ever runs from a click; never retried by itself */
   if(AI.busy || !AI.sample || !D || !D.matcher) return;
   const text = cut(FORM.vals.desc, 400);
@@ -1666,6 +1676,7 @@ function assessMine(){
   AI.msg = saved ? null : {t: NOSAVE, key: rec.key};
   formBlank();
   if(S.mode !== "explore") setMode("explore");
+  closeModal();
   openWin(rec.key);
 }
 function deleteMine(key){
@@ -1685,8 +1696,7 @@ function editMine(key){
   const r = MINE.find(x => x.key === key); if(!r || !r.spec) return;
   FORM.vals = Object.assign({}, r.spec); FORM.editing = key;
   closeWin(key);
-  const box = $("#mine"); if(box) box.scrollIntoView({block: "start"});
-  const f = $("#mf-" + MFIELDS()[0]); if(f) f.focus({preventScroll: true});
+  openModal("m-mine", document.querySelector('[data-my="new"]'));
 }
 function toggleChip(f, v){   /* add or remove one key word in a box */
   const word = chipText(f, v).toLowerCase(), cur = cut(FORM.vals[f], 200);
@@ -1702,6 +1712,8 @@ function myAction(el){
   else if(a === "fill") fillWithClaude();
   else if(a === "chip") toggleChip(el.dataset.f, el.dataset.v);
   else if(a === "cancel"){ formBlank(); renderMine(); }
+  else if(a === "new") openModal("m-mine", el);
+  else if(a === "clear"){ const e = FORM.editing; formBlank(); FORM.editing = e; renderForm(); const f = $("#mf-" + (MFIELDS()[0] || "desc")); if(f) f.focus({preventScroll: true}); }
   else if(a === "edit") editMine(k);
   else if(a === "stop") stopAsk();
   else if(a === "open") openWin(k);
@@ -1734,37 +1746,52 @@ function formParts(){
   return {rd, m, text: previewOf(rd, m), can: rd.any && n > 0};
 }
 function refreshForm(){   /* update only the small lines, chips and the button: the boxes themselves are never redrawn while typing */
-  if(!D || !D.matcher || !$("#mine")) return;
+  if(!D || !D.matcher || !$("#mform .mgroup")) return;
   const P = formParts(), full = MINE.length >= MAXMINE && !FORM.editing;
   MFIELDS().concat("desc").forEach(f => { const e = $("#mr-" + f); if(e) e.innerHTML = readLine(f, P.rd); });
   document.querySelectorAll("[data-chip-f]").forEach(b => { const fd = P.rd.fields[b.dataset.chipF]; b.setAttribute("aria-pressed", !!(fd && !fd.unset && fd.vals.includes(b.dataset.v))); });
   const pv = $("#mprev"); if(pv) pv.textContent = P.text;
   const go = $("#my-go"); if(go) go.disabled = !P.can || full;
 }
-function mineSection(){
+const MGROUPS = [["What the US does", ["move", "target"]], ["Where, and how big", ["where", "scale"]], ["Who acts, and how openly", ["who", "open"]]];
+function mineSection(){   /* the small card on the page: one button, the saved options */
   if(!D.matcher) return "";
-  const list = myOpts(), full = list.length >= MAXMINE && !FORM.editing, M = D.matcher, P = formParts(), busy = !!AI.busy;
-  let h = `<div class="panel mine" id="mine"><h2>Your own option — if the US did this…</h2><p class="note">Describe a US action. Fill in any of the boxes or leave them as n/a. The page finds past US actions with the same settings and counts what followed, with the same five categories as the listed options. Saved only in this browser.</p><div class="mgrid">`;
-  M.fields.forEach(f => {
-    h += `<div class="mf"><label for="mf-${f}">${esc(M.labels[f])}</label><input type="text" id="mf-${f}" maxlength="200" autocomplete="off" placeholder="n/a" value="${esc(FORM.vals[f])}">` +
-      `<div class="mchips" role="group" aria-label="Suggestions for ${esc(M.labels[f])}">${Object.keys(M.vocab[f]).map(v => `<button type="button" class="mchip" data-my="chip" data-f="${f}" data-v="${v}" data-chip-f="${f}" title="${esc(M.vocab[f][v])}" aria-pressed="${!!(P.rd.fields[f] && !P.rd.fields[f].unset && P.rd.fields[f].vals.includes(v))}">${esc(chipText(f, v))}</button>`).join("")}</div>` +
-      `<p class="mread" id="mr-${f}">${readLine(f, P.rd)}</p></div>`;
-  });
-  const claude = AI.status === "ready" && !AI.hidden;
-  h += `<div class="mf wide"><label for="mf-desc">Description</label><div class="mdescrow"><input type="text" id="mf-desc" maxlength="400" autocomplete="off" placeholder="n/a" value="${esc(FORM.vals.desc)}">` +
-    (claude ? `<button type="button" class="linkbtn" data-my="fill"${busy ? " disabled" : ""} title="Sends only your description to Claude">Fill the boxes from my description with Claude</button>` : "") + `</div>` +
-    `<p class="mread" id="mr-desc">${readLine("desc", P.rd)}</p></div></div>`;
+  const list = myOpts(), busy = !!AI.busy;
+  let h = `<div class="panel mine" id="mine"><div class="mtop"><div><h2>Your own option</h2><p class="note">Not on the list? Describe a US action and the page finds the past cases that match it, then counts what followed with the same five categories. Saved only in this browser.</p></div><button class="mybtn" data-my="new">+ Build your own option</button></div>`;
   if(busy && !AI.busy.key) h += busyRow();
   h += msgRow(null);
-  h += `<p class="mprev" id="mprev" role="status">${esc(P.text)}</p>`;
-  if(full) h += `<p class="nodata" style="margin-top:8px">You have ${MAXMINE} saved options. Delete one to make another.</p>`;
-  h += `<div class="myrow"><button class="mybtn" id="my-go" data-my="assess"${P.can && !full ? "" : " disabled"}>Assess</button>` +
-    (FORM.editing ? `<span class="mupd">Updating ${esc(FORM.editing)}</span><button class="linkbtn" data-my="cancel">Cancel</button>` : "") + `</div>`;
   if(list.length) h += `<div class="mylist" role="group" aria-label="Your saved options">` + list.map(o => {
     const cs = activeCases(o), ix = riskIndex(o, cs);
     return `<div class="mc"><button class="mgo" data-my="open" data-k="${o.key}" aria-pressed="${S.open.includes(o.key)}"><span class="key">${o.key}</span><span class="nm">${esc(o.name)} <span class="oldtag">yours</span></span><span class="ev">${!o.cases.length ? "No cases counted" : (ix ? "Risk index " + Math.round(ix.raw * 100) + "% · " : o.too_few ? "Too few cases · " : "") + cntLabel(cs.length, o.cases.length, false) + (S.phase || S.band ? " in this condition" : "")}</span></button>` +
       (AI.confirm === o.key ? delRow(o.key) : `<button class="mx" data-my="del" data-k="${o.key}" aria-label="Delete ${o.key}" title="Delete">×</button>`) + `</div>`; }).join("") + `</div>`;
   return h + `</div>`;
+}
+function fieldHtml(f, P){
+  const M = D.matcher, fd = P.rd.fields[f];
+  return `<div class="mf"><label for="mf-${f}">${esc(M.labels[f])}</label><input type="text" id="mf-${f}" maxlength="200" autocomplete="off" placeholder="n/a" value="${esc(FORM.vals[f])}">` +
+    `<div class="mchips" role="group" aria-label="Suggestions for ${esc(M.labels[f])}">${Object.keys(M.vocab[f]).map(v => `<button type="button" class="mchip" data-my="chip" data-f="${f}" data-v="${v}" data-chip-f="${f}" title="${esc(M.vocab[f][v])}" aria-pressed="${!!(fd && !fd.unset && fd.vals.includes(v))}">${esc(chipText(f, v))}</button>`).join("")}</div>` +
+    `<p class="mread" id="mr-${f}">${readLine(f, P.rd)}</p></div>`;
+}
+function formHtml(){   /* the popup: grouped boxes, then a footer that stays in view with the live count and Assess */
+  const M = D.matcher, P = formParts(), busy = !!AI.busy, full = MINE.length >= MAXMINE && !FORM.editing, claude = AI.status === "ready" && !AI.hidden;
+  const groups = MGROUPS.map(([t, fs]) => [t, fs.filter(f => M.fields.includes(f))]).filter(g => g[1].length);
+  const left = M.fields.filter(f => !MGROUPS.some(g => g[1].includes(f))); if(left.length && groups.length) groups[groups.length - 1][1].push(...left);
+  let h = `<div class="mhead"><h2>${FORM.editing ? "Edit " + esc(FORM.editing) : "Your own option"} — if the US did this…</h2><p class="note">Fill in any boxes and leave the rest as n/a. Tap a word to add it, or type your own. Fewer boxes means more past cases match.</p></div><div class="mbody">`;
+  groups.forEach(([t, fs]) => { h += `<div class="mgroup"><div class="eh"><b>${esc(t)}</b></div><div class="mgrid">${fs.map(f => fieldHtml(f, P)).join("")}</div></div>`; });
+  h += `<div class="mgroup"><div class="eh"><b>In your own words</b><span>optional</span></div><div class="mf wide"><label for="mf-desc">Description</label><div class="mdescrow"><input type="text" id="mf-desc" maxlength="400" autocomplete="off" placeholder="n/a" value="${esc(FORM.vals.desc)}">` +
+    (claude ? `<button type="button" class="linkbtn" data-my="fill"${busy ? " disabled" : ""} title="Sends only your description to Claude">Fill the boxes with Claude</button>` : "") + `</div><p class="mread" id="mr-desc">${readLine("desc", P.rd)}</p></div></div>`;
+  if(busy && !AI.busy.key) h += busyRow();
+  h += msgRow(null) + `</div>`;
+  h += `<div class="mfoot"><p class="mprev" id="mprev" role="status">${esc(P.text)}</p>` + (full ? `<p class="nodata">You have ${MAXMINE} saved options. Delete one to make another.</p>` : "") +
+    `<div class="myrow"><button class="mybtn" id="my-go" data-my="assess"${P.can && !full ? "" : " disabled"}>Assess</button>` + (FORM.editing ? `<span class="mupd">Updating ${esc(FORM.editing)}</span><button class="linkbtn" data-my="cancel">Cancel</button>` : "") + `<button class="linkbtn mclear" data-my="clear">Clear all</button></div></div>`;
+  return h;
+}
+function renderForm(){
+  const box = $("#mform"); if(!box || !D || !D.matcher || $("#m-mine").hidden) return;
+  const ae = document.activeElement, keepId = ae && /^mf-/.test(ae.id || "") ? ae.id : null, keepQ = keepId ? ae.selectionStart : null, sc = $(".mbody", box), top = sc ? sc.scrollTop : 0;
+  box.innerHTML = formHtml();
+  const nb = $(".mbody", box); if(nb) nb.scrollTop = top;
+  if(keepId){ const q = document.getElementById(keepId); if(q){ q.focus({preventScroll: true}); try { q.setSelectionRange(keepQ, keepQ); } catch(e) {} } }
 }
 function settingsBox(o){
   const rd = o.reading, M = D.matcher;
