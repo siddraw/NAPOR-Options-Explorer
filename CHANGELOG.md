@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-06 - Your own option: tidier form
+- Sidd asked for the "Your own option" form to look better and be better organized, on laptops and phones. The page now shows a small card with one "Build your own option" button and your saved options. The form opens in its own popup (like the conditions panel), with the boxes grouped under headings: What the US does, Where and how big, Who acts and how openly, In your own words.
+- The live count and the Assess button sit in a footer that stays in view while you scroll. On phones the popup fills the screen, with bigger tap targets, bigger text boxes and a full-width Assess button. "Clear all" empties the boxes. Matching, saving and the numbers are unchanged.
+
 ## 2026-11-06 - Your own option: settings and a matcher (no AI needed)
 - Sidd wanted "Your own option" to work everywhere, not only inside Claude, and to be checkable. I replaced "Claude picks the cases" with settings and a plain rules-based matcher in the page. You fill in any of six boxes (type of move, target, location, scale, who acts, open or covert) or leave them as n/a, plus an optional free-text description. Under each box there are small suggestion chips; tapping one adds or removes that word.
 - Every counted US action in the log now has tags for what the US did: the method, the target, the place, the scale, who acted and whether it was open or covert. Never what followed. They live in `napor/tags/<theater>.py` (written from each event's own title and sources, with a short "why" where it was a judgment call), the allowed words and synonyms live in `napor/action_tags.py`, and the exporters copy them into the page data.
