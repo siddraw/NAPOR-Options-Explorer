@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-11-06 - Your own option: cleaner text in the popup
+- Sidd said the popup text did not look good. Headings and box labels now use Title Case (small words like "and", "of", "the" stay lower-case), so "Where, and how big" is now "Where and How Big". The suggestion buttons are all caps, small and boxed, so they read as options and not as headings; headings are larger and in the accent color.
+
 ## 2026-11-06 - Your own option: tidier form
 - Sidd asked for the "Your own option" form to look better and be better organized, on laptops and phones. The page now shows a small card with one "Build your own option" button and your saved options. The form opens in its own popup (like the conditions panel), with the boxes grouped under headings: What the US does, Where and how big, Who acts and how openly, In your own words.
 - The live count and the Assess button sit in a footer that stays in view while you scroll. On phones the popup fills the screen, with bigger tap targets, bigger text boxes and a full-width Assess button. "Clear all" empties the boxes. Matching, saving and the numbers are unchanged.

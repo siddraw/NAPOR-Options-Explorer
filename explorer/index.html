@@ -386,17 +386,17 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 .mgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px 18px}
 #m-mine .sheet{max-width:780px;padding:0;display:flex;flex-direction:column;max-height:calc(100vh - 48px);overflow:hidden}
 #mform{display:flex;flex-direction:column;min-height:0;flex:1}
-#mform .mhead{padding:18px 60px 12px 22px;border-bottom:1px solid var(--line)}#mform .mhead h2{margin:0 0 6px}#mform .mhead .note{margin:0}
+#mform .mhead{padding:18px 60px 12px 22px;border-bottom:1px solid var(--line)}#mform .mhead h2{margin:0 0 8px;font-size:20px;line-height:1.25;letter-spacing:0;text-transform:none;color:var(--ink);font-weight:700}#mform .mhead .note{margin:0}
 #mform .mbody{overflow:auto;padding:16px 22px 8px;flex:1;min-height:0;overscroll-behavior:contain}
-.mgroup{margin:0 0 20px}.mgroup .eh{display:flex;gap:4px 10px;align-items:baseline;flex-wrap:wrap;margin:0 0 10px;padding:0 0 5px;border-bottom:1px solid var(--line)}.mgroup .eh b{font-size:13px;color:var(--ink)}.mgroup .eh span{font-size:12px;color:var(--muted)}
+.mgroup{margin:0 0 20px}.mgroup .eh{display:flex;gap:4px 10px;align-items:baseline;flex-wrap:wrap;margin:0 0 10px;padding:0 0 5px;border-bottom:1px solid var(--line)}.mgroup .eh{border-bottom:2px solid var(--accent-soft)}.mgroup .eh b{font-size:16px;font-weight:700;color:var(--accent);letter-spacing:0}.mgroup .eh span{font-size:12px;color:var(--muted)}
 #mform .mfoot{border-top:1px solid var(--line);padding:12px 22px calc(12px + env(safe-area-inset-bottom,0px));background:var(--bg)}#mform .mfoot .mprev{margin:0 0 10px}
 .mclear{margin-left:auto}
 .mf{min-width:0}.mf.wide{grid-column:1/-1}
-.mf label{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
+.mf label{display:block;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:6px}
 .mf input[type=text]{width:100%;box-sizing:border-box;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink)}
 .mdescrow{display:flex;gap:8px;align-items:center}.mdescrow input{flex:1;min-width:0}.mdescrow .linkbtn{flex:none;padding:7px 12px}
-.mchips{display:flex;flex-wrap:wrap;gap:4px 5px;margin-top:6px}
-.mchip{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:99px;padding:1px 9px;font-size:12px;line-height:1.5;cursor:pointer}
+.mchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.mchip{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:6px;padding:3px 9px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;line-height:1.4;cursor:pointer}
 .mchip:hover{border-color:var(--accent)}
 .mchip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .mread{font-size:12.5px;color:var(--muted);margin-top:4px;min-height:0;overflow-wrap:anywhere}.mread:empty{display:none}
@@ -410,7 +410,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 .str.s-exact{border-color:var(--accent);color:var(--accent)}.str.s-loose{color:var(--muted);border-style:dashed}
 @media(max-width:700px){.mgrid{grid-template-columns:minmax(0,1fr)}.mdescrow{flex-wrap:wrap}.mdescrow input{flex-basis:100%}}
 html.phone .mgrid{grid-template-columns:minmax(0,1fr)}html.phone .mdescrow{flex-wrap:wrap}html.phone .mdescrow input{flex-basis:100%}
-html.phone .mchip{padding:7px 13px;font-size:14px;min-height:36px}html.phone .mf input[type=text]{font-size:16px;padding:11px 12px}html.phone #m-mine{padding:0}html.phone #m-mine .sheet{max-width:none;width:100%;height:100%;max-height:none;border-radius:0;border:0;padding-top:env(safe-area-inset-top,0px)}html.phone #m-mine .x{width:calc(34px*var(--z,1));height:calc(34px*var(--z,1));font-size:calc(20px*var(--z,1));top:calc(10px + env(safe-area-inset-top,0px))}html.phone #mform .mhead{padding:14px 64px 10px 16px}html.phone #mform .mbody{padding:14px 16px 8px}html.phone #mform .mfoot{padding:10px 16px calc(12px + env(safe-area-inset-bottom,0px))}html.phone #mform .mybtn{flex:1 1 100%;min-height:48px;font-size:16px}html.phone .mine .mybtn{width:100%;min-height:48px;font-size:16px}html.phone .mclear{margin-left:0}html.phone .mset dl{grid-template-columns:minmax(0,1fr)}html.phone .mset dt{margin-top:4px}
+html.phone .mchip{padding:8px 12px;font-size:12px;min-height:38px}html.phone .mf input[type=text]{font-size:16px;padding:11px 12px}html.phone #m-mine{padding:0}html.phone #m-mine .sheet{max-width:none;width:100%;height:100%;max-height:none;border-radius:0;border:0;padding-top:env(safe-area-inset-top,0px)}html.phone #m-mine .x{width:calc(34px*var(--z,1));height:calc(34px*var(--z,1));font-size:calc(20px*var(--z,1));top:calc(10px + env(safe-area-inset-top,0px))}html.phone #mform .mhead{padding:14px 64px 10px 16px}html.phone #mform .mbody{padding:14px 16px 8px}html.phone #mform .mfoot{padding:10px 16px calc(12px + env(safe-area-inset-bottom,0px))}html.phone #mform .mybtn{flex:1 1 100%;min-height:48px;font-size:16px}html.phone .mine .mybtn{width:100%;min-height:48px;font-size:16px}html.phone .mclear{margin-left:0}html.phone .mset dl{grid-template-columns:minmax(0,1fr)}html.phone .mset dt{margin-top:4px}
 @media(max-width:560px){.mybtn{padding:10px 16px}}
 </style>
 
@@ -1572,7 +1572,10 @@ function autoName(rd){
   const t = s.charAt(0).toUpperCase() + s.slice(1);
   return t.length > 60 ? t.slice(0, 59).replace(/\s+\S*$/, "").replace(/[\s·/]+$/, "") + "…" : t;
 }
-const fieldNames = fs => fs.map(f => D.matcher.labels[f]).join(", ");
+const TC_SMALL = new Set(["a","an","the","and","or","of","in","on","to","for","at","by","but","nor"]);
+const tc = t => String(t).split(" ").map((w, i, a) => (i === 0 || a[i-1] === "—" || !TC_SMALL.has(w.toLowerCase())) ? w.charAt(0).toUpperCase() + w.slice(1) : w.toLowerCase()).join(" ");   /* Title Case for headings: small words stay lower-case */
+const LBL = f => tc(D.matcher.labels[f]);
+const fieldNames = fs => fs.map(LBL).join(", ");
 const widenNote = m => m.dropped.length ? `No past case matched every setting, so the page ignored: ${fieldNames(m.dropped)}.` : "";
 function previewOf(rd, m){
   if(!rd.any) return "Fill in at least one box to see how many past cases match.";
@@ -1735,7 +1738,7 @@ const msgRow = key => AI.msg && AI.msg.key === key ? `<p class="mymsg" role="sta
 const IGN = a => a.length ? `<span class="mign">ignored: ${esc(a.slice(0, 10).join(", "))}${a.length > 10 ? ", …" : ""}</span>` : "";
 function readLine(f, rd){   /* the small line under one box: what the page read, and the words it ignored */
   if(f === "desc"){
-    const fills = MFIELDS().filter(g => rd.desc.fills[g]).map(g => D.matcher.labels[g] + " = " + rd.desc.fills[g].map(v => valName(g, v)).join(" / "));
+    const fills = MFIELDS().filter(g => rd.desc.fills[g]).map(g => LBL(g) + " = " + rd.desc.fills[g].map(v => valName(g, v)).join(" / "));
     return (fills.length ? `<span>from your description: ${esc(fills.join("; "))}</span> ` : "") + IGN(rd.desc.ignored);
   }
   const fd = rd.fields[f];
@@ -1753,7 +1756,7 @@ function refreshForm(){   /* update only the small lines, chips and the button: 
   const pv = $("#mprev"); if(pv) pv.textContent = P.text;
   const go = $("#my-go"); if(go) go.disabled = !P.can || full;
 }
-const MGROUPS = [["What the US does", ["move", "target"]], ["Where, and how big", ["where", "scale"]], ["Who acts, and how openly", ["who", "open"]]];
+const MGROUPS = [["What the US Does", ["move", "target"]], ["Where and How Big", ["where", "scale"]], ["Who Acts and How Openly", ["who", "open"]]];
 function mineSection(){   /* the small card on the page: one button, the saved options */
   if(!D.matcher) return "";
   const list = myOpts(), busy = !!AI.busy;
@@ -1768,17 +1771,17 @@ function mineSection(){   /* the small card on the page: one button, the saved o
 }
 function fieldHtml(f, P){
   const M = D.matcher, fd = P.rd.fields[f];
-  return `<div class="mf"><label for="mf-${f}">${esc(M.labels[f])}</label><input type="text" id="mf-${f}" maxlength="200" autocomplete="off" placeholder="n/a" value="${esc(FORM.vals[f])}">` +
-    `<div class="mchips" role="group" aria-label="Suggestions for ${esc(M.labels[f])}">${Object.keys(M.vocab[f]).map(v => `<button type="button" class="mchip" data-my="chip" data-f="${f}" data-v="${v}" data-chip-f="${f}" title="${esc(M.vocab[f][v])}" aria-pressed="${!!(fd && !fd.unset && fd.vals.includes(v))}">${esc(chipText(f, v))}</button>`).join("")}</div>` +
+  return `<div class="mf"><label for="mf-${f}">${esc(LBL(f))}</label><input type="text" id="mf-${f}" maxlength="200" autocomplete="off" placeholder="n/a" value="${esc(FORM.vals[f])}">` +
+    `<div class="mchips" role="group" aria-label="Suggestions for ${esc(LBL(f))}">${Object.keys(M.vocab[f]).map(v => `<button type="button" class="mchip" data-my="chip" data-f="${f}" data-v="${v}" data-chip-f="${f}" title="${esc(M.vocab[f][v])}" aria-pressed="${!!(fd && !fd.unset && fd.vals.includes(v))}">${esc(chipText(f, v))}</button>`).join("")}</div>` +
     `<p class="mread" id="mr-${f}">${readLine(f, P.rd)}</p></div>`;
 }
 function formHtml(){   /* the popup: grouped boxes, then a footer that stays in view with the live count and Assess */
   const M = D.matcher, P = formParts(), busy = !!AI.busy, full = MINE.length >= MAXMINE && !FORM.editing, claude = AI.status === "ready" && !AI.hidden;
   const groups = MGROUPS.map(([t, fs]) => [t, fs.filter(f => M.fields.includes(f))]).filter(g => g[1].length);
   const left = M.fields.filter(f => !MGROUPS.some(g => g[1].includes(f))); if(left.length && groups.length) groups[groups.length - 1][1].push(...left);
-  let h = `<div class="mhead"><h2>${FORM.editing ? "Edit " + esc(FORM.editing) : "Your own option"} — if the US did this…</h2><p class="note">Fill in any boxes and leave the rest as n/a. Tap a word to add it, or type your own. Fewer boxes means more past cases match.</p></div><div class="mbody">`;
+  let h = `<div class="mhead"><h2>${FORM.editing ? "Edit " + esc(FORM.editing) : "Your Own Option"} — If the US Did This…</h2><p class="note">Fill in any boxes and leave the rest as n/a. Tap a word to add it, or type your own. Fewer boxes means more past cases match.</p></div><div class="mbody">`;
   groups.forEach(([t, fs]) => { h += `<div class="mgroup"><div class="eh"><b>${esc(t)}</b></div><div class="mgrid">${fs.map(f => fieldHtml(f, P)).join("")}</div></div>`; });
-  h += `<div class="mgroup"><div class="eh"><b>In your own words</b><span>optional</span></div><div class="mf wide"><label for="mf-desc">Description</label><div class="mdescrow"><input type="text" id="mf-desc" maxlength="400" autocomplete="off" placeholder="n/a" value="${esc(FORM.vals.desc)}">` +
+  h += `<div class="mgroup"><div class="eh"><b>In Your Own Words</b><span>Optional</span></div><div class="mf wide"><label for="mf-desc">Description</label><div class="mdescrow"><input type="text" id="mf-desc" maxlength="400" autocomplete="off" placeholder="n/a" value="${esc(FORM.vals.desc)}">` +
     (claude ? `<button type="button" class="linkbtn" data-my="fill"${busy ? " disabled" : ""} title="Sends only your description to Claude">Fill the boxes with Claude</button>` : "") + `</div><p class="mread" id="mr-desc">${readLine("desc", P.rd)}</p></div></div>`;
   if(busy && !AI.busy.key) h += busyRow();
   h += msgRow(null) + `</div>`;
@@ -1797,7 +1800,7 @@ function settingsBox(o){
   const rd = o.reading, M = D.matcher;
   const rows = M.fields.map(f => { const fd = rd.fields[f];
     const read = fd.vals.length ? (fd.fromDesc ? "from your description: " : "") + fd.vals.map(v => valName(f, v)).join(" / ") : "n/a";
-    return `<dt>${esc(M.labels[f])}</dt><dd>${fd.unset ? "" : "“" + esc(fd.typed) + "” → "}${esc(read)}${fd.ignored.length ? " " + IGN(fd.ignored) : ""}</dd>`; }).join("");
+    return `<dt>${esc(LBL(f))}</dt><dd>${fd.unset ? "" : "“" + esc(fd.typed) + "” → "}${esc(read)}${fd.ignored.length ? " " + IGN(fd.ignored) : ""}</dd>`; }).join("");
   const dsc = rd.desc.text ? `<dt>Description</dt><dd>“${esc(rd.desc.text)}”${rd.desc.ignored.length ? " " + IGN(rd.desc.ignored) : ""}</dd>` : "";
   const note = o.match.cases.length ? widenNote(o.match) : "NAPOR has no past US actions like this in the latest data, so there is nothing to count.";
   return `<div class="mset"><b>Your settings</b><dl>${rows}${dsc}</dl>${note ? `<p>${esc(note)}</p>` : ""}<p>Matched again with the latest data each time you open the page.</p></div>`;
