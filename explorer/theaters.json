@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-06",
+ "generated": "2026-11-09",
  "default": "iran",
  "theaters": [
   {
@@ -7,35 +7,35 @@
    "name": "Iran",
    "status": "active",
    "data": "data/iran.json",
-   "asof": "2026-11-01"
+   "asof": "2026-11-08"
   },
   {
    "id": "houthis",
    "name": "Houthis / Red Sea",
    "status": "active",
    "data": "data/houthis.json",
-   "asof": "2026-10-31"
+   "asof": "2026-11-08"
   },
   {
    "id": "northkorea",
    "name": "North Korea",
    "status": "active",
    "data": "data/northkorea.json",
-   "asof": "2026-10-31"
+   "asof": "2026-11-04"
   },
   {
    "id": "china",
    "name": "China / Taiwan",
    "status": "active",
    "data": "data/china.json",
-   "asof": "2026-11-01"
+   "asof": "2026-11-08"
   },
   {
    "id": "venezuela",
    "name": "Venezuela / Caribbean",
    "status": "active",
    "data": "data/venezuela.json",
-   "asof": "2026-10-27"
+   "asof": "2026-11-02"
   }
  ]
 }
