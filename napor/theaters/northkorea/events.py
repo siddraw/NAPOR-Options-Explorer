@@ -135,6 +135,10 @@ EVENTS = [
 (2081, d(2026,10,28), "US (with the EU, Australia and partners)", "Sanction (overseas workers, cyber, Russia cooperation)", "North Korean individuals and entities", "Coordinated sanctions announced Oct 28 by the US, EU and Australia targeting North Korea's overseas workers, cyber activity and cooperation with Russia (Stripes); joint statement signed by the US, the EU and ten other governments (EEAS). The US targets and number of designations were not read", None, "n/a", "Medium", "see audit"),
 (2082, d(2026,10,29), "North Korea (per JCS)", "Missile launch (about 10 short-range ballistic missiles)", "From around Wonsan toward the East Sea", "About 10 SRBMs at about 12:30 p.m. local time, flying about 250 km (Reuters); Japan's Defence Ministry says they did not appear to land in its EEZ. The day after the coordinated sanctions and day 4 of Freedom Flag; Seoul calls it a violation of UN resolutions", 2080, "No damage", "Medium", "see audit"),
 (2083, d(2026,10,31), "North Korea (per South Korea's defense ministry)", "Missile launch (tactical ballistic missile, claimed cluster-bomb warhead)", "From the Jeongju area toward the East Sea", "Saturday launch from Jeongju, northwest of Pyongyang, per South Korea's defense ministry; number and time not given. North Korea CLAIMS (KCNA, via Stripes) a cluster-bomb warhead test. Day 6 of Freedom Flag", 2080, "No damage", "Medium", "see audit"),
+(2084, d(2026,10,31), "US (FBI)", "Statement (attribution: Binance hack)", "North Korea", "The FBI blames the North Korea-linked hacker group TraderTraitor for the Oct 29 theft from the Binance exchange, the biggest crypto hack on record (AP: $6.3 billion); Trump says 'We don't know if it's North Korea'. Words and attribution only; no sanction or charge logged", None, "n/a", "Medium", "see audit"),
+(2085, d(2026,11,2), "North Korea (CLAIM, per KCNA via Stripes)", "Missile launch (claimed strategic cruise missile test, dispersal warhead)", "Sea test (place not given)", "North Korea CLAIMS (KCNA) it tested a strategic cruise missile with a new medium-sized dispersal warhead; South Korea's JCS did not confirm a launch and said cruise-missile detection 'may be limited'; USFK and INDOPACOM declined to comment. Cruise missile: not ballistic", None, "No damage", "Medium", "see audit"),
+(2086, d(2026,11,4), "North Korea (per JCS)", "Missile launch (several missiles of different types)", "From the Sondok area, South Hamgyong, toward the East Sea", "JCS: several missiles fired toward the East Sea on US midterm election day, being analysed with the US; a defence ministry official says early data suggest several types (Reuters). North Korea CLAIMS (KCNA, Nov 5) it tested a 'newly designed' air-defence missile and held a long-range strategic cruise missile drill. Al Jazeera calls it the fourth weapons launch in a month. Last days of Freedom Flag (#2080)", None, "No damage reported", "Medium", "see audit"),
+(2087, d(2026,11,4), "North Korea (Kim Yo Jong, per KCNA via AFP)", "Statement (rejects talks; threatens stronger 'counteraction')", "US", "North Korea denies the Binance hack and Kim Yo Jong calls the FBI claim a 'grave political provocation' (Nov 3) and part of Washington's 'invariable hostile policy', saying 'we have no need to sit face to face with such unreliable and hostile persons' and that 'new records should be created in our reflective counteraction' (Nov 4). North Korea's claim", 2084, "n/a", "Medium", "see audit"),
 ]
 
 # ---------------------------------------------------------------------------------------------
@@ -163,6 +167,8 @@ _STRIPES_MAR26 = _s('North Korea missile launch, eastern sea', 'Stars and Stripe
 _PBS_AUG26 = _s('North Korea fires barrage of missiles toward the sea after dismissing overture from Trump', 'AP (via PBS NewsHour)', '2026-08-20', 'https://www.pbs.org/newshour/world/north-korea-fires-barrage-of-missiles-toward-the-sea-after-dismissing-overture-from-trump', 'full text')
 _STRIPES_SEP26B = _s('North Korea "ultra-modern" combat weapon', 'Stars and Stripes; reports a KCNA claim', '2026-09-22', 'https://www.stripes.com/theaters/asia_pacific/2026-09-22/north-korea-ultra-modern-combat-weapon-22926868.html', 'full text')
 _STRIPES_OCT29 = _s('North Korea fires barrage of short-range missiles off its eastern coast', 'Stars and Stripes', '2026-10-29', 'https://www.stripes.com/theaters/asia_pacific/2026-10-29/north-korea-missile-launch-23295815.html', 'full text')
+_EURONEWS_NOV3 = _s('North Korea slams FBI claims it was behind €5bn Binance hack and test fires missiles', 'Euronews', '2026-11-03', 'https://euronews.com/2026/11/03/north-korea-slams-fbi-claims-it-was-behind-5bn-binance-hack-and-test-fires-missiles', 'full text')
+_AJ_NOV4 = _s('N Korea fires multiple missiles, denies US claims on Binance hack', 'Al Jazeera', '2026-11-04', 'https://aljazeera.com/news/2026/11/4/n-korea-fires-multiple-missiles-denies-us-claims-on-binance-hack', 'full text')
 _STRIPES_NOV2 = _s('North Korea tests cluster-bomb warhead in weekend missile launch, state media says', 'Stars and Stripes', '2026-11-02', 'https://www.stripes.com/theaters/asia_pacific/2026-11-02/north-korea-cluster-bomb-warhead-23335418.html', 'full text')
 _STRIPES_SEP26A = _s('North Korea missiles Sept 20', 'Stars and Stripes', '2026-09-20', 'https://www.stripes.com/theaters/asia_pacific/2026-09-20/north-korea-missiles-sept-20-22907123.html', 'full text')
 _REUTERS_OCT26 = _s('North Korea fires missiles days after South Korea\'s hypersonic test', 'Reuters (via GV Wire)', '2026-10-12', 'https://gvwire.com/2026/10/12/north-korea-fires-missiles-days-after-south-koreas-hypersonic-test/', 'full text')
@@ -260,13 +266,22 @@ SOURCES = {
  2081: [_STRIPES_OCT29, _s('Joint Statement on Democratic People’s Republic of Korea (DPRK) Sanctions', 'EEAS (EU official joint statement; the US is a signatory)', '2026-10-28', 'https://www.eeas.europa.eu/eeas/joint-statement-democratic-peoples-republic-korea-dprk-sanctions_en', 'full text')],
  2082: [_s('North Korea fires around 10 ballistic missiles toward sea off east coast, Seoul says', 'Reuters (via KFGO)', '2026-10-29', 'https://kfgo.com/?p=1369247', 'full text'), _STRIPES_OCT29],
  2083: [_STRIPES_NOV2],
+ # weekly update 2026-11-09: every URL came from a search result or fetch in that session
+ 2084: [_s('FBI blames North Korea for stolen billions from Binance in biggest hack in history', 'AP (via NBC Boston)', '2026-10-31', 'https://www.nbcboston.com/news/national-international/fbi-blames-north-korea-for-stolen-billions-from-binance/4041221/', 'full text')],
+ 2085: [_s('North Korea claims cruise missile warhead can devastate 15-acre area', 'Stars and Stripes; reports a KCNA claim', '2026-11-03', 'https://www.stripes.com/theaters/asia_pacific/2026-11-03/north-korea-cruise-missile-warhead-test-23346782.html', 'full text'),
+        _EURONEWS_NOV3],
+ 2086: [_s('North Korea launches missiles toward the sea as Pyongyang protests against US claims on Binance hack', 'AP (via La Nacion)', '2026-11-04', 'https://www.lanacion.com.ar/usa/north-korea-launches-missiles-toward-the-sea-as-pyongyang-protests-against-us-claims-on-binance-hack-nid04112026/', 'full text'),
+        _AJ_NOV4,
+        _s('North Korea says it tested air-defence missile, staged cruise missile drill', 'Reuters (via Internazionale); reports a KCNA claim', '2026-11-05', 'https://www.internazionale.it/ultime-notizie-reuters/2026/11/05/north-korea-test-fires-new-air-defence-missile-system-kcna-reports', 'full text')],
+ 2087: [_s("Kim Yo Jong warns US of stronger retaliation over 'hostile policy' towards North Korea", 'AFP (via Malay Mail)', '2026-11-04', 'https://www.malaymail.com/news/world/2026/11/04/kim-yo-jong-warns-us-of-stronger-retaliation-over-hostile-policy-towards-north-korea/241872', 'full text'),
+        _AJ_NOV4, _EURONEWS_NOV3],
 }
 VERDICT = {k: 'confirmed' for k in SOURCES}
 # North Korean claims or reports of a move that an allowed outlet does not confirm.
 VERDICT[2057] = 'not_confirmed'   # KCNA-claimed cruise missiles; JCS only said it was analyzing
 VERDICT[2065] = 'not_confirmed'   # reported THAAD move; Pentagon declined to confirm
 # Rows where an allowed outlet confirms the event but not every detail in the row (date inferred, claim, or no JCS date).
-PARTLY = {2002, 2013, 2025, 2026, 2032, 2036, 2042, 2045, 2059, 2067, 2068, 2069, 2072, 2075, 2079, 2081, 2083}
+PARTLY = {2002, 2013, 2025, 2026, 2032, 2036, 2042, 2045, 2059, 2067, 2068, 2069, 2072, 2075, 2079, 2081, 2083, 2085}
 
 # Which option letter each US move belongs to (B talks, C sanctions, D joint drills, E interdiction,
 # F missile defense, G strategic assets, H other posture). A (hold) is not tagged.
@@ -292,7 +307,7 @@ CRED_ESTIMATE = {
  2057: 0.30, 2058: 0.80, 2059: 0.80, 2060: 0.80, 2061: 0.80, 2062: 0.96, 2063: 0.80, 2064: 0.80,
  2065: 0.30, 2066: 0.80, 2067: 0.80, 2068: 0.80, 2069: 0.80, 2070: 0.80, 2071: 0.80, 2072: 0.80,
  2073: 0.80, 2074: 0.80, 2075: 0.80, 2076: 0.96,
- 2077: 0.80, 2078: 0.80, 2079: 0.80, 2080: 0.80, 2081: 0.80, 2082: 0.96, 2083: 0.80,
+ 2077: 0.80, 2078: 0.80, 2079: 0.80, 2080: 0.80, 2081: 0.80, 2082: 0.96, 2083: 0.80, 2084: 0.80, 2085: 0.77, 2086: 0.99, 2087: 0.99,
 }
 
 # Trigger Census rows: one per US move (reply window: 7 days, DPRK launch / test / provocation / threatening statement).
@@ -387,7 +402,7 @@ PHASES = [
  ("Quiet and Biden review", d(2020, 1, 1), d(2021, 12, 31), "Few sourced events: cruise missiles (#2014), tanker seizure (#2015)"),
  ("Record launch pace", d(2022, 1, 1), d(2022, 12, 31), "Sanctions (#2016), ICBM (#2018, #2020), the Sep 25 - Nov 2 dense stretch (#2022-#2027), drones (#2028)"),
  ("Strategic assets and trilateral drills", d(2023, 1, 1), d(2024, 12, 31), "Washington Declaration (#2029), Kentucky (#2030), Camp David (#2032), Freedom Edge (#2043), satellite attempts (#2034, #2035, #2040)"),
- ("Second Trump term", d(2025, 1, 20), d(2026, 11, 2), "Carrier and submarine visits (#2048, #2050, #2061), Freedom Shield, Trump's talk offers (#2056, #2069), Freedom Flag and coordinated sanctions (#2080, #2081), 2026 launches (#2063-#2083)"),
+ ("Second Trump term", d(2025, 1, 20), d(2026, 11, 9), "Carrier and submarine visits (#2048, #2050, #2061), Freedom Shield, Trump's talk offers (#2056, #2069), Freedom Flag and coordinated sanctions (#2080, #2081), 2026 launches (#2063-#2086)"),
 ]
 
 CHAIN_NAMES = {

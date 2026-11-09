@@ -85,6 +85,10 @@ EVENTS = [
 (1352, d(2026,10,30), "Houthis (per Saudi-led coalition)", "Strike (proxy front)", "Mecca region, Riyadh area and southern Saudi Arabia", "Coalition says it intercepted a Houthi drone in the Mecca region (the Houthis deny it, saying they target only Saudi oil facilities and military bases), a drone near Riyadh and a ballistic missile over southern Saudi Arabia (CBS)", None, "Not stated", "Medium", "see audit"),
 (1353, d(2026,10,30), "Houthis", "Strike (Yemen front)", "Presidential palace, Aden", "A police official says the Houthis fired two missiles at the presidential palace in Aden; two eyewitnesses saw ambulances enter the compound; CBS notes a Houthi strike on the perimeter of Aden airport on Oct 28", None, "Not stated (ambulances seen, no figures given)", "Medium", "see audit"),
 (1354, d(2026,10,31), "Unknown (Houthis suspected)", "Strike (proxy front)", "Riyadh region (Saudi Arabia)", "Saudi air defences intercept a drone in the Riyadh region (coalition spokesman Turki al-Malki), who does not say who launched it; CBS reports it amid Houthi attacks on Saudi Arabia", None, "Debris fell, no injuries (coalition via CBS)", "Medium", "see audit"),
+(1355, d(2026,11,6), "Unknown (Houthis suspected)", "Strike (proxy front)", "Mecca region (Saudi Arabia)", "Saudi-led coalition spokesman Turki al-Maliki says a drone was intercepted and destroyed over the Mecca region; he does not say where it came from, and the Houthis did not claim it (they have denied targeting Mecca before)", None, "Not stated", "Medium", "see audit"),
+(1356, d(2026,11,6), "Disputed (Houthis or Saudi-led coalition)", "Strike (Yemen front)", "Market in Taiz province, southwestern Yemen", "A strike hits a crowded market in Taiz province. The Houthis blame Saudi-led airstrikes; Yemen's government blames a Houthi ballistic missile (Al Jazeera). AP does not name who carried it out", None, "At least 30 killed, per a Houthi official (AP); no independent count", "Medium", "see audit"),
+(1357, d(2026,11,7), "Saudi-led coalition (per Houthi health ministry)", "Strike (Yemen front)", "Al-Shariya village, Bani Hushaysh district, east of Sanaa", "Airstrikes hit homes east of Sanaa; the Houthi-run health ministry blames Saudi warplanes. Saudi Arabia does not comment (Reuters)", None, "Houthi-run health ministry: at least 27 killed and 36 wounded, mostly women and children (Reuters); 33 killed and 39 wounded (Al Jazeera)", "Medium", "see audit"),
+(1358, d(2026,11,8), "Houthis", "Strike (proxy front)", "Riyadh, Eastern Province (Abqaiq) and southern Saudi Arabia", "The coalition intercepts a wave of Houthi ballistic missiles and a drone aimed at Riyadh, the Eastern Province and the south; debris blows out windows in an Aramco-owned tower in Riyadh's financial district. Houthi spokesman Saree claims strikes on Riyadh airport, Aramco tanks and Abqaiq as retaliation for Saudi strikes near Sanaa and vows more", 1357, "No injuries or deaths; minor damage to the Aramco tower (Saudi energy ministry, via Al Jazeera and Reuters)", "Medium", "see audit"),
 ]
 
 # Who made each US move: option letters (B talks, C sanctions, D naval defense, E arms interdiction,
@@ -117,6 +121,7 @@ _CBS_OCT21 = _s('US orders some diplomats to leave Saudi Arabia amid Houthi atta
 _RTR_OCT21 = _s('US orders departure of diplomats from Saudi Arabia amid Houthi strikes', 'Reuters (via Internazionale)', '2026-10-21', 'https://www.internazionale.it/ultime-notizie-reuters/2026/10/21/exclusive-us-preparing-to-issue-ordered-departure-of-some-personnel-from-gulf-embassies-us-officials', 'full text')
 _AJ_OCT24 = _s("Iran says won't allow US warships to get close as Trump ponders new attacks", 'Al Jazeera', '2026-10-24', 'https://www.aljazeera.com/news/2026/10/24/iran-says-wont-allow-us-warships-to-get-close-as-trump-ponders-new-attacks', 'full text')
 _CBS_LIVE_NOV1 = _s('Trump says war in Iran will be put away very soon "one way or the other"', 'CBS News', '2026-11-01', 'https://www.cbsnews.com/live-updates/iran-war-us-trump-diplomacy-threat-resume-attacks/', 'full text')
+_AJ_NOV8 = _s("Saudi Aramco building in Riyadh damaged in 'attempted' attack", 'Al Jazeera', '2026-11-08', 'https://www.aljazeera.com/news/2026/11/8/saudi-arabia-intercepts-houthi-missiles-targeting-riyadh-eastern-province', 'full text')
 _CBS_LIVE_OCT26 = _s('Trump says he\'s weighing deal with Iran against action to "finish them off"', 'CBS News', '2026-10-26', 'https://www.cbsnews.com/live-updates/iran-war-trump-us-oil-gas-prices-strait-of-hormuz-midterms/', 'full text')
 
 SOURCES = {
@@ -184,11 +189,16 @@ SOURCES = {
  1352: [_CBS_LIVE_NOV1],
  1353: [_CBS_LIVE_NOV1],
  1354: [_CBS_LIVE_NOV1],
+ # weekly update 2026-11-09: every URL came from a search result or fetch in that session (seen as noted)
+ 1355: [_s('Saudi-led coalition says it intercepted drone in Mecca region', 'AFP (via LBCI)', '2026-11-06', 'https://lbcgroup.tv/news/middleeastnews/966646/saudi-led-coalition-says-it-intercepted-drone-in-mecca-region/en', 'full text')],
+ 1356: [_s('Airstrikes on a market in southwestern Yemen kill at least 30, Houthis say', 'AP (via CTV News)', '2026-11-06', 'https://www.ctvnews.ca/world/mideast-conflict/article/airstrikes-on-a-market-in-southwestern-yemen-kill-at-least-30-houthis-say/', 'full text'), _AJ_NOV8],
+ 1357: [_s('Houthi-run health ministry says airstrikes it blames on Saudi Arabia kill 27 near Yemen capital', 'Reuters (via Yahoo News)', '2026-11-07', 'https://ca.news.yahoo.com/houthi-run-health-ministry-says-191323355.html', 'full text'), _AJ_NOV8],
+ 1358: [_AJ_NOV8, _s('Saudi Arabia says danger passed in Riyadh after alert, day after Houthi attack', 'Reuters (via Daily Maverick)', '2026-11-09', 'https://www.dailymaverick.co.za/article/2026-11-09-saudi-arabia-says-danger-passed-in-riyadh-after-alert-day-after-houthi-attack/', 'full text'), _s('Aramco: Building owned by Saudi oil giant damaged in missile attack on Riyadh\'s financial district', 'CNN', '2026-11-08', 'https://www.cnn.com/2026/11/08/middleeast/saudi-arabia-riyadh-missile-financial-intl', 'snippet')],
 }
 VERDICT = {k: 'confirmed' for k in SOURCES}
 VERDICT[1302] = 'not_confirmed'   # only a Houthi claim, relayed by USNI; CENTCOM did not respond
 # Rows where an allowed outlet confirms the event but not every detail in the row.
-PARTLY = {1315, 1316, 1345, 1352}   # 1331/1332 re-sourced 2026-10-25 (Reuters, AAP, AFP give the dates)
+PARTLY = {1315, 1316, 1345, 1352, 1356}   # 1356: who struck the Taiz market is disputed   # 1331/1332 re-sourced 2026-10-25 (Reuters, AAP, AFP give the dates)
 
 # Trigger Census rows for US moves of kinds C-H.
 # Category = what the move cost the other side; status as in data.py (R-strong, R-weak, R-proxy, N, Unclear, Unverified).
@@ -229,8 +239,8 @@ START_ACTS = {1307}
 # Periods when an option was limited: (start, end, text, [event ids])
 # (The Jan 19 - Mar 14, 2025 Houthi pause is a phase, not a US constraint: strikes stayed available.)
 CONSTRAINTS = [
- (d(2025, 5, 6), d(2026, 11, 2), "Oman-brokered US-Houthi ceasefire: the US stopped striking the Houthis and the Houthis said they would not target US ships, so strikes (F/G) were limited. No US strike on the Houthis was found after May 6, 2025 in the searches for this file; the Houthis told US officials in Sep 2026 they still keep the ceasefire (Reuters).", [1319, 1337]),
- (d(2026, 9, 10), d(2026, 11, 2), "Saudi-Houthi war: Trump declined Saudi requests for US strikes (Axios via AFP, Sep 10) and US help was limited to intelligence and targeting advice, with no US strikes or refuelling (CNN). CNN also says US forces are stretched by the Iran conflict. Trump said on Oct 10 'We may' join; no decision found by Nov 2, and ABC (Oct 20) says the administration is wary of opening a second front.", [1335, 1336, 1341, 1344]),
+ (d(2025, 5, 6), d(2026, 11, 9), "Oman-brokered US-Houthi ceasefire: the US stopped striking the Houthis and the Houthis said they would not target US ships, so strikes (F/G) were limited. No US strike on the Houthis was found after May 6, 2025 in the searches for this file; the Houthis told US officials in Sep 2026 they still keep the ceasefire (Reuters).", [1319, 1337]),
+ (d(2026, 9, 10), d(2026, 11, 9), "Saudi-Houthi war: Trump declined Saudi requests for US strikes (Axios via AFP, Sep 10) and US help was limited to intelligence and targeting advice, with no US strikes or refuelling (CNN). CNN also says US forces are stretched by the Iran conflict. Trump said on Oct 10 'We may' join; no decision found by Nov 9, and ABC (Oct 20) says the administration is wary of opening a second front.", [1335, 1336, 1341, 1344]),
 ]
 
 # Phases (oldest first)
@@ -240,7 +250,7 @@ PHASES = [
  ("Operation Rough Rider", d(2025, 3, 15), d(2025, 5, 6), "Daily US strikes from #1307; Houthi attacks on US warships; ends with the Oman-brokered ceasefire (#1319)"),
  ("US-Houthi ceasefire, attacks on other ships", d(2025, 5, 7), d(2025, 10, 9), "Magic Seas and Eternity C sunk (#1320, #1321); sanctions rounds; Minervagracht (#1327)"),
  ("Gaza-ceasefire lull", d(2025, 10, 10), d(2026, 2, 27), "No Houthi attacks logged after Sep 29; Houthis signal the pause (#1328); Treasury round (#1329)"),
- ("Iran war and Saudi-Houthi front", d(2026, 2, 28), d(2026, 11, 2), "Houthis threaten a restart (#1330), blockade Saudi ports (#1331), Riyadh airport attacks (#1339, #1340); US threats, advisers and Muscat talks (#1334, #1335, #1337)"),
+ ("Iran war and Saudi-Houthi front", d(2026, 2, 28), d(2026, 11, 9), "Houthis threaten a restart (#1330), blockade Saudi ports (#1331), Riyadh airport attacks (#1339, #1340); US threats, advisers and Muscat talks (#1334, #1335, #1337)"),
 ]
 
 CHAIN_NAMES = {

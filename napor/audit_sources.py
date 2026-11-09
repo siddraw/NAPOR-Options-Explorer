@@ -1589,3 +1589,76 @@ SOURCES.update({
  88: [_CNN_OCT1, _AJ_OCT2],
  89: [_AJ_OCT2],
 })
+
+# ---------------------------------------------------------------------------
+# Weekly update, 2026-11-09 (weekly agent). Every URL below came from a search result or a fetch in that
+# session. seen="full text" = the article was read; "snippet" = headline/snippet only (the site blocked the fetch).
+# Copies of wire or outlet stories on other sites are labelled "Outlet (via site)".
+# ---------------------------------------------------------------------------
+_CBS_QESHM = _s('U.S. launches limited strikes on Iranian targets in Strait of Hormuz, officials say', 'CBS News', '2026-11-03',
+                'https://www.cbsnews.com/news/u-s-strikes-iran-targets/', 'full text')
+_STRIPES_QESHM = _s('US quietly strikes Iranian island in Strait of Hormuz as Trump weighs next steps', 'Stars and Stripes', '2026-11-03',
+                    'https://www.stripes.com/theaters/middle_east/2026-11-03/us-strikes-iran-qeshm-island-hormuz-23348317.html', 'full text')
+_ABC_QESHM = _s("US carries out defensive airstrikes on Iran's Qeshm Island: Officials", 'ABC News', '2026-11-02',
+                'https://abcnews.com/International/us-carries-defensive-airstrikes-irans-qeshm-island-officials/story?id=137792518', 'full text')
+_CNN_QESHM = _s("US military conducts strikes on Iran's Qeshm Island in defensive operation, officials say", 'CNN', '2026-11-02',
+                'https://www.cnn.com/2026/11/02/politics/us-strikes-iran-qeshm-island', 'snippet')
+_AJ_NOV2 = _s('Trump signals progress on Iran deal as Tehran pushes faster ceasefire', 'Al Jazeera', '2026-11-02',
+              'https://www.aljazeera.com/news/2026/11/2/iran-pushing-accelerated-plan-for-ceasefire-talks-with-us', 'full text')
+_AJ_NOV4 = _s("Iran says US reply to Hormuz plan 'unconvincing'; Trump confirms strikes", 'Al Jazeera', '2026-11-04',
+              'https://www.aljazeera.com/news/2026/11/4/iran-says-us-reply-to-hormuz-plan-unconvincing-trump-confirms-strikes', 'full text')
+_RTR_NOV5 = _s('US slaps sanctions on Indian, Turkish firms and people for aiding Iran', 'Reuters (via The Star, Malaysia)', '2026-11-05',
+               'https://www.thestar.com.my/news/world/2026/11/05/us-slaps-sanctions-on-indian-turkish-firms-and-people-for-aiding-iran', 'full text')
+_CBS_NOV6 = _s('Trump touts imminent decision on potential new attack on Iran', 'CBS News (via Yahoo News)', '2026-11-06',
+               'https://yahoo.com/news/politics/articles/trump-touts-imminent-decision-potential-123052899.html', 'full text')
+_CBS_LIVE_NOV8 = _s('Iran downplays new U.S. task force aimed at disrupting ground transport routes', 'CBS News', '2026-11-08',
+                    'https://www.cbsnews.com/live-updates/iran-war-trump-us-strait-hormuz-persian-gulf/', 'full text')
+_AP_NOV6 = _s("US military carries out new targeted strikes on Iran as Tehran's leaders weigh mediator's proposals", 'AP (via WSLS)', '2026-11-06',
+              'https://www.wsls.com/news/politics/2026/11/06/iran-is-reviewing-proposals-focusing-on-tehrans-nuclear-program-officials-say/', 'full text')
+_AJ_VID_NOV7 = _s("Trump confirms US strikes in Iran, insists 'it's not a war'", 'Al Jazeera', '2026-11-07',
+                  'https://www.aljazeera.com/video/newsfeed/2026/11/7/trump-confirms-us-strikes-in-iran-insists-its-not-a', 'full text')
+_RTR_NOV6 = _s('US Treasury sanctions Canadian money services firms over Iran-related transactions', 'Reuters (via Yahoo Finance Canada)', '2026-11-06',
+               'https://ca.finance.yahoo.com/news/us-treasury-sanctions-canadian-money-210207886.html', 'full text')
+_STRIPES_NOV7 = _s('CENTCOM disables commercial cargo vessel in Gulf of Oman', 'Stars and Stripes', '2026-11-07',
+                   'https://www.stripes.com/theaters/middle_east/2026-11-07/centcom-strikes-commercial-cargo-vessel-23394462.html', 'full text')
+_WAPO_NOV7 = _s("U.S. military seeks to disrupt Iran's land routes, expanding on naval blockade", 'Washington Post', '2026-11-07',
+                'https://www.washingtonpost.com/national-security/2026/11/07/us-military-seeks-disrupt-irans-land-routes-expanding-naval-blockade/', 'snippet')
+_AJ_NOV8 = _s("Iran threatens to 'rain down hell' if US escalates war", 'Al Jazeera', '2026-11-08',
+              'https://www.aljazeera.com/news/2026/11/8/iran-threatens-to-rain-down-hell-if-us-escalates-war', 'full text')
+_BBG_NOV8 = _s('Rubio sees no Iran breakthrough as Trump downplays new strikes', 'Bloomberg (via The Spokesman-Review)', '2026-11-08',
+               'https://www.spokesman.com/stories/2026/nov/08/rubio-sees-no-iran-breakthrough-as-trump-downplays/', 'full text')
+_AJ_NOV9 = _s("Rubio says war on Iran unpopular but 'necessary' to stop nuclear threat", 'Al Jazeera', '2026-11-09',
+              'https://www.aljazeera.com/news/2026/11/9/rubio-says-war-on-iran-unpopular-but-necessary-to-stop-nuclear-threat', 'full text')
+
+VERDICT.update({141: 'confirmed', 142: 'confirmed', 143: 'confirmed', 144: 'confirmed', 145: 'confirmed', 146: 'confirmed',
+                147: 'confirmed', 148: 'confirmed', 149: 'confirmed', 150: 'confirmed', 151: 'confirmed', 152: 'confirmed',
+                153: 'confirmed', 154: 'confirmed', 155: 'confirmed', 156: 'confirmed', 157: 'confirmed'})
+SOURCES.update({
+ 141: [_CBS_QESHM, _STRIPES_QESHM, _ABC_QESHM],
+ 142: [_CBS_QESHM, _STRIPES_QESHM, _ABC_QESHM, _AJ_NOV4, _CNN_QESHM],
+ 143: [_AJ_NOV2],
+ 144: [_AJ_NOV4],
+ 145: [_RTR_NOV5],
+ 146: [_CBS_NOV6, _CBS_LIVE_NOV8],
+ 147: [_CBS_NOV6, _CBS_LIVE_NOV8],
+ 148: [_CBS_NOV6],
+ 149: [_AP_NOV6, _AJ_VID_NOV7],
+ 150: [_AP_NOV6],
+ 151: [_RTR_NOV6],
+ 152: [_STRIPES_NOV7, _CBS_LIVE_NOV8],
+ 153: [_STRIPES_NOV7, _CBS_LIVE_NOV8, _WAPO_NOV7],
+ 154: [_CBS_LIVE_NOV8, _AJ_NOV8],
+ 155: [_CBS_LIVE_NOV8],
+ 156: [_AJ_NOV8, _CBS_LIVE_NOV8],
+ 157: [_AJ_NOV8, _BBG_NOV8, _AJ_NOV9],
+})
+
+# Source-gap re-search, 2026-11-09: #64 (IRGC claim about Juffair, Bahrain) now has allowed-outlet links. It stays
+# "partly confirmed": both pages report the claim, not the damage.
+VERDICT[64] = 'partly_confirmed'
+SOURCES[64] = [
+ _s("Iran's Guards claim strikes against Oman and Bahrain", 'Times of Israel', '2026-07-13',
+    'https://www.timesofisrael.com/liveblog_entry/irans-guards-claim-strikes-against-oman-and-bahrain/', 'full text'),
+ _s('New Iran strikes on Gulf as US attacks escalate: What we know', 'Al Jazeera', '2026-07-13',
+    'https://www.aljazeera.com/news/2026/7/13/new-iran-strikes-on-gulf-as-us-attacks-escalate-what-we-know', 'full text'),
+]

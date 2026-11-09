@@ -1,5 +1,37 @@
 # Changelog
 
+## 2026-11-09 (weekly agent)
+Data updates only. No model rules changed.
+- **Iran**: I added events #141-#157 (news Nov 2-8) to data.py, with sources in audit_sources.py. Every URL came from this week's searches and fetches. Reason: the weekly scan. They cover the first US strikes on Iranian soil since September: limited "defensive" strikes on an anti-aircraft site on Qeshm Island on Nov 2, after the IRGC fired a missile at a US jet (#141, #142), and a second Qeshm strike on Nov 6 (#149). They also cover new Treasury rounds on Nov 4 and Nov 6 (#145, #151), the disabled blockade runner M/V Huda on Nov 7 (#152), CENTCOM's Task Force Iron Gate (#153), indirect talks through Qatar on a two-day "bridge deal" (#150), threats on both sides (#143, #144, #148, #155-#157) and UKMTO-reported ship hits on Nov 5 and Nov 7, one seafarer killed (#146, #147, #154).
+- **Pair and census**: I added pair 26 (#141 -> #142) and census row #141 as R-strong, because US officials tie the Nov 2 strikes to the IRGC fire. I put the new US acts in the census as "Unclear" (#142, #145; windows closed; proposed N) or "Unverified" (#149, #151, #152; windows still open). They change no rate until Sidd decides, as with #104-#119. I added action tags for #142, #145 and #149-#153.
+- **Review queue**: I ran 19 stories through the matcher and logged 17 as new events. Two are left for Sidd. R0505 asks whether Iran's Nov 2 "two-day" plan is the offer already in #138. R0507 asks whether the Nov 3 UKMTO tanker hit off Limah is #140. Reason: I do not guess uncertain matches. I also renumbered this week's queue items (R0502-R0520), because the matcher gave the first one the same id as last week's R0501.
+- **Source gaps**: I closed #64. Times of Israel and Al Jazeera (both Jul 13) report the IRGC claim of strikes on US facilities at Juffair, Bahrain. Neither mentions a radar in Bahrain (the radar claims were about Oman), so I dropped the "Patriot radar" wording from the row. The row stays "partly verified". #67 is still open: I searched again today and found only blocked or non-allowed sites.
+- **Forecasts**: I graded three forecasts. F003 (US strike on Iranian land, Oct 20-Nov 3) and F005 (Iranian attack on US forces, Oct 19-Nov 3) were both YES, from the Nov 2 Qeshm exchange; their Brier scores were 0.518 and 0.490, because both were forecast at about 30%. F007 (shipping attacks Nov 2-8) was YES, Brier 0.004. F008 closes Nov 17 and is not graded yet, although the Nov 2 and Nov 6 strikes already make it likely to resolve YES. I opened three forecasts before their outcomes are known: F009 (shipping attacks Nov 9-15, 93%), F010 (Iranian attack on US forces Nov 9-22, 60%) and F011 (a face-to-face US-Iran meeting or an agreed deal Nov 9-22, 15%).
+- **Decisions**: I recorded S003 (Oct 26-Nov 3) as F. That week was mostly talks through mediators, and then the limited Qeshm strike came on Nov 2. I opened no new situation, because S002 already covers what the US does Nov 4-17.
+- I rewrote napor_now.json for Nov 9. Options C, D, F and H are "In use now"; E and G are "Open" now that the pre-midterm pledge has ended. I also changed the month label to "Nov 2026 (to Nov 8)" in data.py and build.py. Both hold-week checks are clear: neither of the last two weeks was a hold week.
+- **Houthis / Red Sea**: I added #1355-#1358 (Nov 6-8), none of them a US move:
+  - a Mecca-region drone the Houthis did not claim (#1355);
+  - the Taiz market strike, at least 30 killed, with the attacker disputed (#1356, partly verified);
+  - airstrikes near Sanaa that the Houthis blame on Saudi Arabia (#1357);
+  - the Nov 8 Houthi missile wave on Riyadh and the Eastern Province, with an Aramco tower damaged and no one hurt (#1358).
+
+  Hold week of Nov 2: people-hurt flag False, with a note that #1356 is left out because the attacker is disputed. I moved the open-ended phase and constraint end dates to Nov 9. I rewrote now.json; no option changed status.
+- **North Korea**: I added #2084-#2087:
+  - the FBI's Binance-hack attribution (#2084, words only, not a US option);
+  - a claimed Nov 2 cruise missile test that the JCS did not confirm (#2085, partly verified);
+  - the Nov 4 multi-missile launch (#2086);
+  - Kim Yo Jong's Nov 4 statement rejecting talks (#2087).
+
+  I moved the phase end date to Nov 9. I rewrote now.json: options C and D are now "Open" (were "In use now"), because no new sanction or drill was found and Freedom Flag was due to end Nov 6.
+- **China / Taiwan**: I added #3071 (State Department concern over Taiwan's Papua New Guinea office, words only) and #3072 (Trump expects to meet Xi at APEC in Shenzhen, Nov 18-19; a statement, not talks). I also added a Nov 5 Reuters source to #3064 showing the arms package is still paused, and moved the phase end date to Nov 9. I rewrote now.json; no option changed status. Higher PLA air activity on Nov 3 was reported only by outlets that are not allowed, so I did not log it.
+- **Venezuela / Caribbean**: I added three events:
+  - #4068, the Maduro case reassigned to Judge Torres, with the June trial date kept;
+  - #4069, Venezuela's strike on an ELN camp with US intelligence and drones. Its action type is "Joint operation", so it is not counted as a hostile act toward the US;
+  - #4070, Rubio and Bessent meeting Venezuela's foreign minister on Nov 2 (option B), plus the reported status of forces talks.
+
+  I moved #4067 (the Oct 27 boat strike) from "Unverified" to "N", because no Venezuelan hostile act was found Oct 27-Nov 3. I added tags for #4067 and #4070, and updated notes.py (the D note now says 4 of 9 cases come after the capture). I moved the phase end date to Nov 9. I rewrote now.json: option D is now "Open" (was "In use now"), because no boat strike was found Oct 28-Nov 8.
+- weekly_build: PASS. pytest: 150 passed.
+
 ## 2026-11-06 - Your own option: cleaner text in the popup
 - Sidd said the popup text did not look good. Headings and box labels now use Title Case (small words like "and", "of", "the" stay lower-case), so "Where, and how big" is now "Where and How Big". The suggestion buttons are all caps, small and boxed, so they read as options and not as headings; headings are larger and in the accent color.
 

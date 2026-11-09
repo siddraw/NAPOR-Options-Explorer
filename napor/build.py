@@ -42,7 +42,7 @@ lines = [
     ("NAPOR is the underlying engine (event log, credibility, chains, phases, forecasts). NAPOR: Options Explorer applies it to lay out the options and the risks and pros of each one. It does not pick an option. Built by Sidd.", BASE_FONT, 11),
     ("", BASE_FONT, 10),
     ("What this is", BOLD, 11),
-    ("A structured, dated log of US/Israel-Iran war events from Feb 28, 2026 to Nov 2, 2026, built for computing base rates (how often does X follow Y, and how fast) rather than for narrative reading.", BASE_FONT, 10),
+    ("A structured, dated log of US/Israel-Iran war events from Feb 28, 2026 to Nov 8, 2026, built for computing base rates (how often does X follow Y, and how fast) rather than for narrative reading.", BASE_FONT, 10),
     ("", BASE_FONT, 10),
     ("Sheets", BOLD, 11),
     ("Event Log - every event, one row each, with a Trigger ID column pointing to the row that caused it, where reporting says so. Columns N-O count the reports behind each event and how many different independent or official outlets they come from.", BASE_FONT, 10),
@@ -511,7 +511,7 @@ ceasefire_status = {
     "Aug 2026": "No ceasefire, lower-intensity than July",
     "Sep 2026": "No ceasefire; new Iranian proposal Sep 23, rejected Sep 26",
     "Oct 2026": "No ceasefire; Trump says no US strikes on Iran before the Nov 3 midterms (Oct 8); strike plans reported (Oct 16); Trump weighs 'a deal' or renewed strikes (Oct 23-25); Vance letter proposes talks (Oct 25); Qatari mediators in Tehran (Oct 30)",
-    "Nov 2026 (to Nov 2)": "Partial month. Indirect talks in Doha through Qatari and Pakistani mediators (Oct 30-Nov 1); Trump says 'Either they'll make a deal, or we'll just end it' (Nov 1)",
+    "Nov 2026 (to Nov 8)": "Partial month. No ceasefire. Indirect talks in Doha through Qatari and Pakistani mediators (Oct 30-Nov 1); Iran reviews a Qatari two-day 'bridge deal' (Nov 6); Rubio sees no breakthrough (Nov 8)",
 }
 notes_map = {
     "Feb 2026": "War start (Feb 28)",
@@ -523,7 +523,7 @@ notes_map = {
     "Aug 2026": "Relative lull; Larak Island strike late month",
     "Sep 2026": "Partial month - renewed escalation, then a new peace proposal",
     "Oct 2026": "Record attacks on shipping (GFS Pride sunk Oct 13); US bombers leave RAF Fairford; more US sanctions; US staff drawdown from Gulf posts (Oct 21-23); UKMTO-reported tanker hits continue (Oct 29-30); no US-Iran strikes",
-    "Nov 2026 (to Nov 2)": "Partial month. A UKMTO-reported projectile hit in Hormuz (Nov 1); no US-Iran strikes",
+    "Nov 2026 (to Nov 8)": "Partial month. Limited US strikes on Qeshm Island (Nov 2, Nov 6) after the IRGC fired at a US jet; new sanctions (Nov 4, Nov 6); M/V Huda disabled and Task Force Iron Gate formed (Nov 7); a seafarer killed on a tanker hit Nov 5",
 }
 
 for i, (label, start, end) in enumerate(MONTHS, start=2):

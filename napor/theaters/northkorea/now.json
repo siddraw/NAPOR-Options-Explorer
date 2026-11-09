@@ -1,56 +1,51 @@
 {
- "as_of": "2026-11-02",
+ "as_of": "2026-11-09",
  "note": "Analyst reading of the news, written from logged events. Not data. The weekly agent replaces it every week. The log is a sample: it ends with the Oct 12, 2026 launch (#2076) and many launches are missing.",
  "headline": [
-  "North Korea launched five times in October: ballistic missiles on Oct 3 and Oct 12 (#2075, #2076), submarine-launched cruise missiles on Oct 14 (#2077), about 10 short-range ballistic missiles on Oct 29 (#2082) and a tactical ballistic missile it says carried a cluster-bomb warhead on Oct 31 (#2083). No damage was reported.",
-  "The US and South Korea began the Freedom Flag air exercise at Kunsan on Oct 26, running to Nov 6 (#2080). On Oct 28 the US joined coordinated sanctions with the EU, Australia and other partners on North Korea's overseas workers, cyber activity and Russia ties (#2081).",
-  "No talks are logged. Trump said he may meet Kim on his November Asia trip, then said 'I'm not sure that anybody's asking for a meeting'; North Korea has not answered publicly (#2079).",
-  "Tension on the inter-Korean border is rising: Kim Yo Jong threatened more 'tactical strike means' along the DMZ on Oct 19 and Seoul voiced 'grave concerns' (#2078)."
+  "North Korea fired several missiles of different types toward the East Sea on Nov 4, the US midterm election day (#2086); it says it tested a new air-defence missile and held a cruise missile drill. It also claims a Nov 2 cruise missile test with a 'dispersal' warhead that South Korea did not confirm (#2085). No damage was reported.",
+  "The FBI blamed a North Korea-linked hacker group for the record Binance crypto theft on Oct 31 (#2084). North Korea denied it, and Kim Yo Jong called it part of a US 'hostile policy', said there is 'no need to sit face to face' with Washington and threatened stronger 'counteraction' (#2087).",
+  "The Freedom Flag air exercise was scheduled to end Nov 6 (#2080); its end was not confirmed by an allowed outlet. No new US sanction, drill or deployment was found this week.",
+  "No talks are logged. Trump has said he may meet Kim on his Asia trip (#2079), but North Korea's Nov 4 statement rejects sitting down with the US (#2087)."
  ],
- "key_dates": [
-  {
-   "date": "2026-11-06",
-   "label": "Freedom Flag air exercise scheduled to end (#2080)"
-  }
- ],
+ "key_dates": [],
  "pending": [
-  "Trump's November Asia trip (APEC in China): date not confirmed in an allowed outlet (#2079)",
-  "Whether Trump and Kim meet during Trump's November Asia trip (#2079)",
-  "Whether North Korea launches again before Freedom Flag ends on Nov 6 (#2080, #2083)",
-  "Whether North Korea carries out its border threats along the DMZ (#2078)"
+  "Whether Trump and Kim meet during Trump's November Asia trip; no meeting is planned and North Korea rejects one (#2079, #2087)",
+  "Whether North Korea follows its Nov 4 threat of stronger 'counteraction' with more launches (#2086, #2087)",
+  "Whether the US acts on the FBI's Binance finding with sanctions or charges (#2084)"
  ],
  "options": {
   "A": {
    "status": "open",
    "label": "Open",
-   "reason": "The US took new steps in the week of Oct 26 (Freedom Flag #2080, sanctions #2081), so no hold week is under way; holding back stays available.",
+   "reason": "Available. The last logged US moves were Freedom Flag (Oct 26 - Nov 6, #2080) and the Oct 28 sanctions (#2081); no new US step was found Nov 1-8, and the FBI's Binance attribution (#2084) is words, not a move.",
    "events": [
     2080,
-    2081
+    2081,
+    2084
    ]
   },
   "B": {
    "status": "open",
    "label": "Open",
-   "reason": "Trump said he may meet Kim on his Asia trip but later doubted anyone was asking; no talks or formal offer are logged and North Korea has not answered (#2079).",
+   "reason": "Trump said he may meet Kim on his Asia trip (#2079), but on Nov 4 Kim Yo Jong said North Korea has 'no need to sit face to face' with the US (#2087). No talks or formal offer are logged.",
    "events": [
     2079,
-    2069
+    2087
    ]
   },
   "C": {
-   "status": "active",
-   "label": "In use now",
-   "reason": "The US joined a coordinated sanctions round on Oct 28 (#2081); the US targets were not read.",
+   "status": "open",
+   "label": "Open",
+   "reason": "The US joined a coordinated sanctions round on Oct 28 (#2081); no new round was found this week (the Treasury site could not be opened directly, so not fully confirmed).",
    "events": [
     2081,
     2066
    ]
   },
   "D": {
-   "status": "active",
-   "label": "In use now",
-   "reason": "The Freedom Flag air exercise with South Korea runs Oct 26 - Nov 6 (#2080).",
+   "status": "open",
+   "label": "Open",
+   "reason": "Freedom Flag was scheduled to end Nov 6 (#2080); no new drill was found this week. Its end is not confirmed by an allowed outlet.",
    "events": [
     2080,
     2071

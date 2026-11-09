@@ -1,16 +1,21 @@
 {
- "as_of": "2026-11-02",
+ "as_of": "2026-11-09",
  "note": "Analyst reading of the news, written from logged events. Not data. The weekly agent replaces it every week. The log is a sample of named events; routine PLA flights and many coast-guard patrols are not logged. This tab was not updated between Jul 23 and Nov 2, 2026; the main items from that gap were added on Nov 2.",
  "headline": [
-  "Xi made a state visit to Washington on Sep 23-25 and held talks with Trump on Sep 24; Taiwan was discussed and no agreement was reported. Trump says he will meet Xi again in November in China (date not confirmed) and in December at the G20 (#3066).",
-  "A record $14 billion Taiwan arms package has been paused since May, and the US ambassador says Trump and Xi still discuss future Taiwan arms sales (#3064). No new sale is logged since Dec 18, 2025 (#3056).",
-  "The US and Japan held the Keen Sword 27 exercise on Oct 19-29, with US anti-ship missiles on Yonaguni near Taiwan (#3067), and USS Charleston operated near Sabina Shoal on Oct 20 (#3068). China protested and tracked the ship; no Chinese drill tied to either move was found.",
-  "Chinese coast guard ships faced Taiwanese ships near the Pratas Islands on Oct 20 and Nov 1, and China vowed to step up patrols east of Taiwan (#3069, #3070). Nothing links them to a US move.",
+  "Trump says he expects to meet Xi, and possibly Putin, at the APEC summit in Shenzhen on Nov 18-19 (#3072). This would be the 'November in China' meeting he announced after the Sep 24 Washington summit (#3066). Not yet held.",
+  "The record $14 billion Taiwan arms package is still paused; Taiwan's defense minister said on Nov 5 he expects US support to continue after the midterms (#3064).",
+  "The State Department said it is 'deeply concerned' after Taiwan closed its Papua New Guinea office on Nov 6, blaming Chinese pressure (#3071). Words only.",
+  "No US transit, patrol, arms notification, drill or trade step against China, and no named PLA drill or coast-guard clash, was found in an allowed outlet for Nov 2-8. Higher PLA air activity around Taiwan on Nov 3 is reported only by outlets not on the allowed list (not confirmed).",
   "Small numbers: most options have only a handful of counted cases."
  ],
- "key_dates": [],
+ "key_dates": [
+  {
+   "date": "2026-11-18",
+   "label": "APEC leaders' summit in Shenzhen (Nov 18-19); Trump expects to meet Xi there (#3072)"
+  }
+ ],
  "pending": [
-  "Whether the November Trump-Xi meeting in China happens (date not confirmed) and whether Taiwan arms sales are part of it (#3064, #3066)",
+  "Whether Trump and Xi meet at APEC in Shenzhen on Nov 18-19 and whether Taiwan arms sales come up (#3064, #3072)",
   "Whether the paused $14 billion Taiwan package goes ahead (#3064)",
   "Whether Chinese coast guard pressure near Pratas and east of Taiwan continues (#3069, #3070)"
  ],
@@ -27,9 +32,10 @@
   "B": {
    "status": "active",
    "label": "In use now",
-   "reason": "Trump and Xi met in Washington on Sep 24 and plan to meet in China in November (date not confirmed) and at the G20 in December (#3066).",
+   "reason": "Trump and Xi met in Washington on Sep 24 (#3066), and Trump says he expects to meet Xi at APEC in Shenzhen on Nov 18-19 (#3072); not yet held.",
    "events": [
     3066,
+    3072,
     3060
    ]
   },
@@ -54,7 +60,7 @@
   "E": {
    "status": "constrained",
    "label": "Limited",
-   "reason": "A record $14 billion package has been paused since May and Trump calls arms sales a negotiating chip in talks with Xi (#3064); the last announced sale is Dec 18, 2025 (#3056).",
+   "reason": "A record $14 billion package has been paused since May and was still paused on Nov 5 (#3064); Trump calls arms sales a negotiating chip in talks with Xi. The last announced sale was on Dec 18, 2025 (#3056).",
    "events": [
     3064,
     3056

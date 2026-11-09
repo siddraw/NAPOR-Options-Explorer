@@ -287,5 +287,88 @@
    }
   },
   "status_as_of": "2026-11-02"
+ },
+ {
+  "asof": "2026-11-08",
+  "intensity": 17,
+  "band": "High",
+  "events": 293,
+  "options": {
+   "A": {
+    "n": 11,
+    "index": 0.164,
+    "estimate": 0.189
+   },
+   "B": {
+    "n": 25,
+    "index": 0.192,
+    "estimate": 0.195
+   },
+   "C": {
+    "n": 32,
+    "index": 0.188,
+    "estimate": 0.192
+   },
+   "D": {
+    "n": 8,
+    "index": 0.238,
+    "estimate": 0.26
+   },
+   "E": {
+    "n": 3,
+    "index": 0.5,
+    "estimate": 0.415
+   },
+   "F": {
+    "n": 14,
+    "index": 0.571,
+    "estimate": 0.536
+   },
+   "G": {
+    "n": 7,
+    "index": 0.629,
+    "estimate": 0.562
+   },
+   "H": {
+    "n": 14,
+    "index": 0.2,
+    "estimate": 0.205
+   }
+  },
+  "status": {
+   "A": {
+    "status": "open",
+    "label": "Open"
+   },
+   "B": {
+    "status": "active",
+    "label": "In use now"
+   },
+   "C": {
+    "status": "active",
+    "label": "In use now"
+   },
+   "D": {
+    "status": "active",
+    "label": "In use now"
+   },
+   "E": {
+    "status": "open",
+    "label": "Open"
+   },
+   "F": {
+    "status": "active",
+    "label": "In use now"
+   },
+   "G": {
+    "status": "open",
+    "label": "Open"
+   },
+   "H": {
+    "status": "active",
+    "label": "In use now"
+   }
+  },
+  "status_as_of": "2026-11-09"
  }
 ]

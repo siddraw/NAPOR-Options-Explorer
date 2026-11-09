@@ -1,106 +1,109 @@
 {
-  "as_of": "2026-11-02",
-  "note": "Analyst reading of the news, written by the weekly agent from logged events. Not data. Replace every week.",
-  "headline": [
-    "Talks are back on through go-betweens: VP Vance sent Iran's security chief a letter (delivered Oct 25) proposing a meeting led by Vance, with Iran's nuclear program on the table (#129). Qatari mediators took a draft to Tehran on Oct 30, and Qatari and Pakistani mediators held indirect talks with an Iranian delegation in Doha on Oct 30-Nov 1 (#133, #139). No deal yet.",
-    "Trump's no-strike pledge runs out with the Nov 3 midterms. The US reportedly told Gulf allies to get ready for a short, intense campaign after them (#130), and Trump says 'one or two' targets are left; on Nov 1 he said 'Either they'll make a deal, or we'll just end it' (#137). Rubio says no decision has been made.",
-    "Iran's Supreme Leader warned any new attack would get an 'immediate' and 'geographically unrestricted' response; FM Araghchi says there are no plans to meet US officials until the US meets Iran's conditions (#138).",
-    "Shipping: UKMTO reported projectile hits on ships on Oct 29, Oct 30 (south of Lavan) and Nov 1; Oman rescued 25 crew from a burning tanker off Musandam, and a Qatari LNG carrier was attacked (#132, #134, #135, #136, #140). No injuries were reported. The IRGC claims more ships hit mines.",
-    "No US strike on Iran, no Iranian attack on US forces, and no new US sanctions were found this week. CENTCOM says the blockade has turned back 144 ships (#137)."
-  ],
-  "key_dates": [
-    {
-      "date": "2026-11-03",
-      "label": "Midterm elections; end of Trump's no-strike pledge; forecasts F003, F005 and situation S003 close"
-    },
-    {
-      "date": "2026-11-08",
-      "label": "Forecast F007 (shipping attacks Nov 2-8) closes"
-    },
-    {
-      "date": "2026-11-17",
-      "label": "Situation S002 window (what the US does Nov 4-17) and forecast F008 (US strike on Iran Nov 4-17) close"
-    }
-  ],
-  "pending": [
-    "Iran's formal answer to the Vance letter and whether the Doha talks lead to a meeting (#129, #139)",
-    "Whether Trump resumes strikes after Nov 3 (#130, #137)",
-    "Whether Iran carries out its threat of a wide response if attacked (#138)"
-  ],
-  "options": {
-    "A": {
-      "status": "open",
-      "label": "Open",
-      "reason": "Still the current course on strikes: no US strike on Iran since Sep 9, and Rubio says no decision on new strikes has been made (#137).",
-      "events": [
-        97,
-        137
-      ]
-    },
-    "B": {
-      "status": "active",
-      "label": "In use now",
-      "reason": "Vance offered a meeting by letter (#129) and indirect talks through Qatari and Pakistani mediators ran in Doha Oct 30-Nov 1 (#133, #139); no direct meeting or deal yet.",
-      "events": [
-        129,
-        133,
-        139
-      ]
-    },
-    "C": {
-      "status": "active",
-      "label": "In use now",
-      "reason": "Sanctions rounds on Oct 15 and Oct 21 remain in force; no new round was found this week (not confirmed whether one is coming).",
-      "events": [
-        110,
-        119
-      ]
-    },
-    "D": {
-      "status": "active",
-      "label": "In use now",
-      "reason": "The blockade of Iranian ports continues; CENTCOM says it has turned back 144 ships (#137). No new blockade strike is logged since Oct 10-11 (#104).",
-      "events": [
-        104,
-        137
-      ]
-    },
-    "E": {
-      "status": "constrained",
-      "label": "Constrained until Nov 3",
-      "reason": "Trump's pledge covers attacks on Iran before Nov 3 (#97); whether strikes on Iranian boats at sea fall outside it is not confirmed.",
-      "events": [
-        97,
-        104
-      ]
-    },
-    "F": {
-      "status": "constrained",
-      "label": "Constrained until Nov 3",
-      "reason": "Ruled out by Trump's pledge before the midterms (#97); the US reportedly warned Gulf allies of a short, intense campaign after them (#130) and Trump says 'one or two' targets are left (#137).",
-      "events": [
-        97,
-        130,
-        137
-      ]
-    },
-    "G": {
-      "status": "constrained",
-      "label": "Constrained until Nov 3",
-      "reason": "Ruled out by Trump's pledge before the midterms (#97); an expanded target list including energy sites is reported (#130).",
-      "events": [
-        97,
-        111,
-        130
-      ]
-    },
-    "H": {
-      "status": "active",
-      "label": "In use now",
-      "reason": "The drawdown of US diplomats and some military staff from Gulf posts announced Oct 21-23 still stands (#120); nothing new found this week.",
-      "events": [
-        120
-      ]
-    }
+ "as_of": "2026-11-09",
+ "note": "Analyst reading of the news, written by the weekly agent from logged events. Not data. Replace every week.",
+ "headline": [
+  "The US struck Iranian soil again for the first time since September, in small 'defensive' strikes: on Nov 2 it hit an anti-aircraft site on Qeshm Island after the IRGC fired a missile at a US fighter jet (#141, #142), and on Nov 6 it knocked out an air-defence system there (#149). Trump calls them 'minor' and says 'it's not a war'. No one was reported hurt.",
+  "Talks go on only through Qatar. Iran is reviewing a Qatari two-day 'bridge deal' (blockade eased and some funds freed, IAEA inspectors let in, then Hormuz reopens) (#150). Iran's security chief called the US reply 'not convincing' (#144) and Rubio says there is no breakthrough and Iran's demands are 'outrageous' (#157).",
+  "More pressure without big strikes: new Treasury sanctions on Nov 4 and Nov 6 (#145, #151), a US jet disabled the blockade runner M/V Huda on Nov 7 (#152), and CENTCOM set up Task Force Iron Gate to block Iran's land and Caspian routes (#153).",
+  "Threats on both sides: Trump says he will decide 'very soon' whether to 'destroy what is left' of Iran but that new strikes are 'highly unlikely' if talks progress (#148, #157); the IRGC lifted its 2,000 km missile-range limit and Araghchi warns of 'hell' if attacks resume (#155, #156).",
+  "Shipping: a tanker hit in the Gulf on Nov 5 lost one crew member (#146); UKMTO reported another tanker hit on Nov 5 and a tanker on fire off Khasab, Oman on Nov 7 (#147, #154). The IRGC claims more ships hit mines."
+ ],
+ "key_dates": [
+  {
+   "date": "2026-11-15",
+   "label": "Forecast F009 (shipping attacks Nov 9-15) closes"
+  },
+  {
+   "date": "2026-11-17",
+   "label": "Situation S002 window (what the US does Nov 4-17) and forecast F008 (US strike on Iran Nov 4-17) close"
+  },
+  {
+   "date": "2026-11-22",
+   "label": "Forecasts F010 (Iranian attack on US forces) and F011 (direct meeting or agreed deal) close"
   }
+ ],
+ "pending": [
+  "Iran's answer to the Qatari two-day 'bridge deal' (#150)",
+  "Whether the limited US strikes on Qeshm grow into a wider campaign (#142, #149, #157)",
+  "Whether Iran carries out its threat against 'American targets' (#156)",
+  "What Task Force Iron Gate does on Iran's land borders, and whether it uses force (#153)"
+ ],
+ "options": {
+  "A": {
+   "status": "open",
+   "label": "Open",
+   "reason": "Available, but not the course this week: the US struck Qeshm twice, added sanctions and disabled a blockade runner (#142, #149, #145, #152). Trump says more strikes are 'highly unlikely' if talks progress (#157).",
+   "events": [
+    142,
+    149,
+    157
+   ]
+  },
+  "B": {
+   "status": "active",
+   "label": "In use now",
+   "reason": "Indirect talks through Qatar continue: Trump spoke with Qatar's emir and Iran is reviewing a Qatari two-day 'bridge deal' (#150); Iran called the last US reply 'not convincing' (#144). No direct meeting or deal.",
+   "events": [
+    144,
+    150,
+    157
+   ]
+  },
+  "C": {
+   "status": "active",
+   "label": "In use now",
+   "reason": "New Treasury rounds on Nov 4 (an India/Turkey shipping and aviation network) and Nov 6 (Canada-based money services firms) (#145, #151).",
+   "events": [
+    145,
+    151
+   ]
+  },
+  "D": {
+   "status": "active",
+   "label": "In use now",
+   "reason": "The blockade continues: a US jet disabled the cargo ship M/V Huda on Nov 7, and CENTCOM counts 147 ships redirected and 5 disabled (#152).",
+   "events": [
+    152
+   ]
+  },
+  "E": {
+   "status": "open",
+   "label": "Open",
+   "reason": "Trump's pre-midterm pledge (#97) has ended. No US strike on Iranian-linked boats or tankers was logged this week; the Nov 7 strike on M/V Huda was blockade enforcement against a cargo ship (#152).",
+   "events": [
+    97,
+    152
+   ]
+  },
+  "F": {
+   "status": "active",
+   "label": "In use now",
+   "reason": "Limited US strikes on air-defence sites on Qeshm Island on Nov 2 and Nov 6 (#142, #149); Trump calls them 'minor'.",
+   "events": [
+    142,
+    149
+   ]
+  },
+  "G": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The pre-midterm pledge has ended (#97). No US strike aimed at people is logged; the Qeshm strikes hit equipment and no casualties were reported (#142, #149). Trump says a bigger strike is 'highly unlikely' if talks progress (#157).",
+   "events": [
+    97,
+    142,
+    149,
+    157
+   ]
+  },
+  "H": {
+   "status": "active",
+   "label": "In use now",
+   "reason": "CENTCOM formed Task Force Iron Gate for Iran's land and Caspian routes (#153); Trump says three carriers are in the region (#157). The Oct 21-23 staff drawdown still stands (#120).",
+   "events": [
+    153,
+    157,
+    120
+   ]
+  }
+ }
 }

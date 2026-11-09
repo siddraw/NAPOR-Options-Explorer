@@ -1,26 +1,27 @@
 {
- "as_of": "2026-11-02",
+ "as_of": "2026-11-09",
  "note": "Analyst reading of the news, written from logged events. Not data. The weekly agent replaces it every week.",
  "headline": [
-  "Houthi missiles and drones kept coming at Saudi Arabia: the Houthis claim hits on the East-West pipeline and Riyadh airport (Oct 26, not confirmed, #1350); the coalition says it intercepted two missiles over Riyadh on Oct 29 with no casualties reported (#1351), and more drones and a missile on Oct 30-31 (#1352, #1354).",
-  "Inside Yemen the Houthis fired two missiles at the presidential palace in Aden on Oct 30, a police official says; no casualty figures were given (#1353).",
-  "No US move against the Houthis was found this week: no strike, sanctions, naval action, posture change or talks. The last US strike on the Houthis is still before the May 6, 2025 ceasefire (#1319), and the last Treasury round was Jan 16, 2026 (#1329).",
-  "No Houthi attack on US forces or on non-Saudi shipping was found this week."
+  "The Houthi-Saudi war went on. The Saudi-led coalition shot down a drone over the Mecca region on Nov 6 (not claimed by the Houthis, #1355), and on Nov 8 it intercepted a wave of Houthi missiles and a drone aimed at Riyadh, the Eastern Province and the south; debris damaged an Aramco tower in Riyadh but no one was hurt (#1358).",
+  "Inside Yemen, a strike on a market in Taiz killed at least 30 on Nov 6; the Houthis blame Saudi airstrikes and Yemen's government blames a Houthi missile (#1356). Airstrikes the Houthis blame on Saudi Arabia killed 27-33 near Sanaa on Nov 7 (#1357).",
+  "No US move against the Houthis was found this week: no strike, sanctions, naval action, posture change or talks. The last US strike on the Houthis is still before the May 6, 2025 ceasefire (#1319).",
+  "No Houthi attack on US forces or on Red Sea shipping was found this week."
  ],
  "key_dates": [],
  "pending": [
-  "Whether the US joins the Saudi strikes (#1341); no decision found by Nov 2",
-  "Whether the Houthis carry out their warning against US interests (#1342)"
+  "Whether the US joins the Saudi strikes (#1341); no decision found by Nov 9",
+  "Whether the Houthis carry out their warning against US interests (#1342)",
+  "Whether the Houthis keep their promise of more strikes deep inside Saudi Arabia (#1358)"
  ],
  "options": {
   "A": {
    "status": "open",
    "label": "Open",
-   "reason": "The current course: no US move against the Houthis is logged this week and no US strike since May 6, 2025 (#1319); Houthi fire this week was on Saudi and Yemeni government targets (#1351, #1353).",
+   "reason": "The current course: no US move against the Houthis is logged this week and no US strike since May 6, 2025 (#1319); Houthi fire this week was on Saudi targets (#1355, #1358).",
    "events": [
     1319,
-    1351,
-    1353
+    1355,
+    1358
    ]
   },
   "B": {
@@ -34,7 +35,7 @@
   "C": {
    "status": "open",
    "label": "Open",
-   "reason": "Treasury's last Houthi sanctions round is Jan 16, 2026 (#1329); no new Houthi designation was found Oct 26 - Nov 2.",
+   "reason": "Treasury's last Houthi sanctions round is Jan 16, 2026 (#1329); no new Houthi designation was found Nov 2 - Nov 8 (the Treasury site could not be opened directly, so not fully confirmed).",
    "events": [
     1329
    ]
@@ -42,10 +43,10 @@
   "D": {
    "status": "open",
    "label": "Open",
-   "reason": "No US naval-defense move against Houthi attacks is logged in 2026; the Houthi attacks logged are on Saudi targets (#1345, #1346).",
+   "reason": "No US naval-defense move against Houthi attacks is logged in 2026; the Houthi attacks logged are on Saudi targets (#1355, #1358).",
    "events": [
-    1345,
-    1346
+    1355,
+    1358
    ]
   },
   "E": {
@@ -59,7 +60,7 @@
   "F": {
    "status": "constrained",
    "label": "Constrained",
-   "reason": "Trump declined Saudi requests for US strikes (#1336) and said on Oct 10 only 'We may' (#1341); no decision found by Nov 2, and ABC reports the administration is wary of a second front (#1344).",
+   "reason": "Trump declined Saudi requests for US strikes (#1336) and said on Oct 10 only 'We may' (#1341); no decision found by Nov 9, and ABC reports the administration is wary of a second front (#1344).",
    "events": [
     1319,
     1336,

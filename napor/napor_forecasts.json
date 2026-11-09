@@ -68,10 +68,16 @@
    97,
    111
   ],
-  "outcome": null,
-  "resolved_on": null,
-  "resolution_note": null,
-  "brier": null
+  "outcome": "YES",
+  "resolved_on": "2026-11-09",
+  "resolution_note": "YES. On Mon Nov 2 US forces struck an anti-aircraft facility on Qeshm Island, an Iranian island, in what US officials called limited 'defensive' strikes after the IRGC fired a missile at a US fighter jet (CBS, ABC, Stars and Stripes; first reported by the WSJ). Trump confirmed it on Nov 3 ('minor attack, it wasn't a war'; Al Jazeera). Logged as #142. An Oct 31 Iranian claim that the US attacked fishing boats off Qeshm (Reuters) is unconfirmed and not needed.",
+  "brier": 0.518,
+  "sources": [
+   "https://www.cbsnews.com/news/u-s-strikes-iran-targets/",
+   "https://abcnews.com/International/us-carries-defensive-airstrikes-irans-qeshm-island-officials/story?id=137792518",
+   "https://www.stripes.com/theaters/middle_east/2026-11-03/us-strikes-iran-qeshm-island-hormuz-23348317.html",
+   "https://www.aljazeera.com/news/2026/11/4/iran-says-us-reply-to-hormuz-plan-unconvincing-trump-confirms-strikes"
+  ]
  },
  {
   "id": "F004",
@@ -121,10 +127,15 @@
    80,
    113
   ],
-  "outcome": null,
-  "resolved_on": null,
-  "resolution_note": null,
-  "brier": null
+  "outcome": "YES",
+  "resolved_on": "2026-11-09",
+  "resolution_note": "YES. On Nov 2, two US military officials told CBS that the IRGC fired a surface-to-air missile at a US fighter jet over the Strait of Hormuz (also Stars and Stripes; ABC calls it 'an Iranian attack on a U.S. aircraft'); the US struck back the same day. Iran also officially claimed it shot down US drones that day, which a US official called false. Logged as #141.",
+  "brier": 0.49,
+  "sources": [
+   "https://www.cbsnews.com/news/u-s-strikes-iran-targets/",
+   "https://www.stripes.com/theaters/middle_east/2026-11-03/us-strikes-iran-qeshm-island-hormuz-23348317.html",
+   "https://abcnews.com/International/us-carries-defensive-airstrikes-irans-qeshm-island-officials/story?id=137792518"
+  ]
  },
  {
   "id": "F006",
@@ -170,10 +181,14 @@
    136,
    140
   ],
-  "outcome": null,
-  "resolved_on": null,
-  "resolution_note": null,
-  "brier": null
+  "outcome": "YES",
+  "resolved_on": "2026-11-09",
+  "resolution_note": "YES. CBS reports the tanker Velos Sapphire hit in the Gulf on Nov 5 with one seafarer killed, and a UKMTO-reported explosion at the waterline of a tanker leaving Hormuz the same day; on Nov 7 UKMTO reported a tanker on fire about 8 nm northwest of Khasab, Oman, with its crew evacuated (#146, #147, #154). A Nov 3 UKMTO-reported hit off Limah (Al Jazeera) is in the review queue and not needed. IRGC mine claims are not needed.",
+  "brier": 0.004,
+  "sources": [
+   "https://yahoo.com/news/politics/articles/trump-touts-imminent-decision-potential-123052899.html",
+   "https://www.cbsnews.com/live-updates/iran-war-trump-us-strait-hormuz-persian-gulf/"
+  ]
  },
  {
   "id": "F008",
@@ -191,6 +206,69 @@
    130,
    137,
    139
+  ],
+  "outcome": null,
+  "resolved_on": null,
+  "resolution_note": null,
+  "brier": null
+ },
+ {
+  "id": "F009",
+  "made_on": "2026-11-09",
+  "news_through": "2026-11-08",
+  "question": "Will there be at least one new attack on a commercial ship in or near the Strait of Hormuz / Gulf (by Iran or an unidentified attacker) during Nov 9-15?",
+  "resolves_yes_if": "An allowed outlet, UKMTO or CENTCOM reports at least one new projectile, drone, mine or boarding attack on a commercial vessel in the Gulf, Strait of Hormuz or Gulf of Oman dated Nov 9-15, not attributed to the US. IRGC claims alone (not confirmed by UKMTO, CENTCOM or an allowed outlet's own reporting) do not count. Houthi attacks in the Red Sea do not count.",
+  "deadline": "2026-11-15",
+  "probability": 0.93,
+  "basis": "Every week since late September has had at least one confirmed hit (F002, F004, F006, F007 all YES); this week had confirmed hits on Nov 5 (two) and Nov 7. Kept a little below last week's 0.94 because talks through Qatar on a 'bridge deal' that would reopen Hormuz are active (#150).",
+  "option": "A",
+  "related_events": [
+   146,
+   147,
+   154
+  ],
+  "outcome": null,
+  "resolved_on": null,
+  "resolution_note": null,
+  "brier": null
+ },
+ {
+  "id": "F010",
+  "made_on": "2026-11-09",
+  "news_through": "2026-11-08",
+  "question": "Will Iran attack US forces, a US base, or a US-flagged or US Navy-escorted ship between Nov 9 and Nov 22 (inclusive)?",
+  "resolves_yes_if": "Iran (IRGC or Iranian state forces) carries out, or officially claims, a strike or attack on US forces (aircraft and drones included), a US base, a US-flagged ship, or a ship that an allowed outlet or CENTCOM says was under US Navy escort at the time, dated Nov 9-22, as reported by an allowed outlet or official statement. Attacks on other commercial ships, surveillance or warnings, and Houthi attacks do not count.",
+  "deadline": "2026-11-22",
+  "probability": 0.6,
+  "basis": "F005 resolved YES on a single Nov 2 incident (#141). The IRGC also claimed drone shoot-downs on Nov 2, Nov 3-4 and Nov 6 (claims count under this wording), the US struck Qeshm twice (#142, #149), and Iran threatens 'hell' if attacks resume (#156). Against that: Trump says new strikes are 'highly unlikely' if talks progress (#157) and the Qatari 'bridge deal' is under review (#150). Before Nov 2 there was no such attack from Sep 10 to Nov 1.",
+  "option": "A",
+  "related_events": [
+   141,
+   142,
+   149,
+   156,
+   157
+  ],
+  "outcome": null,
+  "resolved_on": null,
+  "resolution_note": null,
+  "brier": null
+ },
+ {
+  "id": "F011",
+  "made_on": "2026-11-09",
+  "news_through": "2026-11-08",
+  "question": "Will US and Iranian officials meet face to face, or will both sides announce an agreement (such as the Qatari 'bridge deal'), between Nov 9 and Nov 22 (inclusive)?",
+  "resolves_yes_if": "An allowed outlet or an official statement reports a face-to-face meeting between US and Iranian government officials (in any place, with or without a mediator in the room), or both governments announce an agreed deal, ceasefire or Hormuz arrangement, dated Nov 9-22. Indirect talks through mediators, letters, and statements that a deal is close do not count.",
+  "deadline": "2026-11-22",
+  "probability": 0.15,
+  "basis": "Talks have been indirect only since the war began (#129, #133, #139, #150). Rubio says there is no breakthrough and calls Iran's demands 'outrageous' (#157); Rezaei calls the US reply 'not convincing' (#144); Araghchi says mediators have not travelled since the midterms (#156). Trump meets Qatar's prime minister on Nov 9 (not logged yet), which keeps a small chance open.",
+  "option": "B",
+  "related_events": [
+   144,
+   150,
+   156,
+   157
   ],
   "outcome": null,
   "resolved_on": null,

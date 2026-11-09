@@ -40,6 +40,8 @@ TAGS = {
     4064: dict(move="strike", target=["boats"], where="sea", scale="single", who="alone", open="announced", why=""),
     4065: dict(move="legal", target=["leaders", "officials"], where="none", scale="single", who="alone", open="announced", why=""),
     4066: dict(move="sanctions", target=["officials"], where="none", scale="single", who="alone", open="announced", why=""),
+    4067: dict(move="strike", target=["boats"], where="sea", scale="single", who="alone", open="announced", why="alleged drug boat, eastern Pacific"),
+    4070: dict(move="talks", target=["none"], where="none", scale="single", who="alone", open="announced", why="Rubio and Bessent meet the interim government's foreign minister"),
     4503: dict(move="statement", target=["none"], where="none", scale="single", who="alone", open="announced", why=""),
     4510: dict(move="sanctions", target=["none"], where="none", scale="single", who="alone", open="announced", why="Drug-cooperation listing cuts aid; no listed target fits"),
     4513: dict(move="other", target=["officials"], where="none", scale="single", who="alone", open="announced", why="Expulsion or visa step against diplomats; fits no listed move, so other"),

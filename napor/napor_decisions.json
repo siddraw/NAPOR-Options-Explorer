@@ -320,11 +320,22 @@
     "Evidence strength": "10 past cases (timing only)"
    }
   },
-  "us_choice": null,
-  "us_choice_detail": null,
-  "choice_event_ids": [],
-  "outcome": null,
-  "sources": [],
-  "closed_on": null
+  "us_choice": "F",
+  "us_choice_detail": "Mostly kept to talks through mediators (B) and the existing blockade all week: the Vance letter and the Qatari/Pakistani-mediated Doha talks (#129, #133, #139). Then on Nov 2, the day before the midterms, limited 'defensive' strikes on an anti-aircraft facility on Qeshm Island after the IRGC fired a missile at a US jet (#141, #142), so the closest single option is F (strike military sites, equipment not people). No new Treasury sanctions were found Oct 26-Nov 3 (next round Nov 4, #145). Public threats continued (#137).",
+  "choice_event_ids": [
+   129,
+   133,
+   139,
+   141,
+   142
+  ],
+  "outcome": "No casualties on either side from the Nov 2 exchange. Iran called the US reply to its Hormuz plan 'not convincing' (Nov 3, #144) but talks through Qatar went on (#150). Ships kept being hit (#146, #147, #154; one seafarer killed on Nov 5). The US struck Qeshm again on Nov 6 (#149), formed Task Force Iron Gate (#153) and disabled a blockade runner (#152).",
+  "sources": [
+   "https://www.cbsnews.com/news/u-s-strikes-iran-targets/",
+   "https://www.stripes.com/theaters/middle_east/2026-11-03/us-strikes-iran-qeshm-island-hormuz-23348317.html",
+   "https://www.aljazeera.com/news/2026/11/4/iran-says-us-reply-to-hormuz-plan-unconvincing-trump-confirms-strikes",
+   "https://www.cbsnews.com/live-updates/iran-war-us-trump-diplomacy-threat-resume-attacks/"
+  ],
+  "closed_on": "2026-11-09"
  }
 ]

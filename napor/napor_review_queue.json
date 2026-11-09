@@ -1185,5 +1185,687 @@
   "seen": "full text",
   "received": "2026-11-02",
   "status": "needs human check: CBS does not say whether the IRGC-claimed mine-hit supertanker (6:01 PM) is the Panama-flagged tanker Oman evacuated off Musandam. Logged together as #134 (partly confirmed). Split into two rows if a source shows two ships."
+ },
+ {
+  "report_id": "R0502",
+  "published": "2026-11-03",
+  "outlet": "CBS News",
+  "kind": "Independent outlet",
+  "headline": "IRGC fires surface-to-air missile at US fighter jet over Hormuz; Iran claims US drones shot down",
+  "url": "https://www.cbsnews.com/news/u-s-strikes-iran-targets/",
+  "decision": "SAME EVENT",
+  "matched_event": 140,
+  "proposed_new_event_id": null,
+  "candidates": [
+   {
+    "score": 0.622,
+    "event_id": 140,
+    "date": "2026-11-01",
+    "detail": "UKMTO reports a mayday from a vessel 'struck by an unknown projectile' in the Strait of Ho"
+   },
+   {
+    "score": 0.476,
+    "event_id": 138,
+    "date": "2026-10-31",
+    "detail": "Supreme Leader Mojtaba Khamenei warns any new attack would get an 'immediate, impactful an"
+   },
+   {
+    "score": 0.299,
+    "event_id": 139,
+    "date": "2026-11-01",
+    "detail": "Qatari and Pakistani mediators meet an Iranian delegation in Doha from Oct 30; Reuters say"
+   }
+  ],
+  "match_score": 0.622,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-09: logged as new event #141 (sources in audit_sources.py); the matcher's 0.62 'same event' score against #140 (Nov 1 mayday) is wrong: this is an IRGC missile fired at a US jet on Nov 2, a different act",
+  "received": "2026-11-09",
+  "decision_final": "NEW EVENT"
+ },
+ {
+  "report_id": "R0503",
+  "published": "2026-11-03",
+  "outlet": "CBS News",
+  "kind": "Independent outlet",
+  "headline": "US launches limited defensive strikes on Iranian anti-aircraft facility on Qeshm Island",
+  "url": "https://www.cbsnews.com/news/u-s-strikes-iran-targets/",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 377,
+  "candidates": [
+   {
+    "score": 0.366,
+    "event_id": 140,
+    "date": "2026-11-01",
+    "detail": "UKMTO reports a mayday from a vessel 'struck by an unknown projectile' in the Strait of Ho"
+   },
+   {
+    "score": 0.231,
+    "event_id": 137,
+    "date": "2026-10-31",
+    "detail": "Trump says the US still has 'one or two' targets left, naming the suspected nuclear site '"
+   },
+   {
+    "score": 0.121,
+    "event_id": 139,
+    "date": "2026-11-01",
+    "detail": "Qatari and Pakistani mediators meet an Iranian delegation in Doha from Oct 30; Reuters say"
+   }
+  ],
+  "match_score": 0.366,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-09: logged as new event #142 (sources in audit_sources.py)",
+  "received": "2026-11-09",
+  "decision_final": "NEW EVENT"
+ },
+ {
+  "report_id": "R0504",
+  "published": "2026-11-02",
+  "outlet": "Al Jazeera",
+  "kind": "Independent outlet",
+  "headline": "Trump says Iran deal coming together very nicely; Vance cites good conversations",
+  "url": "https://www.aljazeera.com/news/2026/11/2/iran-pushing-accelerated-plan-for-ceasefire-talks-with-us",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 377,
+  "candidates": [
+   {
+    "score": 0.382,
+    "event_id": 137,
+    "date": "2026-10-31",
+    "detail": "Trump says the US still has 'one or two' targets left, naming the suspected nuclear site '"
+   },
+   {
+    "score": 0.38,
+    "event_id": 133,
+    "date": "2026-10-30",
+    "detail": "Qatari mediators, led by a senior adviser to PM Sheikh Mohammed bin Abdulrahman, arrive in"
+   },
+   {
+    "score": 0.282,
+    "event_id": 140,
+    "date": "2026-11-01",
+    "detail": "UKMTO reports a mayday from a vessel 'struck by an unknown projectile' in the Strait of Ho"
+   }
+  ],
+  "match_score": 0.382,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-09: logged as new event #143 (sources in audit_sources.py)",
+  "received": "2026-11-09",
+  "decision_final": "NEW EVENT"
+ },
+ {
+  "report_id": "R0505",
+  "published": "2026-11-02",
+  "outlet": "Al Jazeera",
+  "kind": "Independent outlet",
+  "headline": "Iran says its seven-step Hormuz plan can be done in two days if demands met",
+  "url": "https://www.aljazeera.com/news/2026/11/2/iran-pushing-accelerated-plan-for-ceasefire-talks-with-us",
+  "decision": "POSSIBLE MATCH - human should check",
+  "matched_event": 138,
+  "proposed_new_event_id": null,
+  "candidates": [
+   {
+    "score": 0.556,
+    "event_id": 138,
+    "date": "2026-10-31",
+    "detail": "Supreme Leader Mojtaba Khamenei warns any new attack would get an 'immediate, impactful an"
+   },
+   {
+    "score": 0.538,
+    "event_id": 140,
+    "date": "2026-11-01",
+    "detail": "UKMTO reports a mayday from a vessel 'struck by an unknown projectile' in the Strait of Ho"
+   },
+   {
+    "score": 0.495,
+    "event_id": 139,
+    "date": "2026-11-01",
+    "detail": "Qatari and Pakistani mediators meet an Iranian delegation in Doha from Oct 30; Reuters say"
+   }
+  ],
+  "match_score": 0.556,
+  "seen": "full text",
+  "status": "needs human check: Iran's Nov 2 statement (spokesman Baghaei) that its seven-step plan can now be done in two days may be the same offer already logged in #138 (Oct 31: Araghchi says a new mediator proposal could reopen Hormuz within two days). Not logged as a separate event.",
+  "received": "2026-11-09"
+ },
+ {
+  "report_id": "R0506",
+  "published": "2026-11-04",
+  "outlet": "Al Jazeera",
+  "kind": "Independent outlet",
+  "headline": "Rezaei calls US reply to Hormuz plan unconvincing; Qatar says proposals passed in real time",
+  "url": "https://www.aljazeera.com/news/2026/11/4/iran-says-us-reply-to-hormuz-plan-unconvincing-trump-confirms-strikes",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 377,
+  "candidates": [
+   {
+    "score": 0.446,
+    "event_id": 139,
+    "date": "2026-11-01",
+    "detail": "Qatari and Pakistani mediators meet an Iranian delegation in Doha from Oct 30; Reuters say"
+   },
+   {
+    "score": 0.289,
+    "event_id": 140,
+    "date": "2026-11-01",
+    "detail": "UKMTO reports a mayday from a vessel 'struck by an unknown projectile' in the Strait of Ho"
+   },
+   {
+    "score": 0.0,
+    "event_id": 376,
+    "date": "2019-04-22",
+    "detail": "State says it will not renew the exceptions that let eight countries buy Iranian oil; they"
+   }
+  ],
+  "match_score": 0.446,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-09: logged as new event #144 (sources in audit_sources.py)",
+  "received": "2026-11-09",
+  "decision_final": "NEW EVENT"
+ },
+ {
+  "report_id": "R0507",
+  "published": "2026-11-04",
+  "outlet": "Al Jazeera",
+  "kind": "Independent outlet",
+  "headline": "UKMTO: two projectiles hit tanker engine room 14 nm northeast of Limah, Oman",
+  "url": "https://www.aljazeera.com/news/2026/11/4/iran-says-us-reply-to-hormuz-plan-unconvincing-trump-confirms-strikes",
+  "decision": "POSSIBLE MATCH - human should check",
+  "matched_event": 140,
+  "proposed_new_event_id": null,
+  "candidates": [
+   {
+    "score": 0.553,
+    "event_id": 140,
+    "date": "2026-11-01",
+    "detail": "UKMTO reports a mayday from a vessel 'struck by an unknown projectile' in the Strait of Ho"
+   },
+   {
+    "score": 0.156,
+    "event_id": 139,
+    "date": "2026-11-01",
+    "detail": "Qatari and Pakistani mediators meet an Iranian delegation in Doha from Oct 30; Reuters say"
+   },
+   {
+    "score": 0.0,
+    "event_id": 376,
+    "date": "2019-04-22",
+    "detail": "State says it will not renew the exceptions that let eight countries buy Iranian oil; they"
+   }
+  ],
+  "match_score": 0.553,
+  "seen": "full text",
+  "status": "needs human check: UKMTO's tanker hit by two projectiles about 14 nm NE of Limah, Oman (dated Nov 3 by Al Jazeera, Nov 4) may be the same incident as #140 (Nov 1 mayday in Hormuz, no location given) or a Nov 2 hit 9 nm NE of Limah reported only by a non-allowed site. Not logged; F007 does not rest on it.",
+  "received": "2026-11-09"
+ },
+ {
+  "report_id": "R0508",
+  "published": "2026-11-05",
+  "outlet": "Reuters (via The Star, Malaysia)",
+  "kind": "Independent outlet",
+  "headline": "US sanctions Indian and Turkish firms and people for aiding Iran oil shipping and aviation",
+  "url": "https://www.thestar.com.my/news/world/2026/11/05/us-slaps-sanctions-on-indian-turkish-firms-and-people-for-aiding-iran",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 377,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 376,
+    "date": "2019-04-22",
+    "detail": "State says it will not renew the exceptions that let eight countries buy Iranian oil; they"
+   },
+   {
+    "score": 0.0,
+    "event_id": 375,
+    "date": "2019-04-08",
+    "detail": "State announces it will list the Guard as a Foreign Terrorist Organization, effective Apr "
+   },
+   {
+    "score": 0.0,
+    "event_id": 374,
+    "date": "2018-11-05",
+    "detail": "Treasury restores the remaining sanctions that had been lifted or waived and lists more th"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-09: logged as new event #145 (sources in audit_sources.py)",
+  "received": "2026-11-09",
+  "decision_final": "NEW EVENT"
+ },
+ {
+  "report_id": "R0509",
+  "published": "2026-11-06",
+  "outlet": "CBS News (via Yahoo News)",
+  "kind": "Independent outlet",
+  "headline": "Tanker Velos Sapphire hit in Persian Gulf, one seafarer killed",
+  "url": "https://yahoo.com/news/politics/articles/trump-touts-imminent-decision-potential-123052899.html",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 377,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 376,
+    "date": "2019-04-22",
+    "detail": "State says it will not renew the exceptions that let eight countries buy Iranian oil; they"
+   },
+   {
+    "score": 0.0,
+    "event_id": 375,
+    "date": "2019-04-08",
+    "detail": "State announces it will list the Guard as a Foreign Terrorist Organization, effective Apr "
+   },
+   {
+    "score": 0.0,
+    "event_id": 374,
+    "date": "2018-11-05",
+    "detail": "Treasury restores the remaining sanctions that had been lifted or waived and lists more th"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-09: logged as new event #146 (sources in audit_sources.py)",
+  "received": "2026-11-09",
+  "decision_final": "NEW EVENT"
+ },
+ {
+  "report_id": "R0510",
+  "published": "2026-11-06",
+  "outlet": "CBS News (via Yahoo News)",
+  "kind": "Independent outlet",
+  "headline": "UKMTO: explosion at waterline of tanker leaving Strait of Hormuz",
+  "url": "https://yahoo.com/news/politics/articles/trump-touts-imminent-decision-potential-123052899.html",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 377,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 376,
+    "date": "2019-04-22",
+    "detail": "State says it will not renew the exceptions that let eight countries buy Iranian oil; they"
+   },
+   {
+    "score": 0.0,
+    "event_id": 375,
+    "date": "2019-04-08",
+    "detail": "State announces it will list the Guard as a Foreign Terrorist Organization, effective Apr "
+   },
+   {
+    "score": 0.0,
+    "event_id": 374,
+    "date": "2018-11-05",
+    "detail": "Treasury restores the remaining sanctions that had been lifted or waived and lists more th"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-09: logged as new event #147 (sources in audit_sources.py)",
+  "received": "2026-11-09",
+  "decision_final": "NEW EVENT"
+ },
+ {
+  "report_id": "R0511",
+  "published": "2026-11-06",
+  "outlet": "CBS News (via Yahoo News)",
+  "kind": "Independent outlet",
+  "headline": "Trump says he will decide very soon whether to destroy what is left of Iran",
+  "url": "https://yahoo.com/news/politics/articles/trump-touts-imminent-decision-potential-123052899.html",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 377,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 376,
+    "date": "2019-04-22",
+    "detail": "State says it will not renew the exceptions that let eight countries buy Iranian oil; they"
+   },
+   {
+    "score": 0.0,
+    "event_id": 375,
+    "date": "2019-04-08",
+    "detail": "State announces it will list the Guard as a Foreign Terrorist Organization, effective Apr "
+   },
+   {
+    "score": 0.0,
+    "event_id": 374,
+    "date": "2018-11-05",
+    "detail": "Treasury restores the remaining sanctions that had been lifted or waived and lists more th"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-09: logged as new event #148 (sources in audit_sources.py)",
+  "received": "2026-11-09",
+  "decision_final": "NEW EVENT"
+ },
+ {
+  "report_id": "R0512",
+  "published": "2026-11-06",
+  "outlet": "AP (via WSLS)",
+  "kind": "Independent outlet",
+  "headline": "US military carries out new targeted strike on Iranian air defence system on Qeshm Island",
+  "url": "https://www.wsls.com/news/politics/2026/11/06/iran-is-reviewing-proposals-focusing-on-tehrans-nuclear-program-officials-say/",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 377,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 376,
+    "date": "2019-04-22",
+    "detail": "State says it will not renew the exceptions that let eight countries buy Iranian oil; they"
+   },
+   {
+    "score": 0.0,
+    "event_id": 375,
+    "date": "2019-04-08",
+    "detail": "State announces it will list the Guard as a Foreign Terrorist Organization, effective Apr "
+   },
+   {
+    "score": 0.0,
+    "event_id": 374,
+    "date": "2018-11-05",
+    "detail": "Treasury restores the remaining sanctions that had been lifted or waived and lists more th"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-09: logged as new event #149 (sources in audit_sources.py)",
+  "received": "2026-11-09",
+  "decision_final": "NEW EVENT"
+ },
+ {
+  "report_id": "R0513",
+  "published": "2026-11-06",
+  "outlet": "AP (via WSLS)",
+  "kind": "Independent outlet",
+  "headline": "Trump speaks with Qatar emir; Iran reviews Qatari two-day bridge deal proposal",
+  "url": "https://www.wsls.com/news/politics/2026/11/06/iran-is-reviewing-proposals-focusing-on-tehrans-nuclear-program-officials-say/",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 377,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 376,
+    "date": "2019-04-22",
+    "detail": "State says it will not renew the exceptions that let eight countries buy Iranian oil; they"
+   },
+   {
+    "score": 0.0,
+    "event_id": 375,
+    "date": "2019-04-08",
+    "detail": "State announces it will list the Guard as a Foreign Terrorist Organization, effective Apr "
+   },
+   {
+    "score": 0.0,
+    "event_id": 374,
+    "date": "2018-11-05",
+    "detail": "Treasury restores the remaining sanctions that had been lifted or waived and lists more th"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-09: logged as new event #150 (sources in audit_sources.py)",
+  "received": "2026-11-09",
+  "decision_final": "NEW EVENT"
+ },
+ {
+  "report_id": "R0514",
+  "published": "2026-11-06",
+  "outlet": "Reuters (via Yahoo Finance Canada)",
+  "kind": "Independent outlet",
+  "headline": "US Treasury sanctions Canadian money services firms over Iran-related transactions",
+  "url": "https://ca.finance.yahoo.com/news/us-treasury-sanctions-canadian-money-210207886.html",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 377,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 376,
+    "date": "2019-04-22",
+    "detail": "State says it will not renew the exceptions that let eight countries buy Iranian oil; they"
+   },
+   {
+    "score": 0.0,
+    "event_id": 375,
+    "date": "2019-04-08",
+    "detail": "State announces it will list the Guard as a Foreign Terrorist Organization, effective Apr "
+   },
+   {
+    "score": 0.0,
+    "event_id": 374,
+    "date": "2018-11-05",
+    "detail": "Treasury restores the remaining sanctions that had been lifted or waived and lists more th"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-09: logged as new event #151 (sources in audit_sources.py)",
+  "received": "2026-11-09",
+  "decision_final": "NEW EVENT"
+ },
+ {
+  "report_id": "R0515",
+  "published": "2026-11-07",
+  "outlet": "Stars and Stripes",
+  "kind": "Independent outlet",
+  "headline": "CENTCOM disables commercial cargo vessel M/V Huda in Gulf of Oman for running blockade",
+  "url": "https://www.stripes.com/theaters/middle_east/2026-11-07/centcom-strikes-commercial-cargo-vessel-23394462.html",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 377,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 376,
+    "date": "2019-04-22",
+    "detail": "State says it will not renew the exceptions that let eight countries buy Iranian oil; they"
+   },
+   {
+    "score": 0.0,
+    "event_id": 375,
+    "date": "2019-04-08",
+    "detail": "State announces it will list the Guard as a Foreign Terrorist Organization, effective Apr "
+   },
+   {
+    "score": 0.0,
+    "event_id": 374,
+    "date": "2018-11-05",
+    "detail": "Treasury restores the remaining sanctions that had been lifted or waived and lists more th"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-09: logged as new event #152 (sources in audit_sources.py)",
+  "received": "2026-11-09",
+  "decision_final": "NEW EVENT"
+ },
+ {
+  "report_id": "R0516",
+  "published": "2026-11-07",
+  "outlet": "Stars and Stripes",
+  "kind": "Independent outlet",
+  "headline": "CENTCOM forms Task Force Iron Gate to disrupt Iran land border and Caspian routes",
+  "url": "https://www.stripes.com/theaters/middle_east/2026-11-07/centcom-strikes-commercial-cargo-vessel-23394462.html",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 377,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 376,
+    "date": "2019-04-22",
+    "detail": "State says it will not renew the exceptions that let eight countries buy Iranian oil; they"
+   },
+   {
+    "score": 0.0,
+    "event_id": 375,
+    "date": "2019-04-08",
+    "detail": "State announces it will list the Guard as a Foreign Terrorist Organization, effective Apr "
+   },
+   {
+    "score": 0.0,
+    "event_id": 374,
+    "date": "2018-11-05",
+    "detail": "Treasury restores the remaining sanctions that had been lifted or waived and lists more th"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-09: logged as new event #153 (sources in audit_sources.py)",
+  "received": "2026-11-09",
+  "decision_final": "NEW EVENT"
+ },
+ {
+  "report_id": "R0517",
+  "published": "2026-11-08",
+  "outlet": "CBS News",
+  "kind": "Independent outlet",
+  "headline": "UKMTO: tanker on fire 8 nm northwest of Khasab, crew evacuated; Iran navy claims mine hits",
+  "url": "https://www.cbsnews.com/live-updates/iran-war-trump-us-strait-hormuz-persian-gulf/",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 377,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 376,
+    "date": "2019-04-22",
+    "detail": "State says it will not renew the exceptions that let eight countries buy Iranian oil; they"
+   },
+   {
+    "score": 0.0,
+    "event_id": 375,
+    "date": "2019-04-08",
+    "detail": "State announces it will list the Guard as a Foreign Terrorist Organization, effective Apr "
+   },
+   {
+    "score": 0.0,
+    "event_id": 374,
+    "date": "2018-11-05",
+    "detail": "Treasury restores the remaining sanctions that had been lifted or waived and lists more th"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-09: logged as new event #154 (sources in audit_sources.py)",
+  "received": "2026-11-09",
+  "decision_final": "NEW EVENT"
+ },
+ {
+  "report_id": "R0518",
+  "published": "2026-11-08",
+  "outlet": "CBS News",
+  "kind": "Independent outlet",
+  "headline": "IRGC lifts self-imposed 2,000 km missile range limit",
+  "url": "https://www.cbsnews.com/live-updates/iran-war-trump-us-strait-hormuz-persian-gulf/",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 377,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 376,
+    "date": "2019-04-22",
+    "detail": "State says it will not renew the exceptions that let eight countries buy Iranian oil; they"
+   },
+   {
+    "score": 0.0,
+    "event_id": 375,
+    "date": "2019-04-08",
+    "detail": "State announces it will list the Guard as a Foreign Terrorist Organization, effective Apr "
+   },
+   {
+    "score": 0.0,
+    "event_id": 374,
+    "date": "2018-11-05",
+    "detail": "Treasury restores the remaining sanctions that had been lifted or waived and lists more th"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-09: logged as new event #155 (sources in audit_sources.py)",
+  "received": "2026-11-09",
+  "decision_final": "NEW EVENT"
+ },
+ {
+  "report_id": "R0519",
+  "published": "2026-11-08",
+  "outlet": "Al Jazeera",
+  "kind": "Independent outlet",
+  "headline": "Araghchi warns Iran will rain down hell if US resumes attacks",
+  "url": "https://www.aljazeera.com/news/2026/11/8/iran-threatens-to-rain-down-hell-if-us-escalates-war",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 377,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 376,
+    "date": "2019-04-22",
+    "detail": "State says it will not renew the exceptions that let eight countries buy Iranian oil; they"
+   },
+   {
+    "score": 0.0,
+    "event_id": 375,
+    "date": "2019-04-08",
+    "detail": "State announces it will list the Guard as a Foreign Terrorist Organization, effective Apr "
+   },
+   {
+    "score": 0.0,
+    "event_id": 374,
+    "date": "2018-11-05",
+    "detail": "Treasury restores the remaining sanctions that had been lifted or waived and lists more th"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-09: logged as new event #156 (sources in audit_sources.py)",
+  "received": "2026-11-09",
+  "decision_final": "NEW EVENT"
+ },
+ {
+  "report_id": "R0520",
+  "published": "2026-11-08",
+  "outlet": "Bloomberg (via The Spokesman-Review)",
+  "kind": "Independent outlet",
+  "headline": "Trump says new strikes highly unlikely if talks progress; Rubio sees no breakthrough",
+  "url": "https://www.spokesman.com/stories/2026/nov/08/rubio-sees-no-iran-breakthrough-as-trump-downplays/",
+  "decision": "NEW EVENT",
+  "matched_event": null,
+  "proposed_new_event_id": 377,
+  "candidates": [
+   {
+    "score": 0.0,
+    "event_id": 376,
+    "date": "2019-04-22",
+    "detail": "State says it will not renew the exceptions that let eight countries buy Iranian oil; they"
+   },
+   {
+    "score": 0.0,
+    "event_id": 375,
+    "date": "2019-04-08",
+    "detail": "State announces it will list the Guard as a Foreign Terrorist Organization, effective Apr "
+   },
+   {
+    "score": 0.0,
+    "event_id": 374,
+    "date": "2018-11-05",
+    "detail": "Treasury restores the remaining sanctions that had been lifted or waived and lists more th"
+   }
+  ],
+  "match_score": 0.0,
+  "seen": "full text",
+  "status": "confirmed by weekly agent 2026-11-09: logged as new event #157 (sources in audit_sources.py)",
+  "received": "2026-11-09",
+  "decision_final": "NEW EVENT"
  }
 ]

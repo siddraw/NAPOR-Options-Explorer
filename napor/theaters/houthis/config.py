@@ -133,6 +133,7 @@ PEOPLE_HURT = {
     "2026-10-05": (True, [1339, 1340], "Riyadh airport attacks: 3 Saudis killed on Oct 8, then 12 killed and 309 wounded on Oct 10 (Saudi civil aviation via Al Jazeera, NPR)."),
     "2026-10-19": (True, [1345, 1346], "Shaybah oilfield drone (Oct 20): 2 killed, 2 injured by debris, attacker not named by Saudi Arabia (CBS, Reuters); Dammam airport attack (Oct 21): 1 killed, 8 injured (Saudi civil aviation via Reuters). #1348 is a Houthi claim with no casualties stated."),
     "2026-10-26": (False, [1349, 1350, 1351, 1352, 1353, 1354], "Riyadh missiles Oct 29: no casualties reported (AFP via Times of Israel); Riyadh-region drone Oct 31: debris, no injuries (CBS); Oct 26 claim and Oct 30 intercepts: none stated. Aden palace missiles Oct 30 (#1353): ambulances seen but no casualty figures given, so harm there is not reported, not ruled out."),
+    "2026-11-02": (False, [1355, 1358], "Mecca-region drone Nov 6: no casualties stated (AFP); Nov 8 missile and drone wave on Riyadh, the Eastern Province and the south: no injuries or deaths, minor damage to an Aramco tower (Saudi energy ministry via Al Jazeera, Reuters). The Nov 6 Taiz market strike (#1356, at least 30 killed) is not counted here because who carried it out is disputed (the Houthis blame Saudi airstrikes; Yemen's government blames a Houthi missile)."),
 }
 
 CIVILIAN_HARM = {}        # no civilian harm reported in an allowed outlet for any counted US move (Houthi casualty claims are not counted)

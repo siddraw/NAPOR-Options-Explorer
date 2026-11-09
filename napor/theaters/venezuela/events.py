@@ -113,6 +113,9 @@ EVENTS = [
 (4065, d(2026,10,8), "US", "Indictment (superseding, torture conspiracy)", "Maduro and Cilia Flores", "Prosecutors in the Southern District of New York add conspiracy to commit torture to the narco-terrorism and cocaine-importation charges; the 30-page indictment alleges torture of more than a dozen American citizens in Venezuelan custody", None, "n/a", "Medium", "see audit"),
 (4066, d(2026,10,14), "US", "Sanctions relief (Jorge Rodriguez delisted)", "Jorge Rodriguez (National Assembly head)", "OFAC removes Jorge Rodriguez from the SDN list; a source tells Al Jazeera it is part of wider recognition of the interim government and a three-phase transition plan. Rubio says a new round of negotiations on Venezuela's future begins the same day", None, "n/a", "Medium", "see audit"),
 (4067, d(2026,10,27), "US", "Strike (alleged drug boat, eastern Pacific)", "Go-fast vessel, eastern Pacific", "SOUTHCOM says Joint Task Force Western Hemisphere struck a go-fast vessel and that 'confirmed intelligence revealed the vessel's active involvement in narco-trafficking'; no evidence of drugs given. AP: at least 240 killed in more than 70 strikes; Stripes: at least 230 after more than 70 (neither names a source for the totals). Neither mentions a Venezuelan link or response", None, "5 killed (SOUTHCOM, per AP and Stripes)", "Medium", "see audit"),
+(4068, d(2026,10,28), "US (federal court, SDNY)", "Court (Maduro case reassigned)", "Maduro and Cilia Flores", "After Judge Alvin Hellerstein dies on Oct 28, the Maduro-Flores case is randomly reassigned to Judge Analisa Torres, who orders all existing deadlines and appearances, including the June trial date, to 'remain in full force' (Bloomberg Government). Exact date of the reassignment order not given", 4065, "n/a", "Medium", "see audit"),
+(4069, d(2026,10,31), "Venezuela (armed forces), with US intelligence and drones (per NYT)", "Joint operation (Venezuelan strike on an ELN camp in Apure, US help reported)", "ELN camp, Apure state, near the Colombian border", "Venezuela's armed forces strike a camp of the Colombian ELN rebels in Apure; four US officials tell the NYT the attack used US intelligence and drones (unclear who flew them). State refers questions to the Pentagon, which refers them to Venezuela. NYT says 'Friday' (Oct 30); AFP gives Oct 31. Cooperation against an armed group, not a hostile act toward the US", None, "At least 19 killed (AFP, citing NGOs); at least 23, not all apparently fighters (NYT, citing Fundaredes)", "Medium", "see audit"),
+(4070, d(2026,11,2), "US", "Talks (Rubio and Bessent meet Venezuela's foreign minister)", "Venezuela (interim government)", "Rubio meets new Foreign Minister Oliver Blanco, the first meeting with a Venezuelan foreign minister since Jan 3; they reaffirm the 'three-phase plan' (stabilization, recovery, transition) and discuss reconciliation talks and electoral reform; Rubio urges release of remaining political prisoners. Treasury Secretary Bessent meets Blanco the same day on economic recovery, energy and reconnecting Venezuela's banks; no sanctions step announced. The NYT (Nov 3) reports the US is also negotiating a status of forces agreement that could allow US troops to stay; a State official says bases are 'way, way down the road'", 4066, "n/a", "Medium", "see audit"),
 ]
 
 # ---------------------------------------------------------------------------------------------
@@ -211,6 +214,15 @@ SOURCES = {
  # weekly update 2026-11-02: every URL came from a search result or fetch in that session
  4067: [_s('U.S. military says 5 were killed by a strike on an alleged drug smuggling boat in the eastern Pacific', 'AP (via PBS NewsHour)', '2026-10-27', 'https://www.pbs.org/newshour/world/u-s-military-says-5-were-killed-by-a-strike-on-an-alleged-drug-smuggling-boat-in-the-eastern-pacific', 'full text'),
         _s('US forces strike suspected drug boat in Eastern Pacific, killing 5', 'Stars and Stripes', '2026-10-27', 'https://www.stripes.com/theaters/americas/2026-10-27/us-strike-pacific-kills-5-23278633.html', 'full text')],
+ # weekly update 2026-11-09: every URL came from a search result or fetch in that session
+ 4068: [_s("New Maduro Judge, 'Immune to Pressure,' Dealt With Bannon, Jay-Z", 'Bloomberg Government', '2026-11-02', 'https://news.bgov.com/new-york-brief/new-maduro-judge-immune-to-pressure-dealt-with-bannon-jay-z-108', 'full text'),
+        _s('District Court Judge Alvin Hellerstein, who oversaw Nicolas Maduro case, has died at 92', 'ABC News', '2026-10-28', 'https://abcnews.com/Politics/federal-judge-alvin-hellerstein-oversaw-nicolas-maduro-case/story?id=137644046', 'full text')],
+ 4069: [_s('Venezuela Attacks Colombian Rebels, Leaving 19 Dead', 'AFP (via SBS News)', '2026-11-02', 'https://news.sbs.co.kr/english/article.do?news_id=N1008825974', 'full text'),
+        _s('US assisted Venezuela in deadly drone strike, officials say', 'NYT (via San Juan Daily Star)', '2026-11-06', 'https://www.sanjuandailystar.com/post/us-assisted-venezuela-in-deadly-drone-strike-officials-say', 'full text')],
+ 4070: [_s('Rubio meets Venezuelan counterpart as US presses for progress on election preparations', 'AP (via KSAT)', '2026-11-02', 'https://www.ksat.com/news/world/2026/11/02/rubio-meets-venezuelan-counterpart-as-us-presses-for-progress-on-election-preparations/', 'full text'),
+        _s('US urges Venezuela to follow phased plan for democratic transition', 'Al Jazeera', '2026-11-03', 'https://www.aljazeera.com/news/2026/11/3/us-urges-venezuela-to-follow-phased-plan-for-democratic-transition', 'full text'),
+        _s("READOUT: Secretary of the Treasury Scott Bessent's Meeting with Venezuelan Foreign Minister Oliver Blanco", 'Treasury (press release sb0674)', '2026-11-02', 'https://home.treasury.gov/news/press-releases/sb0674', 'full text'),
+        _s('Trump pushes Venezuela for agreement allowing U.S. troops to stay', 'NYT (via Philadelphia Inquirer)', '2026-11-03', 'https://www.inquirer.com/news/nation-world/venezuela-us-military-presence-long-term-trump-rodriguez-rubio-machado-maduro-drug-boats-20261103.html', 'full text')],
 }
 VERDICT = {k: 'confirmed' for k in SOURCES}
 # Venezuelan state-media claim relayed by an allowed outlet; no allowed outlet confirms the details.
@@ -228,7 +240,7 @@ US_OPTION = {
  4027: 'E', 4028: 'E', 4030: 'D', 4032: 'E', 4033: 'E', 4035: 'B', 4036: 'H', 4037: 'C',
  4039: 'H', 4042: 'H', 4043: 'D', 4044: 'H', 4046: 'H', 4048: 'F', 4049: 'G', 4052: 'B',
  4053: 'H', 4055: 'D', 4057: 'B', 4058: 'B', 4059: 'C', 4060: 'B', 4061: 'F', 4062: 'D',
- 4063: 'B', 4064: 'D', 4065: 'C', 4066: 'C', 4067: 'D',
+ 4063: 'B', 4064: 'D', 4065: 'C', 4066: 'C', 4067: 'D', 4070: 'B',
 }
 
 
@@ -292,7 +304,7 @@ CENSUS = [
  (4064, "Personnel/Casualty", "N", "Boat strike, Oct 4, 2026 (4 killed). Stripes mentions no Venezuelan connection or response."),
  (4065, "Political/Diplomatic", "N", "Superseding torture indictment, Oct 8, 2026. No Venezuelan reply found in the CBS article."),
  (4066, "Economic/Blockade", "N", "Jorge Rodriguez delisted, Oct 14, 2026. Sanctions relief within a cooperative phase; no hostile reply."),
- (4067, "Personnel/Casualty", "Unverified", "Boat strike, Oct 27, 2026 (5 killed). 7-day window runs to Nov 3; check next week. No Venezuelan act reported in AP or Stripes so far."),
+ (4067, "Personnel/Casualty", "N", "Boat strike, Oct 27, 2026 (5 killed). Checked Nov 9: no Venezuelan or armed-group attack, harassment of US assets or mobilization found Oct 27-Nov 3; Venezuela's statements were cooperative (Rubio-Blanco meeting Nov 2, #4070). The Oct 31 Venezuelan strike on an ELN camp (#4069) was done with US help, not against the US."),
 ]
 
 # Reply pairs (pair id, trigger, reply, category, reply caused casualties Y/N, note)
@@ -335,7 +347,7 @@ PHASES = [
  ("Bounty, naval buildup and first boat strikes", d(2025, 8, 7), d(2025, 10, 23), "Bounty (#4010), destroyers and amphibious group (#4013-#4014), militia and border troops (#4012, #4016), first strike (#4017), F-35s (#4020), CIA authorization (#4024)"),
  ("Carrier and Southern Spear", d(2025, 10, 24), d(2025, 11, 30), "Ford ordered and arrives (#4027, #4033), Trinidad energy cutoff (#4029), Venezuelan exercise (#4031), Southern Spear (#4032), Maduro call (#4035), FTO designation (#4037), airspace post (#4039)"),
  ("Blockade and tanker seizures", d(2025, 12, 1), d(2026, 1, 2), "Skipper and Centuries seizures (#4042, #4046), blockade order (#4044), dock strike (#4048); second boat-strike cluster"),
- ("Maduro captured; interim government cooperates", d(2026, 1, 3), d(2026, 11, 2), "Capture (#4049), oil deals (#4052, #4063), ties and embassy (#4057, #4058), delistings (#4059, #4066), Tren de Aragua strike (#4061); boat strikes continue at a slower pace"),
+ ("Maduro captured; interim government cooperates", d(2026, 1, 3), d(2026, 11, 9), "Capture (#4049), oil deals (#4052, #4063), ties and embassy (#4057, #4058), delistings (#4059, #4066), Tren de Aragua strike (#4061); boat strikes continue at a slower pace"),
 ]
 
 CHAIN_NAMES = {

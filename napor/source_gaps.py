@@ -18,10 +18,10 @@ import napor_ids as N
 # theater -> {event id: (date last searched, what was searched and why nothing counts)}
 KNOWN_GAPS = {
     "iran": {
-        64: ("2026-11-02", "IRGC claim of strikes on US radars at Juffair, Bahrain (Jul 13-14). Only Tasnim (blocked), "
-                           "regional aggregators and non-allowed sites carry it; no AP/Reuters/AFP/CENTCOM/Bahrain account found."),
-        67: ("2026-11-02", "IRGC claim of a destroyed radar and F-15 at a US base in Jordan (Jul 21). Only Sputnik (blocked), "
-                           "Al Mayadeen and regional sites carry it; AFP covers other Jordan strikes (Jul 16, Jul 22) but not this claim."),
+        67: ("2026-11-09", "IRGC claim of a destroyed radar and F-15 at a US base in Jordan (Jul 21). Only Sputnik (blocked), "
+                           "Al Mayadeen and regional sites carry it; AFP covers other Jordan strikes (Jul 16, Jul 22) but not this claim. "
+                           "Searched again Nov 9: still only blocked or non-allowed sites (a Jul 18 Jerusalem Post page on other IRGC "
+                           "Jordan claims names no F-15 or radar)."),
     },
 }
 MAX_AGE_DAYS = 8

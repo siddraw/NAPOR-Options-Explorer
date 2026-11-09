@@ -146,6 +146,7 @@ pairs = [
 (23, 79, 80, "Economic/Blockade",  "N", "Iran hits back at Jordan within roughly a day of the US destroying 5 Iranian crude carriers (crews were told to abandon ship first)"),
 (24, 81, 82, "Political/Diplomatic","N", "US rejects Iran's ceasefire roadmap days after it is proposed"),
 (25, 82, 86, "Political/Diplomatic","N", "Despite the flat rejection, the US comes back with a formal counter-proposal 3 days later via Qatari mediators - talks continue rather than collapsing"),
+(26, 141, 142, "Military/Property", "N", "US officials say the Nov 2 Qeshm strikes were 'defensive', after the IRGC fired a missile at a US fighter jet the same day (no losses either side)"),
 ]
 
 MONTHS = [
@@ -158,7 +159,7 @@ MONTHS = [
     ("Aug 2026", d(2026,8,1), d(2026,8,31)),
     ("Sep 2026", d(2026,9,1), d(2026,9,30)),
     ("Oct 2026", d(2026,10,1), d(2026,10,31)),
-    ("Nov 2026 (to Nov 2)", d(2026,11,1), d(2026,11,30)),
+    ("Nov 2026 (to Nov 8)", d(2026,11,1), d(2026,11,30)),
 ]
 
 
@@ -343,6 +344,34 @@ events.extend([
 ])
 
 # ---------------------------------------------------------------------------
+# Weekly update, Nov 9 (weekly agent; credible-outlet research covering Nov 2-8). The first US strikes on
+# Iranian soil since September: limited "defensive" strikes on Qeshm Island on Nov 2 (after the IRGC fired a
+# missile at a US jet) and Nov 6. New Treasury rounds Nov 4 and Nov 6; a blockade runner disabled Nov 7; CENTCOM's
+# Task Force Iron Gate (Nov 7). Indirect talks through Qatar continue. UKMTO-reported ship hits Nov 5 and Nov 7.
+# Two stories went to the review queue instead (R0505: Iran's "two-day" plan may repeat #138; R0507: a Nov 3 tanker
+# hit off Limah may be #140).
+# ---------------------------------------------------------------------------
+events.extend([
+(141, d(2026,11,2), 'Iran (IRGC)', 'Strike (missile at US aircraft)', 'US forces (fighter jet over the Strait of Hormuz)', "Two US military officials say the IRGC fired a surface-to-air missile at a US fighter jet over the Strait of Hormuz and fired a missile from Qeshm at commercial shipping (intercepted, per Stars and Stripes). Iran separately CLAIMS it shot down US drones, which a US official calls false", None, 'No US losses reported', 'Medium', 'see audit'),
+(142, d(2026,11,2), 'US', 'Strike (limited, defensive)', 'Qeshm Island (Iran)', "US forces carry out limited, unannounced 'defensive' strikes on an anti-aircraft facility on Qeshm Island after the IRGC fire; first reported by the WSJ, confirmed by US officials; Trump calls it a 'minor attack, it wasn't a war'", 141, 'No casualties or damage figures reported', 'Medium', 'see audit'),
+(143, d(2026,11,2), 'US', 'Diplomatic statement', 'Iran', "Trump says a deal is 'coming together very nicely'; VP Vance cites 'a number of good conversations', sets no deadline, and says any deal needs verifiable assurances Iran will not rebuild its nuclear program", None, 'n/a', 'Medium', 'see audit'),
+(144, d(2026,11,3), 'Iran', 'Diplomatic rejection', 'US', "Security chief Mohsen Rezaei calls the US response to Iran's Hormuz plan 'not convincing' and says the strait reopens only if all seven conditions are met; Qatar's spokesman says talks continue, with Qatar passing proposals between the sides in real time; Trump tells the FT 'We seem to be getting everything we want'", 143, 'n/a', 'Medium', 'see audit'),
+(145, d(2026,11,4), 'US', 'Sanctions response', 'Iran', "Treasury (Operation Economic Outcast) designates India-based Suniel Kumar Sharma, three other Indian nationals and nine linked companies for false flags and certifications on tankers carrying Iranian oil, and Turkey-based Fugo Group Services for supporting Iran's aviation sector", None, 'n/a', 'Medium', 'see audit'),
+(146, d(2026,11,5), 'Unknown', 'Strike (shipping)', 'Gulf (tanker bound for Bahrain)', "The Marshall Islands-flagged, Greek-managed tanker Velos Sapphire, in ballast and heading to Bahrain, is hit in the Gulf (suspected missile; the Philippine government says a drone) and is taken to Bahrain's Khalifa Bin Salman Port", None, '1 seafarer killed; fire put out (CBS)', 'Medium', 'see audit'),
+(147, d(2026,11,5), 'Unknown', 'Strike (shipping)', 'Strait of Hormuz', "UKMTO reports an explosion at the waterline of a tanker leaving the Strait of Hormuz; Iranian state media separately CLAIMS five tankers and a tug caught fire after hitting mines", None, 'Crew safe; ship under way (UKMTO, via CBS)', 'Medium', 'see audit'),
+(148, d(2026,11,5), 'US', 'Diplomatic statement (threat)', 'Iran', "Trump says he will decide 'very soon' whether to 'destroy what is left' of Iran", 137, 'n/a', 'Medium', 'see audit'),
+(149, d(2026,11,6), 'US', 'Strike (limited)', 'Qeshm Island (Iran)', "US strike knocks out an Iranian air-defence system on Qeshm Island (Iranian media report two explosions in the Suza area); Trump calls it 'minor' and says 'we knocked it out in about 15 minutes, maybe five'", None, 'No casualties reported', 'Medium', 'see audit'),
+(150, d(2026,11,6), 'US/Qatar', 'Diplomatic talks (indirect, via Qatar)', 'Iran', "Trump speaks with Qatar's emir and Hegseth with his Qatari counterpart; Trump says 'We are talking to Iran'. Iran is reviewing Qatari proposals for a two-day 'bridge deal' (day 1: the US lifts the blockade and frees some funds while Iran admits IAEA inspectors; day 2: Hormuz reopens), with talks on Iran's enriched uranium to follow (AP)", 144, 'n/a', 'Medium', 'see audit'),
+(151, d(2026,11,6), 'US', 'Sanctions response', 'Iran', "Treasury, coordinating with Canada, designates eight Canada-based money services businesses for Iran-related transactions; FinCEN issues an order cutting off the exchange MEXC Global over Iran, North Korea and Russia sanctions evasion", None, 'n/a', 'Medium', 'see audit'),
+(152, d(2026,11,7), 'US', 'Blockade enforcement strike', 'Iranian shipping (Gulf of Oman)', "CENTCOM says a US aircraft fired a missile at the stern of the St Kitts-flagged cargo ship M/V Huda after it visited an Iranian port and ignored warnings while leaving; the crew had been told to leave the targeted spaces. CENTCOM's blockade totals: 147 vessels redirected, 5 disabled", None, 'Ship disabled; no casualties reported (CENTCOM, via Stars and Stripes)', 'Medium', 'see audit'),
+(153, d(2026,11,7), 'US', 'Force posture (new task force)', "Iran's land borders and Caspian routes", "CENTCOM forms Task Force Iron Gate (about 20 staff, based in Tampa) to stop weapons, dual-use goods, sanctioned materials and illicit revenue moving across Iran's land borders and the Caspian; it does not say whether force will be used. Trump says on Nov 8 it is 'in full force and effect'", None, 'n/a', 'Medium', 'see audit'),
+(154, d(2026,11,7), 'Unknown', 'Strike (shipping)', 'Strait of Hormuz (off Khasab, Oman)', "UKMTO reports a tanker on fire about 8 nautical miles northwest of Khasab, Oman, and its crew evacuated; Iran's navy CLAIMS a tanker with its tracking off hit a mine east of Hormuz and its military says two tankers hit mines on an 'unauthorised route'", None, 'Crew evacuated; no casualties reported (UKMTO, via CBS)', 'Medium', 'see audit'),
+(155, d(2026,11,7), 'Iran (IRGC)', 'Diplomatic statement (threat)', 'US', "The IRGC says it has lifted its self-imposed 2,000 km (about 1,200 mile) limit on missile range", None, 'n/a', 'Medium', 'see audit'),
+(156, d(2026,11,8), 'Iran', 'Diplomatic statement (threat)', 'US', "FM Araghchi warns Iran will 'rain down hell' and 'not go easy on American targets' if the US resumes attacks; he says his two-day proposal stands and mediators have not travelled since the midterms ('we have to wait')", 149, 'n/a', 'Medium', 'see audit'),
+(157, d(2026,11,8), 'US', 'Diplomatic statement', 'Iran', "Trump tells CNN new strikes are 'highly unlikely' if talks progress but he would strike 'if necessary', citing three carriers 'fully locked and loaded'; Rubio says 'I wouldn't say we're on the verge of a breakthrough' and calls Iran's demands 'outrageous and ridiculous'", 156, 'n/a', 'Medium', 'see audit'),
+])
+
+# ---------------------------------------------------------------------------
 # Pre-war record, May 2019 - Feb 27, 2026 (prewar.py). IDs 201+.
 # ---------------------------------------------------------------------------
 import prewar as _pre
@@ -484,9 +513,9 @@ _EDITS.update({
  61: dict(detail="Iran's IRGC says it fired 10 ballistic missiles at the Azraq base in Jordan (Muwaffaq Salti AB is at Azraq); Jordan says it intercepted 8",
           severity="Jordan: 8 intercepted, falling fragments only, no casualties or material damage (the other 2 are not accounted for)",
           note="Confirmed by AFP and Reuters. Neither names Muwaffaq Salti, but it is the air base at Azraq."),
- 64: dict(detail="IRGC claims strikes on US sites at Juffair, Bahrain (Jul 13) and says it destroyed a Patriot radar and other radars (Jul 14)",
+ 64: dict(detail="IRGC claims strikes on US military facilities and infrastructure at Juffair, Bahrain, saying fires are raging (Jul 13). An earlier draft added a destroyed Patriot radar; the allowed outlets read put the IRGC's radar claims in Oman, not Bahrain, so that part was dropped",
           severity="IRGC claim only; no US or Bahraini confirmation or damage assessment found",
-          note="Everything about damage is an Iranian claim (Tasnim). Not confirmed by AP, Reuters, AFP or CNN in what was read."),
+          note="Re-sourced 2026-11-09 (Times of Israel live blog and Al Jazeera, both Jul 13): both report the IRGC claim about Juffair; neither confirms damage, and neither mentions a radar in Bahrain. The row date (Jul 14) is kept; the claim was published Jul 13."),
  66: dict(detail="IRGC says ballistic missiles hit US aircraft at Aqaba airport (Jul 19); Jordan says it shot down 3 missiles and a 4th fell in open ground",
           severity="Damage is an IRGC claim only. Jordan and Israel report no damage or injuries (AFP)",
           note="Strike confirmed by AFP. 'King Hussein International Airport' appears in the sources only as 'Aqaba airport'. The US embassy said Aqaba was evacuated over a 'credible threat'; Jordan denied any evacuation."),
@@ -694,6 +723,18 @@ census += [
 # Weekly update, Oct 26: new US sanctions (window closed; moved to Unclear on Nov 2, waiting on Sidd as for #104-#110).
 census += [
  (119, "Economic/Blockade", "Unclear", "US shadow-fleet sanctions, Oct 21 (checked Nov 2). No Iranian attack on US forces, bases or US-flagged ships Oct 21-26. The IRGC claimed tanker hits Oct 22-23 (#121, #123) and threatened US bases; no outlet ties them to these sanctions. [Proposed: N, as for #85/#87.]"),
+]
+
+# Weekly update, Nov 9: the IRGC missile at a US jet (Nov 2) drew same-day US strikes (pair 26), so it is R-strong.
+# New US acts are Unclear (window closed) or Unverified (window still open) and change no rate until Sidd decides,
+# as for #104-#119. Proposed calls in brackets.
+census += [
+ (141, "Military/Property", "R-strong", "IRGC fires a surface-to-air missile at a US fighter jet, Nov 2 -> US strikes an anti-aircraft facility on Qeshm the same day; US officials call them 'defensive' strikes after the IRGC fire (pair 26; CBS, ABC, Stars and Stripes)."),
+ (142, "Military/Property", "Unclear", "US strikes on Qeshm, Nov 2 (checked Nov 9). No Iranian attack on US forces, bases or US-flagged ships found Nov 3-7; the IRGC CLAIMED drone shoot-downs (unconfirmed) and ships were hit Nov 5 (#146, #147) and Nov 7 (#154) by unnamed attackers; no outlet ties them to the strikes. [Proposed: N, as for #104/#106.]"),
+ (145, "Economic/Blockade", "Unclear", "US sanctions on an India/Turkey network, Nov 4 (checked Nov 9). No Iranian attack on US forces Nov 4-8; ship hits Nov 5 and Nov 7 are not tied to the sanctions by any outlet. [Proposed: N, as for #85/#87.]"),
+ (149, "Military/Property", "Unverified", "US strike on a Qeshm air-defence system, Nov 6. Reply window runs to about Nov 11; not checked yet."),
+ (151, "Economic/Blockade", "Unverified", "US sanctions on Canada-based money services businesses, Nov 6. Window runs to about Nov 11; not checked yet."),
+ (152, "Economic/Blockade", "Unverified", "US aircraft disables the blockade runner M/V Huda, Nov 7. Window runs to about Nov 12; not checked yet."),
 ]
 
 # Continuous-war rule: while both sides were striking each other daily, every act is

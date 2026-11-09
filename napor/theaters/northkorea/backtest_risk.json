@@ -1,23 +1,23 @@
 {
- "generated": "2026-11-06",
- "rows": 472,
- "predictions": 436,
+ "generated": "2026-11-09",
+ "rows": 474,
+ "predictions": 438,
  "skipped_no_history": 36,
  "brier": {
   "overall": {
-   "raw": 0.0648,
-   "shrunk1": 0.0622,
-   "shrunk2": 0.0631,
-   "shrunk4": 0.0657,
-   "pooled": 0.1024,
+   "raw": 0.0645,
+   "shrunk1": 0.0619,
+   "shrunk2": 0.0628,
+   "shrunk4": 0.0654,
+   "pooled": 0.102,
    "half": 0.25,
-   "w_none": 0.0631,
-   "w_era25": 0.0689,
-   "w_era50": 0.0651,
-   "w_hl180": 0.0789,
-   "w_hl365": 0.0697,
-   "w_hl730": 0.0639,
-   "n": 436
+   "w_none": 0.0628,
+   "w_era25": 0.0686,
+   "w_era50": 0.0648,
+   "w_hl180": 0.0786,
+   "w_hl365": 0.0694,
+   "w_hl730": 0.0636,
+   "n": 438
   },
   "people": {
    "raw": 0.0,
@@ -32,7 +32,7 @@
    "w_hl180": 0.0,
    "w_hl365": 0.0,
    "w_hl730": 0.0,
-   "n": 108
+   "n": 110
   },
   "escalation": {
    "raw": 0.0831,
@@ -97,19 +97,19 @@
  },
  "brier_2026": {
   "overall": {
-   "raw": 0.0335,
-   "shrunk1": 0.0348,
-   "shrunk2": 0.0362,
-   "shrunk4": 0.0391,
-   "pooled": 0.0913,
+   "raw": 0.033,
+   "shrunk1": 0.0343,
+   "shrunk2": 0.0357,
+   "shrunk4": 0.0386,
+   "pooled": 0.0901,
    "half": 0.25,
-   "w_none": 0.0362,
-   "w_era25": 0.0402,
-   "w_era50": 0.0373,
-   "w_hl180": 0.0499,
-   "w_hl365": 0.0401,
-   "w_hl730": 0.0343,
-   "n": 144
+   "w_none": 0.0357,
+   "w_era25": 0.0396,
+   "w_era50": 0.0368,
+   "w_hl180": 0.0492,
+   "w_hl365": 0.0396,
+   "w_hl730": 0.0339,
+   "n": 146
   },
   "people": {
    "raw": 0.0,
@@ -124,7 +124,7 @@
    "w_hl180": 0.0,
    "w_hl365": 0.0,
    "w_hl730": 0.0,
-   "n": 35
+   "n": 37
   },
   "escalation": {
    "raw": 0.0361,
@@ -192,9 +192,9 @@
    {
     "lo": 0,
     "hi": 0.2,
-    "n": 275,
+    "n": 277,
     "predicted": 0.011,
-    "observed": 0.044
+    "observed": 0.043
    },
    {
     "lo": 0.2,
@@ -229,9 +229,9 @@
    {
     "lo": 0,
     "hi": 0.2,
-    "n": 271,
+    "n": 273,
     "predicted": 0.028,
-    "observed": 0.041
+    "observed": 0.04
    },
    {
     "lo": 0.2,
@@ -306,24 +306,24 @@
   },
   {
    "period": "2025+",
-   "n": 316,
-   "raw": 0.0378,
-   "shrunk2": 0.0415,
-   "pooled": 0.0915,
+   "n": 318,
+   "raw": 0.0376,
+   "shrunk2": 0.0413,
+   "pooled": 0.0909,
    "half": 0.25
   }
  ],
  "out_of_sample": {
   "train_rows": 323,
-  "test_rows": 144,
-  "scored": 144,
+  "test_rows": 146,
+  "scored": 146,
   "skipped": 0,
   "brier": {
-   "raw": 0.0362,
-   "shrunk1": 0.0373,
-   "shrunk2": 0.0386,
-   "shrunk4": 0.0413,
-   "pooled": 0.091,
+   "raw": 0.0357,
+   "shrunk1": 0.0368,
+   "shrunk2": 0.0381,
+   "shrunk4": 0.0407,
+   "pooled": 0.0897,
    "half": 0.25
   },
   "train_label": "1993-2025"
@@ -581,8 +581,8 @@
     "name": "none",
     "scheme": "none",
     "param": null,
-    "overall": 0.0631,
-    "y2026": 0.0362,
+    "overall": 0.0628,
+    "y2026": 0.0357,
     "by_cat": {
      "people": 0.0,
      "escalation": 0.0884,
@@ -602,8 +602,8 @@
     "name": "era25",
     "scheme": "era",
     "param": 0.25,
-    "overall": 0.0689,
-    "y2026": 0.0402,
+    "overall": 0.0686,
+    "y2026": 0.0396,
     "by_cat": {
      "people": 0.0,
      "escalation": 0.1107,
@@ -623,8 +623,8 @@
     "name": "era50",
     "scheme": "era",
     "param": 0.5,
-    "overall": 0.0651,
-    "y2026": 0.0373,
+    "overall": 0.0648,
+    "y2026": 0.0368,
     "by_cat": {
      "people": 0.0,
      "escalation": 0.0972,
@@ -644,8 +644,8 @@
     "name": "hl180",
     "scheme": "halflife",
     "param": 180,
-    "overall": 0.0789,
-    "y2026": 0.0499,
+    "overall": 0.0786,
+    "y2026": 0.0492,
     "by_cat": {
      "people": 0.0,
      "escalation": 0.1384,
@@ -665,8 +665,8 @@
     "name": "hl365",
     "scheme": "halflife",
     "param": 365,
-    "overall": 0.0697,
-    "y2026": 0.0401,
+    "overall": 0.0694,
+    "y2026": 0.0396,
     "by_cat": {
      "people": 0.0,
      "escalation": 0.1151,
@@ -686,8 +686,8 @@
     "name": "hl730",
     "scheme": "halflife",
     "param": 730,
-    "overall": 0.0639,
-    "y2026": 0.0343,
+    "overall": 0.0636,
+    "y2026": 0.0339,
     "by_cat": {
      "people": 0.0,
      "escalation": 0.1011,
@@ -704,8 +704,8 @@
     }
    }
   ],
-  "n": 436,
-  "n_2026": 144,
+  "n": 438,
+  "n_2026": 146,
   "decision": {
    "scheme": "none",
    "param": null,

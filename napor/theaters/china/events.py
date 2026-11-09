@@ -121,6 +121,8 @@ EVENTS = [
 (3068, d(2026,10,20), "US", "Naval operation (littoral combat ship, near Sabina Shoal)", "Sabina Shoal (Spratlys)", "USS Charleston operates in waters next to Sabina Shoal early Oct 20. China's Southern Theater Command says it 'illegally intruded' and sends naval forces to track and monitor it; the 7th Fleet says it was routine operations in international waters. Reuters does not call it a FONOP", None, "No damage; verbal protest", "Medium", "see audit"),
 (3069, d(2026,10,20), "China (Coast Guard, per Taiwan's coast guard)", "Coast guard confrontation (standoff, restricted waters near Pratas)", "Taiwan coast guard, Pratas Islands", "Taiwan's coast guard says a Chinese coast guard ship entered restricted waters near the Pratas Islands; the standoff was continuing when Reuters filed. Not tied to the same-day Charleston operation by any allowed outlet; background", None, "No clash reported", "Medium", "see audit"),
 (3070, d(2026,11,1), "China (Coast Guard, per Taiwan's coast guard)", "Coast guard confrontation (standoff near Pratas, patrol east of Taiwan)", "Taiwan coast guard, Pratas Islands; waters east of Taiwan", "A Chinese coast guard ship enters waters near Pratas and a Taiwanese ship confronts it, about 1 nautical mile apart at the closest; Taiwan says it is the 13th such intrusion this year. China's coast guard announces a 'routine law enforcement patrol' east of Taiwan and vows to intensify patrols. AP does not mention the US; background", None, "No clash reported", "Medium", "see audit"),
+(3071, d(2026,11,7), "US (State Department)", "Statement (concern over Taiwan's Papua New Guinea office)", "China", "A day after Taiwan says it will close its office in Port Moresby and stop buying Papua New Guinea LNG, blaming Chinese pressure, a State Department spokesperson says the US is 'deeply concerned' and calls it 'yet another example of Beijing's intimidation campaign against Taiwan'. Words only", None, "n/a", "Medium", "see audit"),
+(3072, d(2026,11,8), "US (Trump)", "Statement (expects to meet Xi at APEC in Shenzhen, Nov 18-19)", "China", "Trump says he expects to meet Xi, and possibly Putin, at the APEC leaders' summit in Shenzhen on Nov 18-19, to discuss the Iran war and nuclear disarmament; the three-way meeting is described as possible, not scheduled (Euronews). Date inferred from 'on Sunday'. No meeting has taken place yet", 3066, "n/a", "Medium", "see audit"),
 ]
 
 # ---------------------------------------------------------------------------------------------
@@ -207,7 +209,8 @@ SOURCES = {
  3062: [_s('China begins two days of live-fire drills in Taiwan Strait', 'Reuters (via internazionale.it)', '2026-07-23', 'https://www.internazionale.it/ultime-notizie-reuters/2026/07/23/china-announces-live-fire-drills-in-taiwan-strait', 'full text')],
  3063: [_s('Philippines accuses China of using water cannon on vessels for second day', 'Al Jazeera', '2026-07-24', 'https://aljazeera.com/news/2026/7/24/philippines-accuses-china-of-using-water-cannon-on-vessels-for-second-day', 'full text')],
  # weekly update 2026-11-02: every URL came from a search result or fetch in that session
- 3064: [_s('U.S. pauses $14 billion Taiwan arms sale after China summit', 'Washington Post', '2026-05-23', 'https://www.washingtonpost.com/national-security/2026/05/23/us-pauses-14-billion-taiwan-arms-sale-after-china-summit/'), _AP_PERDUE],
+ 3064: [_s('U.S. pauses $14 billion Taiwan arms sale after China summit', 'Washington Post', '2026-05-23', 'https://www.washingtonpost.com/national-security/2026/05/23/us-pauses-14-billion-taiwan-arms-sale-after-china-summit/'), _AP_PERDUE,
+        _s('Taiwan sees continued US arms sale support after midterm election', 'Reuters (via Yahoo News)', '2026-11-05', 'https://www.yahoo.com/news/articles/taiwan-sees-continued-us-arms-023011637.html', 'full text')],  # added 2026-11-09: package still paused
  3065: [_s('US Navy surveillance aircraft completes rare flight over Taiwan Strait', 'Stars and Stripes', '2026-08-24', 'https://www.stripes.com/branches/navy/2026-08-24/taiwan-strait-navy-p8-poseidon-22644147.html', 'full text')],
  3066: [_s('Trump praises US-China friendship at state dinner with Xi Jinping', 'Al Jazeera', '2026-09-25', 'https://www.aljazeera.com/news/2026/9/25/trump-praises-us-china-friendship-at-state-dinner-with-xi-jinping', 'full text'),
         _s('Trump says he will meet Xi in China in November', 'Reuters (via internazionale.it)', '2026-09-25', 'https://www.internazionale.it/ultime-notizie-reuters/2026/09/25/trump-says-he-will-meet-xi-in-china-in-november', 'full text'), _AP_PERDUE],
@@ -215,6 +218,9 @@ SOURCES = {
  3068: [_REUT_SABINA],
  3069: [_REUT_SABINA],
  3070: [_s('Taiwan accuses China of harassment after standoff between coast guard ships', 'AP (via WISN)', '2026-11-01', 'https://www.wisn.com/article/taiwan-accuses-china-harassment-standoff-coast-guard-ships/74304938', 'full text')],
+ # weekly update 2026-11-09: every URL came from a search result or fetch in that session
+ 3071: [_s('Taiwan shuts Papua New Guinea office and ends LNG buying, citing Chinese pressure', 'Reuters (via AsiaOne)', '2026-11-07', 'https://www.asiaone.com/asia/taiwan-shuts-papua-new-guinea-office-and-ends-lng-buying-citing-chinese-pressure', 'full text')],
+ 3072: [_s('US President Donald Trump plans to meet Putin and Xi in China next week', 'Euronews', '2026-11-09', 'https://www.euronews.com/2026/11/09/donald-trump-plans-to-meet-vladimir-putin-and-xi-jinping-in-china-to-discuss-ending-iran-w', 'full text')],
 }
 VERDICT = {k: 'confirmed' for k in SOURCES}
 VERDICT[3048] = 'not_confirmed'   # only a non-allowed outlet found; not counted
@@ -240,7 +246,7 @@ CRED_ESTIMATE = {
  3037: 0.80, 3038: 0.80, 3039: 0.80, 3040: 0.80, 3041: 0.80, 3042: 0.80, 3043: 0.80, 3044: 0.80, 3045: 0.80,
  3046: 0.80, 3047: 0.80, 3048: 0.30, 3049: 0.80, 3050: 0.80, 3051: 0.80, 3052: 0.80, 3053: 0.80, 3054: 0.80,
  3055: 0.96, 3056: 0.80, 3057: 0.96, 3058: 0.80, 3059: 0.80, 3060: 0.96, 3061: 0.80, 3062: 0.80, 3063: 0.80,
- 3064: 0.96, 3065: 0.80, 3066: 0.96, 3067: 0.96, 3068: 0.80, 3069: 0.80, 3070: 0.80,
+ 3064: 0.96, 3065: 0.80, 3066: 0.96, 3067: 0.96, 3068: 0.80, 3069: 0.80, 3070: 0.80, 3071: 0.80, 3072: 0.80,
 }
 
 # Trigger Census rows for US moves of kinds C-H (window: 7 days for a reply, counted from the logged date).
@@ -311,7 +317,7 @@ PHASES = [
  ("Visits, sales and sanctions on arms makers", d(2020, 7, 4), d(2022, 7, 31), "Carriers (#3011), Azar and Krach visits (#3012, #3017), Oct 2020 sale and sanctions (#3019-#3020), Feb 2022 sanctions (#3024)"),
  ("Pelosi crisis", d(2022, 8, 1), d(2022, 8, 31), "Pelosi visit (#3025), six-zone drills (#3026), sanctions and suspended talks (#3027), transit (#3028)"),
  ("Named drills after leader visits", d(2022, 9, 1), d(2024, 12, 31), "Tsai-McCarthy and the April 2023 drills (#3031-#3032), Lai's August 2023 stops (#3037-#3038), Joint Sword 2024A/B (#3042, #3044), talks with Biden (#3035, #3039)"),
- ("Trump second term", d(2025, 1, 1), d(2026, 11, 2), "Transits (#3050, #3055, #3059), Strait Thunder 2025A (#3052), the $11.1B sale, sanctions and Justice Mission 2025 (#3056-#3058), Beijing summit (#3060), July 2026 talks and drills (#3061-#3062)"),
+ ("Trump second term", d(2025, 1, 1), d(2026, 11, 9), "Transits (#3050, #3055, #3059), Strait Thunder 2025A (#3052), the $11.1B sale, sanctions and Justice Mission 2025 (#3056-#3058), Beijing summit (#3060), July 2026 talks and drills (#3061-#3062)"),
 ]
 
 CHAIN_NAMES = {
