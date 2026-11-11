@@ -3,3 +3,4 @@ __pycache__/
 *.bak*
 ~$*
 .pytest_cache/
+napor/glove/
