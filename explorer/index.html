@@ -1467,7 +1467,7 @@ const smallNote = () => TH.small_n ? `<div class="smalln" role="note"><b>Small n
    KIND as the viewer's words: boxes the viewer filled and clear move words ("pull troops out", "sell weapons to") are hard
    filters on the tags; a small word-meaning model (GloVe vectors, loaded from matcher_vectors.json, nothing from outside)
    then ranks the rest by closeness. It only retrieves: the page counts every number from the matched cases with the same
-   code as the listed options. If the model file cannot load, the old key-word reader (v1, below) is used and says so.
+   code as the listed options. If the model file cannot load, the old key-word reader (v1, below) is used and says so. (Merged onto the live 2026-11-09 page.)
    Claude (only on the claude.ai page) can optionally fill the boxes from a description; it never sees cases or outcomes.
    The saved record is just the typed settings; the cases are matched again from the latest data on every load. */
 const cut = (s, n) => String(s == null ? "" : s).replace(/\s+/g, " ").trim().slice(0, n);
