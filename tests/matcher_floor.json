@@ -1,0 +1,6 @@
+{
+ "note": "Floor for the weekly build (bench_matcher.py --check): about 0.05 below what v2 achieved on the TEST half on 2026-11-11 (test F1 0.58, precision@5 0.66, none-correct 1.00). Raise it when the matcher gets better; never lower it to make a build pass without Sidd's approval.",
+ "test_f1": 0.53,
+ "test_p5": 0.61,
+ "test_none": 1.0
+}

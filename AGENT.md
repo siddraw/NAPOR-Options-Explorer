@@ -22,8 +22,17 @@ are done once per theater. Steps 3-5 are Iran only.
    `napor/tags/<theater>.py` (`TAGS = {event id: dict(move, target=[...], where, scale, who, open, why)}`), using only
    the words in `napor/action_tags.py`. Tag what the US DID (method, target, place, scale, partners, openness) from the
    event's own title and sources, never from what followed; use `why` for a judgment call. The viewer's "Your own
-   option" matcher finds past cases by these tags. `python3 napor/tag_check.py` (a weekly_build step) FAILS the
+   option" matcher finds past cases by these tags (boxes the viewer fills are exact filters on them). `python3 napor/tag_check.py` (a weekly_build step) FAILS the
    build when a counted case has no tags or uses a word outside the list.
+   MATCHER ACCURACY AND THE WORD FILE (owner rule, 2026-11-11): the "Your own option" matcher uses a small word-meaning
+   model (GloVe vectors in `explorer/matcher_vectors.json`) plus fixed rules (`CUES` in `napor/action_tags.py`). Accuracy is checked
+   every build: `python3 bench_matcher.py --check` (a weekly_build step) FAILS if the test half of `tests/matcher_bench.json` falls below
+   `tests/matcher_floor.json`. The model only retrieves cases; the page counts every number. When new case titles bring new words,
+   regenerate the file from `napor/`: `python3 build_vectors.py` (first time on a machine: `python3 build_vectors.py --fetch`, which
+   downloads the public GloVe file from https://github.com/RaRe-Technologies/gensim-data/releases/download/glove-wiki-gigaword-100/glove-wiki-gigaword-100.gz
+   into the git-ignored `napor/glove/`). `python3 build_vectors.py --check` (also a weekly_build step) lists words the file does not
+   cover yet. Then republish: the publish file list in step 9 now includes `matcher_vectors.json`. Do not retune thresholds
+   (`MATCH` in `action_tags.py`) or edit the answer key on your own; report the accuracy numbers (`python3 bench_matcher.py`) and wait for Sidd.
    BLOCKED SOURCES (owner rule, 2026-11-02): never collect, cite or link state-run or armed-group media. They score 0
    and `tests/test_sources.py` fails if one appears. Iran: Tasnim, IRNA, Press TV, Fars, Mehr, IRIB, ISNA, Al-Alam and
    similar; Houthis: al-Masirah, Saba, Al-Manar; North Korea: KCNA, Rodong Sinmun, KCTV; China: Xinhua, Global Times,
@@ -77,6 +86,7 @@ are done once per theater. Steps 3-5 are Iran only.
 9. **Publish the page (only after PASS).** With the Artifact tool: first `read` the artifact
    https://claude.ai/artifact/8YQyFjEyHHNv4RA5qqopow, then publish `explorer/index.html` to that same
    `url` with `files` = {"theaters.json": "explorer/theaters.json", "data.json": "explorer/data.json",
+   "matcher_vectors.json": "explorer/matcher_vectors.json" (the word-meaning file the "Your own option" popup loads, about 3 MB),
    and for every theater id in `theaters.json`: "data/<id>.json": "explorer/data/<id>.json" and
    "data/<id>-history.json": "explorer/data/<id>-history.json"}. (Today: iran, houthis, northkorea, china, venezuela.
    `data.json` is a fallback copy of `data/iran.json`. The verify files `explorer/verify-<id>.json` are

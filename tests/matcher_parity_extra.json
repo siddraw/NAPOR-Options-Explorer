@@ -1,0 +1,16 @@
+[
+ {"id": "x-01", "theater": "iran", "spec": {"move": "strike", "target": "oil", "desc": ""}},
+ {"id": "x-02", "theater": "iran", "spec": {"move": "sanctions", "target": "oil, banks", "who": "alone", "desc": "new sanctions"}},
+ {"id": "x-03", "theater": "iran", "spec": {"move": "", "target": "", "where": "sea", "desc": "stop ships carrying weapons"}},
+ {"id": "x-04", "theater": "iran", "spec": {"move": "pull troops out", "desc": ""}},
+ {"id": "x-05", "theater": "china", "spec": {"move": "naval", "where": "sea", "scale": "single", "desc": "sail a warship near Taiwan"}},
+ {"id": "x-06", "theater": "venezuela", "spec": {"target": "boats", "where": "sea", "desc": "hit drug boats"}},
+ {"id": "x-07", "theater": "northkorea", "spec": {"move": "drill", "who": "allies", "scale": "campaign", "desc": ""}},
+ {"id": "x-08", "theater": "houthis", "spec": {"move": "strike", "target": "equipment", "where": "proxy", "scale": "campaign", "who": "partners", "open": "unclaimed", "desc": "secret strikes"}},
+ {"id": "x-09", "theater": "iran", "spec": {"desc": "do not send more troops"}},
+ {"id": "x-10", "theater": "iran", "spec": {"desc": "say the US will not strike Iran"}},
+ {"id": "x-11", "theater": "iran", "spec": {"move": "talks", "desc": "zzzz qqqq"}},
+ {"id": "x-12", "theater": "china", "spec": {"desc": "Chinese hackers steal secrets, so the US retaliates"}},
+ {"id": "x-13", "theater": "iran", "spec": {"move": "strike", "target": "leaders", "where": "third", "who": "alone", "desc": ""}},
+ {"id": "x-14", "theater": "venezuela", "spec": {"desc": "Maduro"}}
+]

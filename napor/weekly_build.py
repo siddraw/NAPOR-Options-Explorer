@@ -117,6 +117,15 @@ def validate():
     for rel in ("data.json",):
         if not os.path.exists(os.path.join(ex, rel)):
             problems.append(f"explorer/{rel} (fallback) missing")
+    vp = os.path.join(ex, "matcher_vectors.json")             # the "Your own option" word-meaning file (publish it with the page)
+    try:
+        v = json.load(open(vp))
+        if len(v["words"].split(" ")) != v["n"]:
+            problems.append("explorer/matcher_vectors.json: word count does not match n (run build_vectors.py)")
+        if os.path.getsize(vp) > 3.6e6:
+            problems.append("explorer/matcher_vectors.json is over 3.6 MB")
+    except Exception as e:                       # noqa: BLE001
+        problems.append(f"explorer/matcher_vectors.json unreadable: {e} (run build_vectors.py)")
     return problems, warnings
 
 
@@ -138,6 +147,8 @@ if __name__ == "__main__":
         step(f"[{tid}] verify_explorer.py (independent recount)", [PY, "verify_explorer.py", tid])
     step("source_gaps.py (every event has a usable source; open gaps re-searched weekly)", [PY, "source_gaps.py"], must_contain=("Source gaps: PASS",))
     step("tag_check.py (every counted case has action tags)", [PY, "tag_check.py"], must_contain=("Tag check: PASS",))
+    step("build_vectors.py --check (word-meaning file covers the words in the cases)", [PY, "build_vectors.py", "--check"], must_contain=("Word coverage:",))
+    step("bench_matcher.py --check (Your own option matcher accuracy on the answer key's test half)", [PY, "bench_matcher.py", "--check"], must_contain=("Matcher accuracy: PASS",))
     probs, warns = validate()
     results.append(("page-data validator", not probs, "; ".join(probs[:5]) + (f" (+{len(probs) - 5} more)" if len(probs) > 5 else "")))
     print("Checklist:")
@@ -146,5 +157,5 @@ if __name__ == "__main__":
     for w in warns:
         print(f"  [WARN] {w}")
     allok = all(ok for _, ok, _ in results)
-    print("\nRESULT:", "PASS - publish explorer/index.html with the files listed in AGENT.md" if allok else "FAIL - do not publish; fix the first failing step")
+    print("\nRESULT:", "PASS - publish explorer/index.html with the files listed in AGENT.md (theaters.json, data.json, matcher_vectors.json and data/<id>.json + data/<id>-history.json for every theater)" if allok else "FAIL - do not publish; fix the first failing step")
     sys.exit(0 if allok else 1)

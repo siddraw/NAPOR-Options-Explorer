@@ -73,20 +73,20 @@ VOCAB = {
 
 # words a viewer might type -> (field, value). Lower-case; matched as whole words or short phrases.
 SYNONYMS = {
-    "move": {
-        "strike": ["strike", "strikes", "airstrike", "air strike", "bomb", "bombing", "bombed", "missile", "missiles", "drone", "drones", "attack", "hit", "shell", "tomahawk"],
-        "raid": ["raid", "special forces", "commando", "ground operation", "capture", "seize leader", "snatch"],
-        "naval": ["naval", "navy", "blockade", "boarding", "board", "seize", "seizure", "interdict", "interdiction", "transit", "fonop", "freedom of navigation", "escort", "quarantine", "warship"],
-        "deployment": ["deploy", "deployment", "send", "station", "carrier", "bombers", "patriot", "thaad", "reinforce", "buildup", "build-up", "troops"],
-        "withdrawal": ["withdraw", "withdrawal", "pull out", "pullout", "reduce", "drawdown", "leave"],
-        "drill": ["drill", "drills", "exercise", "exercises", "war games", "wargame"],
-        "sanctions": ["sanction", "sanctions", "embargo", "export control", "export controls", "tariff", "tariffs", "freeze", "asset freeze", "ban"],
-        "legal": ["designate", "designation", "terror listing", "fto", "indict", "indictment", "bounty", "charge", "lawsuit", "court"],
-        "arms": ["arms sale", "arms", "weapons sale", "sell weapons", "arm", "military aid", "arms transfer"],
-        "talks": ["talks", "negotiate", "negotiation", "deal", "ceasefire", "truce", "summit", "agreement", "diplomacy", "mediation"],
-        "visit": ["visit", "meeting", "meet", "call", "phone call", "delegation", "contact"],
-        "statement": ["statement", "warn", "warning", "threat", "threaten", "ultimatum", "speech", "announce"],
-        "cyber": ["cyber", "hack", "hacking", "cyberattack", "cyber attack", "malware"],
+    "move": {   # one-word or short cue words (lowest priority, "tier 3" in CUES below). A word may sit under two moves when it is ambiguous.
+        "strike": ["strike", "strikes", "airstrike", "airstrikes", "air strike", "air strikes", "bomb", "bombs", "bombing", "bombed", "missile", "missiles", "rocket", "rockets", "drone", "drones", "attack", "attacks", "attacked", "hit", "hits", "shell", "shelling", "tomahawk", "destroy", "destroyed", "blast", "kill", "killing", "killed"],
+        "raid": ["raid", "raids", "special forces", "commando", "commandos", "ground operation", "capture", "snatch", "rescue", "invade", "invasion"],
+        "naval": ["naval", "navy", "blockade", "boarding", "board", "interdict", "interdiction", "transit", "fonop", "freedom of navigation", "escort", "quarantine", "warship", "warships", "destroyer", "destroyers", "seizure", "maritime"],
+        "deployment": ["deploy", "deployed", "deployment", "deployments", "station", "stationed", "carrier", "carriers", "bombers", "patriot", "thaad", "reinforce", "buildup", "build-up", "troops", "marines", "advisers", "advisors", "garrison", "battery", "batteries", "missile defense", "air defense", "warship", "warships", "surge"],
+        "withdrawal": ["withdraw", "withdrawal", "withdrawing", "pullout", "pull out", "drawdown", "draw down", "evacuate", "evacuation"],
+        "drill": ["drill", "drills", "exercise", "exercises", "war games", "wargame", "wargames", "maneuvers", "manoeuvres"],
+        "sanctions": ["sanction", "sanctions", "sanctioned", "embargo", "export control", "export controls", "tariff", "tariffs", "freeze", "asset freeze", "blacklist", "penalty", "penalties"],
+        "legal": ["designate", "designation", "terror listing", "fto", "indict", "indictment", "bounty", "charge", "charges", "lawsuit", "court", "prosecute", "warrant", "reward", "extradition"],
+        "arms": ["arms sale", "arms sales", "arms", "weapons sale", "weapons sales", "arms deal", "military aid", "arms transfer", "security assistance", "arm"],
+        "talks": ["talks", "negotiate", "negotiation", "negotiations", "deal", "ceasefire", "truce", "summit", "agreement", "diplomacy", "mediation", "treaty", "dialogue", "call", "phone call", "say", "says"],
+        "visit": ["visit", "visits", "meeting", "meet", "meets", "phone call", "call", "phone", "delegation", "contact"],
+        "statement": ["statement", "warn", "warning", "threat", "threaten", "ultimatum", "speech", "announce", "declare", "say", "says"],
+        "cyber": ["cyber", "hack", "hacking", "hackers", "cyberattack", "cyber attack", "malware", "ransomware"],
     },
     "target": {
         "equipment": ["radar", "radars", "launcher", "launchers", "base", "bases", "air defense", "military site", "military sites", "weapons", "depot", "airfield"],
@@ -120,6 +120,85 @@ SYNONYMS = {
     },
 }
 
+# ---- Reading the move from a typed description ("Your own option" matcher, v2) ----
+# CUES say which Type-of-move values a description clearly points to. They are the matcher's only HARD rule for the
+# description: a clear cue keeps only cases whose move is in `moves`; no cue means no move filter (the word-meaning
+# model then ranks everything). Cue rows are tried in tiers: tier 1 (specific phrases, e.g. "pull troops out") beats
+# tier 2 (a verb plus an object, e.g. "send ... carrier") beats tier 3 (tier 0 is only for acts that no move fits: the filter is then empty) (one cue word, the SYNONYMS["move"] lists above).
+# Only the best tier that matched counts; inside that tier every matched row adds its moves (an ambiguous act keeps
+# both moves and lets closeness decide). The same list is exported to the page; napor/matcher_ref.py is the Python twin.
+# Phrase language (lower-case words; a trailing * means "any ending"): `a|b` = either word, `...` = up to 4 words in between,
+# the words must come in this order. Example: "pull ... out|back|down" matches "pull troops out" and "pull back".
+# Moves are chosen with the log's own tagging habits in mind: sanctions relief, ceasefires and "restore relations" are
+# tagged talks, so those cues keep talks (and sanctions) in.
+_OBJ_FORCES = "troop*|force*|soldier*|personnel|presence|footprint|staff|garrison*|deployment*|contingent|marines|advisers|advisors"
+_OBJ_ASSETS = "troop*|force*|soldier*|marines|carrier*|warship*|ship*|bomber*|aircraft|jet*|fighter*|destroyer*|submarine*|advisers|advisors|personnel|batter*|defense|defence|patriot|thaad|system*|missile*|radar*|assets|weapons|reinforcements|fleet|navy|capabilit*"
+_OBJ_ARMS = "weapon*|arms|missile*|batter*|patriot|thaad|jet*|aircraft|fighter*|tank*|ammunition|munition*|drone*|equipment|system*|artillery|helicopter*|rocket*"
+_OBJ_SHIPS = "ship*|tanker*|vessel*|boat*|cargo*|freighter*|shipment*|container*|oil|fuel|crude"
+_OBJ_TRADE = "export*|import*|sale*|sell*|purchase*|buy*|trade|oil|chip*|technolog*|invest*|financ*|bank*|crude|gas|energy|supplies|payment*|transaction*|travel|visa*|shipment*|revenue|money|funding|funds"
+_RELIEF = "lift*|eas*|relax*|remov*|suspend*|waiv*|roll*|drop*|scrap*|loosen*|repeal*|revok*|rescind*|unfreez*|releas*|end|reduc*|cut*|relief"
+_SANC = "sanction*|embargo*|tariff*|restriction*|penalt*|curbs|ban|bans|controls"
+_LEADER = "leader*|general*|commander*|chief*|head|scientist*|official*|minister*|president|supreme|ayatollah|khamenei|soleimani|kingpin|boss|dictator|maduro|kim"
+_TERROR = "terror*|fto|sdgt|sponsor*"
+CUES = [
+    # --- tier 1: specific phrases ---
+    dict(p=1, moves=["withdrawal"], phrases=["pull ... out|back|down|away|home", "pullout", "draw ... down", "drawdown", "withdraw*", "bring ... home|back", "evacuat*",
+        "leave|exit|quit ... iraq|syria|afghanistan|region|base|bases|country|korea|japan|yemen|gulf|bahrain|qatar|kuwait|jordan|saudi|east",
+        "reduc*|cut*|scale|scal*|lower|trim|shrink|decreas*|downsiz*|thin ... " + _OBJ_FORCES, "close|shut|abandon ... embass*|consulate*|base|bases|mission"]),
+    dict(p=1, moves=["withdrawal", "sanctions"], phrases=["cut|break|sever|end|suspend|downgrad*|expel ... ties|relations|relationship|diplomatic"]),
+    dict(p=1, moves=["sanctions", "talks"], phrases=[_RELIEF + " ... " + _SANC, "sanctions relief", "relief ... sanction*", "unfreez*|releas* ... funds|assets|money|oil"]),
+    dict(p=1, moves=["legal", "sanctions"], phrases=["delist*", "take|taking|remov*|drop* ... off|from ... list|designation|terror*", "revok*|rescind*|lift*|end ... designation|listing"]),
+    dict(p=1, moves=["sanctions"], phrases=["reimpos*|reinstat*|renew*|reapply*|snap* ... sanction*", "restor* ... sanction*|pressure"]),
+    dict(p=1, moves=["arms"], phrases=["arms sale*", "arms transfer*", "arms deal*", "arms package*", "weapons sale*", "military aid", "military assistance", "security assistance",
+        "sell*|sale*|transfer*|provid*|suppl*|giv*|donat*|deliver*|export*|approv*|authoriz* ... " + _OBJ_ARMS, "send*|ship*|arm|arms|offer* ... weapon*|arms|ammunition|munition*"]),
+    dict(p=1, moves=["strike", "raid"], phrases=["kill*|assassinat*|eliminat*|decapitat*|hunt*|murder* ... " + _LEADER, "take|taking|took ... out ... " + _LEADER]),
+    dict(p=1, moves=["raid", "legal"], phrases=["captur*|arrest*|abduct*|seiz*|detain*|snatch* ... " + _LEADER]),
+    dict(p=1, moves=["legal", "sanctions"], phrases=["designat*|list*|label*|declar*|classif*|brand* ... " + _TERROR]),
+    dict(p=1, moves=["sanctions"], phrases=["freez*|froze|frozen|seiz*|block* ... asset*|fund*|money|account*|property|wealth|reserves|deposit*",
+        "ban|prohibit*|restrict*|limit*|block*|curb*|cut ... off ... " + _OBJ_TRADE, "ban|prohibit*|restrict*|limit*|curb*|cap|bar|forbid* ... " + _OBJ_TRADE]),
+    dict(p=1, moves=["naval"], phrases=["seiz*|captur*|board*|intercept*|detain*|impound*|stop* ... " + _OBJ_SHIPS]),
+    dict(p=1, moves=["strike", "naval"], phrases=["destroy*|sink*|sunk ... " + _OBJ_SHIPS.replace("|oil|fuel|crude", "")]),
+    dict(p=1, moves=["talks"], phrases=["stop*|halt*|end*|ceas*|suspend*|paus* ... strike*|bomb*|attack*|air*|campaign|war|operation|fighting|hostilit*|raid*", "call ... off ... strike*|bomb*|attack*|campaign|operation",
+        "restor*|reopen*|resum*|reestablish*|normaliz*|normalis*|reinstat* ... relations|ties|contact*|embass*|channel*|communication*|dialogue|talks|diplomatic|ambassador*",
+        "agree*|reach* ... ceasefire|truce|deal|agreement"]),
+    dict(p=1, moves=["drill"], phrases=["cancel*|stop*|halt*|suspend*|end*|postpon*|reduc*|scale|scal*|shrink|cut|curtail* ... drill*|exercise*|war games|wargame*|maneuver*"]),
+    dict(p=1, moves=["talks", "statement", "visit"], phrases=["writ*|letter|message|offer*|propos*|invit* ... meet*|talks|negotiat*|dialogue|summit|meeting|engagement"]),
+    dict(p=0, moves=[], phrases=["leav*|exit*|quit*|abandon*|withdraw*|pull* ... deal|agreement|accord|treaty|jcpoa|pact"]),   # tier 0, no move: leaving an agreement is not a move the log tags, so nothing is returned (never talks)
+    # --- tier 2: a verb with its object, or a clear kind of act ---
+    dict(p=2, moves=["deployment"], phrases=["send*|deploy*|dispatch*|station*|position*|mov*|bring*|surg*|base*|put|place|install*|increas*|bolster*|reinforc*|boost|add|augment*|fly|flew|stage|forward ... " + _OBJ_ASSETS]),
+    dict(p=2, moves=["naval"], phrases=["escort*|convoy*|freedom of navigation|fonop*|transit*|sail*|navigat*|patrol*|boarding|blockad*|quarantin*|interdict*|block* ... port*|strait|coast|shipping|sea|route*|harbor*|harbour*"]),
+    dict(p=2, moves=["cyber"], phrases=["cyber*|hack*|malware|ransomware|virus|stuxnet|ddos", "computer network*", "digital attack*"]),
+    dict(p=2, moves=["talks", "visit"], phrases=["meet|meeting|meets|visit*|call|phone*|telephone*|speak|summit|invit*|host|welcome|receiv* ... leader*|president|xi|kim|minister*|official*|delegation*|counterpart*"]),
+    dict(p=2, moves=["strike", "raid"], phrases=["kill*|assassinat*|eliminat*"]),
+    dict(p=2, moves=["drill"], phrases=["hold*|conduct*|launch*|run|start|join*|stage|stag* ... drill*|exercise*|war games|wargame*|maneuver*"]),
+]
+
+# Words that name the theater itself. Every case in a theater is already about it, so these words never filter anything,
+# never show as "ignored", and are left out of the word-meaning comparison.
+NEUTRAL = {
+    "iran": ["iran", "iranian", "iranians", "tehran"],
+    "houthis": ["houthi", "houthis", "yemen", "yemeni", "yemenis", "ansar", "ansarallah", "sanaa"],
+    "northkorea": ["dprk", "north", "korea", "korean", "koreans", "pyongyang"],
+    "china": ["china", "chinese", "prc", "beijing"],
+    "venezuela": ["venezuela", "venezuelan", "venezuelans", "caracas", "maduro"],
+}
+
+# Tuning numbers of the word-meaning matcher (set on the DEV half of tests/matcher_bench.json; docs/METHODOLOGY.md section 13).
+MATCH = dict(
+    kind_weight=1.0,     # how much the case's short "kind" line counts next to its title
+    tag_weight=0.0,      # how much the plain labels of the move and target tags count (tested on dev: no gain, so 0)
+    soft=0.5,            # share of the "every description word has a close word in the case" score (the rest is whole-sentence closeness)
+    rel_gap=0.09,        # keep cases within this much of the best one
+    max_cases=12,        # never return more than this
+    min_sim=0.70,        # a case must be at least this close (no clear move in the words)
+    min_sim_move=0.65,   # the same, when the words clearly name a move (the move filter already removed unlike cases)
+    none_below=0.70,     # if even the best case is below this, say the log has nothing like it (no clear move)
+    none_below_move=0.60,
+    very_close=0.85,     # closeness for the label "Very close" (also needs every box setting met)
+    close=0.75,          # closeness for the label "Close"
+    min_pool=3,          # fewer cases than this: relax box settings one by one (never the move)
+)
+
 # Widening order when too few cases match: the first field listed is dropped first. Type of move is never dropped.
 WIDEN_ORDER = ["open", "who", "scale", "where", "target"]
 
@@ -145,9 +224,11 @@ def check(theater, tags, case_ids):
     return out
 
 
-def page_vocab():
-    """What the exporter writes to the page data: labels, values, synonyms and widening order."""
-    return dict(fields=FIELDS, labels=LABELS, vocab=VOCAB, synonyms=SYNONYMS, widen=WIDEN_ORDER)
+def page_vocab(theater_id=None):
+    """What the exporter writes to the page data: labels, values, synonyms, cue rows, the theater's neutral words,
+    the matcher's tuning numbers and the widening order."""
+    return dict(fields=FIELDS, labels=LABELS, vocab=VOCAB, synonyms=SYNONYMS, widen=WIDEN_ORDER,
+                cues=CUES, neutral=NEUTRAL.get(theater_id, []), params=MATCH)
 
 
 def load_tags(theater_id):
@@ -181,5 +262,5 @@ def annotate(out, theater_id):
             if row.get("why"):
                 t["why"] = row["why"]
             c["tags"] = t
-    out["matcher"] = page_vocab()
+    out["matcher"] = page_vocab(theater_id)
     return out

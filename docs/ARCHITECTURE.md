@@ -81,6 +81,7 @@ Paths below are used by the weekly update. Do not move or rename them without up
 | `explorer/data/<id>.json` | Page data for one theater: options, cases, sources, report card, history |
 | `explorer/data/<id>-history.json` | Weekly snapshots of each option's index, kept for "since last update" |
 | `explorer/data.json` | Fallback copy of the Iran data |
+| `explorer/matcher_vectors.json` | Word-meaning file the "Your own option" popup loads (about 2.9 MB; published with the page) |
 | `explorer/verify-<id>.json`, `verify.json` | Independent recount output (Iran is `verify.json`); checks, not page files |
 | **`napor/`** (engine and Iran data) | |
 | `napor/data.py` | Iran 2026 event log (IDs 1-128), pairs, Trigger Census, merged duplicates, kind of act |
@@ -100,9 +101,12 @@ Paths below are used by the weekly update. Do not move or rename them without up
 | `napor/backtest.py` | Earlier backtest of reply timing (Trigger Census and pairs) |
 | `napor/export_explorer.py` | Builds and writes the Iran page data and runs the self-checks; shared risk-index helpers |
 | `napor/verify_explorer.py` | Independent recount for Iran |
-| `napor/action_tags.py` | The six "Your own option" settings: allowed words, plain labels, synonyms, widening order, `check()`; adds tags to the page data |
+| `napor/action_tags.py` | The six "Your own option" settings: allowed words, plain labels, synonyms, move cue rules (`CUES`), neutral theater words, matcher tuning numbers (`MATCH`), widening order, `check()`; adds tags and the matcher block to the page data |
 | `napor/tags/<theater>.py` | One tag row per counted US-action case (what the US did, never what followed) |
 | `napor/tag_check.py` | Fails the build when a counted case has no valid tags |
+| `napor/build_vectors.py` | Writes `explorer/matcher_vectors.json` (GloVe word vectors as int8 plus word weights); `--fetch` downloads GloVe, `--check` lists new words |
+| `napor/matcher_ref.py` | Python twin (numpy) of the page's "Your own option" matcher: cue rules, word-meaning ranking, thresholds |
+| `napor/bench_matcher.py`, `napor/bench_matcher_v1.js`, `napor/parity_matcher.js` | Score the matcher on the answer key (v2 in Python, v1 in a headless browser) and run the page's matcher for the parity test |
 | `napor/weekly_build.py` | One command that runs every check and prints PASS or FAIL |
 | `napor/build.py`, `napor/NAPOR_iran_war.xlsx` | Builds the Iran workbook (events, census, options) |
 | `napor/napor_now.json` | Iran "right now" notes: status of each option, key dates, what is pending |
@@ -129,6 +133,8 @@ Paths below are used by the weekly update. Do not move or rename them without up
 | `tests/test_theaters.py` | Per theater: export keys and A-H order, sources, 0.50 cut, no-hindsight check, recount, thin_before date |
 | `tests/test_sources.py` | Every source label names the site its URL points to (or says "via"), in every theater |
 | `tests/test_resolver.py` | Headline-matching test (moved from `napor/`; also run by `weekly_build.py`) |
+| `tests/matcher_bench.json`, `tests/matcher_floor.json`, `tests/matcher_v1_baseline.json` | Hand-written answer key for the matcher (dev and test halves), the accuracy floor, and the old matcher's saved results |
+| `tests/test_matcher_accuracy.py`, `tests/test_matcher_parity.py` | Test half stays above the floor and beats v1; page JavaScript and Python reference give the same ranking |
 
 ## Adding a theater
 
