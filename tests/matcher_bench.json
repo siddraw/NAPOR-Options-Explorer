@@ -1,0 +1,944 @@
+[
+ {
+  "id": "iran-01",
+  "theater": "iran",
+  "text": "bomb Iranian radar sites",
+  "expect": [
+   44,
+   46,
+   55,
+   60
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "easy",
+  "note": "air-defense/radar strike nights in 2026; 44 hits air-defense units"
+ },
+ {
+  "id": "iran-02",
+  "theater": "iran",
+  "text": "send a carrier to the Persian Gulf",
+  "expect": [
+   89,
+   201,
+   259,
+   261
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "easy",
+  "note": "carrier groups ordered to Middle East; 92 is a departure so excluded"
+ },
+ {
+  "id": "iran-03",
+  "theater": "iran",
+  "text": "sell Patriot batteries to Jordan",
+  "expect": [
+   211,
+   246
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "hard",
+  "note": "no sale in log; nearest are air-defense systems sent to partners (THAAD Israel, Saudi/UAE)"
+ },
+ {
+  "id": "iran-04",
+  "theater": "iran",
+  "text": "pull troops out of Iraq",
+  "expect": [
+   120,
+   372
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "hard",
+  "note": "drawdowns/departures of US staff; no troop pullout from Iraq itself, so loose"
+ },
+ {
+  "id": "iran-05",
+  "theater": "iran",
+  "text": "new sanctions on Iranian banks",
+  "expect": [
+   87,
+   110,
+   210,
+   342,
+   349,
+   352,
+   354
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "easy",
+  "note": "bank/central-bank/shadow-banking sanctions"
+ },
+ {
+  "id": "iran-06",
+  "theater": "iran",
+  "text": "kill an IRGC general",
+  "expect": [
+   215,
+   242
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "hard",
+  "note": "targeted killing of commander; 242 is a militia commander; Khamenei strike (2) left out"
+ },
+ {
+  "id": "iran-07",
+  "theater": "iran",
+  "text": "seize a tanker at sea",
+  "expect": [
+   37,
+   221,
+   264,
+   265
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "hard",
+  "note": "boarding/interdiction seizures; 264/265 are arms cargoes, 37 mixes disable+interdict"
+ },
+ {
+  "id": "iran-08",
+  "theater": "iran",
+  "text": "destroy Iranian oil tankers",
+  "expect": [
+   37,
+   77,
+   79,
+   104
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "hard",
+  "note": "striking ships carrying/running Iranian oil; 'crude carriers' wording differs"
+ },
+ {
+  "id": "iran-09",
+  "theater": "iran",
+  "text": "escort ships through the Strait of Hormuz",
+  "expect": [
+   33,
+   40,
+   231,
+   314
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "easy",
+  "note": "naval escort/protection of merchant shipping, transit of strait"
+ },
+ {
+  "id": "iran-10",
+  "theater": "iran",
+  "text": "reimpose sanctions on Iran that were lifted",
+  "expect": [
+   247,
+   371,
+   374
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "hard",
+  "note": "reversal: restoring/maximum-pressure sanctions; actual deal exit not in log"
+ },
+ {
+  "id": "iran-11",
+  "theater": "iran",
+  "text": "lift sanctions on Iran",
+  "expect": [
+   50,
+   232,
+   356
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "hard",
+  "note": "opposite of sanction cases: limited relief, waivers, frozen funds release"
+ },
+ {
+  "id": "iran-12",
+  "theater": "iran",
+  "text": "block Iranian ports with the navy",
+  "expect": [
+   35,
+   37,
+   104
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "easy",
+  "note": "naval blockade and enforcement against ships"
+ },
+ {
+  "id": "iran-13",
+  "theater": "iran",
+  "text": "hold nuclear talks with Iran",
+  "expect": [
+   34,
+   248,
+   249,
+   250,
+   251,
+   252,
+   260,
+   262
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "easy",
+  "note": "negotiation rounds in 2025-26"
+ },
+ {
+  "id": "iran-14",
+  "theater": "iran",
+  "text": "freeze Iranian government money in the US",
+  "expect": [
+   302,
+   354
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "easy",
+  "note": "asset freezes of Iran government/banks"
+ },
+ {
+  "id": "iran-15",
+  "theater": "iran",
+  "text": "list the Revolutionary Guard as a terrorist organization",
+  "expect": [
+   342,
+   375
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "hard",
+  "note": "FTO listing (375) and SDGT designation (342); 'designate' vs 'list' wording"
+ },
+ {
+  "id": "iran-16",
+  "theater": "iran",
+  "text": "cut diplomatic ties with Iran and close embassies",
+  "expect": [
+   120,
+   303,
+   372
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "hard",
+  "note": "breaking relations / consulate and embassy staff reductions"
+ },
+ {
+  "id": "iran-17",
+  "theater": "iran",
+  "text": "agree a ceasefire with Iran",
+  "expect": [
+   19,
+   28,
+   50,
+   257
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "easy",
+  "note": "ceasefire announcements/plans; 50 is interim MOU that stops fighting"
+ },
+ {
+  "id": "iran-18",
+  "theater": "iran",
+  "text": "strike Iran's nuclear sites",
+  "expect": [
+   255
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "easy",
+  "note": "only one strike on nuclear sites (Midnight Hammer)"
+ },
+ {
+  "id": "iran-19",
+  "theater": "iran",
+  "text": "hit Iran-backed militias in Iraq and Syria",
+  "expect": [
+   213,
+   219,
+   222,
+   223,
+   225,
+   228,
+   240
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "easy",
+  "note": "repeated militia-site airstrikes; 242 single-commander strike left out"
+ },
+ {
+  "id": "iran-20",
+  "theater": "iran",
+  "text": "ban buying Iranian oil",
+  "expect": [
+   247,
+   301,
+   327,
+   376
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "hard",
+  "note": "import bans / no-waiver / zero-export push; 'buy' vs 'trade' wording"
+ },
+ {
+  "id": "iran-21",
+  "theater": "iran",
+  "text": "send more troops to the Middle East",
+  "expect": [
+   89,
+   204,
+   211,
+   246
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "easy",
+  "note": "troop reinforcements"
+ },
+ {
+  "id": "iran-22",
+  "theater": "iran",
+  "text": "strike Iranian islands in the Gulf",
+  "expect": [
+   42,
+   70
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "hard",
+  "note": "Qeshm/Bandar Abbas and Larak Island; query place names stated differently"
+ },
+ {
+  "id": "iran-23",
+  "theater": "iran",
+  "text": "sanction Iran's top officials personally",
+  "expect": [
+   206,
+   208,
+   217
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "hard",
+  "note": "sanctions on Khamenei, Zarif, senior officials"
+ },
+ {
+  "id": "iran-24",
+  "theater": "iran",
+  "text": "write to Iran's leaders offering to meet",
+  "expect": [
+   19,
+   129,
+   346,
+   355
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "hard",
+  "note": "direct leader-level outreach: message, call, letter, plan passed via mediators"
+ },
+ {
+  "id": "houthis-01",
+  "theater": "houthis",
+  "text": "strike Houthi radar and missile sites",
+  "expect": [
+   1003,
+   1021,
+   1307
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "easy",
+  "note": "US strikes on Houthi targets"
+ },
+ {
+  "id": "houthis-02",
+  "theater": "houthis",
+  "text": "list the Houthis as a terrorist organization",
+  "expect": [
+   1006,
+   1305,
+   1306
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "easy",
+  "note": "FTO designation; 1008 is the revocation"
+ },
+ {
+  "id": "houthis-03",
+  "theater": "houthis",
+  "text": "take the Houthis off the terror list",
+  "expect": [
+   1008
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "hard",
+  "note": "reversal of designation; only revocation case"
+ },
+ {
+  "id": "houthis-04",
+  "theater": "houthis",
+  "text": "stop bombing the Houthis",
+  "expect": [
+   1319
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "hard",
+  "note": "stand-down; 1007 ends Saudi support but is a different act"
+ },
+ {
+  "id": "houthis-05",
+  "theater": "houthis",
+  "text": "intercept ships smuggling weapons to Yemen",
+  "expect": [
+   1005,
+   1009,
+   1068
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "hard",
+  "note": "boarding seizures of arms dhows/fishing vessel; titles do not say 'ship smuggling'"
+ },
+ {
+  "id": "houthis-06",
+  "theater": "houthis",
+  "text": "sanction Houthi oil smuggling and finance",
+  "expect": [
+   1052,
+   1324,
+   1326,
+   1329
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "easy",
+  "note": "OFAC sanctions on Houthi networks; 1052 is earlier asset freeze"
+ },
+ {
+  "id": "houthis-07",
+  "theater": "houthis",
+  "text": "send military advisers to help Saudi Arabia against the Houthis",
+  "expect": [
+   1058,
+   1335
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "hard",
+  "note": "support/planning cell and advisers; 1073 is the reduction"
+ },
+ {
+  "id": "houthis-08",
+  "theater": "houthis",
+  "text": "send warships near Yemen",
+  "expect": [
+   1062,
+   1065,
+   1076,
+   1310
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "easy",
+  "note": "naval/carrier posture near Yemen; 1065 is a pullback so partial"
+ },
+ {
+  "id": "northkorea-01",
+  "theater": "northkorea",
+  "text": "hold joint drills with South Korea",
+  "expect": [
+   2012,
+   2021,
+   2033,
+   2043,
+   2052,
+   2064,
+   2071,
+   2080,
+   2554,
+   2561,
+   2584
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "easy",
+  "note": "many exercises; 2068 (cut drills) left out"
+ },
+ {
+  "id": "northkorea-02",
+  "theater": "northkorea",
+  "text": "scale back the military drills with South Korea",
+  "expect": [
+   2012,
+   2068
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "hard",
+  "note": "reduction of exercises; shares words with all drills cases"
+ },
+ {
+  "id": "northkorea-03",
+  "theater": "northkorea",
+  "text": "fly bombers over South Korea",
+  "expect": [
+   2001,
+   2549,
+   2557,
+   2582
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "easy",
+  "note": "show-of-force overflights; 2518 Guam deployment left out"
+ },
+ {
+  "id": "northkorea-04",
+  "theater": "northkorea",
+  "text": "send a carrier toward Korea",
+  "expect": [
+   2021,
+   2041,
+   2050,
+   2061,
+   2573
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "easy",
+  "note": "carrier groups to Korea/Busan; port calls included"
+ },
+ {
+  "id": "northkorea-05",
+  "theater": "northkorea",
+  "text": "meet Kim Jong Un in person",
+  "expect": [
+   2005,
+   2006,
+   2011
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "hard",
+  "note": "summits; title may say 'leaders summit' or 'shake hands at DMZ'"
+ },
+ {
+  "id": "northkorea-06",
+  "theater": "northkorea",
+  "text": "start negotiations with North Korea",
+  "expect": [
+   2508,
+   2509,
+   2511,
+   2520
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "easy",
+  "note": "opening talks/policy of talks; 2523 is a talks outcome, left out"
+ },
+ {
+  "id": "northkorea-07",
+  "theater": "northkorea",
+  "text": "ease sanctions on North Korea",
+  "expect": [
+   2508
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "hard",
+  "note": "reversal; only one easing case"
+ },
+ {
+  "id": "northkorea-08",
+  "theater": "northkorea",
+  "text": "sanction Chinese companies helping North Korea",
+  "expect": [
+   2007,
+   2579,
+   2585
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "hard",
+  "note": "place is Chinese, titles say China-based/Dandong/Dalian; 2010 seizure left out"
+ },
+ {
+  "id": "northkorea-09",
+  "theater": "northkorea",
+  "text": "cut off North Korean hackers and IT worker money",
+  "expect": [
+   2060,
+   2066,
+   2081
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "easy",
+  "note": "cyber/IT-worker sanctions"
+ },
+ {
+  "id": "northkorea-10",
+  "theater": "northkorea",
+  "text": "put a missile defense system in South Korea",
+  "expect": [
+   2566
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "hard",
+  "note": "THAAD deployment; only case"
+ },
+ {
+  "id": "china-01",
+  "theater": "china",
+  "text": "sail a warship near the South China Sea islands",
+  "expect": [
+   3001,
+   3005,
+   3006,
+   3009,
+   3010,
+   3068,
+   3538,
+   3549,
+   3550,
+   3562
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "easy",
+  "note": "FONOPs; 3040 multilateral activity left out"
+ },
+ {
+  "id": "china-02",
+  "theater": "china",
+  "text": "send a warship through the Taiwan Strait",
+  "expect": [
+   3021,
+   3033,
+   3050,
+   3055,
+   3059,
+   3065,
+   3558
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "easy",
+  "note": "strait transits; 3065 is an aircraft flight"
+ },
+ {
+  "id": "china-03",
+  "theater": "china",
+  "text": "approve an arms sale to Taiwan",
+  "expect": [
+   3019,
+   3023,
+   3056,
+   3517,
+   3524,
+   3527,
+   3539,
+   3548
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "easy",
+  "note": "Taiwan packages; 3007 Abrams sale is Taiwan too"
+ },
+ {
+  "id": "china-04",
+  "theater": "china",
+  "text": "let Taiwan's leaders visit or meet US officials",
+  "expect": [
+   3025,
+   3031,
+   3037,
+   3500,
+   3545
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "hard",
+  "note": "Lee visit, Tsai/McCarthy, Lai stopover, Trump-Tsai call, Pelosi; titles state differently"
+ },
+ {
+  "id": "china-05",
+  "theater": "china",
+  "text": "limit computer chip sales to China",
+  "expect": [
+   3030
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "easy",
+  "note": "export controls; only case"
+ },
+ {
+  "id": "china-06",
+  "theater": "china",
+  "text": "meet Xi Jinping",
+  "expect": [
+   3035,
+   3039,
+   3060,
+   3066,
+   3503,
+   3509,
+   3518,
+   3547,
+   3551
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "easy",
+  "note": "leader meetings/summits"
+ },
+ {
+  "id": "china-07",
+  "theater": "china",
+  "text": "punish China for buying Russian weapons",
+  "expect": [
+   3561
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "hard",
+  "note": "CAATSA sanctions; no shared words"
+ },
+ {
+  "id": "china-08",
+  "theater": "china",
+  "text": "say the US does not support Taiwan independence",
+  "expect": [
+   3510,
+   3520,
+   3522
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "hard",
+  "note": "policy statements; 3526 joint statement weaker"
+ },
+ {
+  "id": "china-09",
+  "theater": "china",
+  "text": "hold military exercises with Japan and the Philippines",
+  "expect": [
+   3040,
+   3067
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "easy",
+  "note": "multilateral exercises"
+ },
+ {
+  "id": "china-10",
+  "theater": "china",
+  "text": "restore military contacts with China",
+  "expect": [
+   3039,
+   3536
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "hard",
+  "note": "restart of mil-mil channels; 3537 memoranda annexes left out"
+ },
+ {
+  "id": "venezuela-01",
+  "theater": "venezuela",
+  "text": "strike a drug boat in the Caribbean",
+  "expect": [
+   4017,
+   4022,
+   4023,
+   4030,
+   4043,
+   4055,
+   4062,
+   4064
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "easy",
+  "note": "boat strikes; some are Pacific"
+ },
+ {
+  "id": "venezuela-02",
+  "theater": "venezuela",
+  "text": "send warships near Venezuela",
+  "expect": [
+   4013,
+   4014,
+   4027,
+   4028,
+   4033
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "easy",
+  "note": "naval buildup; 4020/4026 air deployments left out"
+ },
+ {
+  "id": "venezuela-03",
+  "theater": "venezuela",
+  "text": "freeze assets of Venezuelan officials",
+  "expect": [
+   4524,
+   4543,
+   4546,
+   4549,
+   4551,
+   4564
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "easy",
+  "note": "OFAC freezes on individuals"
+ },
+ {
+  "id": "venezuela-04",
+  "theater": "venezuela",
+  "text": "sanction Venezuela's state oil company",
+  "expect": [
+   4003,
+   4534,
+   4554
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "easy",
+  "note": "PDVSA measures"
+ },
+ {
+  "id": "venezuela-05",
+  "theater": "venezuela",
+  "text": "seize an oil tanker off Venezuela",
+  "expect": [
+   4042,
+   4053
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "easy",
+  "note": "tanker seizures"
+ },
+ {
+  "id": "venezuela-06",
+  "theater": "venezuela",
+  "text": "capture a foreign president",
+  "expect": [
+   4004,
+   4010,
+   4049
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "hard",
+  "note": "raid 4049; indictment/rewards are the precursors, looser"
+ },
+ {
+  "id": "venezuela-07",
+  "theater": "venezuela",
+  "text": "list the cartel as a terrorist organization",
+  "expect": [
+   4037
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "easy",
+  "note": "FTO designation; only case"
+ },
+ {
+  "id": "venezuela-08",
+  "theater": "venezuela",
+  "text": "restore diplomatic relations and reopen the embassy",
+  "expect": [
+   4057,
+   4058,
+   4528
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "hard",
+  "note": "reversal of break; titles say ambassadors back / embassy reopens"
+ },
+ {
+  "id": "venezuela-09",
+  "theater": "venezuela",
+  "text": "lift sanctions on Venezuelan oil and officials",
+  "expect": [
+   4006,
+   4059,
+   4066
+  ],
+  "none": false,
+  "split": "dev",
+  "kind": "hard",
+  "note": "relief: Chevron license, SDN removals; opposite of sanction cases"
+ },
+ {
+  "id": "venezuela-10",
+  "theater": "venezuela",
+  "text": "expel a Venezuelan diplomat",
+  "expect": [
+   4513,
+   4523,
+   4533,
+   4541
+  ],
+  "none": false,
+  "split": "test",
+  "kind": "hard",
+  "note": "persona non grata, visa revocation, expulsions"
+ },
+ {
+  "id": "iran-25",
+  "theater": "iran",
+  "text": "launch a cyber attack on Iranian ports",
+  "expect": [],
+  "none": true,
+  "split": "dev",
+  "kind": "hard",
+  "note": "no cyber operation in the Iran log"
+ },
+ {
+  "id": "northkorea-11",
+  "theater": "northkorea",
+  "text": "bomb North Korean nuclear sites",
+  "expect": [],
+  "none": true,
+  "split": "test",
+  "kind": "hard",
+  "note": "no strike on North Korea in the log"
+ },
+ {
+  "id": "china-11",
+  "theater": "china",
+  "text": "ban a Chinese social media app in the US",
+  "expect": [],
+  "none": true,
+  "split": "dev",
+  "kind": "hard",
+  "note": "no app ban in the China log"
+ }
+]
