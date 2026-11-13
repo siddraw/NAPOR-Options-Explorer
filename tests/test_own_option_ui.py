@@ -26,6 +26,21 @@ QUERIES = [
 ]
 
 
+def plural(n, one):
+    return f"{n} {one}" if n == 1 else f"{n} {one}s"
+
+
+def kw_line(total, found):
+    """The key-word sentence the page shows (explorer/index.html relWords); the grammar follows the count."""
+    if total == 1:
+        lead = "Your 1 key word shows up" if found else "Your 1 key word does not show up"
+    elif found == 0:
+        lead = f"None of your {total} key words show up"
+    else:
+        lead = f"{found} of your {total} key words {'shows' if found == 1 else 'show'} up"
+    return lead + " in the titles, kinds or tags of these cases."
+
+
 def node_path():
     return subprocess.run(["npm", "root", "-g"], capture_output=True, text=True).stdout.strip()
 
@@ -46,18 +61,25 @@ def test_relevance_in_the_window_matches_the_python_numbers():
         got = js["res"][i]
         m = R.match({**dict(move="", target="", where="", scale="", who="", open="", desc=""), **spec}, ths[t])
         if not m["cases"]:
-            assert "has no past cases like this, so there is nothing to count" in got["preview"], (i, got["preview"])
+            want = "has no weeks with no new US move for this conflict, so there is nothing to count" if m["hold"] else "has no past cases like this, so there is nothing to count"
+            assert want in got["preview"], (i, got["preview"])
             assert "relbox" not in got or got.get("relbox") is None
             continue
         rel = R.relevance(m["rd"], ths[t], [c["id"] for c in m["cases"]], [c["strength"] for c in m["cases"]])
+        if m["hold"]:                                   # hold weeks are never rated close: the page says N/A
+            for where in ("preview", "relbox"):
+                assert "Relevance: N/A for hold weeks" in got[where], (i, got[where])
+            assert "Relevance: N/A for hold weeks" in got["card"], (i, got["card"])
+            assert "key words" not in got["relbox"], (i, got["relbox"])
+            continue
         if rel["band"] == "few":
-            want = f"only {rel['n']} counted case"
+            want = f"only {plural(rel['n'], 'counted case')}"
         else:
-            want = f"Relevance: {rel['close']} of {rel['n']} counted cases are close or very close ({rel['pct']}%)"
+            want = f"Relevance: {rel['close']} of {rel['n']} counted cases {'is' if rel['close'] == 1 else 'are'} close or very close ({rel['pct']}%)"
         assert want in got["preview"], (i, want, got["preview"])
         assert want in got["relbox"], (i, want, got["relbox"])
         if rel["kw_total"]:
-            kw = f"Your key words: {rel['kw_found']} of {rel['kw_total']} show up"
+            kw = kw_line(rel["kw_total"], rel["kw_found"])
             assert kw in got["preview"] and kw in got["relbox"], (i, kw, got["relbox"])
         if rel["band"] != "few":
             assert {"strong": "Strong fit", "moderate": "Moderate fit", "weak": "Weak fit — read the numbers with care"}[rel["band"]] in got["relbox"]

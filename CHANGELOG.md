@@ -1,7 +1,7 @@
 # Changelog
 
 ## 2026-11-13 - Own option: fixes from the tester round
-Matcher logic only (no layout change). Python reference and page code stay identical (parity tests, a seeded 1,200-input random sweep, and a new 249-entry regression suite). Bench: dev precision@5 0.69, F1 0.69; test precision@5 0.80, F1 0.69; none-correct 1.00 (before: dev 0.67 / 0.65, test 0.66 / 0.58). Floor not lowered, answer key not edited. Regression suite before/after: fix set 78 of 183 to 172, holdout 29 of 66 to 60.
+Matcher logic, then screen, flow and wording (second pass). Python reference and page code stay identical (parity tests, a seeded 1,200-input random sweep, and a new 249-entry regression suite). Bench: dev precision@5 0.69, F1 0.69; test precision@5 0.80, F1 0.69; none-correct 1.00 (before: dev 0.67 / 0.65, test 0.66 / 0.58). Floor not lowered, answer key not edited. Regression suite before/after: fix set 78 of 183 to 172, holdout 29 of 66 to 60.
 - **Strength is absolute.** Close and Very close need a fitting move, a closeness over fixed lines and no unread literal word; no move read means nothing better than Loose; reverse actions are never close; words with no meaning return no cases.
 - **One tokenizer and typo repair** in boxes and description (endings, irregular verbs, shown as "read x as y"); emoji cut by character.
 - **Domain lexicon** (Fordow, Hormuz, THAAD, OFAC...) plus a literal-words score blended with the model score.
@@ -9,6 +9,11 @@ Matcher logic only (no layout change). Python reference and page code stay ident
 - **Negation** works in boxes, with informal forms and many non-negation idioms; a hold with boxes filled shows them as context.
 - **Type of Move box keeps every move named**; casual box words; unread box words never wipe out results; the footer says which words were not understood.
 - **No old fallback**: if the word file cannot load, the same rules run without the vectors and the page says so.
+- **Screen and flow (second pass).** Too-few rule: an index needs at least 3 counted cases in the current view; with 1 or 2 the card, window and Compare say "Too few cases". Popup: header note hidden on short or narrow screens, compact one-line footer with Show more, landscape phone scrolls as one sheet (checked at 320x640, 390x844, 844x390, 1280x900, light and dark). Tab is kept inside an open popup, Escape closes it, focus returns to the opener. Cancel in edit mode closes the popup and keeps the option unchanged. Delete confirm sits inside its card without moving the layout. Long names are cut with an ellipsis (full name in the window title).
+- **Compare all now lists personal options** in a "Your Own Options" block, marked yours, with the same numbers as the window; never in the Report card or the weekly check.
+- **Wording.** One meaning, one wording: at most 12 cases ("the 12 closest"); "not" is described as what the US would not do; plural helper (1 case, 2 cases); Very close / Close / Loose and N/A capitalized; Relevance and Hold-week texts shared by the preview, window, card, Glossary and How this works.
+- **Matcher leftovers.** Entities stripped; 4-letter typo repair only next to a move cue word; leader / adversary ranking ("kill Maduro", "bomb Venezuela" list case 4049 first); rare-word rescue when the cut-off would leave nothing (blockade Kharg, seize tankers, halt strikes). Regression suite fix 172 to 177 of 183, holdout 60 of 66; bench test F1 0.69, precision@5 0.80, none-correct 1.00. Floors not touched.
+- New tests: `tests/test_own_option_screen.py` with `napor/ui_check_own_option_flow.js`.
 - New `tests/matcher_regress.json`, `napor/matcher_regress.py`, `tests/test_matcher_rules.py`; `matcher_vectors.json` rebuilt (2.9 MB) for the new words; `build_vectors.py` ignores cue stems and reads the lexicon.
 
 ## 2026-11-12 - Own option: understands "not", relevance score, Israeli-action rule

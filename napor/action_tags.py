@@ -207,6 +207,7 @@ FLUFF = ("take takes took taking make makes made making keep keeps kept keeping 
          "many there here what which who when while such yet gonna gotta wanna lets let".split())
 LANG = dict(
     silent=SILENT, fluff=FLUFF,
+    leader_words="leader leaders commander commanders general generals regime maduro kim khamenei ayatollah supreme dictator tsai soleimani chief chiefs minister ministers kingpin boss".split(),
     say="say says said declare declares state states announce announces pledge pledges promise promises reaffirm affirm tell tells warn warns reiterate clarify commit vow publicly".split(),
     neg_rows=[
         dict(p="no longer", kind="rev", can=True),
@@ -290,6 +291,15 @@ NEUTRAL = {
     "venezuela": ["venezuela", "venezuelan", "venezuelans", "caracas"],
 }
 
+# Words that name the adversary itself (not its adjective): "bomb Venezuela", "strike Iran" ask for force on its own ground.
+ADVERSARY = {
+    "iran": ["iran", "tehran"],
+    "houthis": ["houthi", "houthis", "yemen", "sanaa"],
+    "northkorea": ["dprk", "pyongyang"],
+    "china": ["china", "beijing", "prc"],
+    "venezuela": ["venezuela", "caracas"],
+}
+
 # Place words: a place a past case happened at is weak evidence of what kind of action it was, so these count for less in the word-meaning
 # comparison (a viewer's "in the Strait of Hormuz" must not push a clear match under the "nothing" cut-off).
 PLACES = {
@@ -323,6 +333,9 @@ MATCH = dict(
     lex_none=0.30,
     lex_close=0.60,
     lex_very_close=0.85,
+    adv_bonus=0.10,      # ranking bonus for cases on the adversary's own ground or against its leaders when the words ask for force against the adversary's leader or the country itself
+    anchor_df=6,         # a word is "rare" when it is in 1 to this many case titles: such a literal word keeps a case of the read move above the closeness lines
+    anchor_min=0.40,     # ... but never one this far from the words
     fix_top=6000,        # typo repair looks at this many of the most common model words (plus the cue, lexicon and case-title words)
 )
 
@@ -360,7 +373,7 @@ def page_vocab(theater_id=None):
     """What the exporter writes to the page data: labels, values, synonyms, cue rows, the theater's neutral words,
     the matcher's tuning numbers and the widening order."""
     return dict(fields=FIELDS, labels=LABELS, vocab=VOCAB, synonyms=SYNONYMS, widen=WIDEN_ORDER,
-                cues=CUES, neutral=NEUTRAL.get(theater_id, []), params=MATCH, lang=LANG, places=PLACES.get(theater_id, []), siblings=SIBLINGS, alike=ALIKE)
+                cues=CUES, neutral=NEUTRAL.get(theater_id, []), params=MATCH, lang=LANG, places=PLACES.get(theater_id, []), adversary=ADVERSARY.get(theater_id, []), siblings=SIBLINGS, alike=ALIKE)
 
 
 def load_tags(theater_id):

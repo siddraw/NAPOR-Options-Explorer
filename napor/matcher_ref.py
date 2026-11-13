@@ -42,6 +42,7 @@ NEG_BREAK = {"but", "then", "instead", "however", "although", "though", "while",
 WS = re.compile("[ \t\n\r\f\v   -     　﻿]+")
 MARKS = re.compile("[̀-ͯ]")
 PIECE = re.compile("[a-z]+|[,;:.!?()/+&—–…]")
+ENTITY = re.compile("&(?:[a-z]+|#[0-9]+|#x[0-9a-f]+);")     # "&amp;" "&lt;" "&#39;": web-page leftovers, read as a space, never as the words amp, lt
 
 
 # ---------------------------------------------------------------- the text: one tokenizer for boxes and description
@@ -52,7 +53,7 @@ def clean(s, n):
 
 def norm(s):
     """Lower case, accents removed (NFKD, then the combining marks are dropped)."""
-    return MARKS.sub("", unicodedata.normalize("NFKD", "" if s is None else str(s)).lower())
+    return ENTITY.sub(" ", MARKS.sub("", unicodedata.normalize("NFKD", "" if s is None else str(s)).lower()))
 
 
 def tokens_br(text):
@@ -755,7 +756,20 @@ class Theater:
             by_len.setdefault(len(w), []).append((cls, rank, w))
         for v in by_len.values():
             v.sort()
-        self._tools = dict(cf=cf, known=known, by_len=by_len, relief=relief)
+        mv4 = set()                                    # the move cue words of 3 to 5 letters (the only words a 4-letter typo may be repaired to)
+        for c in self.matcher["cues"]:
+            for p in c["phrases"]:
+                for part in p.split(" "):
+                    for a in part.split("|"):
+                        a = a[:-1] if a.endswith("*") else a
+                        if part != "..." and 3 <= len(a) <= 5 and a.isalpha():
+                            mv4.add(a)
+        for v in self.matcher["vocab"]["move"]:
+            for w in [v] + list((self.matcher["synonyms"].get("move") or {}).get(v, [])):
+                for a in tokens(w):
+                    if 3 <= len(a) <= 5:
+                        mv4.add(a)
+        self._tools = dict(cf=cf, known=known, by_len=by_len, relief=relief, mv4=sorted(mv4))
         return self._tools
 
     def known(self, t):
@@ -771,7 +785,13 @@ class Theater:
             return self._fix[t]
         res = None
         L = len(t)
-        if L >= 5 and not self.known(t):
+        if L == 4 and not self.known(t):               # a 4-letter word is repaired only to a MOVE cue word one edit away ("bmob" -> "bomb"), never to anything else
+            best = None
+            for w in self.tools()["mv4"]:
+                if osa(t, w, 1) <= 1 and (best is None or w < best):
+                    best = w
+            res = best
+        elif L >= 5 and not self.known(t):
             maxd = 2 if L >= 8 else 1
             best = None
             by = self.tools()["by_len"]
@@ -963,6 +983,32 @@ def _match(rd, th, P):
             capped[c["id"]] = cap
     movef = mv
     rel_ok = {c["id"]: T["relief"][k] for k, c in enumerate(th.cases)}
+    # (1) force at the adversary: the words ask for a strike or raid and name the adversary's leader or the country itself, so cases on its own ground
+    #     or against its leaders are ranked above cases at sea (the ranking score `rk` only; the closeness `sc` and every strength stay as measured)
+    rk = dict(sc)
+    if ranked and movef and ({"strike", "raid"} & set(movef)) and "where" not in sets:
+        names, leaders, dt = set(M.get("adversary") or []), set(th.C.L.get("leader_words") or []), rd["dtoks"]
+        # the country is the TARGET only when it ends its phrase ("bomb Venezuela", "strike on Iran"), not "Iran's sites" or "Iran-backed militias"
+        ends = th.C.silent - {"s", "t", "m", "d", "ll", "re", "ve"} | {"and", "or", "again", "now", "today", "tonight", "please"}
+        hit = any(th.C.fset(t) & leaders for t in rd["ptoks"]) or any(t in names and (k + 1 >= len(dt) or dt[k + 1] in ends) for k, t in zip(rd["ppos"], rd["ptoks"]))
+        if hit:
+            for c in th.cases:
+                if c["tags"]["where"] == "adversary" or "leaders" in c["tags"]["target"]:
+                    rk[c["id"]] = sc[c["id"]] + P["adv_bonus"]
+    # (2) literal anchor: when a move is clearly read, when the closeness lines would leave NOTHING, a case of that move whose title or kind literally has a RARE
+    #     word of the description still stands (it can only be Loose then); rare = the word is in 1 to `anchor_df` case titles; place words, theater names and small words do not count
+    anch = {}
+    if ranked and movef:
+        skip_a = th.C.silent | th.C.fluff | th.neutral | th.places
+        rare, seen_a = [], set()
+        for t in rd["ptoks"]:
+            if t in skip_a or len(t) < 3 or t in seen_a:
+                continue
+            seen_a.add(t)
+            if 1 <= th.df(t) <= P["anchor_df"]:
+                rare.append(t)
+        for k, c in enumerate(th.cases):
+            anch[c["id"]] = any(th.C.fset(w) & T["cf"][k] for w in rare)
 
     def admits(c):
         m = c["tags"]["move"]
@@ -984,16 +1030,17 @@ def _match(rd, th, P):
             return sorted(pl, key=lambda c: (sum(1 for f in box if not _meets(c, f, sets)), -sc[c["id"]], c["id"])), False
         if not ranked:
             return sorted(pl, key=lambda c: (c["date"], c["id"])), False
-        pl = sorted(pl, key=lambda c: (-sc[c["id"]], c["id"]))
+        pl = sorted(pl, key=lambda c: (-rk[c["id"]], c["id"]))
         if not pl:
             return [], False
-        if small and len(pl) <= P["small_pool"]:      # a precise phrase names a kind of move the log has only a few of: show them all (never better than Loose)
+        if small and len(pl) <= P["small_pool"]:      # a precise phrase naming a kind of move the log has only a few of: show them all (never better than Loose)
             return pl, False
-        best = sc[pl[0]["id"]]
-        if best < fl:
-            return [], True
-        lo = max(lo0, best - P["rel_gap"])
-        return [c for c in pl if sc[c["id"]] >= lo][:P["max_cases"]], False
+        best = rk[pl[0]["id"]]
+        base = [] if best < fl else [c for c in pl if rk[c["id"]] >= max(lo0, best - P["rel_gap"])]
+        if base:
+            return base[:P["max_cases"]], False
+        ah = [c for c in pl if anch.get(c["id"]) and sc[c["id"]] >= P["anchor_min"]]     # nothing passed the lines: only anchored cases may stand
+        return ah[:P["max_cases"]], (best < fl and not ah)
 
     kept, dropped = list(box), []
     levels = []
