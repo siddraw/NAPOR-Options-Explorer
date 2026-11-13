@@ -1761,7 +1761,8 @@ function findNegations(toks, breaks, C, neutral, skip){
     const h = C.cueAt(toks, i, breaks);
     if(h === null){ i++; continue; }
     const end = h.end, row = h.row, sw = saidIndex(toks, i, C.say);
-    if(sw < 0 && i > 0 && neutral.has(toks[i - 1]) && !row.solo){ i = end; continue; }
+    const verb = row.terms[0][0].some(([w, pre]) => pre && toks[i].startsWith(w));
+    if(sw < 0 && i > 0 && neutral.has(toks[i - 1]) && !row.solo && verb){ i = end; continue; }
     let e = end; while(e < n && e - end < NEG_SCOPE && !breaks.has(e) && !NEG_BREAK.has(toks[e])) e++;
     cues.push({cue: [i, end], scope: [end, e], kind: row.kind, can: row.can, adj: row.adj, solo: row.solo, cancelled: false, said: sw >= 0, idle: false, say: sw});
     i = end;
