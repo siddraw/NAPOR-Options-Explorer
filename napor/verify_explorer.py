@@ -55,7 +55,7 @@ def recount(weighting=None, asof=None):
   for o in O.OPTIONS:
       k = o["key"]
       if o["match"]:
-          rows = [c for c in data.census if O.us_side(c[0]) and o["match"](c[0])]
+          rows = [c for c in data.census if O.us_case(c[0]) and o["match"](c[0])]
       elif k in ("B", "H"):
           rows = [(i, None, None, None) for i in O.option_cases(k)]
       else:
@@ -158,7 +158,7 @@ def recount_at(scheme, param, T):
         k = o["key"]
         ppl, esc, mil, eco, pol = new()
         if o["match"]:
-            rows = [c for c in data.census if O.us_side(c[0]) and o["match"](c[0])]
+            rows = [c for c in data.census if O.us_case(c[0]) and o["match"](c[0])]
         elif k in ("B", "H"):
             rows = [(i, None, None, None) for i in O.option_cases(k)]
         else:

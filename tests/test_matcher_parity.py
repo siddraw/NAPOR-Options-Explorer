@@ -23,13 +23,15 @@ def specs():
     bench = json.load(open(os.path.join(REPO, "tests", "matcher_bench.json")))
     out = [dict(id=q["id"], theater=q["theater"], spec=dict(desc=q["text"])) for q in bench]
     out += json.load(open(os.path.join(REPO, "tests", "matcher_parity_extra.json")))
+    for fn in ("matcher_negation_heldout.json",):          # every held-out negation phrasing is also a parity query
+        out += [dict(id=q["id"], theater=q["theater"], spec=dict(desc=q["text"])) for q in json.load(open(os.path.join(REPO, "tests", fn)))["items"]]
     return out
 
 
 @pytest.mark.skipif(not HAVE, reason="node/playwright not installed")
 def test_js_and_python_matchers_agree():
     sp = specs()
-    assert len(sp) >= 40
+    assert len(sp) >= 100
     with tempfile.TemporaryDirectory() as tmp:
         qf, of = os.path.join(tmp, "q.json"), os.path.join(tmp, "o.json")
         json.dump(sp, open(qf, "w"))
@@ -53,4 +55,12 @@ def test_js_and_python_matchers_agree():
                 bad.append((q["id"], "score", c["id"], c["sim"], s))
         if [c["strength"] for c in py["cases"]] != j["strength"]:
             bad.append((q["id"], "strength"))
+        rd = py["rd"]
+        if (bool(py["hold"]), bool(rd["neg"]), bool(rd["refrain"]), rd["ptoks"], py["reason"]) != (j["hold"], j["neg"], j["refrain"], j["ptoks"], j["reason"]):
+            bad.append((q["id"], "negation", py["hold"], rd["neg"], rd["refrain"], rd["ptoks"], j["hold"], j["neg"], j["refrain"], j["ptoks"]))
+        ids = [c["id"] for c in py["cases"]]
+        rel = R.relevance(rd, ths[q["theater"]], ids, [c["strength"] for c in py["cases"]]) if ids else None
+        want = rel and {k: rel[k] for k in ("n", "close", "pct", "band", "kw_total", "kw_found", "kw_missing", "words")}
+        if want != j["rel"]:
+            bad.append((q["id"], "relevance", want, j["rel"]))
     assert not bad, bad[:5]

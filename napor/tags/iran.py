@@ -1,7 +1,7 @@
 """Iran-theater US-action tags (what the US did, not what followed); rule date 2026-11-06."""
 
 TAGS = {
-    2: dict(move='strike', target=['equipment', 'leaders', 'personnel'], where='adversary', scale='campaign', who='allies', open='announced', why='joint with Israel per source; operation opened with 1,000+ targets'),
+    2: dict(move='strike', target=['equipment', 'leaders', 'personnel'], where='adversary', scale='campaign', who='allies', open='announced', why='US link: joint operation with Israel, announced by the Pentagon (Operation Epic Fury); opened with 1,000+ targets'),
     19: dict(move='talks', target=['none'], where='none', scale='single', who='partners', open='announced', why='ceasefire plan passed to Iran via Pakistani intermediaries'),
     28: dict(move='talks', target=['none'], where='none', scale='single', who='alone', open='announced', why='ceasefire announced on Truth Social after Pakistani request'),
     33: dict(move='naval', target=['none'], where='sea', scale='single', who='alone', open='announced', why='destroyers transit the Strait with mine-clearance framing'),
@@ -11,7 +11,7 @@ TAGS = {
     40: dict(move='naval', target=['boats', 'shipping'], where='sea', scale='campaign', who='alone', open='announced', why='escort operation (listed option says strike) with boats sunk; kept as naval'),
     42: dict(move='strike', target=['equipment'], where='adversary', scale='single', who='alone', open='announced', why='CENTCOM did not name the IRGC'),
     43: dict(move='talks', target=['none'], where='none', scale='single', who='alone', open='announced', why='Iran agrees to halt attacks on Israel; US role not detailed'),
-    44: dict(move='strike', target=['personnel', 'equipment'], where='adversary', scale='single', who='allies', open='unclaimed', why='data row names Israel as actor; kept because it is listed as a case; tagged unclaimed as US did not claim it'),
+    # 44 (Israeli strike on air-defense crews, Jun 8 2026): NOT a US case, taken out of every US option on 2026-11-12 (no US link in the log's sources; see napor/non_us_actors.py).
     46: dict(move='strike', target=['equipment'], where='adversary', scale='single', who='alone', open='announced', why=''),
     50: dict(move='talks', target=['none'], where='none', scale='single', who='alone', open='announced', why='14-point interim MOU signed by Trump and Pezeshkian'),
     55: dict(move='strike', target=['equipment'], where='adversary', scale='single', who='alone', open='announced', why=''),

@@ -403,6 +403,12 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 .mign{color:var(--ink);background:var(--b1);border:1px solid var(--b2);border-radius:4px;padding:0 5px}
 .mprev{font-size:14px;font-weight:500;overflow-wrap:anywhere}
 .mupd{font-size:13px;font-weight:600}#mform .myrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0}
+.relbox{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:9px 12px;margin:0 0 12px;font-size:13.5px;display:flex;flex-direction:column;gap:4px}
+.relbox .rl{overflow-wrap:anywhere}.relbox p{margin:2px 0 0;font-size:12.5px}
+.relband{display:inline-block;font-size:11.5px;font-weight:600;border:1px solid var(--line);border-radius:4px;padding:0 6px;margin-left:4px}
+.relband.b-strong{border-color:var(--accent);color:var(--accent)}.relband.b-weak{border-style:dashed;color:var(--muted)}
+.mc .rel{grid-column:2;font-size:12px;color:var(--muted)}
+.mrel{display:block;margin-top:3px;font-size:12.5px;font-weight:400;color:var(--muted)}
 .mset{border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:13.5px}
 .mset dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:3px 12px;margin:6px 0}.mset dt{font-weight:600}.mset dd{margin:0;overflow-wrap:anywhere}
 .mset p{font-size:13px;color:var(--muted);margin-top:4px}
@@ -981,7 +987,7 @@ function situationBlock(o){
     (D.week_events && D.week_events.length ? `<p class="nodata" style="margin-top:8px">New in the log this week:</p><ul>${D.week_events.slice().reverse().map(e => `<li><span class="mono">${fmtDate(e.date)}</span> #${e.id} ${esc(e.title.length > 130 ? e.title.slice(0,127) + "…" : e.title)}</li>`).join("")}</ul>` : "") + `</details></div>`;
 }
 function indexPanel(o, cs){
-  if(o.mine && !o.cases.length) return `<p class="nodata">${o.picked.length ? "You removed every case, so there is nothing to count. Put a case back below to see the numbers." : o.rec.spec ? "No past case in the latest data fits these settings, so there is nothing to count." : o.rec.spec ? "No past case in the latest data fits these settings, so there is nothing to count." : "None of the cases saved for this option are in the log any more, so there is nothing to count."}</p>`;
+  if(o.mine && !o.cases.length) return `<p class="nodata">${o.picked.length ? "You removed every case, so there is nothing to count. Put a case back below to see the numbers." : o.rec.spec ? NOTHING : "None of the cases saved for this option are in the log any more, so there is nothing to count."}</p>`;
   if(o.mine && o.too_few) return `<p class="nodata">Too few cases: only ${o.cases.length} past case${o.cases.length === 1 ? "" : "s"} ${o.cases.length === 1 ? "is" : "are"} counted for "${esc(o.name)}", so NAPOR does not show a risk index for it. The cases are listed below.</p>`;
   if(!o.cases.length) return `<p class="nodata">No past cases of this option are in the log, so there is no risk index. The notes are reasoning, not data.</p>`;
   if(o.too_few) return `<p class="nodata">Too few cases: ${o.cases.length ? "only " + o.cases.length + " past case" + (o.cases.length === 1 ? "" : "s") + " of" : "no past cases of"} "${esc(o.name)}" ${o.cases.length ? "are" : "are"} in the log, so NAPOR does not show a risk index for it. The cases are listed below; the notes above are reasoning, not data.</p>`;
@@ -1147,7 +1153,7 @@ function detailHtml(o){
   let h = '';
   h += `<div class="head"><h3>${o.key}. ${esc(winName(o))}</h3><p class="what">${esc(o.what)}</p>${o.mine ? mineBanner(o) : situationBlock(o)}` +
     (o.cases.length ? `<div class="meter"><span>${S.phase || S.band ? cntLabel(st.cases, st.total, o.is_hold) + " match the condition you picked" : cntLabel(st.cases, st.total, o.is_hold) + (S.asof ? " known on that date" : " in the log")}${st.cases > 0 && st.cases <= 3 ? ' <span class="oldtag">very few cases</span>' : ""}</span><span class="bar"><i style="width:${Math.min(100, st.cases / 8 * 100)}%"></i></span><span>8+ cases is a fair sample</span></div>` : "") + `</div>`;
-  h += `<section><h2 title="${esc(RISKDEF)}">NAPOR risk assessment</h2><p class="legend idxdef">${esc(RISKDEF)}</p>${indexPanel(o, cs)}</section>`;
+  h += `<section><h2 title="${esc(RISKDEF)}">NAPOR risk assessment</h2><p class="legend idxdef">${esc(RISKDEF)}</p>${o.mine ? relBox(Object.assign({}, o, {rel: relOf(o)})) : ""}${indexPanel(o, cs)}</section>`;
   if(o.mine) h += mineWhy(o);
   h += `<section><h2><span class="h2l">What followed the last times the US did this</span><span class="h2s">What followed past cases</span></h2>${outcomesBlock(o, st, ix)}</section>`;
   if(!o.mine) h += `<section><h2>Pros and other harms (written by the weekly agent, not data; as of ${fmtDate(D.now && D.now.as_of ? D.now.as_of : D.generated)})</h2><div class="three"><div class="box"><b>Pros</b>${esc(o.pros)}</div><div class="box"><b>Other harms</b>${esc(o.harms)}</div><div class="box"><b>What the data cannot tell us</b>${esc(o.unknown)}</div></div></section>`;
@@ -1392,6 +1398,8 @@ function renderGloss(){
   const G = [
     ["Option", "One lettered move the US could make. The page lays out each option and what followed past cases of it. It never says which to pick."],
     ["Your own option", "A US action that is not on the list, which you describe in your own words and, if you like, with a few boxes (type of move, target, location, scale, who acts, open or covert). The page finds the past US actions that are the same kind of action and counts them with the same five categories. It is saved only in your browser and is not one of NAPOR's options."],
+    ["Relevance", "How well the counted past cases fit what you typed for your own option. The headline is the share of counted cases rated Very close or Close (75% or more is a strong fit, 50 to 74% a moderate fit, under 50% a weak fit, and under 3 cases is too few to judge). The second line counts how many of your key words (not small words, not the theater's own names, not words you said the US would not do) show up in the titles, kinds or tags of those cases. It is not a risk and never changes a risk number."],
+    ["Not (in your words)", "Words after “not”, “never”, “without”, “avoid”, “instead of” and similar are read by fixed rules as what the US would not do. They are left out of the matching, and the rest is read normally. If that is all you wrote, the page reads it as the US holding back and uses the weeks with no new US move."],
     ["Closeness", "How close a past case is to what you described. Very close: the words are close and the case fits every box you filled in. Close: a little less close, or it misses one box. Loose: the weakest fit. It is the word model's reading of the words, not a probability, and the page lists cases closest first."],
     ["Case", "One past time the US did something of that kind, together with what followed."],
     ["Hold week", "For the option of making no new move: a week with no new US move, counted like a case."],
@@ -1442,9 +1450,9 @@ function renderHow(){
   <h3>Sources</h3><p>Only allowed outlets (wire services, major papers and broadcasters, defense press) and official or primary sources (government and military sites, legislative records, courts, the UN and other international bodies, a government's own ministry for what it did or said, official archives). No Wikipedia, blogs or social media. A copy of a story read on another site is labelled "via" that site. ${esc(TH.claim_note || (TH.adversary + "'s state media"))} and other state-run or armed-group media are never cited; a claim from that side is logged only when a credible outlet reports it. Every counted event links to at least one credible or official source; events without a link are left out. Each event also has a credibility score from 0 to 1; events under 0.5 are left out of the numbers.</p>
   <h3>Weekly update</h3><p>An agent adds the week's events every Monday, grades forecasts and rebuilds this page after a full check. This data: ${fmtDate(D.generated, true)}, news through ${fmtDate(D.asof, true)}.</p>
   <p>Updated = when this page was built. News through = the last day of news in the log. Look back = view the page as it would have looked on a past date.</p>
-  <h3>Your own option</h3><p>If the US action you are thinking about is not on the list, describe it under "Your own option": fill in any of the boxes (type of move, target, location, scale, who acts, open or covert) or leave them as N/A. Every past US action in the log has tags for what the US did, never for what followed. The page does two things. First, fixed rules: a box you fill in is an exact rule, and so is a clear move in your words ("pull troops out" is a withdrawal, "sell weapons to" is an arms sale), so opposite actions are never mixed. Then a small word-meaning model (about 20,000 words, kept in a file that comes with this page) ranks the remaining past cases by how close their words are to yours, and the page shows them closest first as Very close, Close or Loose. If even the closest case is not close enough, the page says the log has nothing like it. The model only finds cases: the page counts them with the same five categories and the same risk index as the listed options. If you filled in boxes and fewer than 3 cases fit, the page ignores boxes one at a time (open or covert first, then who acts, scale, location and target; the type of move is never ignored) and tells you which. The model understands words, not whole situations, and it cannot read "not": describe what the US would do. You can remove any case, and the cases are matched again from the latest data every time you open the page. Your option is saved only in your browser. It is not part of NAPOR's counts, the Report card or the weekly check. With fewer than 3 cases it shows "too few cases" instead of an index. When this page is opened in Claude, an extra button can fill the boxes from your description.</p>
+  <h3>Your own option</h3><p>If the US action you are thinking about is not on the list, describe it under "Your own option": fill in any of the boxes (type of move, target, location, scale, who acts, open or covert) or leave them as N/A. Every past US action in the log has tags for what the US did, never for what followed. The page does two things. First, fixed rules: a box you fill in is an exact rule, and so is a clear move in your words ("pull troops out" is a withdrawal, "sell weapons to" is an arms sale), so opposite actions are never mixed. Then a small word-meaning model (about 20,000 words, kept in a file that comes with this page) ranks the remaining past cases by how close their words are to yours, and the page shows them closest first as Very close, Close or Loose. If even the closest case is not close enough, the page says the log has nothing like it. The model only finds cases: the page counts them with the same five categories and the same risk index as the listed options. If you filled in boxes and fewer than 3 cases fit, the page ignores boxes one at a time (open or covert first, then who acts, scale, location and target; the type of move is never ignored) and tells you which. The model understands words, not whole situations. "Not" is read by fixed rules, not by the model: words after "not", "never", "without", "avoid", "instead of" and similar (up to the next comma or "but") are what the US would not do, so they are left out and never matched ("negotiate rather than strike" is read as talks; "sanctions but no strikes" as sanctions). If your words only say what the US would not do ("do not strike"), the page reads it as the US holding back and uses the weeks the log counts as no new US move; that is the closest the log has, because it cannot tell a chosen pause from a quiet week. Next to the risk numbers the page shows "Relevance": how many of the counted cases are close or very close to your words, and how many of your key words show up in those cases. It says how well past cases fit what you typed, not how risky it is, and it never changes a risk number. If the log has no past cases like your request, the page says so and has nothing to count. You can remove any case, and the cases are matched again from the latest data every time you open the page. Your option is saved only in your browser. It is not part of NAPOR's counts, the Report card or the weekly check. With fewer than 3 cases it shows "too few cases" instead of an index. When this page is opened in Claude, an extra button can fill the boxes from your description.</p>
   <h3>Privacy</h3><p>This page stores your last chosen option, and any options you made yourself, in your browser. The matching runs in your browser, using a word file that is part of this page: nothing you type is sent anywhere and nothing is downloaded from other websites. The only time anything leaves the page is if you press "Fill the boxes with Claude": then just the description you typed, and the list of setting words, go to Claude, through the Claude page you opened this in.</p>
-  <h3>Known limits</h3><ul><li>Small samples: read numbers as hints.</li><li>"After" is not "because of".</li><li>Big campaigns are logged as a few rows; quiet weeks may be under-logged.</li>${TH.thin_before ? `<li>Older years (before ${esc(thinYear())}) are logged more thinly than recent ones, so older cases may be missing and numbers that rest on them are softer. Cases from those years carry an "older, thinner data" tag.</li>` : ""}<li>Phase names were drawn with hindsight.</li><li>${esc(TH.not_measured || "")}</li></ul>`;
+  <h3>Known limits</h3><ul><li>Small samples: read numbers as hints.</li><li>Your own option reads “not” with simple rules, so a long or unusual sentence can be misread. Check the words the page says it left out.</li><li>"After" is not "because of".</li><li>Big campaigns are logged as a few rows; quiet weeks may be under-logged.</li>${TH.thin_before ? `<li>Older years (before ${esc(thinYear())}) are logged more thinly than recent ones, so older cases may be missing and numbers that rest on them are softer. Cases from those years carry an "older, thinner data" tag.</li>` : ""}<li>Phase names were drawn with hindsight.</li><li>${esc(TH.not_measured || "")}</li></ul>`;
 }
 /* ---------- per-theater words (category names and definitions come from the data file; the defaults are the Iran / Houthi words) ---------- */
 const WORDS0 = {name: {...CAT_NAME}, short: {...SHORT}, def: {...CAT_DEF}, rule: {...RULE}};
@@ -1485,7 +1493,7 @@ function mineReset(){   /* a new theater: forget the last one's state, read this
   try {
     const a = JSON.parse(localStorage.getItem(mineKey()) || "[]");
     if(Array.isArray(a)) MINE = a.filter(r => r && /^Y\d+$/.test(String(r.key)) && ((r.spec && typeof r.spec === "object") || Array.isArray(r.ids))).slice(0, MAXMINE).map(r => {
-      const b = {key: String(r.key), name: cut(r.name, 60) || String(r.key), made: cut(r.made, 10), gone: Array.isArray(r.gone) ? r.gone.map(Number) : []};
+      const b = {key: String(r.key), name: cut(r.name, 60) || String(r.key), made: cut(r.made, 10), gone: Array.isArray(r.gone) ? r.gone.map(x => /^W/.test(String(x)) ? String(x) : Number(x)) : []};
       if(r.spec && typeof r.spec === "object"){ const spec = {}; SPEC_KEYS().forEach(f => spec[f] = cut(r.spec[f], 200)); return Object.assign(b, {spec, v: 2}); }
       return Object.assign(b, {what: cut(r.what, 240), base: cut(r.base, 4), ids: [...new Set(r.ids.map(Number).filter(Number.isFinite))],
         why: r.why && typeof r.why === "object" ? r.why : {}, note: cut(r.note, 300), q: cut(r.q, 200)});
@@ -1509,7 +1517,7 @@ function baseFor(key, ids){   /* the listed option whose rules the page uses (ne
 /* ----- reading the boxes ----- */
 let MM = {};   /* phrase tables, built once per theater */
 const NOTSET = ["", "n/a", "na", "none", "-", "any"];
-const SILENT = new Set("the a an of to for by with if did does do would from then than is it that this these those some all as be into u.s us on in at near onto over off against up".split(" "));   /* small words that are never shown as ignored */
+const SILENT = new Set("the a an of to for by with if did does do would from then than is it that this these those some all as be into u s us on in at near onto over off against up".split(" "));   /* small words that are never shown as ignored */
 const SHORTV = {target: {none: "no target", proxy: "proxy group"}, where: {adversary: "inside the country", proxy: "proxy territory", sea: "at sea", third: "third country", none: "no place"},
   scale: {single: "one action", campaign: "campaign"}, who: {alone: "US alone", allies: "with allies", partners: "via partners"}, open: {announced: "announced", unclaimed: "covert"}};
 const valName = (f, v) => (SHORTV[f] && SHORTV[f][v]) || v;
@@ -1596,8 +1604,55 @@ function loadVectors(){   /* one fetch of the page's own file; nothing is downlo
   return MV.p;
 }
 const tok = s => String(s == null ? "" : s).toLowerCase().replace(/[’‘]/g, "'").match(/[a-z]+/g) || [];
-const NEGW = new Set("not no never without dont don doesnt doesn didnt wont won refuse refuses refrain avoid instead rather neither nor".split(" "));
+/* ---- negation: a rule layer (NOT the word model, which cannot be told "not"); the Python twin is napor/matcher_ref.py ---- */
 const SAYW = new Set("say says said declare declares state states announce announces pledge pledges promise promises reaffirm affirm tell tells warn warns reiterate clarify commit vow publicly".split(" "));   /* a "not" after one of these is part of what is said */
+const NEG_WORDS = new Set("not no never nothing neither nor dont doesnt didnt wont cant cannot shouldnt wouldnt couldnt mustnt".split(" "));
+const NEG_T = new Set("don doesn didn won can shouldn wouldn couldn mustn".split(" "));   /* followed by "t": don't, won't, can't... */
+const NEG_VERBS = ["refrain", "refus", "avoid", "declin", "forgo", "forego", "abstain", "shun", "eschew", "forswear", "renounc", "skip"];
+const NEG_PAIRS = [[["rule|rules|ruled|ruling", "out"], true], [["hold|holds|holding|held", "off|back"], true], [["stay|stays|staying|stayed|keep|keeps|keeping|kept", "out|away"], true],
+  [["steer|steers|steering", "clear"], true], [["back|backs|backing|backed", "off"], true], [["stop|stops|stopping|stopped", "short", "of"], true],
+  [["instead", "of"], false], [["rather", "than"], false], [["in", "place", "of"], false], [["as", "opposed", "to"], false]];
+const NEG_ONLY_AFTER = new Set(["only", "just", "merely", "simply"]);
+const NEG_BREAK = new Set("but then instead however although though while whereas yet".split(" "));
+const NEG_SCOPE = 8, NEG_GAP = 2;
+const FLUFF = new Set("actually additional administration again also am america american americans and another any anything are be been being but can could even ever further get gets go goes going government had has have he her here his i its just keep keeping keeps kept made make makes making many may might more much must my new now only or other our please president really shall she should simply so states still such take takes taking their there they too took trump united very was washington we were what when which while who will yet you your".split(" "));   /* words that carry no action */
+const tokBr = text => {   /* the same words as tok(), plus the word positions that have a punctuation break just before them */
+  const toks = [], breaks = new Set();
+  (String(text == null ? "" : text).toLowerCase().replace(/[’‘]/g, "'").match(/[a-z]+|[,;:.!?()—–]/g) || []).forEach(m => { if(/[a-z]/.test(m[0])) toks.push(m); else breaks.add(toks.length); });
+  return {toks, breaks};
+};
+const saidBefore = (toks, i) => toks.slice(0, i).some((x, k) => SAYW.has(x) && !(x === "states" && k > 0 && toks[k - 1] === "united"));
+function cueAt(toks, i){   /* the negation cue that starts at word i: {end, can} or null (can = it may cancel a "not" right before it) */
+  const n = toks.length, t = toks[i];
+  for(const [pair, can] of NEG_PAIRS){ if(i + pair.length <= n && pair.every((a, j) => a.split("|").includes(toks[i + j]))) return {end: i + pair.length, can}; }
+  if(NEG_T.has(t) && i + 1 < n && toks[i + 1] === "t") return {end: i + 2, can: false};
+  if(t === "not" && i + 1 < n && NEG_ONLY_AFTER.has(toks[i + 1])) return null;
+  if(NEG_WORDS.has(t)) return {end: i + 1, can: false};
+  if(t === "without" || NEG_VERBS.some(v => t.startsWith(v))) return {end: i + 1, can: true};
+  return null;
+}
+function findNegations(toks, breaks){   /* [{cue: [a, b], scope: [b, e], can, cancelled}]: what each cue covers (to the next clause break, at most 8 words); a second cue right after the first cancels both */
+  const cues = [], n = toks.length; let i = 0;
+  while(i < n){
+    const h = cueAt(toks, i);
+    if(!h){ i++; continue; }
+    if(saidBefore(toks, i)){ i = h.end; continue; }
+    let e = h.end; while(e < n && e - h.end < NEG_SCOPE && !breaks.has(e) && !NEG_BREAK.has(toks[e])) e++;
+    cues.push({cue: [i, h.end], scope: [h.end, e], can: h.can, cancelled: false}); i = h.end;
+  }
+  let live = null;
+  cues.forEach(c => {
+    if(live && c.can && live.scope[0] <= c.cue[0] && c.cue[0] < live.scope[1] && c.cue[0] - live.cue[1] <= NEG_GAP){ live.cancelled = c.cancelled = true; live = null; return; }
+    live = c;
+  });
+  return cues;
+}
+function splitNegation(toks, breaks){   /* -> {pos: [word positions to read], negpos: Set (what the viewer said the US would NOT do), act: the cues that stand} */
+  const cues = findNegations(toks, breaks), neg = new Set(), cuew = new Set();
+  cues.forEach(c => { for(let k = c.cue[0]; k < c.cue[1]; k++) cuew.add(k); if(!c.cancelled) for(let k = c.scope[0]; k < c.scope[1]; k++) neg.add(k); });
+  const pos = []; for(let k = 0; k < toks.length; k++) if(!neg.has(k) && !cuew.has(k)) pos.push(k);
+  return {pos, negpos: neg, act: cues.filter(c => !c.cancelled)};
+}
 const neutralSet = () => MM.neutral || (MM.neutral = new Set((D.matcher.neutral) || []));
 function mfind(t){   /* index of a word, or of its plain stem, or null */
   const m = MV.m, ix = m.idx.get(t); if(ix !== undefined) return ix;
@@ -1653,9 +1708,10 @@ function phraseMatch(toks, terms){   /* positions of the first place the terms o
   };
   return rec(0, 0);
 }
-function readMove(toks, names){   /* -> {moves: [values in list order], tier, covered: Set of word positions} */
+function readMove(toks, names){ return readMoveRuns([[0, toks]], names); }
+function readMoveRuns(runs, names){   /* -> {moves: [values in list order], tier, covered: Set of word positions}; a cue phrase never reaches across two runs */
   const hits = [], cov = new Set();
-  cueRows(names).forEach(([tier, mv, phs]) => phs.forEach(terms => { const r = phraseMatch(toks, terms); if(r) hits.push([tier, mv, r]); }));
+  cueRows(names).forEach(([tier, mv, phs]) => phs.forEach(terms => runs.forEach(([off, toks]) => { const r = phraseMatch(toks, terms); if(r) hits.push([tier, mv, r.map(x => x + off)]); })));
   if(!hits.length) return {moves: [], tier: null, covered: cov};
   const best = Math.min(...hits.map(h => h[0])), moves = new Set();
   hits.forEach(([tier, mv, r]) => { r.forEach(i => cov.add(i)); if(tier === best) mv.forEach(v => moves.add(v)); });
@@ -1671,7 +1727,7 @@ function readBox(f, typed, nu){   /* what one box's words mean: {vals, ignored} 
   const r = scan(typed, [f]);
   return {vals: order.filter(v => (r.hits[f] || []).includes(v)), ignored: r.ignored.filter(w => !nu.has(w))};
 }
-function readSpecV2(spec){   /* what the page understood: {v:2, fields, desc, sets (boxes only), cue, neg, any} */
+function readSpecV2(spec){   /* what the page understood: {v:2, fields, desc, sets (boxes only), cue, neg, negs, refrain, ptoks, any} */
   const F = MFIELDS(), nu = neutralSet(), out = {v: 2, fields: {}, sets: {}, any: false}, texts = [];
   F.forEach(f => {
     const typed = cut(spec[f], 200), unset = NOTSET.includes(typed.toLowerCase()), r = unset ? {vals: [], ignored: []} : readBox(f, typed, nu);
@@ -1679,12 +1735,17 @@ function readSpecV2(spec){   /* what the page understood: {v:2, fields, desc, se
     if(r.vals.length) out.sets[f] = r.vals;
     if(!unset) texts.push(typed);
   });
-  const dtext = cut(spec.desc, 400), dt = tok(dtext);
-  let neg = false; dt.forEach((t, k) => { if(NEGW.has(t) && !dt.slice(0, k).some(x => SAYW.has(x))) neg = true; });
-  const cue = dt.length && !neg ? readMove(dt, false) : {moves: [], tier: null, covered: new Set()}, fills = {};
+  const dtext = cut(spec.desc, 400), tb = tokBr(dtext), dt = tb.toks, sp = splitNegation(dt, tb.breaks), ptoks = sp.pos.map(k => dt[k]);
+  const runs = []; sp.pos.forEach(k => { const l = runs[runs.length - 1]; if(l && k === l[0] + l[1].length) l[1].push(dt[k]); else runs.push([k, [dt[k]]]); });   /* runs of neighbouring words that are read */
+  const cue = ptoks.length ? readMoveRuns(runs, false) : {moves: [], tier: null, covered: new Set()}, fills = {};
   if(cue.moves.length && out.fields.move && out.fields.move.unset){ fills.move = cue.moves; out.fields.move.vals = cue.moves; out.fields.move.fromDesc = true; }
-  const unknown = []; dt.forEach(t => { if(!nu.has(t) && !SILENT.has(t) && !NEGW.has(t) && MV.m && mfind(t) === null && !unknown.includes(t)) unknown.push(t); });
-  Object.assign(out, {desc: {text: dtext, fills, ignored: unknown, toks: dt}, cue, neg, boxText: texts.join(" ")});
+  const skip = t => SILENT.has(t) || FLUFF.has(t) || nu.has(t);
+  const negContent = [...sp.negpos].some(k => !skip(dt[k])) || sp.act.some(c => dt[c.cue[0]] === "nothing");
+  const posContent = ptoks.filter(t => !skip(t));
+  const unknown = []; ptoks.forEach(t => { if(!nu.has(t) && !SILENT.has(t) && MV.m && mfind(t) === null && !unknown.includes(t)) unknown.push(t); });
+  Object.assign(out, {desc: {text: dtext, fills, ignored: unknown, toks: dt}, cue, neg: sp.act.length > 0, negs: sp.act.map(c => dt.slice(c.cue[0], c.scope[1]).join(" ")), ptoks, boxText: texts.join(" ")});
+  out.posContent = posContent.length > 0;
+  out.refrain = out.neg && negContent && cue.tier === null && !posContent.length && !Object.keys(out.sets).length;
   out.any = Object.keys(out.sets).length > 0 || dt.length > 0;
   return out;
 }
@@ -1709,12 +1770,16 @@ function matchCasesV2(rd){   /* pure: what the page read -> {kept, dropped, case
   const box = F.filter(f => sets[f] && f !== "move");
   let mv = null, movesFrom = null;
   if(sets.move){ mv = sets.move.slice(); movesFrom = "box"; } else if(rd.cue.tier !== null){ mv = rd.cue.moves.slice(); movesFrom = "words"; }   /* a tier-0 cue has no move: nothing can match */
-  const q = MV.m ? membed(tok((rd.neg ? "" : rd.desc.text) + " " + rd.boxText), nu, null) : {vec: null, words: []};
-  const ranked = rd.desc.toks.length > 0 && !rd.neg && q.vec !== null;
+  const q = MV.m ? membed(tok(rd.ptoks.join(" ") + " " + rd.boxText), nu, null) : {vec: null, words: []};   /* the words the viewer said the US would NOT do are never searched */
+  const ranked = rd.ptoks.length > 0 && q.vec !== null;
   const ordered = !ranked && q.vec !== null;   /* only the boxes' words: every case that fits the boxes is kept, closest words first */
-  const base = {ranked, ordered, moves: mv || [], movesFrom, neg: rd.neg, reason: null};
+  const base = {ranked, ordered, moves: mv || [], movesFrom, neg: rd.neg, hold: false, reason: null};
   const none = reason => Object.assign({}, base, {cases: [], kept: [], dropped: [], reason});
-  if(rd.neg && !Object.keys(sets).length) return none("negation");
+  if(rd.refrain){   /* only a "not": the US would hold back, so the page uses the weeks the log counts as no new US move (option A's cases) */
+    const ho = D.options.find(x => x.is_hold), cs = ho ? ho.cases.filter(isWeek).sort((a, b) => a.date < b.date ? -1 : a.date > b.date ? 1 : a.id < b.id ? -1 : a.id > b.id ? 1 : 0).map(c => ({c, o: ho, sim: null, strength: "loose", missed: []})) : [];
+    return Object.assign({}, base, {ranked: false, ordered: false, moves: [], movesFrom: "hold", hold: true, cases: cs, kept: [], dropped: [], reason: cs.length ? null : "nothing"});
+  }
+  if(rd.neg && !Object.keys(sets).length && !rd.posContent && mv === null) return none("negation");
   if(!Object.keys(sets).length && !ranked) return none("empty");
   const sc = new Map(), vecs = ranked || ordered ? caseVectors(P) : null;
   if(ranked || ordered){
@@ -1763,6 +1828,55 @@ function matchCasesV2(rd){   /* pure: what the page read -> {kept, dropped, case
 }
 function matchCases(rd){ return rd && rd.v === 2 ? matchCasesV2(rd) : Object.assign({ranked: false, moves: [], neg: false, reason: null}, matchCasesV1(rd.sets)); }
 const CLOSE_WORD = {exact: "Very close", close: "Close", loose: "Loose"};
+/* ----- Relevance: how well the counted cases fit what was typed. It is NOT a risk and never changes a risk number. Python twin: matcher_ref.relevance ----- */
+function stemForms(t){   /* a word and its plain stems (-s, -es, -ies, -ed, -ing); two words match when their forms share one */
+  const c = new Set([t]), add = x => { if(x === t || x.length >= 3) c.add(x); };
+  if(t.endsWith("ies")) add(t.slice(0, -3) + "y");
+  if(t.endsWith("es")) add(t.slice(0, -2));
+  if(t.endsWith("s") && !t.endsWith("ss")) add(t.slice(0, -1));
+  if(t.endsWith("ed")){ add(t.slice(0, -2)); add(t.slice(0, -1)); }
+  if(t.endsWith("ing")){ add(t.slice(0, -3)); add(t.slice(0, -3) + "e"); }
+  return c;
+}
+function relHeadline(strengths){   /* share of the counted cases rated Very close or Close; integer maths so Python and JavaScript agree */
+  const n = strengths.length, close = strengths.filter(x => x === "exact" || x === "close").length;
+  if(n < 3) return {n, close, pct: null, band: "few"};
+  return {n, close, pct: Math.floor((200 * close + n) / (2 * n)), band: 4 * close >= 3 * n ? "strong" : 2 * close >= n ? "moderate" : "weak"};
+}
+function keyWords(rd, known){   /* the meaningful words typed (description + boxes), once each: no small words, no theater names, nothing the US would NOT do, nothing the page did not understand */
+  const nu = neutralSet(), skip = t => SILENT.has(t) || FLUFF.has(t) || nu.has(t), out = [];
+  rd.ptoks.forEach(t => { if(!skip(t) && known(t) && !out.includes(t)) out.push(t); });
+  MFIELDS().forEach(f => { const fd = rd.fields[f]; if(!fd || fd.unset) return; tok(fd.typed).forEach(t => { if(!skip(t) && !fd.ignored.includes(t) && !out.includes(t)) out.push(t); }); });
+  return out;
+}
+function caseWords(c){   /* what a counted case offers for the key-word check: title, kind line and the plain labels of its tags */
+  const V = D.matcher.vocab; let out = tok(c.title).concat(tok(c.kind || ""));
+  if(c.tags) MFIELDS().forEach(f => (f === "target" ? c.tags.target : [c.tags[f]]).forEach(v => { out = out.concat(tok(V[f][v] || "")); }));
+  return out;
+}
+function relevanceCalc(rd, counted){   /* counted: [{c, strength}] -> numbers only (the same as matcher_ref.relevance) */
+  const h = relHeadline(counted.map(x => x.strength)), words = keyWords(rd, t => !!MV.m && mfind(t) !== null), have = new Set();
+  counted.forEach(x => caseWords(x.c).forEach(t => stemForms(t).forEach(f => have.add(f))));
+  const miss = words.filter(w => ![...stemForms(w)].some(f => have.has(f)));
+  return Object.assign(h, {kw_total: words.length, kw_found: words.length - miss.length, kw_missing: miss, words});
+}
+const REL_BAND = {strong: "Strong fit", moderate: "Moderate fit", weak: "Weak fit — read the numbers with care"};
+const RELDEF = "Relevance says how well past cases fit what you typed, not how risky it is. It never changes a risk number.";
+function relHead(r){   /* the headline line */
+  if(!r || !r.n) return "";
+  if(r.band === "few") return `Relevance: only ${r.n} counted case${r.n === 1 ? "" : "s"}, too few to judge how well they fit.`;
+  return `Relevance: ${r.close} of ${r.n} counted cases are close or very close (${r.pct}%)`;
+}
+function relWords(r){   /* the key-word line, or "" */
+  if(!r || !r.n || !r.kw_total) return "";
+  return `Your key words: ${r.kw_found} of ${r.kw_total} show up in the titles, kinds or tags of these cases.` + (r.kw_missing.length ? ` Not found: ${r.kw_missing.slice(0, 8).join(", ")}.` : "");
+}
+const relShort = r => !r || !r.n ? "" : r.band === "few" ? "Relevance: too few cases to judge" : `Relevance: ${REL_BAND[r.band].split(" —")[0]} (${r.pct}%)`;
+function relBox(o){   /* in the option window, at the top of the risk section */
+  const r = o.rel; if(!r || !r.n) return "";
+  const hold = o.match && o.match.hold ? " Hold weeks are never rated close: the log cannot tell a chosen pause from a quiet week." : "";
+  return `<div class="relbox" id="relbox"><div class="rl"><b>${esc(relHead(r))}</b>${r.band === "few" ? "" : ` <span class="relband b-${r.band}">${esc(REL_BAND[r.band])}</span>`}</div>` + (relWords(r) ? `<div class="rl">${esc(relWords(r))}</div>` : "") + `<p class="nodata">${esc(RELDEF)}${esc(hold)}</p></div>`;
+}
 function autoName(rd){
   const parts = MFIELDS().filter(f => rd.sets[f]).map(f => rd.sets[f].map(v => valName(f, v)).join("/"));
   if(rd.v === 2 && rd.desc.text){ const d = cut(rd.desc.text, 60); return d.charAt(0).toUpperCase() + d.slice(1); }
@@ -1776,23 +1890,28 @@ const tc = t => String(t).split(" ").map((w, i, a) => (i === 0 || a[i-1] === "�
 const LBL = f => tc(D.matcher.labels[f]);
 const fieldNames = fs => fs.map(LBL).join(", ");
 const widenNote = m => m.dropped.length ? `No past case matched every box, so the page ignored: ${fieldNames(m.dropped)}.` : "";
-const NEG_NOTE = "Your words say what the US would not do, and the page cannot read “not”. Describe what it would do (for example “stop bombing” or “pull troops out”), or fill the boxes.";
-const NOTHING = "The log has nothing like this, so the page can't give a risk assessment.";
+const NEG_NOTE = "Your words say “not”, but not what the US would not do. Say which action (for example “do not strike”), or say what it would do.";
+const HOLD_NOTE = "Your words say the US would hold back, so the page uses the weeks the log counts as no new US move. That is the closest the log has: it cannot tell a chosen pause from a quiet week.";
+const NEGSEEN = negs => `The page left out what the US would not do (${negs.map(x => "“" + x + "”").join(", ")}) and read the rest.`;
+const NOTHING = "The log has no past cases like this, so there is nothing to count.";
 function countNote(m){   /* "5 past cases: 2 very close, 2 close, 1 loose" */
   const n = m.cases.length, k = s => m.cases.filter(x => x.strength === s).length;
   const parts = ["exact", "close", "loose"].filter(s => k(s)).map(s => k(s) + " " + CLOSE_WORD[s].toLowerCase());
   return n + " past case" + (n === 1 ? "" : "s") + (m.ranked || parts.length > 1 || m.dropped.length ? ": " + parts.join(", ") : "") + ".";
 }
-function previewOf(rd, m){
-  if(MV.state === "loading" && rd.v !== 2 && rd.desc && rd.desc.text) return "Your words are matched as soon as the model has loaded.";
-  if(!rd.any) return "Fill in at least one box, or describe the action, to see how many past cases match.";
-  if(rd.v === 2 && m.reason === "negation") return NEG_NOTE;
+function previewParts(rd, m){   /* [the count line, the Relevance line (or "")] for the live preview */
+  if(MV.state === "loading" && rd.v !== 2 && rd.desc && rd.desc.text) return ["Your words are matched as soon as the model has loaded.", ""];
+  if(!rd.any) return ["Fill in at least one box, or describe the action, to see how many past cases match.", ""];
+  if(rd.v === 2 && m.reason === "negation") return [NEG_NOTE, ""];
   const n = m.cases.length;
-  if(!n) return rd.v === 2 && m.reason === "empty" ? "The page could not read any of those words. Try other words, or fill the boxes." : (rd.v === 2 ? NOTHING : "NAPOR has no past US actions like this in the log, so it can't give a risk assessment.");
+  if(!n) return [rd.v === 2 && m.reason === "empty" ? "The page could not read any of those words. Try other words, or fill the boxes." : NOTHING, ""];
   const few = n < 3 ? " That is too few for a risk index (it takes at least 3), but the cases are listed." : "";
-  if(rd.v !== 2) return m.dropped.length ? `${widenNote(m)} ${n} past case${n === 1 ? "" : "s"} match the rest.${few}` : `${n} past case${n === 1 ? "" : "s"} match${n === 1 ? "es" : ""} all your settings.${few}`;
-  return `${countNote(m)}${m.ranked ? " Closest first." : ""}${m.dropped.length ? " " + widenNote(m) : ""}${few}`;
+  if(rd.v !== 2) return [m.dropped.length ? `${widenNote(m)} ${n} past case${n === 1 ? "" : "s"} match the rest.${few}` : `${n} past case${n === 1 ? "" : "s"} match${n === 1 ? "es" : ""} all your settings.${few}`, ""];
+  const rel = relevanceCalc(rd, m.cases), rl = [relHead(rel) + (rel.band === "few" ? "" : " · " + REL_BAND[rel.band] + "."), relWords(rel)].filter(Boolean).join(" ");
+  if(m.hold) return [`${n} hold week${n === 1 ? "" : "s"}. ${HOLD_NOTE}${few}`, rl];
+  return [`${countNote(m)}${m.ranked ? " Closest first." : ""}${m.dropped.length ? " " + widenNote(m) : ""}${rd.neg ? " " + NEGSEEN(rd.negs) : ""}${few}`, rl];
 }
+function previewOf(rd, m){ return previewParts(rd, m).filter(Boolean).join(" "); }
 function myOpts(){
   if(MY) return MY;
   MY = MINE.map(r => {
@@ -1803,10 +1922,10 @@ function myOpts(){
         const base = baseFor("", []);
         return Object.assign({}, base, common, {name: r.name, what: "Matching your saved words…", baseOpt: base, reading: {fields: {}, desc: {text: "", ignored: [], fills: {}}, sets: {}}, match: {cases: [], dropped: [], kept: []}, cases: [], picked: [], missing: 0, too_few: true, waiting: true, evidence: "Loading the word-meaning model…"});
       }
-      const rd = readSpec(r.spec), m = matchCases(rd), base = baseFor("", m.cases.map(x => x.c.id));
+      const rd = readSpec(r.spec), m = matchCases(rd), hold = !!m.hold, base = hold ? m.cases.length ? m.cases[0].o : D.options.find(x => x.is_hold) : baseFor("", m.cases.map(x => x.c.id));
       const picked = m.cases.map(x => ({c: x.c, from: x.o, strength: x.strength, missed: x.missed, sim: x.sim, gone: r.gone.includes(x.c.id)}));
       const cases = picked.filter(p => !p.gone).map(p => p.c);
-      return Object.assign({}, base, common, {name: r.name, what: r.spec.desc ? cut(r.spec.desc, 240) : "Past US actions with the settings you chose.", baseOpt: base, reading: rd, match: m, cases, picked, missing: 0, too_few: cases.length < 3, evidence: cases.length + " past cases"});
+      return Object.assign({}, base, common, {name: r.name, what: r.spec.desc ? cut(r.spec.desc, 240) : "Past US actions with the settings you chose.", baseOpt: base, reading: rd, match: m, cases, picked, missing: 0, too_few: cases.length < 3, is_hold: hold, evidence: cases.length + (hold ? " hold weeks" : " past cases")});
     }
     const base = baseFor(r.base, r.ids);
     const picked = r.ids.map(id => CAT && CAT.get(id)).filter(Boolean).map(e => ({c: e.c, from: e.o, why: cut(r.why[e.c.id], 200), gone: r.gone.includes(e.c.id)}));
@@ -1814,6 +1933,11 @@ function myOpts(){
     return Object.assign({}, base, common, {name: r.name, what: r.what, baseOpt: base, cases, picked, missing: r.ids.length - picked.length, too_few: cases.length < 3, evidence: cases.length + " past cases"});
   });
   return MY;
+}
+function relOf(o){   /* the Relevance figure of a saved option for the cases counted now (after removals and the condition you picked); null when there is none */
+  if(!o.mine || !o.reading || o.reading.v !== 2 || o.waiting || !o.cases.length) return null;
+  const ids = new Set(activeCases(o).map(c => c.id));
+  return relevanceCalc(o.reading, o.picked.filter(p => !p.gone && ids.has(p.c.id)).map(p => ({c: p.c, strength: p.strength})));
 }
 /* ----- the optional Claude helper (claude.ai page only): turns a description into box words ----- */
 function resolveAI(){   /* once per page load; this only checks that the AI exists, it calls nothing */
@@ -1934,7 +2058,7 @@ function myAction(el){
   else if(a === "edit") editMine(k);
   else if(a === "stop") stopAsk();
   else if(a === "open") openWin(k);
-  else if(a === "toggle") toggleCase(k, +el.dataset.id);
+  else if(a === "toggle") toggleCase(k, /^W/.test(el.dataset.id) ? el.dataset.id : +el.dataset.id);
   else if(a === "del"){ AI.confirm = k; renderMine(); const y = document.querySelector('[data-my="delyes"][data-k="' + k + '"]'); if(y) y.focus(); }
   else if(a === "delno"){ AI.confirm = null; renderMine(); }
   else if(a === "delyes") deleteMine(k);
@@ -1953,21 +2077,23 @@ const IGN = (a, lab) => a.length ? `<span class="mign">${lab || "ignored"}: ${es
 function readLine(f, rd){   /* the small line under one box: what the page read, and the words it ignored */
   if(f === "desc"){
     const fills = MFIELDS().filter(g => rd.desc.fills[g]).map(g => LBL(g) + " = " + rd.desc.fills[g].map(v => valName(g, v)).join(" / "));
-    return (fills.length ? `<span>from your words: ${esc(fills.join("; "))}${rd.v === 2 ? " (only the type of move is a fixed rule; everything else is matched by meaning)" : ""}</span> ` : "") + (rd.v === 2 ? IGN(rd.desc.ignored, "not in the word model") : IGN(rd.desc.ignored)) + (rd.v === 2 && rd.neg ? ` <span>${esc(NEG_NOTE)}</span>` : "");
+    return (fills.length ? `<span>from your words: ${esc(fills.join("; "))}${rd.v === 2 ? " (only the type of move is a fixed rule; everything else is matched by meaning)" : ""}</span> ` : "") + (rd.v === 2 ? IGN(rd.desc.ignored, "not in the word model") : IGN(rd.desc.ignored)) +
+      (rd.v === 2 && rd.refrain ? ` <span>read as: the US holds back (the weeks with no new US move)</span>` : rd.v === 2 && rd.neg ? ` <span>${esc(NEGSEEN(rd.negs))}</span>` : "");
   }
   const fd = rd.fields[f];
   return (fd.vals.length && !fd.unset ? `<span>read as: ${esc(fd.vals.map(v => valName(f, v)).join(" / "))}</span> ` : "") + IGN(fd.ignored);
 }
 function formParts(){
-  const rd = readSpec(FORM.vals), m = matchCases(rd), n = m.cases.length;
-  return {rd, m, text: previewOf(rd, m), can: rd.any && n > 0 && !(MV.state === "loading" && FORM.vals.desc && !mvReady())};
+  const rd = readSpec(FORM.vals), m = matchCases(rd), n = m.cases.length, pp = previewParts(rd, m);
+  return {rd, m, text: pp[0], rel: pp[1], can: rd.any && n > 0 && !(MV.state === "loading" && FORM.vals.desc && !mvReady())};
 }
+const prevHtml = P => esc(P.text) + (P.rel ? `<span class="mrel">${esc(P.rel)}</span>` : "");
 function refreshForm(){   /* update only the small lines, chips and the button: the boxes themselves are never redrawn while typing */
   if(!D || !D.matcher || !$("#mform .mgroup")) return;
   const P = formParts(), full = MINE.length >= MAXMINE && !FORM.editing;
   MFIELDS().concat("desc").forEach(f => { const e = $("#mr-" + f); if(e) e.innerHTML = readLine(f, P.rd); });
   document.querySelectorAll("[data-chip-f]").forEach(b => { const fd = P.rd.fields[b.dataset.chipF]; b.setAttribute("aria-pressed", !!(fd && !fd.unset && fd.vals.includes(b.dataset.v))); });
-  const pv = $("#mprev"); if(pv) pv.textContent = P.text;
+  const pv = $("#mprev"); if(pv) pv.innerHTML = prevHtml(P);
   const go = $("#my-go"); if(go) go.disabled = !P.can || full;
 }
 const MGROUPS = [["What the US Does", ["move", "target"]], ["Where and How Big", ["where", "scale"]], ["Who Acts and How Openly", ["who", "open"]]];
@@ -1979,10 +2105,11 @@ function mineSection(){   /* the small card on the page: one button, the saved o
   h += msgRow(null);
   if(list.length) h += `<div class="mylist" role="group" aria-label="Your saved options">` + list.map(o => {
     const cs = activeCases(o), ix = riskIndex(o, cs);
-    return `<div class="mc"><button class="mgo" data-my="open" data-k="${o.key}" aria-pressed="${S.open.includes(o.key)}"${o.waiting ? " disabled" : ""}><span class="key">${o.key}</span><span class="nm">${esc(o.name)} <span class="oldtag">yours</span></span><span class="ev">${o.waiting ? "Loading the word-meaning model…" : !o.cases.length ? "No cases counted" : (ix ? "Risk index " + Math.round(ix.raw * 100) + "% · " : o.too_few ? "Too few cases · " : "") + cntLabel(cs.length, o.cases.length, false) + (S.phase || S.band ? " in this condition" : "")}</span></button>` +
+    return `<div class="mc"><button class="mgo" data-my="open" data-k="${o.key}" aria-pressed="${S.open.includes(o.key)}"${o.waiting ? " disabled" : ""}><span class="key">${o.key}</span><span class="nm">${esc(o.name)} <span class="oldtag">yours</span></span><span class="ev">${o.waiting ? "Loading the word-meaning model…" : !o.cases.length ? "No cases counted" : (ix ? "Risk index " + Math.round(ix.raw * 100) + "% · " : o.too_few ? "Too few cases · " : "") + cntLabel(cs.length, o.cases.length, !!o.is_hold) + (S.phase || S.band ? " in this condition" : "")}</span>${relCard(o)}</button>` +
       (AI.confirm === o.key ? delRow(o.key) : `<button class="mx" data-my="del" data-k="${o.key}" aria-label="Delete ${o.key}" title="Delete">×</button>`) + `</div>`; }).join("") + `</div>`;
   return h + `</div>`;
 }
+function relCard(o){ const r = relOf(o), t = relShort(r); return t ? `<span class="rel" title="${esc(RELDEF)}">${esc(t)}</span>` : ""; }
 function fieldHtml(f, P){
   const M = D.matcher, fd = P.rd.fields[f];
   return `<div class="mf"><label for="mf-${f}">${esc(LBL(f))}</label><input type="text" id="mf-${f}" maxlength="200" autocomplete="off" placeholder="N/A" value="${esc(FORM.vals[f])}">` +
@@ -1999,7 +2126,7 @@ function formHtml(){   /* the popup: grouped boxes, then a footer that stays in 
     (claude ? `<button type="button" class="linkbtn" data-my="fill"${busy ? " disabled" : ""} title="Sends only your description to Claude">Fill the boxes with Claude</button>` : "") + `</div><p class="mread" id="mr-desc">${readLine("desc", P.rd)}</p></div></div>`;
   if(busy && !AI.busy.key) h += busyRow();
   h += msgRow(null) + `</div>`;
-  h += `<div class="mfoot">${MV.state === "loading" ? `<p class="mymsg" role="status">Loading the word-meaning model…</p>` : MV.state === "failed" ? `<p class="mymsg" role="status">${esc(MV_FAIL)}</p>` : ""}<p class="mprev" id="mprev" role="status">${esc(P.text)}</p>` + (full ? `<p class="nodata">You have ${MAXMINE} saved options. Delete one to make another.</p>` : "") +
+  h += `<div class="mfoot">${MV.state === "loading" ? `<p class="mymsg" role="status">Loading the word-meaning model…</p>` : MV.state === "failed" ? `<p class="mymsg" role="status">${esc(MV_FAIL)}</p>` : ""}<p class="mprev" id="mprev" role="status">${prevHtml(P)}</p>` + (full ? `<p class="nodata">You have ${MAXMINE} saved options. Delete one to make another.</p>` : "") +
     `<div class="myrow"><button class="mybtn" id="my-go" data-my="assess"${P.can && !full ? "" : " disabled"}>Assess</button>` + (FORM.editing ? `<span class="mupd">Updating ${esc(FORM.editing)}</span><button class="linkbtn" data-my="cancel">Cancel</button>` : "") + `<button class="linkbtn mclear" data-my="clear">Clear all</button></div></div>`;
   return h;
 }
@@ -2018,8 +2145,8 @@ function settingsBox(o){
     return `<dt>${esc(LBL(f))}</dt><dd>${fd.unset ? "" : "“" + esc(fd.typed) + "” → "}${esc(read)}${fd.ignored.length ? " " + IGN(fd.ignored) : ""}</dd>`; }).join("");
   const dsc = rd.desc.text ? `<dt>Description</dt><dd>“${esc(rd.desc.text)}”${rd.desc.ignored.length ? " " + (v2 ? IGN(rd.desc.ignored, "not in the word model") : IGN(rd.desc.ignored)) : ""}</dd>` : "";
   const m = o.match, n = m.cases.length;
-  const note = n ? widenNote(m) : (v2 ? (m.reason === "negation" ? NEG_NOTE : NOTHING.replace("so the page can't give a risk assessment.", "in the latest data, so there is nothing to count.")) : "NAPOR has no past US actions like this in the latest data, so there is nothing to count.");
-  const how = v2 ? "The page keeps past cases whose move fits (a box you filled, or a clear move in your words) and ranks them by how close their words are to yours. " : "";
+  const note = n ? (v2 && m.hold ? HOLD_NOTE : widenNote(m) + (v2 && rd.neg ? " " + NEGSEEN(rd.negs) : "")).trim() : (v2 && m.reason === "negation" ? NEG_NOTE : NOTHING);
+  const how = v2 && !m.hold ? "The page keeps past cases whose move fits (a box you filled, or a clear move in your words) and ranks them by how close their words are to yours. " : "";
   return `<div class="mset"><b>Your settings</b><dl>${rows}${dsc}</dl>${note ? `<p>${esc(note)}</p>` : ""}<p>${how}Matched again with the latest data each time you open the page.</p>${!v2 && MV.state === "failed" ? `<p>${esc(MV_FAIL)}</p>` : ""}</div>`;
 }
 function mineBanner(o){
@@ -2032,15 +2159,17 @@ function mineBanner(o){
 }
 const tagLine = t => [t.move, t.target.join("+"), t.where, t.scale, t.who, t.open].join(" · ");
 function mineWhy(o){
-  const act = new Set(activeCases(o).map(c => c.id)), r = o.rec, v2 = !!r.spec, ranked = v2 && o.reading.v === 2 && o.match.ranked;
-  const legend = !v2 ? "Claude chose these from the log by what the US did, without seeing how things turned out. Remove any that don't fit; the numbers update right away."
+  const act = new Set(activeCases(o).map(c => c.id)), r = o.rec, v2 = !!r.spec, ranked = v2 && o.reading.v === 2 && o.match.ranked, hold = v2 && o.reading.v === 2 && o.match.hold;
+  const legend = hold ? "Your words say the US would hold back. The log has no record of the US choosing to hold back, so the page uses the weeks it counts as no new US move (option A's weeks). That is the closest the log has: a quiet week and a chosen pause look the same. The tags below do not exist for weeks, so no week is rated close. Remove any week that does not fit; the numbers update right away."
+    : !v2 ? "Claude chose these from the log by what the US did, without seeing how things turned out. Remove any that don't fit; the numbers update right away."
     : o.reading.v === 2 ? `The page kept past cases whose type of move fits${o.match.movesFrom === "words" ? " (read from your words: " + esc(o.match.moves.map(x => valName("move", x)).join(" / ")) + ")" : o.match.movesFrom === "box" ? " (the box you filled)" : ""}, then listed them ${ranked ? "closest first" : o.match.ordered ? "best fit first" : "by date"}. The tags describe what the US did and never what followed. ${ranked ? "“Very close” means the words are close and every box you filled is met; “Close” is a little less close or misses one box; “Loose” is the weakest fit." : "“Very close” means the case fits every box you filled, “Close” misses one box, “Loose” misses two or more. (No description was typed, so every case that fits the boxes is shown.)"} Closeness is the model's reading of the words, not a probability. Remove any that don't fit; the numbers update right away.`
     : "The page picked these by their tags (key words only), which say what the US did and never what followed. “Very close” means the case fits every setting you filled in, “close” misses one, “loose” misses two or more. Remove any that don't fit; the numbers update right away.";
   let h = `<section><h2>Why these past cases</h2><p class="legend idxdef">${legend}${o.missing ? " " + o.missing + " saved case" + (o.missing === 1 ? " is" : "s are") + " no longer in the log." : ""}</p>`;
-  h += o.picked.map(p => { const c = p.c, off = !p.gone && !act.has(c.id);
-    const why = v2 ? `<span class="str s-${p.strength}">${CLOSE_WORD[p.strength]}</span> <span class="mono" title="${esc(c.tags.why || "")}">tags: ${esc(tagLine(c.tags))}</span>${p.missed.length ? " misses: " + esc(fieldNames(p.missed)) : ""}` : (p.why ? "Claude: " + esc(p.why) : "No reason saved.");
-    return `<div class="mycase${p.gone ? " gone" : ""}"><div class="mct"><span class="mono">${esc(fmtDate(c.date, true))} · #${c.id}</span>${esc(short(c.title, 160))} <span class="oldtag">from ${esc(p.from.key)}. ${esc(short(p.from.name, 40))}</span>${p.gone ? ' <span class="oldtag">removed</span>' : ""}${off ? ` <span class="oldtag">${S.asof && c.date > S.asof ? "after the date you are viewing" : "outside your condition"}: not counted now</span>` : ""}</div>` +
+  const rows = o.picked.map(p => { const c = p.c, off = !p.gone && !act.has(c.id);
+    const why = hold ? `<span class="str s-loose">Loose</span> no new US move was logged that week` : v2 ? `<span class="str s-${p.strength}">${CLOSE_WORD[p.strength]}</span> <span class="mono" title="${esc(c.tags.why || "")}">tags: ${esc(tagLine(c.tags))}</span>${p.missed.length ? " misses: " + esc(fieldNames(p.missed)) : ""}` : (p.why ? "Claude: " + esc(p.why) : "No reason saved.");
+    return `<div class="mycase${p.gone ? " gone" : ""}"><div class="mct"><span class="mono">${esc(fmtDate(c.date, true))} · ${hold ? "week" : "#" + c.id}</span>${esc(short(c.title, 160))}${hold ? "" : ` <span class="oldtag">from ${esc(p.from.key)}. ${esc(short(p.from.name, 40))}</span>`}${p.gone ? ' <span class="oldtag">removed</span>' : ""}${off ? ` <span class="oldtag">${S.asof && c.date > S.asof ? "after the date you are viewing" : "outside your condition"}: not counted now</span>` : ""}</div>` +
       `<div class="rw">${why}</div><button class="linkbtn" data-my="toggle" data-k="${o.key}" data-id="${c.id}">${p.gone ? "Put back" : "Remove"}</button></div>`; }).join("") || '<p class="nodata">No cases.</p>';
+  h += hold && o.picked.length ? `<details class="cases"><summary>Show the ${o.picked.length} hold week${o.picked.length === 1 ? "" : "s"} (remove any)</summary>${rows}</details>` : rows;
   h += `<div class="myact">`;
   if(v2) h += `<button class="linkbtn" data-my="edit" data-k="${o.key}">Edit settings</button>`;
   h += AI.confirm === o.key ? delRow(o.key) : `<button class="linkbtn" data-my="del" data-k="${o.key}">Delete this option</button>`;

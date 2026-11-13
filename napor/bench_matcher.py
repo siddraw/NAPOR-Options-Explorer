@@ -170,7 +170,7 @@ nothing like it: dev %d, test %d):
 - **none-correct**: the share of "nothing like this in the log" queries where the page returned nothing.
 
 Honest limits: the key lists only 1 to 11 cases per query (most 2 to 4), so the numbers move a lot when a single case is
-added or removed. The test half was scored after the tuning numbers were frozen; later edits did not change its score. The model understands words, not whole situations. The key is a person's judgement; a few of its
+added or removed. The test half was scored after the tuning numbers were frozen; later edits did not change its score. The model understands words, not whole situations. The answer key has one "not" query (a say-sentence); negation is handled by fixed rules and checked apart in `tests/test_matcher_negation.py` (31 example phrasings and 34 held-out ones). The key is a person's judgement; a few of its
 choices are debatable. Each theater's log is small (27 to 98 cases).
 
 Re-run: `cd napor && python3 bench_matcher.py` (v2 only needs numpy). `python3 bench_matcher.py --v1` re-runs the old matcher in a

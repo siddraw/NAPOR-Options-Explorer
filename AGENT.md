@@ -24,6 +24,13 @@ are done once per theater. Steps 3-5 are Iran only.
    event's own title and sources, never from what followed; use `why` for a judgment call. The viewer's "Your own
    option" matcher finds past cases by these tags (boxes the viewer fills are exact filters on them). `python3 napor/tag_check.py` (a weekly_build step) FAILS the
    build when a counted case has no tags or uses a word outside the list.
+   NON-US ACTORS (owner rule, 2026-11-12, Sidd: "include Israeli actions as US cases only when you see a correlation (US funding, joint
+   work...), not all the time"): an action by Israel or another non-US government (Saudi Arabia, the UK, Japan, South Korea... acting alone) is a
+   US case only if the log's own sources show a US link: a joint operation, US intelligence, refueling or air defense used in it, the US asked
+   for, approved or announced it, or the US acts within days as part of the same operation. Otherwise it is NOT a US case and must not be in any US
+   option. WEEKLY: for any new non-US-actor event, record the US link in `napor/non_us_actors.py` `LINKS` (and say it in the tag's `why`) or exclude it in
+   `EXCLUDED` with the reason; do not guess, and put a real judgment call in `REVIEW` for Sidd. The weekly build (`tag_check.py`) FAILS when a counted
+   case has a non-US actor and no recorded US link, or when an excluded case is still counted.
    MATCHER ACCURACY AND THE WORD FILE (owner rule, 2026-11-11): the "Your own option" matcher uses a small word-meaning
    model (GloVe vectors in `explorer/matcher_vectors.json`) plus fixed rules (`CUES` in `napor/action_tags.py`). Accuracy is checked
    every build: `python3 bench_matcher.py --check` (a weekly_build step) FAILS if the test half of `tests/matcher_bench.json` falls below
@@ -33,6 +40,7 @@ are done once per theater. Steps 3-5 are Iran only.
    into the git-ignored `napor/glove/`). `python3 build_vectors.py --check` (also a weekly_build step) lists words the file does not
    cover yet. Then republish: the publish file list in step 9 now includes `matcher_vectors.json`. Do not retune thresholds
    (`MATCH` in `action_tags.py`) or edit the answer key on your own; report the accuracy numbers (`python3 bench_matcher.py`) and wait for Sidd.
+   "Not" in a description is read by fixed rules in `matcher_ref.py` and the page (negation cues and scope, not the word model); the page also shows a "Relevance" figure (how well the counted cases fit what was typed; never a risk). Both are described in `docs/METHODOLOGY.md` section 13 and tested by `tests/test_matcher_negation.py` and `tests/test_matcher_relevance.py`. Do not change those rules without Sidd; if you see a phrasing misread, add it to the report.
    BLOCKED SOURCES (owner rule, 2026-11-02): never collect, cite or link state-run or armed-group media. They score 0
    and `tests/test_sources.py` fails if one appears. Iran: Tasnim, IRNA, Press TV, Fars, Mehr, IRIB, ISNA, Al-Alam and
    similar; Houthis: al-Masirah, Saba, Al-Manar; North Korea: KCNA, Rodong Sinmun, KCTV; China: Xinhua, Global Times,

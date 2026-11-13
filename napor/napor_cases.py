@@ -55,7 +55,7 @@ def option_cases(key, last=LAST):
     if FLAGS[key]["is_hold"]:
         cases = hold_weeks.cases(last)
     elif o["match"]:
-        for c in [c for c in O.census if O.us_side(c[0]) and o["match"](c[0])]:
+        for c in [c for c in O.census if O.us_case(c[0]) and o["match"](c[0])]:
             prs = [p for p in O.pairs if p[1] == c[0]]
             counted = c[2] in COUNTED
             cases.append(dict(**ev(c[0]), cls=c[2], replied=(c[2] != "N") if counted else None,

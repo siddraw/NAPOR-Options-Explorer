@@ -164,7 +164,7 @@ def robustness(ctx=None):
     ]
     for key in ("C", "D", "E", "F", "G"):
         o = [x for x in O.OPTIONS if x["key"] == key][0]
-        rows = [c for c in O.census if O.us_side(c[0]) and o["match"](c[0]) and c[2] in NC.COUNTED]
+        rows = [c for c in O.census if O.us_case(c[0]) and o["match"](c[0]) and c[2] in NC.COUNTED]
         res = dict(key=key, name=o["name"], cells=[])
         for label, f, mode in variants:
             k = n = 0

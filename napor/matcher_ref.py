@@ -2,6 +2,8 @@
 steps in JavaScript; tests and the Playwright parity check make sure both give the same ranked case ids.
 
 What it does, in plain words: a viewer describes a US action. The matcher finds past cases of the SAME KIND:
+  0. "Not". Words after a negation cue (not, never, without, avoid, instead of...) are what the US would NOT do: they are left out of every
+     step below (rules, not the model). If that is all the viewer wrote, the US holds back: the matched cases are the hold weeks.
   1. Hard rules. Boxes the viewer filled are exact filters on the case tags. In the description, clear cue phrases
      ("pull troops out", "sell weapons to", "kill a general") pick the Type of move, and that is a hard filter too.
   2. Word meaning. Every case (title + kind + the plain label of its move and target) and the description become one
@@ -10,6 +12,7 @@ What it does, in plain words: a viewer describes a US action. The matcher finds 
   3. A closeness cut-off and a maximum number of cases. If even the best case is not close enough, nothing is returned.
 The model only RETRIEVES cases. Every number on the page (five categories, risk index) is still counted from the
 matched cases by the page's own code. All tuning numbers live in action_tags.MATCH (exported with the page data).
+Relevance (further down) says how well the counted cases fit what was typed; it is never a risk and changes no number.
 """
 import base64
 import json
@@ -22,7 +25,23 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 EXPLORER = os.path.join(HERE, "..", "explorer")
 TOK = re.compile(r"[a-z]+")
 SAY = {"say", "says", "said", "declare", "declares", "state", "states", "announce", "announces", "pledge", "pledges", "promise", "promises", "reaffirm", "affirm", "tell", "tells", "warn", "warns", "reiterate", "clarify", "commit", "vow", "publicly"}   # words after which a "not" is part of what is said
-NEG = {"not", "no", "never", "without", "dont", "don", "doesnt", "doesn", "didnt", "wont", "won", "refuse", "refuses", "refrain", "avoid", "instead", "rather", "neither", "nor"}
+# ---- negation: a rule layer (NOT the word model, which cannot be told "not"). See docs/METHODOLOGY.md section 13. ----
+# A negation cue says the words after it (up to the next clause break, at most NEG_SCOPE words) are what the US would NOT do.
+NEG_WORDS = {"not", "no", "never", "nothing", "neither", "nor", "dont", "doesnt", "didnt", "wont", "cant", "cannot", "shouldnt", "wouldnt",
+             "couldnt", "mustnt"}
+NEG_T = {"don", "doesn", "didn", "won", "can", "shouldn", "wouldn", "couldn", "mustn"}   # followed by "t" ("don't" -> don, t)
+NEG_VERBS = ("refrain", "refus", "avoid", "declin", "forgo", "forego", "abstain", "shun", "eschew", "forswear", "renounc", "skip")   # word starts that mean "not doing"
+NEG_PAIRS = [(("rule|rules|ruled|ruling", "out"), True), (("hold|holds|holding|held", "off|back"), True), (("stay|stays|staying|stayed|keep|keeps|keeping|kept", "out|away"), True),
+             (("steer|steers|steering", "clear"), True), (("back|backs|backing|backed", "off"), True), (("stop|stops|stopping|stopped", "short", "of"), True),
+             (("instead", "of"), False), (("rather", "than"), False), (("in", "place", "of"), False), (("as", "opposed", "to"), False)]
+NEG_ONLY_AFTER = {"only", "just", "merely", "simply"}           # "not only X but Y" is not a negation
+NEG_BREAK_WORDS = {"but", "then", "instead", "however", "although", "though", "while", "whereas", "yet"}
+NEG_SCOPE = 8
+NEG_GAP = 2     # "not (completely) ruling out": two cues this close cancel each other
+FLUFF = set("take takes took taking make makes made making keep keeps kept keeping go goes going get gets have has had be been being are was were am will shall should "
+            "could can may might must we i you they he she our their its his her my your america american americans washington administration government president trump "
+            "united states also just only please now and or but any anything more further new additional another other again ever even still simply really actually so too very much "
+            "many there here what which who when while such yet".split())
 SILENT = set("the a an of to for by with if did does do would from then than is it that this these those some all as be into u s us on in at near onto over off against up".split())
 NOTSET = ["", "n/a", "na", "none", "-", "any"]
 GAP = 4
@@ -30,6 +49,88 @@ GAP = 4
 
 def tokens(text):
     return TOK.findall(str(text if text is not None else "").lower().replace("’", "'").replace("‘", "'"))
+
+
+PIECE = re.compile(r"[a-z]+|[,;:.!?()\u2014\u2013]")
+
+
+def tokens_br(text):
+    """-> (tokens, breaks): the same words as tokens(), plus the set of word positions that have a punctuation break (comma, ;, :, ., !, ?, brackets, dashes) just before them."""
+    toks, breaks = [], set()
+    for m in PIECE.findall(str(text if text is not None else "").lower().replace("\u2019", "'").replace("\u2018", "'")):
+        if m[0].isalpha():
+            toks.append(m)
+        else:
+            breaks.add(len(toks))
+    return toks, breaks
+
+
+def said_before(toks, i):
+    """True when a say/declare/announce word comes before word i (then a "not" there is part of what is said). "United States" is not a say word."""
+    return any(x in SAY and not (x == "states" and k > 0 and toks[k - 1] == "united") for k, x in enumerate(toks[:i]))
+
+
+def _alt(tok, alts):
+    return tok in alts.split("|")
+
+
+def _cue_at(toks, i):
+    """The negation cue that starts at word i: (end, can_cancel) or None. can_cancel = it may cancel a "not" right before it."""
+    n, t = len(toks), toks[i]
+    for pair, can in NEG_PAIRS:
+        if i + len(pair) <= n and all(_alt(toks[i + j], pair[j]) for j in range(len(pair))):
+            return i + len(pair), can
+    if t in NEG_T and i + 1 < n and toks[i + 1] == "t":
+        return i + 2, False
+    if t == "not" and i + 1 < n and toks[i + 1] in NEG_ONLY_AFTER:
+        return None
+    if t in NEG_WORDS:
+        return i + 1, False
+    if t == "without" or t.startswith(NEG_VERBS):
+        return i + 1, True
+    return None
+
+
+def find_negations(toks, breaks):
+    """Negation cues and what they cover: a list of {cue: (start, end), scope: (start, end), can_cancel, cancelled} in text order (positions are word
+    positions, end exclusive). The scope is the words after the cue up to the next clause break (comma, ; : . ! ? bracket, dash, "but", "then",
+    "instead", "however"...) and at most NEG_SCOPE words. A cue after a say/declare word is part of what is said, not a negation here. "not only/just"
+    is not a negation. A second cue right after a first one ("not ruling out", "won't refuse") cancels both: a double negative is positive."""
+    cues, i, n = [], 0, len(toks)
+    while i < n:
+        h = _cue_at(toks, i)
+        if h is None:
+            i += 1
+            continue
+        end, can = h
+        if said_before(toks, i):
+            i = end
+            continue
+        e = end
+        while e < n and e - end < NEG_SCOPE and e not in breaks and toks[e] not in NEG_BREAK_WORDS:
+            e += 1
+        cues.append(dict(cue=(i, end), scope=(end, e), can_cancel=can, cancelled=False))
+        i = end
+    live = None
+    for c in cues:
+        if live is not None and c["can_cancel"] and live["scope"][0] <= c["cue"][0] < live["scope"][1] and c["cue"][0] - live["cue"][1] <= NEG_GAP:
+            live["cancelled"] = c["cancelled"] = True
+            live = None
+            continue
+        live = c
+    return cues
+
+
+def split_negation(toks, breaks):
+    """-> (positive positions [sorted], negated positions {cue words and what they cover}, cue-word positions, active negations)."""
+    cues = find_negations(toks, breaks)
+    neg, cuew = set(), set()
+    for c in cues:
+        cuew.update(range(*c["cue"]))
+        if not c["cancelled"]:
+            neg.update(range(*c["scope"]))
+    pos = [k for k in range(len(toks)) if k not in neg and k not in cuew]
+    return pos, neg, cuew, [c for c in cues if not c["cancelled"]]
 
 
 # ---------------------------------------------------------------- word model
@@ -136,13 +237,20 @@ def cue_rows(matcher, names=False):
 
 def read_move(toks, matcher, names=False):
     """The Type of move a text points to: {moves: [values in VOCAB order], tier, covered: set of token positions}."""
-    best, moves, cov = None, set(), set()
+    return read_move_runs([(0, toks)], matcher, names)
+
+
+def read_move_runs(runs, matcher, names=False):
+    """The same, for several separate runs of words [(offset, tokens)]: a cue phrase never reaches across the gap between two runs
+    (the gap is a stretch of words the viewer said the US would NOT do)."""
+    moves, cov = set(), set()
     hits = []
     for tier, mv, phs in cue_rows(matcher, names):
         for terms in phs:
-            r = phrase_match(toks, terms)
-            if r is not None:
-                hits.append((tier, mv, r))
+            for off, toks in runs:
+                r = phrase_match(toks, terms)
+                if r is not None:
+                    hits.append((tier, mv, [off + x for x in r]))
     if not hits:
         return dict(moves=[], tier=None, covered=set())
     best = min(h[0] for h in hits)
@@ -227,15 +335,25 @@ def read_spec(spec, matcher, neutral=()):
         if not unset:
             texts.append(typed)
     dtext = " ".join(str(spec.get("desc", "") or "").split())[:400]
-    dt = tokens(dtext)
-    neg = False
-    for k, t in enumerate(dt):
-        if t in NEG and not any(x in SAY for x in dt[:k]):
-            neg = True
+    dt, br = tokens_br(dtext)
+    pos, negpos, cuew, act = split_negation(dt, br)
+    ptoks = [dt[k] for k in pos]
     cue = dict(moves=[], tier=None, covered=set())
-    if dt and not neg:
-        cue = read_move(dt, matcher)
-    return dict(fields=fields, sets=sets, box_text=" ".join(texts), desc=dtext, dtoks=dt, neg=neg, cue=cue)
+    runs = []
+    for k in pos:                       # runs of neighbouring positive words: a cue phrase never reaches across negated words
+        if runs and k == runs[-1][0] + len(runs[-1][1]):
+            runs[-1][1].append(dt[k])
+        else:
+            runs.append([k, [dt[k]]])
+    runs = [(r[0], r[1]) for r in runs]
+    if ptoks:
+        cue = read_move_runs(runs, matcher)
+    skip = SILENT | FLUFF | set(neutral)
+    neg_content = any(dt[k] not in skip for k in negpos) or any(dt[c["cue"][0]] == "nothing" for c in act)
+    pos_content = [t for t in ptoks if t not in skip]
+    negs = [" ".join(dt[c["cue"][0]:c["scope"][1]]) for c in act]
+    refrain = bool(act) and neg_content and cue["tier"] is None and not pos_content and not sets
+    return dict(fields=fields, sets=sets, box_text=" ".join(texts), desc=dtext, dtoks=dt, ptoks=ptoks, neg=bool(act), negs=negs, refrain=refrain, pos_content=bool(pos_content), cue=cue)
 
 
 # ---------------------------------------------------------------- the cases
@@ -246,13 +364,17 @@ class Theater:
         self.matcher = d["matcher"]
         self.neutral = set(self.matcher.get("neutral") or [])
         self.model = model
-        seen, self.cases = set(), []
+        seen, self.cases, self.holds = set(), [], []
         for o in d["options"]:
+            if o.get("is_hold"):    # the hold option's cases are weeks with no logged US move (c.week); the page counts them as option A does
+                self.holds = [dict(id=c["id"], date=c["date"], title=c["title"], kind=c.get("kind", ""), okey=o["key"]) for c in o["cases"] if c.get("week")]
             for c in o["cases"]:
                 if c.get("week") or "tags" not in c or c["id"] in seen:
                     continue
                 seen.add(c["id"])
                 self.cases.append(dict(id=c["id"], date=c["date"], title=c["title"], kind=c.get("kind", ""), tags=c["tags"], okey=o["key"]))
+        self.by_id = {c["id"]: c for c in self.cases}
+        self.by_id.update({w["id"]: w for w in self.holds})
         self._prep = None
 
     def prep(self):
@@ -302,12 +424,15 @@ def _match(rd, th, P):
         mv, mv_from = list(sets["move"]), "box"
     elif rd["cue"]["tier"] is not None:           # a clear cue; tier-0 cues carry no move at all, so nothing can match
         mv, mv_from = list(rd["cue"]["moves"]), "words"
-    qtext = ("" if rd["neg"] else rd["desc"]) + " " + rd["box_text"]
+    qtext = " ".join(rd["ptoks"]) + " " + rd["box_text"]      # the words the viewer said the US would NOT do are never searched
     qvec, qwords = embed(model, tokens(qtext), th.neutral)
-    ranked = bool(rd["dtoks"]) and not rd["neg"] and qvec is not None
+    ranked = bool(rd["ptoks"]) and qvec is not None
     ordered = (not ranked) and qvec is not None      # only the boxes' words: every case that fits the boxes is kept, closest words first
-    base = dict(ranked=ranked, moves=mv or [], moves_from=mv_from, neg=rd["neg"], reason=None)
-    if rd["neg"] and not sets:
+    base = dict(ranked=ranked, moves=mv or [], moves_from=mv_from, neg=rd["neg"], hold=False, reason=None)
+    if rd["refrain"]:                                  # only a "not": the US would hold back -> the weeks with no new US move
+        cs = [dict(id=w["id"], sim=None, strength="loose", missed=[], week=True) for w in sorted(th.holds, key=lambda w: (w["date"], w["id"]))]
+        return dict(base, ranked=False, moves=[], moves_from="hold", hold=True, cases=cs, kept=[], dropped=[], reason=None if cs else "nothing")
+    if rd["neg"] and not sets and not rd["pos_content"] and mv is None:
         return dict(base, cases=[], kept=[], dropped=[], reason="negation")
     if not sets and not ranked:
         return dict(base, cases=[], kept=[], dropped=[], reason="empty")
@@ -369,6 +494,77 @@ def _match(rd, th, P):
             st = "exact" if not missed else "close" if len(missed) == 1 else "loose"
         res.append(dict(id=c["id"], sim=s, strength=st, missed=missed))
     return dict(base, cases=res, kept=kept, dropped=dropped, reason="weak" if (weak and not res) else None)
+
+
+# ---------------------------------------------------------------- relevance (how well the counted cases fit what was typed; never a risk)
+def stem_forms(t):
+    """A word and its plain stems (-s, -es, -ies, -ed, -ing; the same simple stemming as Model.find). Two words match when their forms share one."""
+    c = {t}
+    if t.endswith("ies"): c.add(t[:-3] + "y")
+    if t.endswith("es"): c.add(t[:-2])
+    if t.endswith("s") and not t.endswith("ss"): c.add(t[:-1])
+    if t.endswith("ed"): c.update([t[:-2], t[:-1]])
+    if t.endswith("ing"): c.update([t[:-3], t[:-3] + "e"])
+    return {x for x in c if x == t or len(x) >= 3}
+
+
+def relevance_headline(strengths):
+    """Share of the counted cases rated Very close or Close. strengths = the strength word of each counted case.
+    band: 'few' (under 3 cases), 'strong' (75% or more), 'moderate' (50-74%), 'weak' (under 50%). Integer maths only, so Python and JavaScript agree."""
+    n = len(strengths)
+    close = sum(1 for x in strengths if x in ("exact", "close"))
+    if n < 3:
+        return dict(n=n, close=close, pct=None, band="few")
+    band = "strong" if 4 * close >= 3 * n else "moderate" if 2 * close >= n else "weak"
+    return dict(n=n, close=close, pct=(200 * close + n) // (2 * n), band=band)
+
+
+def key_words(rd, neutral, known):
+    """The meaningful words the viewer typed (description + boxes), once each, in order: not a small word, not one of the theater's own names, not a word
+    the viewer said the US would NOT do, and (description) known to the word model / (box) understood by the page. known(t) -> bool for description words."""
+    skip = SILENT | FLUFF | set(neutral)
+    out = []
+    for t in rd["ptoks"]:
+        if t not in skip and known(t) and t not in out:
+            out.append(t)
+    for f, fd in rd["fields"].items():
+        if fd["unset"]:
+            continue
+        for t in tokens(fd["typed"]):
+            if t not in skip and t not in fd["ignored"] and t not in out:
+                out.append(t)
+    return out
+
+
+def relevance_words(words, case_token_lists):
+    """How many key words show up (after stemming) in at least one counted case's words. -> (found count, [missing words])."""
+    have = set()
+    for toks in case_token_lists:
+        for t in toks:
+            have |= stem_forms(t)
+    miss = [w for w in words if not (stem_forms(w) & have)]
+    return len(words) - len(miss), miss
+
+
+def case_words(th, case_id):
+    """The words a counted case offers for the key-word check: its title, its kind line and the plain labels of its tags."""
+    c = th.by_id[case_id]
+    V = th.matcher["vocab"]
+    out = tokens(c["title"]) + tokens(c.get("kind", ""))
+    t = c.get("tags")
+    if t:
+        for f in th.matcher["fields"]:
+            for v in (t[f] if f == "target" else [t[f]]):
+                out += tokens(V[f].get(v, ""))
+    return out
+
+
+def relevance(rd, th, case_ids, strengths):
+    """The whole Relevance figure for the counted cases (ids + strengths): headline numbers and the key-word line."""
+    h = relevance_headline(strengths)
+    words = key_words(rd, th.neutral, lambda t: th.model.find(t) is not None)
+    found, miss = relevance_words(words, [case_words(th, i) for i in case_ids])
+    return dict(h, kw_total=len(words), kw_found=found, kw_missing=miss, words=words)
 
 
 # ---------------------------------------------------------------- bench helpers

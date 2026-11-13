@@ -103,9 +103,13 @@ Paths below are used by the weekly update. Do not move or rename them without up
 | `napor/verify_explorer.py` | Independent recount for Iran |
 | `napor/action_tags.py` | The six "Your own option" settings: allowed words, plain labels, synonyms, move cue rules (`CUES`), neutral theater words, matcher tuning numbers (`MATCH`), widening order, `check()`; adds tags and the matcher block to the page data |
 | `napor/tags/<theater>.py` | One tag row per counted US-action case (what the US did, never what followed) |
-| `napor/tag_check.py` | Fails the build when a counted case has no valid tags |
+| `napor/tag_check.py` | Fails the build when a counted case has no valid tags, or has a non-US actor with no recorded US link (`non_us_actors.py`) |
+| `napor/non_us_actors.py` | Sidd's Israeli-actions rule (2026-11-12): `LINKS` (non-US actors kept as US cases, with the US link), `EXCLUDED` (taken out of every US option; `napor_options.us_case` reads it), `REVIEW` (judgment calls for Sidd) |
+| `docs/TAG_REVIEW.md` | The tags most likely to be wrong, with one yes/no question each for Sidd (no tag was changed) |
 | `napor/build_vectors.py` | Writes `explorer/matcher_vectors.json` (GloVe word vectors as int8 plus word weights); `--fetch` downloads GloVe, `--check` lists new words |
-| `napor/matcher_ref.py` | Python twin (numpy) of the page's "Your own option" matcher: cue rules, word-meaning ranking, thresholds |
+| `napor/matcher_ref.py` | Python twin (numpy) of the page's "Your own option" matcher: negation rules ("not"), cue rules, word-meaning ranking, thresholds, hold weeks for "do not" requests, and the Relevance figure |
+| `napor/ui_check_own_option.js`, `tests/test_own_option_ui.py` | Playwright check that the Relevance numbers in the preview, window and card match the Python reference |
+| `tests/test_matcher_negation.py`, `tests/matcher_negation_heldout.json`, `tests/test_matcher_relevance.py`, `tests/test_non_us_actors.py` | Negation (31 examples and 34 held-out phrasings), Relevance and non-US-actor tests |
 | `napor/bench_matcher.py`, `napor/bench_matcher_v1.js`, `napor/parity_matcher.js` | Score the matcher on the answer key (v2 in Python, v1 in a headless browser) and run the page's matcher for the parity test |
 | `napor/weekly_build.py` | One command that runs every check and prints PASS or FAIL |
 | `napor/build.py`, `napor/NAPOR_iran_war.xlsx` | Builds the Iran workbook (events, census, options) |

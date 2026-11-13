@@ -14,6 +14,7 @@ from collections import Counter
 import data
 import napor_ids as N
 import napor_threads as T
+import non_us_actors as NONUS
 
 census, _ = N.filter_census(data.census)
 pairs, _ = N.filter_pairs(data.pairs)
@@ -35,6 +36,11 @@ def wilson(k, n, z=1.96):
 
 def us_side(tid):
     return EV[tid][2].lower().startswith(("us", "israel"))
+
+
+def us_case(tid):
+    """A US-side event that counts as a US case: not a non-US action without a US link (non_us_actors.EXCLUDED)."""
+    return us_side(tid) and tid not in NONUS.excluded("iran")
 
 
 def is_shipping_strike(tid):
@@ -88,7 +94,7 @@ def option_rows():
             row.update(n=0, reply="Not measured", reply_range="", phase_note="", fast="Not measured", casualties="Not measured",
                        longer="", patriots="", cases="", credibility="")
         else:
-            rows = [c for c in census if us_side(c[0]) and o["match"](c[0])]
+            rows = [c for c in census if us_case(c[0]) and o["match"](c[0])]
             counted = [c for c in rows if c[2] in ("R-strong", "R-weak", "R-proxy", "N")]
             unclear = [c for c in rows if c[2] == "Unclear"]
             k = sum(1 for c in counted if c[2] != "N")
@@ -203,12 +209,12 @@ def option_cases(key):
         return []
     if key == "B":
         # conciliatory moves only: offers, talks, ceasefires, deals (not ultimatums, rejections or rhetoric)
-        ids = [e[0] for e in data.events if _talks(e) and us_side(e[0])]
+        ids = [e[0] for e in data.events if _talks(e) and us_case(e[0])]
     elif key == "H":
-        ids = [e[0] for e in data.events if _usable(e) and us_side(e[0]) and KIND[e[0]] == "Posture"]
+        ids = [e[0] for e in data.events if _usable(e) and us_case(e[0]) and KIND[e[0]] == "Posture"]
     else:
         o = [x for x in OPTIONS if x["key"] == key][0]
-        ids = [c[0] for c in census if us_side(c[0]) and o["match"](c[0])]
+        ids = [c[0] for c in census if us_case(c[0]) and o["match"](c[0])]
     return [i for i in ids if (_LAST - EV[i][1]).days >= 7]
 
 
@@ -268,7 +274,7 @@ def _replies(key):
     o = [x for x in OPTIONS if x["key"] == key][0]
     if not o["match"]:
         return []
-    trig = {c[0] for c in census if us_side(c[0]) and o["match"](c[0])}
+    trig = {c[0] for c in census if us_case(c[0]) and o["match"](c[0])}
     return [p for p in pairs if p[1] in trig]
 
 

@@ -1,6 +1,6 @@
 # Your own option: how accurate is the matcher?
 
-Checked 2026-11-11 against the hand-written answer key `tests/matcher_bench.json` (65 things a viewer might type, each with the
+Checked 2026-11-12 against the hand-written answer key `tests/matcher_bench.json` (65 things a viewer might type, each with the
 past cases that really are the same kind of US action; written from the case titles, not from the tags).
 The key has a **dev** half (used to set the tuning numbers) and a **test** half (never used for tuning). Six queries are
 admittedly loose (the key itself says the log has no exact match) and are listed apart.
@@ -25,7 +25,7 @@ nothing like it: dev 2, test 1):
 - **none-correct**: the share of "nothing like this in the log" queries where the page returned nothing.
 
 Honest limits: the key lists only 1 to 11 cases per query (most 2 to 4), so the numbers move a lot when a single case is
-added or removed. The test half was scored after the tuning numbers were frozen; later edits did not change its score. The model understands words, not whole situations. The key is a person's judgement; a few of its
+added or removed. The test half was scored after the tuning numbers were frozen; later edits did not change its score. The model understands words, not whole situations. The answer key has one "not" query (a say-sentence); negation is handled by fixed rules and checked apart in `tests/test_matcher_negation.py` (31 example phrasings and 34 held-out ones). The key is a person's judgement; a few of its
 choices are debatable. Each theater's log is small (27 to 98 cases).
 
 Re-run: `cd napor && python3 bench_matcher.py` (v2 only needs numpy). `python3 bench_matcher.py --v1` re-runs the old matcher in a

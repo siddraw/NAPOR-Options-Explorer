@@ -25,7 +25,8 @@ const srv = http.createServer((req, res) => {
       res[q.id] = await page.evaluate(spec => {
         const full = Object.assign({ move: "", target: "", where: "", scale: "", who: "", open: "", desc: "" }, spec);
         const rd = readSpec(full), m = matchCases(rd);
-        return { v: rd.v, ids: m.cases.map(x => x.c.id), sims: m.cases.map(x => x.sim), strength: m.cases.map(x => x.strength), dropped: m.dropped, moves: m.moves, reason: m.reason };
+        const rel = rd.v === 2 && m.cases.length ? relevanceCalc(rd, m.cases) : null;
+        return { v: rd.v, ids: m.cases.map(x => x.c.id), sims: m.cases.map(x => x.sim), strength: m.cases.map(x => x.strength), dropped: m.dropped, moves: m.moves, reason: m.reason, hold: !!m.hold, neg: !!rd.neg, refrain: !!rd.refrain, ptoks: rd.ptoks, rel: rel && { n: rel.n, close: rel.close, pct: rel.pct, band: rel.band, kw_total: rel.kw_total, kw_found: rel.kw_found, kw_missing: rel.kw_missing, words: rel.words } };
       }, Object.assign({}, q.spec || { desc: q.text }));
     }
     await page.close();

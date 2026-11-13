@@ -163,7 +163,7 @@ CUES = [
         "agree*|reach* ... ceasefire|truce|deal|agreement"]),
     dict(p=1, moves=["drill"], phrases=["cancel*|stop*|halt*|suspend*|end*|postpon*|reduc*|scale|scal*|shrink|cut|curtail* ... drill*|exercise*|war games|wargame*|maneuver*"]),
     dict(p=1, moves=["talks", "statement", "visit"], phrases=["writ*|letter|message|offer*|propos*|invit* ... meet*|talks|negotiat*|dialogue|summit|meeting|engagement"]),
-    dict(p=0, moves=[], phrases=["leav*|exit*|quit*|abandon*|withdraw*|pull* ... deal|agreement|accord|treaty|jcpoa|pact"]),   # tier 0, no move: leaving an agreement is not a move the log tags, so nothing is returned (never talks)
+    dict(p=0, moves=[], phrases=["leav*|exit*|quit*|abandon*|withdraw*|pull* ... deal|agreement|accord|treaty|jcpoa|pact"]),   # tier 0, no move: no log row is tagged as leaving an agreement, so no case matches (never talks) and the page says the log has no past cases like it
     # --- tier 2: a verb with its object, or a clear kind of act ---
     dict(p=2, moves=["deployment"], phrases=["send*|deploy*|dispatch*|station*|position*|mov*|bring*|surg*|base*|put|place|install*|increas*|bolster*|reinforc*|boost|add|augment*|fly|flew|stage|forward ... " + _OBJ_ASSETS]),
     dict(p=2, moves=["naval"], phrases=["escort*|convoy*|freedom of navigation|fonop*|transit*|sail*|navigat*|patrol*|boarding|blockad*|quarantin*|interdict*|block* ... port*|strait|coast|shipping|sea|route*|harbor*|harbour*"]),

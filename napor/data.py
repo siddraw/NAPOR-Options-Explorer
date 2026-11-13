@@ -565,7 +565,7 @@ _EDITS.update({
 })
 
 _EDITS.update({
- 44: dict(date=d(2026,6,8), note="Date corrected to Jun 8 (AFP via Al Arabiya, published Jun 9): the Israeli strikes were overnight into Monday Jun 8; Iranian state TV (a claim) said at least 2 air-defense personnel were killed (re-sourced Oct 28)."),
+ 44: dict(date=d(2026,6,8), note="Date corrected to Jun 8 (AFP via Al Arabiya, published Jun 9): the Israeli strikes were overnight into Monday Jun 8; Iranian state TV (a claim) said at least 2 air-defense personnel were killed (re-sourced Oct 28). NOT A US CASE (2026-11-12, Sidd's Israeli-actions rule): the log's source shows no US link to this Israeli strike, so it is kept as a context event and is not counted in any US option (napor/non_us_actors.py)."),
  45: dict(date=d(2026,6,8), note="Date corrected to Jun 8 (CBS, updated Jun 9): the Apache went down Monday Jun 8 and both crew were rescued about two hours later by an unmanned surface drone; CBS sources say a Shahed drone (re-sourced Oct 28)."),
  83: dict(detail="5 men in their 20s are arrested on Sep 27 on suspicion of explosives offences after three suspicious vehicles head toward RAF Fairford (a base used for US bombers); Rubio says it 'clearly involves the hands of a foreign actor', Trump says it 'might be' linked to Iran, and UK PM Burnham says there are 'strong indications that Iran played a part' (Iran denies)",
      note="Wording corrected (Stars and Stripes, Sep 30): the source does not say the men planned to do 'big damage'; it says they are suspected of planning a terrorist attack near the base. They were released on bail Sep 28 and Trump questioned the bail (re-sourced Oct 28)."),
