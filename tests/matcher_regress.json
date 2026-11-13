@@ -1,0 +1,3453 @@
+[
+ {
+  "id": "r-001",
+  "theater": "iran",
+  "desc": "strike Fordow",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "include_ids": [
+    255
+   ],
+   "band": [
+    "moderate",
+    "weak",
+    "few"
+   ]
+  },
+  "src": "t1F1"
+ },
+ {
+  "id": "r-002",
+  "theater": "iran",
+  "desc": "bunker buster bombs on Fordow",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "include_ids": [
+    255
+   ],
+   "none": false
+  },
+  "src": "t1F2",
+  "holdout": true
+ },
+ {
+  "id": "r-003",
+  "theater": "iran",
+  "desc": "use bunker buster bombs on Fordow",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "include_ids": [
+    255
+   ]
+  },
+  "src": "t1F2"
+ },
+ {
+  "id": "r-004",
+  "theater": "iran",
+  "desc": "blockade Kharg Island",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "naval"
+   ],
+   "include_ids": [
+    35
+   ]
+  },
+  "src": "t1F2"
+ },
+ {
+  "id": "r-005",
+  "theater": "iran",
+  "desc": "seize Iranian oil tankers in the Strait of Hormuz",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "naval"
+   ],
+   "include_ids": [
+    221,
+    265
+   ]
+  },
+  "src": "t1F2"
+ },
+ {
+  "id": "r-006",
+  "theater": "iran",
+  "desc": "seize tankers in Hormuz",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "naval"
+   ],
+   "include_ids": [
+    265
+   ]
+  },
+  "src": "t1F2",
+  "holdout": true
+ },
+ {
+  "id": "r-007",
+  "theater": "iran",
+  "desc": "interdict Iranian oil shipments to China",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "naval"
+   ],
+   "none": false
+  },
+  "src": "t1F2"
+ },
+ {
+  "id": "r-008",
+  "theater": "iran",
+  "desc": "move THAAD and SM-3 interceptors to the Gulf",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "deployment"
+   ],
+   "include_ids": [
+    246
+   ]
+  },
+  "src": "t1F2"
+ },
+ {
+  "id": "r-009",
+  "theater": "iran",
+  "desc": "send Patriot batteries to Gulf allies",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    246,
+    211
+   ]
+  },
+  "src": "t1F2",
+  "holdout": true
+ },
+ {
+  "id": "r-010",
+  "theater": "china",
+  "desc": "allow the Taiwanese president to transit New York",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "visit"
+   ],
+   "exclude_moves": [
+    "naval"
+   ],
+   "include_ids": [
+    3037
+   ]
+  },
+  "src": "t1F3"
+ },
+ {
+  "id": "r-011",
+  "theater": "china",
+  "desc": "let President Tsai stop over in California",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "visit"
+   ],
+   "include_ids": [
+    3037
+   ]
+  },
+  "src": "t1F3",
+  "holdout": true
+ },
+ {
+  "id": "r-012",
+  "theater": "iran",
+  "desc": "OFAC designates Iranian drone procurement network",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "legal",
+    "sanctions"
+   ],
+   "exclude_moves": [
+    "strike"
+   ],
+   "include_ids": [
+    244
+   ]
+  },
+  "src": "t1F4"
+ },
+ {
+  "id": "r-013",
+  "theater": "iran",
+  "desc": "sanction Iranian drone procurement network",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "sanctions"
+   ],
+   "exclude_moves": [
+    "strike"
+   ],
+   "include_ids": [
+    244
+   ]
+  },
+  "src": "t1F4"
+ },
+ {
+  "id": "r-014",
+  "theater": "iran",
+  "desc": "OFAC designates Iranian network",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "sanctions"
+   ],
+   "exclude_moves": [
+    "strike"
+   ],
+   "none": false
+  },
+  "src": "t1F4",
+  "holdout": true
+ },
+ {
+  "id": "r-015",
+  "theater": "iran",
+  "desc": "lift sanctions on Iran",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "talks"
+   ],
+   "exclude_ids": [
+    374,
+    247,
+    371
+   ]
+  },
+  "src": "t1F5"
+ },
+ {
+  "id": "r-016",
+  "theater": "iran",
+  "desc": "offer sanctions relief for a nuclear freeze",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "talks"
+   ],
+   "include_ids": [
+    356,
+    50
+   ],
+   "exclude_ids": [
+    349,
+    302,
+    329
+   ]
+  },
+  "src": "t1F5",
+  "holdout": true
+ },
+ {
+  "id": "r-017",
+  "theater": "iran",
+  "desc": "ease oil sanctions in exchange for a nuclear freeze",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "talks"
+   ],
+   "exclude_ids": [
+    349,
+    302
+   ]
+  },
+  "src": "t1F5"
+ },
+ {
+  "id": "r-018",
+  "theater": "iran",
+  "desc": "ease sanctions rather than escalate",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "talks"
+   ],
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t1F5"
+ },
+ {
+  "id": "r-019",
+  "theater": "houthis",
+  "desc": "remove the Houthis from the terrorism list",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "legal"
+   ],
+   "include_ids": [
+    1008
+   ],
+   "exclude_ids": [
+    1305,
+    1006,
+    1306
+   ]
+  },
+  "src": "t1F5"
+ },
+ {
+  "id": "r-020",
+  "theater": "venezuela",
+  "desc": "ease sanctions on Venezuelan oil for Chevron",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4006
+   ],
+   "exclude_ids": [
+    4003
+   ]
+  },
+  "src": "t1F5",
+  "holdout": true
+ },
+ {
+  "id": "r-021",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "open": "secret"
+  },
+  "expect": {
+   "band": [
+    "weak",
+    "few"
+   ],
+   "max_cases": 12
+  },
+  "src": "t1F6"
+ },
+ {
+  "id": "r-022",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "move": "covert operation",
+   "open": "secret"
+  },
+  "expect": {
+   "band": [
+    "weak",
+    "few",
+    "moderate"
+   ],
+   "max_cases": 40
+  },
+  "src": "t1F6",
+  "holdout": true
+ },
+ {
+  "id": "r-023",
+  "theater": "china",
+  "desc": "stop transiting the Taiwan Strait",
+  "boxes": {},
+  "expect": {
+   "exclude_moves": [
+    "naval"
+   ],
+   "none": true
+  },
+  "src": "t1F7"
+ },
+ {
+  "id": "r-024",
+  "theater": "china",
+  "desc": "withhold the arms sale to Taiwan",
+  "boxes": {},
+  "expect": {
+   "exclude_moves": [
+    "arms"
+   ],
+   "none": true
+  },
+  "src": "t1F7",
+  "holdout": true
+ },
+ {
+  "id": "r-025",
+  "theater": "northkorea",
+  "desc": "cancel the joint exercises",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "drill"
+   ],
+   "include_ids": [
+    2068
+   ]
+  },
+  "src": "t1F7"
+ },
+ {
+  "id": "r-026",
+  "theater": "northkorea",
+  "desc": "suspend Ulchi Freedom Shield",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "drill"
+   ],
+   "include_ids": [
+    2068
+   ]
+  },
+  "src": "t1F7"
+ },
+ {
+  "id": "r-027",
+  "theater": "venezuela",
+  "desc": "stop the boat strikes",
+  "boxes": {},
+  "expect": {
+   "exclude_moves": [
+    "strike",
+    "naval"
+   ]
+  },
+  "src": "t1F7",
+  "holdout": true
+ },
+ {
+  "id": "r-028",
+  "theater": "iran",
+  "desc": "rule out military force",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t1F7"
+ },
+ {
+  "id": "r-029",
+  "theater": "china",
+  "desc": "US carrier strike group enters the South China Sea",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "deployment"
+   ],
+   "exclude_moves": [
+    "strike"
+   ],
+   "band": [
+    "moderate",
+    "weak",
+    "few"
+   ]
+  },
+  "src": "t1F8"
+ },
+ {
+  "id": "r-030",
+  "theater": "china",
+  "desc": "carrier strike group in the South China Sea",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "deployment"
+   ],
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t1F8",
+  "holdout": true
+ },
+ {
+  "id": "r-031",
+  "theater": "china",
+  "desc": "deploy an aircraft carrier near Taiwan",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "deployment"
+   ],
+   "band": [
+    "moderate",
+    "weak",
+    "few"
+   ]
+  },
+  "src": "t1F8"
+ },
+ {
+  "id": "r-032",
+  "theater": "iran",
+  "desc": "deploy a carrier strike group to the Red Sea",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "deployment"
+   ],
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t1F8"
+ },
+ {
+  "id": "r-033",
+  "theater": "northkorea",
+  "desc": "joint US-ROK drills near the DMZ",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "drill"
+   ],
+   "include_ids": [
+    2012,
+    2584
+   ],
+   "band": [
+    "strong",
+    "moderate"
+   ]
+  },
+  "src": "t1F9"
+ },
+ {
+  "id": "r-034",
+  "theater": "northkorea",
+  "desc": "joint US-South Korea drills near the DMZ",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "drill"
+   ],
+   "include_ids": [
+    2012,
+    2584
+   ]
+  },
+  "src": "t1F9",
+  "holdout": true
+ },
+ {
+  "id": "r-035",
+  "theater": "iran",
+  "desc": "Trump gives Iran a 60 day deadline for a deal",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "statement"
+   ],
+   "exclude_moves": [
+    "talks"
+   ]
+  },
+  "src": "t1F10"
+ },
+ {
+  "id": "r-036",
+  "theater": "iran",
+  "desc": "publicly threaten regime change",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "statement"
+   ]
+  },
+  "src": "t1F10",
+  "holdout": true
+ },
+ {
+  "id": "r-037",
+  "theater": "houthis",
+  "desc": "designate the Houthis as an FTO again",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "legal"
+   ],
+   "include_ids": [
+    1306,
+    1006,
+    1305
+   ]
+  },
+  "src": "t1F11"
+ },
+ {
+  "id": "r-038",
+  "theater": "houthis",
+  "desc": "designate Houthis as terrorists",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "legal"
+   ],
+   "include_ids": [
+    1306,
+    1006,
+    1305
+   ]
+  },
+  "src": "t1F11"
+ },
+ {
+  "id": "r-039",
+  "theater": "houthis",
+  "desc": "bomb the Houthis",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "include_ids": [
+    1307,
+    1003,
+    1021
+   ]
+  },
+  "src": "t1F12",
+  "holdout": true
+ },
+ {
+  "id": "r-040",
+  "theater": "venezuela",
+  "desc": "bomb Venezuelan military bases",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4049
+   ]
+  },
+  "src": "t1F12"
+ },
+ {
+  "id": "r-041",
+  "theater": "venezuela",
+  "desc": "bomb military bases in Caracas",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4049
+   ]
+  },
+  "src": "t1F12"
+ },
+ {
+  "id": "r-042",
+  "theater": "venezuela",
+  "desc": "strike cartel targets on land in Venezuela",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4049,
+    4061
+   ]
+  },
+  "src": "t1F12",
+  "holdout": true
+ },
+ {
+  "id": "r-043",
+  "theater": "venezuela",
+  "desc": "airstrikes on Tren de Aragua",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4061
+   ]
+  },
+  "src": "t1F12"
+ },
+ {
+  "id": "r-044",
+  "theater": "iran",
+  "desc": "hit Iranian oil refineries",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ]
+  },
+  "src": "t1F12"
+ },
+ {
+  "id": "r-045",
+  "theater": "china",
+  "desc": "phone call with Tsai Ing-wen",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    3545,
+    3031
+   ]
+  },
+  "src": "t1F13"
+ },
+ {
+  "id": "r-046",
+  "theater": "venezuela",
+  "desc": "indict Maduro for narco-terrorism",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "legal"
+   ],
+   "include_ids": [
+    4004,
+    4065
+   ]
+  },
+  "src": "t1F13",
+  "holdout": true
+ },
+ {
+  "id": "r-047",
+  "theater": "northkorea",
+  "desc": "resume Key Resolve",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "drill"
+   ],
+   "include_ids": [
+    2561
+   ]
+  },
+  "src": "t1F13"
+ },
+ {
+  "id": "r-048",
+  "theater": "northkorea",
+  "desc": "exercises with Japan",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "drill"
+   ],
+   "include_ids": [
+    2043,
+    2071
+   ]
+  },
+  "src": "t1F13"
+ },
+ {
+  "id": "r-049",
+  "theater": "china",
+  "desc": "Pentagon military talks with PLA",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    3536
+   ]
+  },
+  "src": "t1F13",
+  "holdout": true
+ },
+ {
+  "id": "r-050",
+  "theater": "iran",
+  "desc": "re-enter the JCPOA",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "talks"
+   ],
+   "none": false
+  },
+  "src": "t1F13"
+ },
+ {
+  "id": "r-051",
+  "theater": "iran",
+  "desc": "withdraw US troops from Iraq and Syria",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "withdrawal"
+   ],
+   "band": [
+    "moderate",
+    "weak",
+    "few"
+   ]
+  },
+  "src": "t1F16"
+ },
+ {
+  "id": "r-052",
+  "theater": "houthis",
+  "desc": "do nothing about Houthi attacks",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t1F15"
+ },
+ {
+  "id": "r-053",
+  "theater": "houthis",
+  "desc": "stay out of Yemen",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t1F15"
+ },
+ {
+  "id": "r-054",
+  "theater": "iran",
+  "desc": "wait and see",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t1F15"
+ },
+ {
+  "id": "r-055",
+  "theater": "iran",
+  "desc": "status quo",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t1F15",
+  "holdout": true
+ },
+ {
+  "id": "r-056",
+  "theater": "iran",
+  "desc": "no-fly zone",
+  "boxes": {},
+  "expect": {
+   "band": [
+    "weak",
+    "few"
+   ]
+  },
+  "src": "t1F15"
+ },
+ {
+  "id": "r-057",
+  "theater": "iran",
+  "desc": "the",
+  "boxes": {},
+  "expect": {
+   "none": true,
+   "reason": "empty"
+  },
+  "src": "t2F1"
+ },
+ {
+  "id": "r-058",
+  "theater": "venezuela",
+  "desc": "sanctoins on venezula",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "sanctions"
+   ],
+   "include_ids": [
+    4003
+   ]
+  },
+  "src": "t2F1",
+  "holdout": true
+ },
+ {
+  "id": "r-059",
+  "theater": "iran",
+  "desc": "sanctoins on iran",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "sanctions"
+   ],
+   "none": false
+  },
+  "src": "t2F1"
+ },
+ {
+  "id": "r-060",
+  "theater": "iran",
+  "desc": "nuke them",
+  "boxes": {},
+  "expect": {
+   "none": true
+  },
+  "src": "t2F1"
+ },
+ {
+  "id": "r-061",
+  "theater": "china",
+  "desc": "us shud stop helping taiwan",
+  "boxes": {},
+  "expect": {
+   "band": [
+    "weak",
+    "few"
+   ]
+  },
+  "src": "t2F1"
+ },
+ {
+  "id": "r-062",
+  "theater": "iran",
+  "desc": "war",
+  "boxes": {},
+  "expect": {
+   "band": [
+    "weak",
+    "few"
+   ],
+   "no_move_loose": true
+  },
+  "src": "t2F1"
+ },
+ {
+  "id": "r-063",
+  "theater": "iran",
+  "desc": "help",
+  "boxes": {},
+  "expect": {
+   "band": [
+    "weak",
+    "few"
+   ],
+   "no_move_loose": true
+  },
+  "src": "t2F1",
+  "holdout": true
+ },
+ {
+  "id": "r-064",
+  "theater": "venezuela",
+  "desc": "go after maduro",
+  "boxes": {},
+  "expect": {
+   "band": [
+    "weak",
+    "few"
+   ]
+  },
+  "src": "t2F1"
+ },
+ {
+  "id": "r-065",
+  "theater": "iran",
+  "desc": "bombed iran",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "none": false
+  },
+  "src": "t2F2"
+ },
+ {
+  "id": "r-066",
+  "theater": "houthis",
+  "desc": "bombed the houthis",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "none": false
+  },
+  "src": "t2F2"
+ },
+ {
+  "id": "r-067",
+  "theater": "houthis",
+  "desc": "bomb houthis",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "none": false
+  },
+  "src": "t2F2",
+  "holdout": true
+ },
+ {
+  "id": "r-068",
+  "theater": "iran",
+  "desc": "BOMB IRAN....   please",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "none": false
+  },
+  "src": "t2F2"
+ },
+ {
+  "id": "r-069",
+  "theater": "iran",
+  "desc": "<script>alert(1)</script> bomb iran",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "none": false
+  },
+  "src": "t2F2"
+ },
+ {
+  "id": "r-070",
+  "theater": "venezuela",
+  "desc": "bomb venezuela",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4049
+   ]
+  },
+  "src": "t2F3",
+  "holdout": true
+ },
+ {
+  "id": "r-071",
+  "theater": "northkorea",
+  "desc": "bomb north korea",
+  "boxes": {},
+  "expect": {
+   "none": true
+  },
+  "src": "t2F2"
+ },
+ {
+  "id": "r-072",
+  "theater": "venezuela",
+  "desc": "kill maduro",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4049
+   ]
+  },
+  "src": "t2F3"
+ },
+ {
+  "id": "r-073",
+  "theater": "venezuela",
+  "desc": "invade venezuela",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "raid"
+   ],
+   "include_ids": [
+    4049
+   ]
+  },
+  "src": "t2F3"
+ },
+ {
+  "id": "r-074",
+  "theater": "venezuela",
+  "desc": "what if we invade venezuela?",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4049
+   ]
+  },
+  "src": "t2F3",
+  "holdout": true
+ },
+ {
+  "id": "r-075",
+  "theater": "venezuela",
+  "desc": "capture maduro",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4049
+   ]
+  },
+  "src": "t2F3"
+ },
+ {
+  "id": "r-076",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "where": "near their coast"
+  },
+  "expect": {
+   "box_read": {
+    "where": [
+     "sea"
+    ]
+   }
+  },
+  "src": "t2F4"
+ },
+ {
+  "id": "r-077",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "who": "with friends"
+  },
+  "expect": {
+   "box_read": {
+    "who": [
+     "allies",
+     "partners"
+    ]
+   }
+  },
+  "src": "t2F4",
+  "holdout": true
+ },
+ {
+  "id": "r-078",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "scale": "big"
+  },
+  "expect": {
+   "box_read": {
+    "scale": [
+     "campaign"
+    ]
+   }
+  },
+  "src": "t2F4"
+ },
+ {
+  "id": "r-079",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "open": "sneaky"
+  },
+  "expect": {
+   "box_read": {
+    "open": [
+     "unclaimed"
+    ]
+   }
+  },
+  "src": "t2F4"
+ },
+ {
+  "id": "r-080",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "open": "secretly"
+  },
+  "expect": {
+   "box_read": {
+    "open": [
+     "unclaimed"
+    ]
+   }
+  },
+  "src": "t2F4"
+ },
+ {
+  "id": "r-081",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "open": "covertly"
+  },
+  "expect": {
+   "box_read": {
+    "open": [
+     "unclaimed"
+    ]
+   }
+  },
+  "src": "t2F4",
+  "holdout": true
+ },
+ {
+  "id": "r-082",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "target": "khamenei"
+  },
+  "expect": {
+   "box_read": {
+    "target": [
+     "leaders"
+    ]
+   }
+  },
+  "src": "t2F4"
+ },
+ {
+  "id": "r-083",
+  "theater": "china",
+  "desc": "stop selling weapons to taiwan",
+  "boxes": {},
+  "expect": {
+   "exclude_moves": [
+    "arms"
+   ],
+   "none": true
+  },
+  "src": "t2F5"
+ },
+ {
+  "id": "r-084",
+  "theater": "iran",
+  "desc": "us shud stop helping iran",
+  "boxes": {},
+  "expect": {
+   "band": [
+    "weak",
+    "few"
+   ]
+  },
+  "src": "t2F5",
+  "holdout": true
+ },
+ {
+  "id": "r-085",
+  "theater": "venezuela",
+  "desc": "stop buying venezuelan oil",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "sanctions"
+   ],
+   "exclude_moves": [
+    "naval"
+   ]
+  },
+  "src": "t2F5"
+ },
+ {
+  "id": "r-086",
+  "theater": "iran",
+  "desc": "better to talk than to bomb",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "talks"
+   ],
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t2F5"
+ },
+ {
+  "id": "r-087",
+  "theater": "iran",
+  "desc": "let netanyahu bomb iran by himself",
+  "boxes": {},
+  "expect": {
+   "exclude_moves": [
+    "strike"
+   ],
+   "hold": true
+  },
+  "src": "t2F5",
+  "holdout": true
+ },
+ {
+  "id": "r-088",
+  "theater": "iran",
+  "desc": "cant we just talk",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "talks"
+   ],
+   "hold": false
+  },
+  "src": "t2F6"
+ },
+ {
+  "id": "r-089",
+  "theater": "iran",
+  "desc": "why dont we just bomb them",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "hold": false
+  },
+  "src": "t2F6"
+ },
+ {
+  "id": "r-090",
+  "theater": "iran",
+  "desc": "ain't gonna strike",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t2F6"
+ },
+ {
+  "id": "r-091",
+  "theater": "iran",
+  "desc": "should we bomb iran or not",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "hold": false
+  },
+  "src": "t2F6",
+  "holdout": true
+ },
+ {
+  "id": "r-092",
+  "theater": "iran",
+  "desc": "give israel more bombs",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "arms"
+   ],
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t2F7"
+ },
+ {
+  "id": "r-093",
+  "theater": "iran",
+  "desc": "missile defense in the gulf",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "deployment"
+   ],
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t2F7"
+ },
+ {
+  "id": "r-094",
+  "theater": "iran",
+  "desc": "missile defence in the gulf",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "deployment"
+   ],
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t2F7",
+  "holdout": true
+ },
+ {
+  "id": "r-095",
+  "theater": "northkorea",
+  "desc": "missile defence in south korea",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "deployment"
+   ],
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t2F7"
+ },
+ {
+  "id": "r-096",
+  "theater": "iran",
+  "desc": "trump threatens iran on twitter",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "statement"
+   ],
+   "none": false
+  },
+  "src": "t2F8"
+ },
+ {
+  "id": "r-097",
+  "theater": "iran",
+  "desc": "get out of iraq",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "withdrawal"
+   ],
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t2F8"
+ },
+ {
+  "id": "r-098",
+  "theater": "iran",
+  "desc": "regime change in iran",
+  "boxes": {},
+  "expect": {
+   "band": [
+    "weak",
+    "few"
+   ],
+   "no_move_loose": true
+  },
+  "src": "t2F8",
+  "holdout": true
+ },
+ {
+  "id": "r-099",
+  "theater": "iran",
+  "desc": "do not strike",
+  "boxes": {
+   "move": "strike"
+  },
+  "expect": {
+   "hold": true
+  },
+  "src": "t2F11"
+ },
+ {
+  "id": "r-100",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "move": "strike",
+   "where": "at-sea"
+  },
+  "expect": {
+   "box_read": {
+    "where": [
+     "sea"
+    ]
+   }
+  },
+  "src": "t3F1"
+ },
+ {
+  "id": "r-101",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "move": "strike",
+   "scale": "one-time"
+  },
+  "expect": {
+   "box_read": {
+    "scale": [
+     "single"
+    ]
+   }
+  },
+  "src": "t3F1"
+ },
+ {
+  "id": "r-102",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "move": "strike",
+   "who": "US-alone"
+  },
+  "expect": {
+   "box_read": {
+    "who": [
+     "alone"
+    ]
+   }
+  },
+  "src": "t3F1",
+  "holdout": true
+ },
+ {
+  "id": "r-103",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "move": "strike",
+   "open": "un-claimed"
+  },
+  "expect": {
+   "box_read": {
+    "open": [
+     "unclaimed"
+    ]
+   }
+  },
+  "src": "t3F1"
+ },
+ {
+  "id": "r-104",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "move": "strike",
+   "target": "leaders-commanders"
+  },
+  "expect": {
+   "box_read": {
+    "target": [
+     "leaders"
+    ]
+   }
+  },
+  "src": "t3F1"
+ },
+ {
+  "id": "r-105",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "move": "sanctions",
+   "target": "bank-related"
+  },
+  "expect": {
+   "box_read": {
+    "target": [
+     "economy"
+    ]
+   }
+  },
+  "src": "t3F1"
+ },
+ {
+  "id": "r-106",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "move": "strike",
+   "where": "third-country"
+  },
+  "expect": {
+   "box_read": {
+    "where": [
+     "third"
+    ]
+   }
+  },
+  "src": "t3F1",
+  "holdout": true
+ },
+ {
+  "id": "r-107",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "move": "strike",
+   "target": "anti-ship missile launchers"
+  },
+  "expect": {
+   "box_read": {
+    "target": [
+     "equipment"
+    ]
+   }
+  },
+  "src": "t3F1"
+ },
+ {
+  "id": "r-108",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "move": "strike",
+   "target": "Iran's nuclear program"
+  },
+  "expect": {
+   "box_read": {
+    "target": [
+     "nuclear"
+    ]
+   }
+  },
+  "src": "t3F1"
+ },
+ {
+  "id": "r-109",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "move": "strike",
+   "scale": "multi-day campaign"
+  },
+  "expect": {
+   "box_read": {
+    "scale": [
+     "campaign"
+    ]
+   }
+  },
+  "src": "t3F1",
+  "holdout": true
+ },
+ {
+  "id": "r-110",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "move": "not strike"
+  },
+  "expect": {
+   "hold": true
+  },
+  "src": "t3F4"
+ },
+ {
+  "id": "r-111",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "move": "do not strike"
+  },
+  "expect": {
+   "hold": true
+  },
+  "src": "t3F4"
+ },
+ {
+  "id": "r-112",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "move": "strike",
+   "target": "not nuclear"
+  },
+  "expect": {
+   "exclude_ids": [
+    255
+   ],
+   "moves": [
+    "strike"
+   ]
+  },
+  "src": "t3F4",
+  "holdout": true
+ },
+ {
+  "id": "r-113",
+  "theater": "iran",
+  "desc": "Do not strike",
+  "boxes": {
+   "move": "talks"
+  },
+  "expect": {
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t3F5"
+ },
+ {
+  "id": "r-114",
+  "theater": "iran",
+  "desc": "Do not strike",
+  "boxes": {
+   "target": "nuclear"
+  },
+  "expect": {
+   "hold": true,
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t3F5"
+ },
+ {
+  "id": "r-115",
+  "theater": "iran",
+  "desc": "No sanctions",
+  "boxes": {
+   "target": "economy"
+  },
+  "expect": {
+   "hold": true,
+   "exclude_moves": [
+    "sanctions"
+   ]
+  },
+  "src": "t3F5"
+ },
+ {
+  "id": "r-116",
+  "theater": "iran",
+  "desc": "Avoid sending carriers",
+  "boxes": {
+   "target": "equipment"
+  },
+  "expect": {
+   "hold": true,
+   "exclude_moves": [
+    "strike",
+    "deployment"
+   ]
+  },
+  "src": "t3F5",
+  "holdout": true
+ },
+ {
+  "id": "r-117",
+  "theater": "iran",
+  "desc": "Strike Iranian nuclear sites",
+  "boxes": {
+   "move": "talks"
+  },
+  "expect": {
+   "conflict": true
+  },
+  "src": "t3F5"
+ },
+ {
+  "id": "r-118",
+  "theater": "iran",
+  "desc": "Say we will not strike",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "statement"
+   ],
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t3F6"
+ },
+ {
+  "id": "r-119",
+  "theater": "iran",
+  "desc": "The US says it will not strike Iran",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "statement"
+   ],
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t3F6"
+ },
+ {
+  "id": "r-120",
+  "theater": "iran",
+  "desc": "Announce that we will not strike",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "statement"
+   ],
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t3F6",
+  "holdout": true
+ },
+ {
+  "id": "r-121",
+  "theater": "iran",
+  "desc": "Warn Iran we will strike if it does not stop enrichment",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "statement"
+   ]
+  },
+  "src": "t3F6"
+ },
+ {
+  "id": "r-122",
+  "theater": "iran",
+  "desc": "Tell Iran we won't invade",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "statement"
+   ],
+   "exclude_moves": [
+    "raid"
+   ]
+  },
+  "src": "t3F6"
+ },
+ {
+  "id": "r-123",
+  "theater": "iran",
+  "desc": "Warn Iran: do not enrich uranium",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "statement"
+   ]
+  },
+  "src": "t3F6",
+  "holdout": true
+ },
+ {
+  "id": "r-124",
+  "theater": "iran",
+  "desc": "Don't stop striking",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "hold": false
+  },
+  "src": "t3F7"
+ },
+ {
+  "id": "r-125",
+  "theater": "iran",
+  "desc": "Stop striking",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "talks"
+   ],
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t3F7"
+ },
+ {
+  "id": "r-126",
+  "theater": "iran",
+  "desc": "Halt the strikes",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "talks"
+   ],
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t3F7",
+  "holdout": true
+ },
+ {
+  "id": "r-127",
+  "theater": "iran",
+  "desc": "Stop the bombing",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "talks"
+   ],
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t3F7"
+ },
+ {
+  "id": "r-128",
+  "theater": "iran",
+  "desc": "Don't not strike",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "hold": false
+  },
+  "src": "t3F7"
+ },
+ {
+  "id": "r-129",
+  "theater": "iran",
+  "desc": "Without delay impose sanctions on Iranian oil",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "sanctions"
+   ],
+   "hold": false
+  },
+  "src": "t3F8"
+ },
+ {
+  "id": "r-130",
+  "theater": "iran",
+  "desc": "No later than Friday strike Iranian radar sites",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "hold": false
+  },
+  "src": "t3F8"
+ },
+ {
+  "id": "r-131",
+  "theater": "iran",
+  "desc": "Deploy no fewer than two carriers",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "deployment"
+   ],
+   "hold": false
+  },
+  "src": "t3F8",
+  "holdout": true
+ },
+ {
+  "id": "r-132",
+  "theater": "iran",
+  "desc": "Deploy no more than one carrier to the Gulf",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "deployment"
+   ],
+   "hold": false
+  },
+  "src": "t3F8"
+ },
+ {
+  "id": "r-133",
+  "theater": "iran",
+  "desc": "Strike Iran without warning",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "hold": false
+  },
+  "src": "t3F8"
+ },
+ {
+  "id": "r-134",
+  "theater": "iran",
+  "desc": "No doubt we should strike",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "hold": false
+  },
+  "src": "t3F9"
+ },
+ {
+  "id": "r-135",
+  "theater": "iran",
+  "desc": "Nothing short of a strike",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "hold": false
+  },
+  "src": "t3F9"
+ },
+ {
+  "id": "r-136",
+  "theater": "iran",
+  "desc": "can't hurt to strike",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "hold": false
+  },
+  "src": "t3F9",
+  "holdout": true
+ },
+ {
+  "id": "r-137",
+  "theater": "iran",
+  "desc": "Can't we strike?",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "hold": false
+  },
+  "src": "t3F9"
+ },
+ {
+  "id": "r-138",
+  "theater": "iran",
+  "desc": "Why not strike Iran?",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "hold": false
+  },
+  "src": "t3F9"
+ },
+ {
+  "id": "r-139",
+  "theater": "iran",
+  "desc": "Do not strike Iran, it risks escalation and a wider regional war",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t3F10"
+ },
+ {
+  "id": "r-140",
+  "theater": "iran",
+  "desc": "The president would, after much careful consideration and discussion with allies, not strike",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t3F10",
+  "holdout": true
+ },
+ {
+  "id": "r-141",
+  "theater": "iran",
+  "desc": "Sanctioning Iranian banks",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "sanctions"
+   ],
+   "none": false
+  },
+  "src": "t3F11"
+ },
+ {
+  "id": "r-142",
+  "theater": "iran",
+  "desc": "Striking Iranian nuclear sites",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "include_ids": [
+    255
+   ]
+  },
+  "src": "t3F11"
+ },
+ {
+  "id": "r-143",
+  "theater": "iran",
+  "desc": "Attacking Iranian radar sites",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ]
+  },
+  "src": "t3F11"
+ },
+ {
+  "id": "r-144",
+  "theater": "iran",
+  "desc": "What would happen if the US struck Iran's nuclear sites?",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "include_ids": [
+    255
+   ]
+  },
+  "src": "t3F11",
+  "holdout": true
+ },
+ {
+  "id": "r-145",
+  "theater": "iran",
+  "desc": "Talk to Iran",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "talks"
+   ]
+  },
+  "src": "t3F11"
+ },
+ {
+  "id": "r-146",
+  "theater": "china",
+  "desc": "Sell Patriots to Taiwan",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "arms"
+   ]
+  },
+  "src": "t3F11"
+ },
+ {
+  "id": "r-147",
+  "theater": "china",
+  "desc": "Send a destroyer through the Taiwan Strait",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "naval"
+   ],
+   "include_ids": [
+    3005,
+    3021
+   ]
+  },
+  "src": "t3F11",
+  "holdout": true
+ },
+ {
+  "id": "r-148",
+  "theater": "iran",
+  "desc": "The president orders air strikes on Iranian nuclear facilities after talks collapse and Iran refuses to stop enrichment",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "hold": false
+  },
+  "src": "t3F12"
+ },
+ {
+  "id": "r-149",
+  "theater": "iran",
+  "desc": "Support a labor strike by Iranian oil workers",
+  "boxes": {},
+  "expect": {
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t3F12"
+ },
+ {
+  "id": "r-150",
+  "theater": "iran",
+  "desc": "Fire the national security adviser",
+  "boxes": {},
+  "expect": {
+   "exclude_moves": [
+    "strike"
+   ],
+   "no_move_loose": true
+  },
+  "src": "t3F12"
+ },
+ {
+  "id": "r-151",
+  "theater": "iran",
+  "desc": "Oil drilling in the Gulf",
+  "boxes": {},
+  "expect": {
+   "exclude_moves": [
+    "drill"
+   ]
+  },
+  "src": "t3F12",
+  "holdout": true
+ },
+ {
+  "id": "r-152",
+  "theater": "iran",
+  "desc": "Exercise restraint",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t3F12"
+ },
+ {
+  "id": "r-153",
+  "theater": "iran",
+  "desc": "Seize the moment to talk",
+  "boxes": {},
+  "expect": {
+   "exclude_moves": [
+    "naval"
+   ],
+   "moves": [
+    "talks"
+   ]
+  },
+  "src": "t3F12"
+ },
+ {
+  "id": "r-154",
+  "theater": "iran",
+  "desc": "Strike Iranian radars, not nuclear sites",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "exclude_ids": [
+    255
+   ]
+  },
+  "src": "t3F13"
+ },
+ {
+  "id": "r-155",
+  "theater": "iran",
+  "desc": "Strike everything except nuclear sites",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "exclude_ids": [
+    255
+   ]
+  },
+  "src": "t3F13",
+  "holdout": true
+ },
+ {
+  "id": "r-156",
+  "theater": "iran",
+  "desc": "Strike unless they negotiate",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "exclude_moves": [
+    "talks"
+   ]
+  },
+  "src": "t3F13"
+ },
+ {
+  "id": "r-157",
+  "theater": "iran",
+  "desc": "Strike",
+  "boxes": {
+   "target": "banana"
+  },
+  "expect": {
+   "none": false
+  },
+  "src": "t3F14"
+ },
+ {
+  "id": "r-158",
+  "theater": "iran",
+  "desc": "Strike",
+  "boxes": {
+   "who": "unclaimed"
+  },
+  "expect": {
+   "none": false
+  },
+  "src": "t3F14"
+ },
+ {
+  "id": "r-159",
+  "theater": "iran",
+  "desc": "Strike",
+  "boxes": {
+   "target": "zzz qqq ppp"
+  },
+  "expect": {
+   "none": false
+  },
+  "src": "t3F14",
+  "holdout": true
+ },
+ {
+  "id": "r-160",
+  "theater": "iran",
+  "desc": "Strike Iran \ud83d\udca5 'quote' \"dq\" `bt` &amp; &lt;b&gt;",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "none": false
+  },
+  "src": "t3F14"
+ },
+ {
+  "id": "r-161",
+  "theater": "iran",
+  "desc": "N/A",
+  "boxes": {
+   "move": "talks"
+  },
+  "expect": {
+   "moves": [
+    "talks"
+   ],
+   "none": false
+  },
+  "src": "t3F15"
+ },
+ {
+  "id": "r-162",
+  "theater": "iran",
+  "desc": "none",
+  "boxes": {
+   "move": "talks"
+  },
+  "expect": {
+   "moves": [
+    "talks"
+   ],
+   "none": false
+  },
+  "src": "t3F15",
+  "holdout": true
+ },
+ {
+  "id": "r-163",
+  "theater": "iran",
+  "desc": "the of a an to for with",
+  "boxes": {},
+  "expect": {
+   "none": true,
+   "reason": "empty"
+  },
+  "src": "t3F3"
+ },
+ {
+  "id": "r-164",
+  "theater": "iran",
+  "desc": "the US",
+  "boxes": {},
+  "expect": {
+   "none": true,
+   "reason": "empty"
+  },
+  "src": "t3F3"
+ },
+ {
+  "id": "r-165",
+  "theater": "iran",
+  "desc": "a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a ",
+  "boxes": {},
+  "expect": {
+   "none": true,
+   "reason": "empty"
+  },
+  "src": "t3F3",
+  "holdout": true
+ },
+ {
+  "id": "r-166",
+  "theater": "iran",
+  "desc": "all",
+  "boxes": {},
+  "expect": {
+   "none": true,
+   "reason": "empty"
+  },
+  "src": "t3F3"
+ },
+ {
+  "id": "r-167",
+  "theater": "iran",
+  "desc": "any",
+  "boxes": {},
+  "expect": {
+   "none": true
+  },
+  "src": "t3F3"
+ },
+ {
+  "id": "r-168",
+  "theater": "venezuela",
+  "desc": "Capture Nicol\u00e1s Maduro",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4049
+   ]
+  },
+  "src": "t3F24"
+ },
+ {
+  "id": "r-169",
+  "theater": "venezuela",
+  "desc": "Kill Maduro",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4049
+   ]
+  },
+  "src": "t3F25"
+ },
+ {
+  "id": "r-170",
+  "theater": "venezuela",
+  "desc": "Seize Maduro",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4049
+   ]
+  },
+  "src": "t3F25",
+  "holdout": true
+ },
+ {
+  "id": "r-171",
+  "theater": "iran",
+  "desc": "Kill Soleimani",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    215
+   ]
+  },
+  "src": "t3F25"
+ },
+ {
+  "id": "r-172",
+  "theater": "iran",
+  "desc": "Assassinate the Supreme Leader",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike",
+    "raid"
+   ]
+  },
+  "src": "t3F25"
+ },
+ {
+  "id": "r-173",
+  "theater": "iran",
+  "desc": "Tariffs hit Iranian exports",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "sanctions"
+   ],
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t3F26"
+ },
+ {
+  "id": "r-174",
+  "theater": "iran",
+  "desc": "Kill the deal",
+  "boxes": {},
+  "expect": {
+   "exclude_moves": [
+    "strike",
+    "raid"
+   ],
+   "none": true
+  },
+  "src": "t3F26",
+  "holdout": true
+ },
+ {
+  "id": "r-175",
+  "theater": "china",
+  "desc": "Do not sell weapons to Taiwan",
+  "boxes": {},
+  "expect": {
+   "none": true
+  },
+  "src": "t3F22"
+ },
+ {
+  "id": "r-176",
+  "theater": "iran",
+  "desc": "Hold off",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t3F17"
+ },
+ {
+  "id": "r-177",
+  "theater": "iran",
+  "desc": "Back off",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t3F17"
+ },
+ {
+  "id": "r-178",
+  "theater": "iran",
+  "desc": "Refrain",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t3F17",
+  "holdout": true
+ },
+ {
+  "id": "r-179",
+  "theater": "iran",
+  "desc": "Stay out of it",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t3F17"
+ },
+ {
+  "id": "r-180",
+  "theater": "iran",
+  "desc": "Stand down",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t3F17"
+ },
+ {
+  "id": "r-181",
+  "theater": "iran",
+  "desc": "Remain neutral",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t3F17",
+  "holdout": true
+ },
+ {
+  "id": "r-182",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "move": "strike, talks, sanctions, statement, withdrawal"
+  },
+  "expect": {
+   "box_read": {
+    "move": [
+     "strike",
+     "talks",
+     "sanctions",
+     "statement",
+     "withdrawal"
+    ]
+   }
+  },
+  "src": "t4F1"
+ },
+ {
+  "id": "r-183",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "move": "strike, withdrawal"
+  },
+  "expect": {
+   "box_read": {
+    "move": [
+     "strike",
+     "withdrawal"
+    ]
+   }
+  },
+  "src": "t4F1"
+ },
+ {
+  "id": "r-184",
+  "theater": "iran",
+  "desc": "",
+  "boxes": {
+   "move": "cyber, strike"
+  },
+  "expect": {
+   "box_read": {
+    "move": [
+     "cyber",
+     "strike"
+    ]
+   }
+  },
+  "src": "t4F1",
+  "holdout": true
+ },
+ {
+  "id": "r-185",
+  "theater": "china",
+  "desc": "",
+  "boxes": {
+   "move": "arms, cyber"
+  },
+  "expect": {
+   "box_read": {
+    "move": [
+     "arms",
+     "cyber"
+    ]
+   }
+  },
+  "src": "t4F1"
+ },
+ {
+  "id": "r-186",
+  "theater": "iran",
+  "desc": "do not strike",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t4F2",
+  "nomodel": true
+ },
+ {
+  "id": "r-187",
+  "theater": "iran",
+  "desc": "Do not strike Iran",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t3F16",
+  "nomodel": true
+ },
+ {
+  "id": "r-188",
+  "theater": "iran",
+  "desc": "No strikes",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t3F16",
+  "holdout": true,
+  "nomodel": true
+ },
+ {
+  "id": "r-189",
+  "theater": "iran",
+  "desc": "Sanctions but no strikes",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "sanctions"
+   ],
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t3F16",
+  "nomodel": true
+ },
+ {
+  "id": "r-190",
+  "theater": "iran",
+  "desc": "pull troops out of Iraq",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "withdrawal"
+   ],
+   "exclude_moves": [
+    "deployment"
+   ]
+  },
+  "src": "t4F2",
+  "nomodel": true
+ },
+ {
+  "id": "r-191",
+  "theater": "iran",
+  "desc": "Negotiate instead of striking",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "talks"
+   ],
+   "exclude_moves": [
+    "strike"
+   ]
+  },
+  "src": "t3F16",
+  "holdout": true,
+  "nomodel": true
+ },
+ {
+  "id": "r-192",
+  "theater": "iran",
+  "desc": "strike Natanz",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    255
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-193",
+  "theater": "iran",
+  "desc": "strike Iranian proxies in Iraq",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    223,
+    222,
+    213
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-194",
+  "theater": "iran",
+  "desc": "deploy a second carrier strike group to the Eastern Med",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "deployment"
+   ],
+   "include_ids": [
+    201,
+    89,
+    261,
+    259
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-195",
+  "theater": "iran",
+  "desc": "resume indirect talks through Oman",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "talks"
+   ],
+   "include_ids": [
+    260,
+    248,
+    262
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-196",
+  "theater": "iran",
+  "desc": "assassinate IRGC Quds Force commander",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    215
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-197",
+  "theater": "iran",
+  "desc": "impose new sanctions on Iran's oil exports",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "sanctions"
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-198",
+  "theater": "iran",
+  "desc": "designate the IRGC as a foreign terrorist organization",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    375
+   ]
+  },
+  "src": "t1ok",
+  "holdout": true
+ },
+ {
+  "id": "r-199",
+  "theater": "iran",
+  "desc": "freeze Iranian assets",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    302,
+    354
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-200",
+  "theater": "iran",
+  "desc": "announce a ceasefire and halt all strikes",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    43
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-201",
+  "theater": "houthis",
+  "desc": "strike Houthi radar sites with the UK",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    1021
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-202",
+  "theater": "houthis",
+  "desc": "designate the Houthis as a Foreign Terrorist Organization",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    1305,
+    1006,
+    1306
+   ]
+  },
+  "src": "t1ok",
+  "holdout": true
+ },
+ {
+  "id": "r-203",
+  "theater": "houthis",
+  "desc": "revoke the terrorist designation of the Houthis",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    1008
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-204",
+  "theater": "houthis",
+  "desc": "seize Iranian arms shipments bound for the Houthis",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    1068,
+    1005,
+    1009
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-205",
+  "theater": "houthis",
+  "desc": "negotiate a truce with the Houthis through Oman",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    1319,
+    1337
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-206",
+  "theater": "northkorea",
+  "desc": "deploy B-52 bombers to Guam",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    2518
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-207",
+  "theater": "northkorea",
+  "desc": "deploy THAAD to South Korea",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    2566
+   ]
+  },
+  "src": "t1ok",
+  "holdout": true
+ },
+ {
+  "id": "r-208",
+  "theater": "northkorea",
+  "desc": "station nuclear-armed submarine in Busan",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    2030,
+    2048
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-209",
+  "theater": "northkorea",
+  "desc": "scale back Ulchi Freedom Shield exercises",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    2033,
+    2554,
+    2068
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-210",
+  "theater": "northkorea",
+  "desc": "trilateral exercise with Japan and South Korea",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    2043
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-211",
+  "theater": "china",
+  "desc": "approve a new arms sale package to Taiwan",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "arms"
+   ],
+   "include_ids": [
+    3056
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-212",
+  "theater": "china",
+  "desc": "transit the Taiwan Strait with a destroyer",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "naval"
+   ],
+   "include_ids": [
+    3005
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-213",
+  "theater": "china",
+  "desc": "US Navy P-8 flight through Taiwan Strait",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    3065
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-214",
+  "theater": "china",
+  "desc": "Speaker visits Taiwan",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    3025
+   ]
+  },
+  "src": "t1ok",
+  "holdout": true
+ },
+ {
+  "id": "r-215",
+  "theater": "china",
+  "desc": "export controls on advanced semiconductors to China",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    3030
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-216",
+  "theater": "china",
+  "desc": "fly B-52 bombers through the Chinese ADIZ",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    3532
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-217",
+  "theater": "china",
+  "desc": "freedom of navigation operation near Scarborough Shoal",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "naval"
+   ],
+   "include_ids": [
+    3001
+   ]
+  },
+  "src": "t1ok",
+  "holdout": true
+ },
+ {
+  "id": "r-218",
+  "theater": "venezuela",
+  "desc": "strike drug boats off the Venezuelan coast",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "include_ids": [
+    4022
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-219",
+  "theater": "venezuela",
+  "desc": "deploy the USS Gerald R. Ford to the Caribbean",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4033,
+    4027
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-220",
+  "theater": "venezuela",
+  "desc": "impose oil sanctions on PDVSA",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4003
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-221",
+  "theater": "venezuela",
+  "desc": "raise the reward for Maduro's arrest",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4010
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-222",
+  "theater": "venezuela",
+  "desc": "designate Cartel de los Soles as a terrorist organization",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4037
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-223",
+  "theater": "venezuela",
+  "desc": "covert CIA operation inside Venezuela",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4024
+   ]
+  },
+  "src": "t1ok",
+  "holdout": true
+ },
+ {
+  "id": "r-224",
+  "theater": "venezuela",
+  "desc": "reopen the US embassy in Caracas",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4058
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-225",
+  "theater": "venezuela",
+  "desc": "recognize Guaido",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4001
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-226",
+  "theater": "venezuela",
+  "desc": "move F-35s to Puerto Rico",
+  "boxes": {},
+  "expect": {
+   "include_ids": [
+    4020
+   ]
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-227",
+  "theater": "iran",
+  "desc": "do not strike nuclear sites",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-228",
+  "theater": "iran",
+  "desc": "avoid escalating after the drone attack",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t1ok",
+  "holdout": true
+ },
+ {
+  "id": "r-229",
+  "theater": "iran",
+  "desc": "refrain from retaliating",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-230",
+  "theater": "iran",
+  "desc": "hold off on new sanctions",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-231",
+  "theater": "houthis",
+  "desc": "stop bombing the Houthis",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "talks"
+   ],
+   "include_ids": [
+    1319
+   ]
+  },
+  "src": "t2ok"
+ },
+ {
+  "id": "r-232",
+  "theater": "iran",
+  "desc": "no talks, just strikes",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "hold": false
+  },
+  "src": "t2ok",
+  "holdout": true
+ },
+ {
+  "id": "r-233",
+  "theater": "iran",
+  "desc": "we should not sanction iran",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t2ok"
+ },
+ {
+  "id": "r-234",
+  "theater": "iran",
+  "desc": "never bomb iran again",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t2ok"
+ },
+ {
+  "id": "r-235",
+  "theater": "iran",
+  "desc": "Won't rule out strikes",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike"
+   ],
+   "hold": false
+  },
+  "src": "t3ok"
+ },
+ {
+  "id": "r-236",
+  "theater": "iran",
+  "desc": "Not only strike but also sanction",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "strike",
+    "sanctions"
+   ],
+   "hold": false
+  },
+  "src": "t3ok",
+  "holdout": true
+ },
+ {
+  "id": "r-237",
+  "theater": "iran",
+  "desc": "Sanctions, not strikes",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "sanctions"
+   ],
+   "exclude_moves": [
+    "strike"
+   ],
+   "hold": false
+  },
+  "src": "t3ok"
+ },
+ {
+  "id": "r-238",
+  "theater": "iran",
+  "desc": "Stop short of striking",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t3ok"
+ },
+ {
+  "id": "r-239",
+  "theater": "iran",
+  "desc": "Neither strike nor sanction",
+  "boxes": {},
+  "expect": {
+   "hold": true
+  },
+  "src": "t3ok"
+ },
+ {
+  "id": "r-240",
+  "theater": "iran",
+  "desc": "Pull troops out of Iraq",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "withdrawal"
+   ]
+  },
+  "src": "t3ok"
+ },
+ {
+  "id": "r-241",
+  "theater": "iran",
+  "desc": "Reach a nuclear deal",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "talks"
+   ]
+  },
+  "src": "t3ok",
+  "holdout": true
+ },
+ {
+  "id": "r-242",
+  "theater": "iran",
+  "desc": "Ban Iranian oil imports",
+  "boxes": {},
+  "expect": {
+   "moves": [
+    "sanctions"
+   ]
+  },
+  "src": "t3ok"
+ },
+ {
+  "id": "r-243",
+  "theater": "northkorea",
+  "desc": "shoot down a North Korean missile test",
+  "boxes": {},
+  "expect": {
+   "none": true
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-244",
+  "theater": "northkorea",
+  "desc": "preemptive strike on Yongbyon reactor",
+  "boxes": {},
+  "expect": {
+   "none": true
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-245",
+  "theater": "northkorea",
+  "desc": "withdraw troops from South Korea",
+  "boxes": {},
+  "expect": {
+   "none": true
+  },
+  "src": "t1ok",
+  "holdout": true
+ },
+ {
+  "id": "r-246",
+  "theater": "northkorea",
+  "desc": "naval blockade of North Korea",
+  "boxes": {},
+  "expect": {
+   "none": true
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-247",
+  "theater": "venezuela",
+  "desc": "withdraw the US embassy from Caracas",
+  "boxes": {},
+  "expect": {
+   "none": true
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-248",
+  "theater": "venezuela",
+  "desc": "deport Venezuelan migrants",
+  "boxes": {},
+  "expect": {
+   "none": true
+  },
+  "src": "t1ok"
+ },
+ {
+  "id": "r-249",
+  "theater": "china",
+  "desc": "ban TikTok",
+  "boxes": {},
+  "expect": {
+   "none": true
+  },
+  "src": "t1ok"
+ }
+]

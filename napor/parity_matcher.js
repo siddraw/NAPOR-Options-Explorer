@@ -22,12 +22,20 @@ const srv = http.createServer((req, res) => {
     await page.waitForFunction(t => typeof D !== "undefined" && D && D.matcher && S.theater === t && typeof CAT !== "undefined" && CAT.size > 0, tid, { timeout: 20000 });
     await page.evaluate(() => loadVectors());
     for (const q of qs.filter(x => x.theater === tid)) {
-      res[q.id] = await page.evaluate(spec => {
-        const full = Object.assign({ move: "", target: "", where: "", scale: "", who: "", open: "", desc: "" }, spec);
-        const rd = readSpec(full), m = matchCases(rd);
-        const rel = rd.v === 2 && m.cases.length ? relevanceCalc(rd, m.cases) : null;
-        return { v: rd.v, ids: m.cases.map(x => x.c.id), sims: m.cases.map(x => x.sim), strength: m.cases.map(x => x.strength), dropped: m.dropped, moves: m.moves, reason: m.reason, hold: !!m.hold, neg: !!rd.neg, refrain: !!rd.refrain, ptoks: rd.ptoks, rel: rel && { n: rel.n, close: rel.close, pct: rel.pct, band: rel.band, kw_total: rel.kw_total, kw_found: rel.kw_found, kw_missing: rel.kw_missing, words: rel.words } };
-      }, Object.assign({}, q.spec || { desc: q.text }));
+      res[q.id] = await page.evaluate(([spec, nomodel]) => {
+        const keep = MV.m; if(nomodel) MV.m = null;
+        try {
+          const full = Object.assign({ move: "", target: "", where: "", scale: "", who: "", open: "", desc: "" }, spec);
+          const rd = readSpec(full), m = matchCases(rd);
+          const rel = m.cases.length ? relevanceCalc(rd, m.cases, m.dropped) : null;
+          const f = {}; for (const k of Object.keys(rd.fields)) { const x = rd.fields[k]; f[k] = { vals: x.vals, ignored: x.ignored, neg: x.neg, excl: x.excl, negated: x.negated, used: x.used }; }
+          return { ids: m.cases.map(x => x.c.id), sims: m.cases.map(x => x.sim), strength: m.cases.map(x => x.strength), missed: m.cases.map(x => x.missed), dropped: m.dropped, kept: m.kept, moves: m.moves, moves_from: m.movesFrom, reason: m.reason, hold: !!m.hold, ranked: !!m.ranked, ordered: !!m.ordered,
+            neg: !!rd.neg, negs: rd.negs, refrain: !!rd.refrain, boxes_context: !!rd.boxesContext, conflict: !!rd.conflict, ptoks: rd.ptoks, fixes: rd.fixes, unread: rd.unread, sets: rd.sets, fields: f, rev: rd.rev.map(r => [r.text, r.moves]), lex: rd.lex, typed: !!rd.typed, any: !!rd.any,
+            cue: { moves: rd.cue.moves, tier: rd.cue.tier, relief: !!rd.cue.relief }, covered_words: rd.coveredWords,
+            case_moves: m.cases.map(x => x.c.tags ? x.c.tags.move : "week"),
+            rel: rel && { n: rel.n, close: rel.close, pct: rel.pct, band: rel.band, kw_total: rel.kw_total, kw_found: rel.kw_found, kw_missing: rel.kw_missing, words: rel.words } };
+        } finally { MV.m = keep; }
+      }, [Object.assign({}, q.spec || { desc: q.text }), !!q.nomodel]);
     }
     await page.close();
   }
