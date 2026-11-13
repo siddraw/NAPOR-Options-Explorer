@@ -374,7 +374,8 @@ def find_negations(toks, breaks, C, neutral=(), skip=()):
             continue
         end, row = h
         sw = said_index(toks, i, C.say)
-        if sw < 0 and i > 0 and toks[i - 1] in neutral and not row["solo"]:
+        verb = any(pre and toks[i].startswith(w) for w, pre, _f in row["terms"][0][0])      # "Iran refuses ...": a verb of another party, not the US
+        if sw < 0 and i > 0 and toks[i - 1] in neutral and not row["solo"] and verb:
             i = end
             continue
         e = end

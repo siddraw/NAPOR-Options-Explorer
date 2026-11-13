@@ -45,15 +45,17 @@ def test_stem_forms_match_plural_and_ing():
 
 def test_key_words_drop_small_words_theater_names_unknown_words_and_negated_words(ths):
     th = ths["iran"]
-    rd = R.read_spec(dict(desc="impose new sanctions on Iranian banks but do not strike the zzzqqq"), th.matcher, th.neutral)
-    w = R.key_words(rd, th.neutral, lambda t: th.model.find(t) is not None)
-    assert w == ["impose", "sanctions", "banks"]          # new = filler, on/the = small, iranian = theater name, strike/zzzqqq = said the US would not do
+    rd = R.read_spec(dict(desc="impose new sanctions on Iranian banks but do not strike the zzzqqq"), th)
+    w, forced = R.key_words(rd, th)
+    assert w == ["impose", "sanctions", "banks"] and not forced          # new = filler, on/the = small, iranian = theater name, strike/zzzqqq = said the US would not do
 
 
 def test_key_words_read_the_boxes_too_and_skip_ignored_box_words(ths):
     th = ths["iran"]
-    rd = R.read_spec(dict(move="strike", target="radar, zzzqqq", desc=""), th.matcher, th.neutral)
-    assert R.key_words(rd, th.neutral, lambda t: True) == ["strike", "radar"]
+    rd = R.read_spec(dict(move="strike", target="radar, zzzqqq", desc=""), th)
+    # a box word that was read as a setting is an exact rule, not a key word; a box word the page could not read is a key word that never counts as found
+    assert R.key_words(rd, th) == (["zzzqqq"], {"zzzqqq"})
+    assert R.key_words(rd, th, ["target"]) == (["radar", "zzzqqq"], {"radar", "zzzqqq"})
 
 
 def test_key_words_found_with_stems():

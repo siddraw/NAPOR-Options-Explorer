@@ -7,6 +7,13 @@ import matcher_ref as R
 from conftest import THEATER_IDS, load_export
 
 M = dict(A.page_vocab("iran"))
+_T = {}
+
+
+def _ths():
+    if not _T:
+        _T.update(R.load_all(with_model=False)[1])
+    return _T
 
 
 def moves(text, names=False):
@@ -53,9 +60,9 @@ def test_pulling_out_is_never_a_deployment():
 
 
 def test_negation_is_not_read_as_a_move():
-    rd = R.read_spec(dict(desc="do not strike Iran"), M, set())
+    rd = R.read_spec(dict(desc="do not strike Iran"), _ths()["iran"])
     assert rd["neg"] and rd["cue"]["moves"] == []
-    rd = R.read_spec(dict(desc="say the US does not support Taiwan independence"), M, set())
+    rd = R.read_spec(dict(desc="say the US does not support Taiwan independence"), _ths()["iran"])
     assert not rd["neg"]                           # a "not" after "say" is part of what is said
 
 
@@ -75,5 +82,5 @@ def test_page_data_has_cues_neutral_and_params(tid):
 def test_theater_names_are_neutral_not_ignored():
     for tid in THEATER_IDS:
         mm = A.page_vocab(tid)
-        vals, ignored = R.scan_box("Iranian Houthi chinese venezuelan north korean", "where", mm, set(mm["neutral"]))
-        assert not set(mm["neutral"]) & set(ignored)
+        r = R.scan_box("Iranian Houthi chinese venezuelan north korean", "where", _ths()[tid])
+        assert not set(mm["neutral"]) & set(r["ignored"])

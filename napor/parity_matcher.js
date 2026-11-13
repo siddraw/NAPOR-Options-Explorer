@@ -28,7 +28,7 @@ const srv = http.createServer((req, res) => {
           const full = Object.assign({ move: "", target: "", where: "", scale: "", who: "", open: "", desc: "" }, spec);
           const rd = readSpec(full), m = matchCases(rd);
           const rel = m.cases.length ? relevanceCalc(rd, m.cases, m.dropped) : null;
-          const f = {}; for (const k of Object.keys(rd.fields)) { const x = rd.fields[k]; f[k] = { vals: x.vals, ignored: x.ignored, neg: x.neg, excl: x.excl, negated: x.negated, used: x.used }; }
+          const f = {}; for (const k of Object.keys(rd.fields)) { const x = rd.fields[k]; f[k] = { vals: x.fromDesc ? [] : x.vals, ignored: x.ignored, neg: x.neg, excl: x.excl, negated: x.negated, used: x.used }; }
           return { ids: m.cases.map(x => x.c.id), sims: m.cases.map(x => x.sim), strength: m.cases.map(x => x.strength), missed: m.cases.map(x => x.missed), dropped: m.dropped, kept: m.kept, moves: m.moves, moves_from: m.movesFrom, reason: m.reason, hold: !!m.hold, ranked: !!m.ranked, ordered: !!m.ordered,
             neg: !!rd.neg, negs: rd.negs, refrain: !!rd.refrain, boxes_context: !!rd.boxesContext, conflict: !!rd.conflict, ptoks: rd.ptoks, fixes: rd.fixes, unread: rd.unread, sets: rd.sets, fields: f, rev: rd.rev.map(r => [r.text, r.moves]), lex: rd.lex, typed: !!rd.typed, any: !!rd.any,
             cue: { moves: rd.cue.moves, tier: rd.cue.tier, relief: !!rd.cue.relief }, covered_words: rd.coveredWords,

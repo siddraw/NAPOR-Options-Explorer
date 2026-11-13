@@ -83,7 +83,9 @@ def needed_words():
                 need.update(words_of(w))
     for cue in A.CUES:
         for p in cue["phrases"]:
-            need.update(words_of(p))
+            need.update(words_of(re.sub(r"[a-z]+\*", " ", p)))      # a stem ending in * is not a word
+    for k, v in A.LANG["lexicon"].items():        # the plain words a lexicon term (Fordow, THAAD...) stands for
+        need.update(words_of(k)); need.update(words_of(v))
     for ws in A.NEUTRAL.values():
         for w in ws:
             need.update(words_of(w))

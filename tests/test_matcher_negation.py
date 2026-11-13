@@ -105,12 +105,12 @@ def test_a_negated_action_is_never_read_as_a_move_on_either_set(ths):
 
 def test_say_or_declare_stays_a_statement(ths):
     for t in ["say the US does not support Taiwan independence", "declare that the US will not strike Iran", "publicly pledge never to invade"]:
-        rd = R.read_spec(dict(desc=t), ths["iran"].matcher, set())
+        rd = R.read_spec(dict(desc=t), ths["iran"])
         assert not rd["neg"], t
 
 
 def test_the_united_states_is_not_a_say_word(ths):
-    rd = R.read_spec(dict(desc="the United States would not strike"), ths["iran"].matcher, set())
+    rd = R.read_spec(dict(desc="the United States would not strike"), ths["iran"])
     assert rd["neg"] and rd["refrain"]
 
 

@@ -1,6 +1,6 @@
 # Your own option: how accurate is the matcher?
 
-Checked 2026-11-12 against the hand-written answer key `tests/matcher_bench.json` (65 things a viewer might type, each with the
+Checked 2026-11-13 against the hand-written answer key `tests/matcher_bench.json` (65 things a viewer might type, each with the
 past cases that really are the same kind of US action; written from the case titles, not from the tags).
 The key has a **dev** half (used to set the tuning numbers) and a **test** half (never used for tuning). Six queries are
 admittedly loose (the key itself says the log has no exact match) and are listed apart.
@@ -10,11 +10,11 @@ admittedly loose (the key itself says the log has no exact match) and are listed
 | Queries | Matcher | n | precision@5 | recall@10 | F1 | none-correct |
 |---|---|---|---|---|---|---|
 | Dev (used for tuning) | v1 key words | 27 | 0.33 | 0.52 | 0.40 | 0.50 |
-| Dev (used for tuning) | v2 word meaning | 27 | 0.67 | 0.72 | 0.65 | 1.00 |
+| Dev (used for tuning) | v2 word meaning | 27 | 0.69 | 0.76 | 0.69 | 1.00 |
 | Test (never tuned on) | v1 key words | 29 | 0.32 | 0.48 | 0.41 | 1.00 |
-| Test (never tuned on) | v2 word meaning | 29 | 0.66 | 0.66 | 0.58 | 1.00 |
+| Test (never tuned on) | v2 word meaning | 29 | 0.80 | 0.70 | 0.69 | 1.00 |
 | Loose queries (reported only) | v1 key words | 6 | 0.44 | 0.51 | 0.42 | - |
-| Loose queries (reported only) | v2 word meaning | 6 | 0.58 | 0.56 | 0.48 | - |
+| Loose queries (reported only) | v2 word meaning | 6 | 0.43 | 0.50 | 0.38 | - |
 
 What the columns mean (all averages over queries; none-correct is only for the queries where the key says the log has
 nothing like it: dev 2, test 1):

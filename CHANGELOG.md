@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-11-13 - Own option: fixes from the tester round
+Matcher logic only (no layout change). Python reference and page code stay identical (parity tests, a seeded 1,200-input random sweep, and a new 249-entry regression suite). Bench: dev precision@5 0.69, F1 0.69; test precision@5 0.80, F1 0.69; none-correct 1.00 (before: dev 0.67 / 0.65, test 0.66 / 0.58). Floor not lowered, answer key not edited. Regression suite before/after: fix set 78 of 183 to 172, holdout 29 of 66 to 60.
+- **Strength is absolute.** Close and Very close need a fitting move, a closeness over fixed lines and no unread literal word; no move read means nothing better than Loose; reverse actions are never close; words with no meaning return no cases.
+- **One tokenizer and typo repair** in boxes and description (endings, irregular verbs, shown as "read x as y"); emoji cut by character.
+- **Domain lexicon** (Fordow, Hormuz, THAAD, OFAC...) plus a literal-words score blended with the model score.
+- **Reversals** (lift, stop, cancel...) ask for the opposite move; phrase rules (carrier strike group, stopover, designate, labor strike, invade...).
+- **Negation** works in boxes, with informal forms and many non-negation idioms; a hold with boxes filled shows them as context.
+- **Type of Move box keeps every move named**; casual box words; unread box words never wipe out results; the footer says which words were not understood.
+- **No old fallback**: if the word file cannot load, the same rules run without the vectors and the page says so.
+- New `tests/matcher_regress.json`, `napor/matcher_regress.py`, `tests/test_matcher_rules.py`; `matcher_vectors.json` rebuilt (2.9 MB) for the new words; `build_vectors.py` ignores cue stems and reads the lexicon.
+
 ## 2026-11-12 - Own option: understands "not", relevance score, Israeli-action rule
 Page, matcher and one data decision. The matcher accuracy check is unchanged (test F1 0.58, precision@5 0.66; floor not touched, answer key and `MATCH` not edited).
 - **"Not" is understood, by rules.** The word vectors cannot be told "not", so a rule layer reads negation cues (not, n't, never, no, without, refrain, avoid, instead of, rather than, hold off, rule out...) and their scope (up to the next comma or "but", at most 8 words). Negated words are never read as a move and never searched; the rest is read normally ("negotiate rather than strike" is talks). If the only action is negated ("do not strike Iran") the page reads it as the US holding back and uses the hold weeks, saying that "no new US move" is the closest the log has. "Not ruling out" and "won't rule out" are positive; "say it will not..." stays a statement. Python (`matcher_ref.py`) and the page match exactly. Tests: 31 example phrasings and 34 held-out phrasings written before the rules (held-out first run 33 of 34).
