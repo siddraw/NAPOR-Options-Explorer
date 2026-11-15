@@ -3,7 +3,7 @@
   "asof": "2026-02-28",
   "intensity": 4,
   "band": "Low",
-  "events": 133,
+  "events": 134,
   "options": {
    "A": {
     "n": 0,
@@ -11,39 +11,39 @@
     "estimate": null
    },
    "B": {
-    "n": 1,
-    "index": 0.25,
-    "estimate": 0.619
+    "n": 5,
+    "index": 0.35,
+    "estimate": 0.407
    },
    "C": {
-    "n": 0,
-    "index": null,
-    "estimate": null
+    "n": 4,
+    "index": 0.25,
+    "estimate": 0.361
    },
    "D": {
-    "n": 3,
-    "index": 0.583,
-    "estimate": 0.559
+    "n": 7,
+    "index": 0.464,
+    "estimate": 0.433
    },
    "E": {
-    "n": 11,
-    "index": 0.766,
-    "estimate": 0.748
+    "n": 18,
+    "index": 0.605,
+    "estimate": 0.436
    },
    "F": {
-    "n": 1,
-    "index": 1.0,
-    "estimate": 0.702
-   },
-   "G": {
     "n": 3,
     "index": 0.583,
-    "estimate": 0.643
+    "estimate": 0.407
+   },
+   "G": {
+    "n": 4,
+    "index": 0.5,
+    "estimate": 0.407
    },
    "H": {
-    "n": 1,
-    "index": 0.75,
-    "estimate": 0.675
+    "n": 4,
+    "index": 0.375,
+    "estimate": 0.367
    }
   },
   "status": {
