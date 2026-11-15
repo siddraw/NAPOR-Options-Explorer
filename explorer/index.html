@@ -1185,7 +1185,7 @@ function detailHtml(o){
   let h = '';
   h += `<div class="head"><h3>${o.key}. ${esc(winName(o))}</h3><p class="what">${esc(o.what)}</p>${o.mine ? mineBanner(o) : situationBlock(o)}` +
     (o.cases.length && !(o.mine && !activeCases(o).length) ? `<div class="meter"><span>${o.mine ? (S.phase || S.band ? cntLabel(st.cases, st.total, o.is_hold) + " match the condition you picked" : cntMine(o, activeCases(o)) + (S.asof ? " known on that date" : "")) : S.phase || S.band ? cntLabel(st.cases, st.total, o.is_hold) + " match the condition you picked" : cntLabel(st.cases, st.total, o.is_hold) + (S.asof ? " known on that date" : " in the log")}${st.cases >= MINC && st.cases <= 3 ? ' <span class="oldtag">very few cases</span>' : ""}</span><span class="bar"><i style="width:${Math.min(100, st.cases / 8 * 100)}%"></i></span><span>8+ cases is a fair sample</span></div>` : "") + `</div>`;
-  h += `<section><h2 title="${esc(RISKDEF)}">NAPOR risk assessment</h2><p class="legend idxdef">${esc(RISKDEF)}</p>${o.mine ? relBox(Object.assign({}, o, {rel: relOf(o)})) : ""}${indexPanel(o, cs)}</section>`;
+  h += `<section><h2 title="${esc(RISKDEF)}">NAPOR risk assessment</h2><p class="legend idxdef">${esc(RISKDEF)}</p>${o.mine ? relBox(Object.assign({}, o, {rel: relOf(o)})) + crossBox(o) : ""}${indexPanel(o, cs)}</section>`;
   if(o.mine) h += mineWhy(o);
   h += `<section><h2><span class="h2l">What followed the last times the US did this</span><span class="h2s">What followed past cases</span></h2>${outcomesBlock(o, st, ix)}</section>`;
   if(!o.mine) h += `<section><h2>Pros and other harms (written by the weekly agent, not data; as of ${fmtDate(D.now && D.now.as_of ? D.now.as_of : D.generated)})</h2><div class="three"><div class="box"><b>Pros</b>${esc(o.pros)}</div><div class="box"><b>Other harms</b>${esc(o.harms)}</div><div class="box"><b>What the data cannot tell us</b>${esc(o.unknown)}</div></div></section>`;
@@ -2313,6 +2313,58 @@ function relBox(o){   /* in the option window, at the top of the risk section */
   const r = o.rel; if(!r || !r.n) return "";
   const hold = r.hold ? " Hold weeks are never rated close: the log cannot tell a chosen pause from a quiet week, so Relevance does not apply to them." : "";
   return `<div class="relbox" id="relbox"><div class="rl"><b>${esc(relHead(r))}</b>${r.band === "few" || r.hold ? "" : ` <span class="relband b-${r.band}">${esc(REL_BAND[r.band])}</span>`}</div>` + (relWords(r) ? `<div class="rl">${esc(relWords(r))}</div>` : "") + `<p class="nodata">${esc(RELDEF)}${esc(hold)}</p></div>`;
+}
+/* ----- A pointer to the Leader captures and raids tab. Python twin: matcher_ref.cross_hint. It is a pointer only: it never changes this tab's cases, numbers, Relevance or risk index. ----- */
+const CAPS = {state: "idle", d: null, cat: null, ctx: {}, memo: new Map()};   /* ctx: one reading context per home tab */   /* idle | loading | ready | failed */
+const CROSS_MOVES = ["raid", "strike", "legal"];
+function loadCaptures(){   /* one fetch of the captures data, only when a personal option is open; if it fails, nothing is shown */
+  if(CAPS.state !== "idle") return;
+  CAPS.state = "loading";
+  const t = THEATERS && THEATERS.theaters.find(x => x.id === "captures");
+  if(!t){ CAPS.state = "failed"; return; }
+  fetch(t.data, {cache: "no-store"}).then(r => { if(!r.ok) throw 0; return r.json(); }).then(d => {
+    if(!d || !d.matcher || !Array.isArray(d.options)) throw 0;
+    const cat = new Map(); d.options.forEach(o => o.cases.forEach(c => { if(!isWeek(c) && !cat.has(c.id)) cat.set(c.id, {c, o}); }));
+    CAPS.d = d; CAPS.cat = cat; CAPS.state = "ready";
+  }).catch(() => { CAPS.state = "failed"; }).then(() => { if(D && CAPS.state === "ready") patchCross(); });
+}
+function patchCross(){   /* the data arrived after a window was drawn: add the box in place (no redraw, so focus and scroll stay where they are) */
+  document.querySelectorAll("#wins .win").forEach(w => {
+    const o = optByKey(w.dataset.k), rb = w.querySelector("#relbox, .relbox");
+    if(!o || !rb || w.querySelector(".crossbox")) return;
+    const h = crossBox(o); if(h) rb.insertAdjacentHTML("afterend", h);
+  });
+}
+function crossHintCalc(spec){   /* the same matcher on the captures data -> {show, n, cases, band, moves}; the page's own data are put back in a finally block */
+  const no = {show: false};
+  if(S.theater === "captures" || CAPS.state !== "ready" || !mvReady()) return no;
+  const sD = D, sC = CAT, sM = MTH;
+  try {
+    const hid = S.theater, cx = CAPS.ctx[hid] || (CAPS.ctx[hid] = {   /* the captures data read as this tab would read them: the tab's own words (Houthi, Iran, Maduro...) are neutral, as they are at home */
+      d: Object.assign({}, CAPS.d, {matcher: Object.assign({}, CAPS.d.matcher, {neutral: [...new Set((CAPS.d.matcher.neutral || []).concat(sD.matcher.neutral || []))]})}), mth: null});
+    D = cx.d; CAT = CAPS.cat; MTH = cx.mth;
+    const rd0 = readSpec(spec), m = matchCases(rd0), rd = m.rd, T = theater();
+    cx.mth = MTH;
+    if(!rd.any || !m.cases.length || m.hold) return no;
+    const rel = relevanceCalc(rd, m.cases, m.dropped);
+    if(rel.band === "few" ? rel.close !== rel.n : rel.band !== "strong" && rel.band !== "moderate") return no;   /* 3 or more cases: a Strong or Moderate band; 1 or 2 (too few for a band): all of them close or very close */
+    const moves = m.moves.filter(x => CROSS_MOVES.includes(x));
+    if(!moves.length) return no;
+    const L = new Set(T.C.L.leader_words || []);
+    const lead = tokens(clean(spec.desc, 400)).some(t => inter(T.C.fset(t), L)) || (rd.sets.target || []).includes("leaders");
+    if(!lead) return no;
+    return {show: true, n: m.cases.length, ids: m.cases.slice(0, 3).map(x => x.c.id), cases: m.cases.slice(0, 3).map(x => x.c), band: rel.band, moves};
+  } finally { D = sD; CAT = sC; MTH = sM; }
+}
+function crossBox(o){   /* under the Relevance box of a personal option; "" when there is nothing to point to */
+  if(!o.mine || o.waiting || o.is_hold || !o.rec || !o.rec.spec || S.theater === "captures") return "";
+  if(CAPS.state === "idle") loadCaptures();
+  if(CAPS.state !== "ready" || !mvReady()) return "";
+  const key = S.theater + "|" + JSON.stringify(o.rec.spec);
+  if(!CAPS.memo.has(key)) CAPS.memo.set(key, crossHintCalc(o.rec.spec));
+  const h = CAPS.memo.get(key); if(!h || !h.show) return "";
+  const list = h.cases.map(c => `${c.title} (${fmtDate(c.date, true)})`).join("; ");
+  return `<div class="relbox crossbox"><div class="rl">The <b>Leader captures and raids</b> tab has ${plural(h.n, "past case")} like this (US operations to capture or kill a leader anywhere, 1983-2026): ${esc(list)}. <a href="#captures">Open that tab →</a></div></div>`;
 }
 function autoName(rd){
   const parts = MFIELDS().filter(f => rd.sets[f]).map(f => rd.sets[f].map(v => valName(f, v)).join("/"));
