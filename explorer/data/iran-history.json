@@ -292,47 +292,47 @@
   "asof": "2026-11-08",
   "intensity": 17,
   "band": "High",
-  "events": 293,
+  "events": 334,
   "options": {
    "A": {
     "n": 11,
     "index": 0.164,
-    "estimate": 0.189
+    "estimate": null
    },
    "B": {
-    "n": 24,
-    "index": 0.192,
-    "estimate": 0.195
+    "n": 27,
+    "index": 0.185,
+    "estimate": null
    },
    "C": {
-    "n": 32,
-    "index": 0.188,
-    "estimate": 0.192
+    "n": 39,
+    "index": 0.19,
+    "estimate": null
    },
    "D": {
-    "n": 8,
-    "index": 0.238,
-    "estimate": 0.26
+    "n": 10,
+    "index": 0.244,
+    "estimate": null
    },
    "E": {
     "n": 3,
     "index": 0.5,
-    "estimate": 0.414
+    "estimate": null
    },
    "F": {
-    "n": 14,
-    "index": 0.571,
-    "estimate": 0.536
+    "n": 15,
+    "index": 0.567,
+    "estimate": null
    },
    "G": {
     "n": 6,
     "index": 0.667,
-    "estimate": 0.582
+    "estimate": null
    },
    "H": {
-    "n": 14,
+    "n": 36,
     "index": 0.2,
-    "estimate": 0.205
+    "estimate": null
    }
   },
   "status": {

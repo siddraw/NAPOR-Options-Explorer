@@ -169,26 +169,26 @@
   "asof": "2026-11-04",
   "intensity": 8,
   "band": "Medium",
-  "events": 171,
+  "events": 212,
   "options": {
    "A": {
-    "n": 69,
+    "n": 66,
     "index": 0.261,
     "estimate": null
    },
    "B": {
-    "n": 10,
-    "index": 0.275,
+    "n": 16,
+    "index": 0.25,
     "estimate": null
    },
    "C": {
-    "n": 12,
-    "index": 0.54,
+    "n": 14,
+    "index": 0.499,
     "estimate": null
    },
    "D": {
-    "n": 11,
-    "index": 0.634,
+    "n": 17,
+    "index": 0.499,
     "estimate": null
    },
    "E": {

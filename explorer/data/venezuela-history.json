@@ -169,26 +169,26 @@
   "asof": "2026-11-02",
   "intensity": 0,
   "band": "Quiet",
-  "events": 136,
+  "events": 178,
   "options": {
    "A": {
-    "n": 15,
+    "n": 14,
     "index": 0.2,
     "estimate": null
    },
    "B": {
-    "n": 11,
-    "index": 0.218,
+    "n": 16,
+    "index": 0.212,
     "estimate": null
    },
    "C": {
-    "n": 20,
-    "index": 0.24,
+    "n": 40,
+    "index": 0.205,
     "estimate": null
    },
    "D": {
-    "n": 8,
-    "index": 0.45,
+    "n": 17,
+    "index": 0.435,
     "estimate": null
    },
    "E": {
@@ -207,8 +207,8 @@
     "estimate": null
    },
    "H": {
-    "n": 14,
-    "index": 0.257,
+    "n": 22,
+    "index": 0.227,
     "estimate": null
    }
   },

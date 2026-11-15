@@ -252,11 +252,11 @@
   "asof": "2026-11-08",
   "intensity": 26,
   "band": "High",
-  "events": 129,
+  "events": 146,
   "options": {
    "A": {
-    "n": 79,
-    "index": 0.253,
+    "n": 78,
+    "index": 0.254,
     "estimate": null
    },
    "B": {
@@ -265,7 +265,7 @@
     "estimate": null
    },
    "C": {
-    "n": 8,
+    "n": 15,
     "index": 0.2,
     "estimate": null
    },
@@ -275,7 +275,7 @@
     "estimate": null
    },
    "E": {
-    "n": 3,
+    "n": 8,
     "index": 0.2,
     "estimate": null
    },
