@@ -1,0 +1,85 @@
+[
+ {
+  "asof": "2026-02-28",
+  "intensity": 4,
+  "band": "Low",
+  "events": 127,
+  "options": {
+   "A": {
+    "n": 0,
+    "index": null,
+    "estimate": null
+   },
+   "B": {
+    "n": 0,
+    "index": null,
+    "estimate": null
+   },
+   "C": {
+    "n": 0,
+    "index": null,
+    "estimate": null
+   },
+   "D": {
+    "n": 3,
+    "index": 0.583,
+    "estimate": 0.583
+   },
+   "E": {
+    "n": 9,
+    "index": 0.795,
+    "estimate": 0.775
+   },
+   "F": {
+    "n": 1,
+    "index": 1.0,
+    "estimate": 0.74
+   },
+   "G": {
+    "n": 2,
+    "index": 0.75,
+    "estimate": 0.716
+   },
+   "H": {
+    "n": 1,
+    "index": 0.75,
+    "estimate": 0.712
+   }
+  },
+  "status": {
+   "A": {
+    "status": "open",
+    "label": "Open"
+   },
+   "B": {
+    "status": "open",
+    "label": "Open"
+   },
+   "C": {
+    "status": "open",
+    "label": "Open"
+   },
+   "D": {
+    "status": "open",
+    "label": "Open"
+   },
+   "E": {
+    "status": "open",
+    "label": "Open"
+   },
+   "F": {
+    "status": "open",
+    "label": "Open"
+   },
+   "G": {
+    "status": "open",
+    "label": "Open"
+   },
+   "H": {
+    "status": "open",
+    "label": "Open"
+   }
+  },
+  "status_as_of": "2026-11-15"
+ }
+]
