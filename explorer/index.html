@@ -583,6 +583,7 @@ const EDAYS = () => ECONM().days || 7;
 const CL = cat => { const v = (TH.close || {})[cat]; return v != null ? v : ({people:7, escalation:RD(), military:RD(), economic:EDAYS(), political:14})[cat]; };
 const ACT = () => Object.assign({verb:"struck within 7 days", row:"strikes within 7 days", col:"Strike ≤7d", none:"No strike"}, TH.act || {});
 const BASEN = () => (TH.base && TH.base.noun) || "attacks on shipping";
+const INTNOTE = () => (TH.intensity && TH.intensity.note) || "War intensity counts logged hostile events in the 14 days before each date (2 points per direct strike, 1 per shipping attack or blockade move, +2 if someone died). Big campaigns are logged as a few rows, so hot weeks are understated.";
 const INTN = () => (TH.intensity && TH.intensity.name) || "War intensity";
 const isWeek = c => !!c.week;
 const MINC = 3;   /* a risk index needs at least this many counted cases in the current view (after Remove, the look-back date and any condition) */
@@ -743,6 +744,7 @@ function renderIntensity(){
     `<div class="scale" aria-label="Intensity scale"><div class="needle" style="left:${left}%"></div><div class="segs">${BAND_NAMES.map((n,i) => `<div style="background:var(--b${i})">${n}</div>`).join("")}</div><div class="ticks">${D.intensity.bands.map(([l]) => `<span>${l}${l === 12 ? "+" : ""} ${l === 1 ? "pt" : "pts"}</span>`).join("")}</div></div></div>` +
     `<div class="chartbox" id="chartbox"></div>` +
     `<div class="chartfoot"><span>Scroll sideways for earlier years. Hover or use ← → to read a day; click to pin it.</span><span>Top bar: phase (phase, named with hindsight).</span><span class="lg"><i class="dot"></i> ${esc(TH.actor_short)} ${o0.trigger ? "replied" : esc(ACT().verb)}</span><span class="lg"><i class="dot no"></i> ${o0.trigger ? "no reply" : esc(lc1(ACT().none))}</span><span class="lg"><i class="dot open"></i> not yet known</span></div>` +
+    `<p class="note" id="intexplain" style="margin:10px 0 0">${esc(INTNOTE())}</p>` +
     `<div class="evlist"><h2>What counted in the 14 days up to ${fmtDate(dt)}</h2>` +
     (evs.length ? '<ul>' + evs.map(e => `<li><span class="mono">${fmtDate(e.date)}</span><span class="pts">+${e.pts}</span><span>${esc(e.title.length > 120 ? e.title.slice(0,117) + "…" : e.title)}</span></li>`).join('') + '</ul>' : '<p class="nodata">No hostile events logged in this window.</p>') + '</div>';
   const nb = $("#nowbtn"); if(nb) nb.onclick = () => { S.pin = null; renderIntensity(); };
