@@ -442,6 +442,26 @@ html.phone .mchip{padding:8px 12px;font-size:12px;min-height:38px}html.phone .mf
  html.phone #mform .mfoot{position:static}
  html.phone #m-mine .x{position:fixed}
 }
+
+/* option I (capture or kill the leader): worldwide cases inside a country tab */
+.leadno{margin:8px 2px 0;font-size:12.5px}
+.leadsrc{border:1px solid var(--line);border-left:4px solid var(--k4);border-radius:8px;padding:8px 12px;margin:8px 0;font-size:13px;background:var(--bg)}
+.list .leadbtn{border-style:dashed}
+.leadcases{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:8px;font-size:13px}
+.leadcases li{overflow-wrap:anywhere}
+details.subopt{border:1px solid var(--line);border-radius:8px;margin:6px 0;background:var(--panel)}
+details.subopt>summary{cursor:pointer;padding:8px 12px;display:grid;grid-template-columns:44px 1fr auto;gap:2px 8px;align-items:baseline;list-style:none}
+details.subopt>summary::-webkit-details-marker{display:none}
+details.subopt .more{grid-column:3;grid-row:1/3;align-self:center;font-size:12px;color:var(--accent)}
+details.subopt .mo,details.subopt[open] .mc{display:none}details.subopt[open] .mo{display:inline}
+details.subopt>summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+details.subopt .key{font-family:var(--f-mono);font-weight:500;color:var(--accent);grid-row:1/3}
+details.subopt .nm{font-weight:500}
+details.subopt .ev{grid-column:2;font-size:12.5px;color:var(--muted)}
+details.subopt .subbody{padding:2px 12px 12px}
+details.subopt .subbody .what{margin:0 0 6px;font-size:13px}
+.subnums{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px 14px;font-size:12.5px;margin:6px 0 8px}
+.subnums b{font-weight:600}.subnums small{color:var(--muted)}
 </style>
 
 <div class="wrap">
@@ -697,6 +717,7 @@ function statusAt(o, iso){
   return {...ruleStatus(o, iso), src:"rule"};
 }
 const stPill = (o) => {
+  if(o.leader) return "";   /* option I has no weekly status: its validity is the analyst's call (see its window) */
   if(S.asof){ const st = statusAt(o, S.asof); return `<span class="pill ${esc(st.status)}">${esc(st.label)}</span>`; }
   const n = D.now && D.now.options && D.now.options[o.key]; return n ? `<span class="pill ${esc(n.status)}">${esc(n.label)}</span>` : ""; };
 
@@ -714,7 +735,7 @@ function renderIntensity(){
   const frac = b === 0 ? 0.5 : Math.min(1, (pts - lo) / Math.max(1, hi - lo));
   const left = (b + (b === 0 ? 0.5 : Math.min(0.97, Math.max(0.03, frac)))) / 4 * 100;
   const below = D.series.filter(s => s[1] < pts).length / D.series.length;
-  const ph = D.phases.find(p => dt >= p.start && dt <= p.end), evs = windowEvents(idx), o0 = optByKey(S.sel) || D.options[0];
+  const ph = D.phases.find(p => dt >= p.start && dt <= p.end), evs = windowEvents(idx), o0 = selOpt();
   $("#intensity").innerHTML =
     `<h2 style="padding-right:44px">${esc(INTN())}</h2><div class="gauge-row"><div class="read"><div class="big mono">${pts} <small>points · ${isNow ? "now" : "as of " + fmtDate(dt)}</small></div>` +
     `<span class="bandname" style="background:var(--b${b})">${BAND_NAMES[b]}</span>` +
@@ -734,7 +755,7 @@ function drawChart(){
   const n = D.series.length, VW = Math.max(260, box.clientWidth - AXW), W = Math.max(VW, Math.round(n * PXD) + L + Rr);
   const x = i => L + (W - L - Rr) * i / (n - 1);
   const ymax = Math.max(Math.ceil(D.intensity.peak / 5) * 5, D.intensity.bands[3][0]) + 2, y = v => BT - (BT - T) * v / ymax;
-  const o = optByKey(S.sel) || D.options[0], cs = o.cases;
+  const o = selOpt(), cs = o.cases;
   const idxOf = iso => Math.round((dd(iso) - dd(D.series[0][0])) / 864e5);
   const bl = D.intensity.bands.map(b => b[0]);
   // fixed y-axis
@@ -959,6 +980,7 @@ function baseText(){
 }
 function outcomesBlock(o, st, ix){
   const nowN = activeCases(o).length;
+  if(o.leader && (!o.cases.length || fewNow(o, activeCases(o)))) return `<p class="nodata">${nowN ? "Too few cases: only " + plural(nowN, "past case") + " " + isAre(nowN) + " counted here, which is too few to show a measured outcome. The cases are listed below." : "No past case is known on that date, so there is no measured outcome."}</p>`;
   if(o.mine && (!o.cases.length || fewNow(o, activeCases(o)))) return `<p class="nodata">${o.cases.length ? (nowN ? "Too few cases: only " + plural(nowN, "past case") + " " + isAre(nowN) + " counted, which is too few to show a measured outcome. The cases are listed below." : "None of the past cases are counted in this view, so there is no measured outcome. The cases are listed below.") : "No cases are counted, so there is no measured outcome."}</p>`;
   if(!o.cases.length || fewNow(o, activeCases(o))){
     let h = `<p class="nodata" style="margin-bottom:10px">${o.cases.length ? "Too few cases: only " + plural(o.too_few ? o.cases.length : nowN, "past case") + (o.too_few ? " of" : " " + isAre(nowN) + " counted for") : "No past case of"} "${esc(o.name)}"${o.cases.length ? (o.too_few ? " " + isAre(o.cases.length) + " in the log" : "") : " is in the log"}, so there is no measured outcome${o.cases.length ? " worth a percentage (the cases are listed below)" : ""}. What is measured is what happens anyway: ${esc(BASEN())}, logged per week (the real count is higher, because big clusters are logged as one row).</p>` + (o.is_hold && TH.hold_note ? `<p class="note" style="margin-bottom:10px">${esc(TH.hold_note)}</p>` : "") + weeklyShipping() +
@@ -1115,7 +1137,8 @@ function weightLine(c){ // only when a recency weight is in use (none is today, 
   const age = ageDays(asofDate(), c.date), w = caseW(c);
   return `<div class="rw">Recency weight ${fw(w)} (case is ${age} day${age === 1 ? "" : "s"} old)</div>`;
 }
-function renderCat(){
+function renderCat(){ const o = optByKey(S.sel); return o && o.leader ? inLib(renderCat0) : renderCat0(); }   /* option I's cases are read in the library's words */
+function renderCat0(){
   const o = optByKey(S.sel) || D.options[0], cat = S.cat, cs = activeCases(o);
   const rows = cs.map(c => ({c, j: judge(o, c, cat)}));
   const base = rows.filter(r => r.j.base), k = base.filter(r => r.j.flag).length, n = base.length;
@@ -1181,6 +1204,7 @@ function renderTime(){
   document.querySelectorAll("[data-asof]").forEach(b => b.onclick = () => setAsof(b.dataset.asof));
 }
 function detailHtml(o){
+  if(o.leader){ const pre = leadTop(o); return inLib(() => leaderHtml(o, pre)); }
   const st = stats(o), cs = activeCases(o), ix = riskIndex(o, cs);
   let h = '';
   h += `<div class="head"><h3>${o.key}. ${esc(winName(o))}</h3><p class="what">${esc(o.what)}</p>${o.mine ? mineBanner(o) : situationBlock(o)}` +
@@ -1198,7 +1222,10 @@ function renderExplore(){
     const c2 = activeCases(x), xi = riskIndex(x, c2);
     h += `<button data-k="${x.key}" aria-pressed="${S.open.includes(x.key)}"><span class="key">${x.key}</span><span class="nm">${esc(x.name)}</span><span class="row2">${stPill(x)}</span><span class="ev">${!x.cases.length || (!c2.length && !S.phase && !S.band) ? "No past cases" + (x.cases.length && S.asof ? " known on that date" : "") : (xi ? "Risk index " + Math.round(xi.raw*100) + "% · " : fewNow(x, c2) ? "Too few cases · " : "") + cntLabel(c2.length, x.cases.length, x.is_hold) + (S.phase || S.band ? " in this condition" : "") + (c2.length > 0 && c2.length <= 3 && !fewNow(x, c2) ? ' <span class="oldtag">very few cases</span>' : "")}</span></button>`;
   }
-  h += '</div>' + mineSection();
+  const lo = leadOpt("I");
+  if(lo){ const lx = inLib(() => { const c2 = activeCases(lo), xi = riskIndex(lo, c2); return !lo.cases.length || !c2.length ? "No past cases known on that date" : (xi ? "Risk index " + Math.round(xi.raw*100) + "% · " : fewNow(lo, c2) ? "Too few cases · " : "") + plural(c2.length, "past case") + " worldwide" + (c2.length <= 3 && !fewNow(lo, c2) ? ' <span class="oldtag">very few cases</span>' : ""); });
+    h += `<button data-k="I" class="leadbtn" aria-pressed="${S.open.includes("I")}"><span class="key">I</span><span class="nm">${esc(lo.name)}</span><span class="row2"><span class="oldtag" title="${esc(leadNote())}">worldwide cases</span></span><span class="ev">${lx}</span></button>`; }
+  h += '</div>' + leadNo() + mineSection();
   const ae = document.activeElement, keepId = ae && /^mf-/.test(ae.id || "") ? ae.id : null, keepQ = keepId ? ae.selectionStart : null;
   $("#view").innerHTML = h;
   document.querySelectorAll(".list button").forEach(b => b.onclick = () => openWin(b.dataset.k));
@@ -1284,6 +1311,8 @@ function renderCompare(){
     return `<div class="frow${yours ? " yours" : ""}" data-k="${o.key}"><div class="nm"><b>${o.key}</b>${yours ? `<span class="nmt" title="${esc(winName(o))}">${esc(o.name)}</span>` : esc(o.name)}${yours ? ' <span class="oldtag">yours</span>' : "<br>" + stPill(o)}</div>${mid}<div class="val">${val}</div></div>`;
   };
   for(const o of D.options) h += rowOf(o, false);
+  const lo = leadOpt("I");
+  if(lo) h += inLib(() => rowOf(lo, false)).replace('<div class="frow"', '<div class="frow leadrow"').replace(/(<div class="nm"><b>I<\/b>[^<]*)/, '$1 <span class="oldtag" title="' + esc(leadNote()) + '">worldwide cases</span>');
   const mine = D.matcher ? myOpts() : [];
   if(mine.length){
     h += `<h2 class="mycmp">Your Own Options</h2><p class="note" style="margin-bottom:4px">Only you see these. Each row uses the same numbers as its window and is marked yours. They are not part of NAPOR's counts, the Report card or the weekly check.</p>`;
@@ -1345,6 +1374,7 @@ document.addEventListener("keydown", ev => {   /* Tab stays inside an open popup
   else if(!ev.shiftKey && a === f[f.length - 1]){ ev.preventDefault(); f[0].focus(); }
 });
 document.addEventListener("click", ev => {
+  const lead = ev.target.closest("[data-leadopen]"); if(lead){ if(leadOpt("I")){ setMode("explore"); openWin("I"); const w = document.querySelector('.win[data-k="I"]'); if(w){ w.tabIndex = -1; w.focus({preventScroll: true}); } } return; }
   const my = ev.target.closest("[data-my]"); if(my){ myAction(my); return; }
   const op = ev.target.closest("[data-open]"); if(op){ openModal(op.dataset.open, op); return; }
   const ct = ev.target.closest("[data-cat]"); if(ct && ct.dataset.cat){ S.cat = ct.dataset.cat; S.catFilter = "all"; lastOpener = ct; const m = $("#m-cat"); m.hidden = false; document.body.classList.add("locked"); renderCat(); $(".sheet", m).focus(); return; }
@@ -1458,6 +1488,7 @@ function renderGloss(){
     ["Relevance", "How well the counted past cases fit what you typed for your own option. The headline is the share of counted cases rated Very close or Close (75% or more is a Strong fit, 50 to 74% a Moderate fit, under 50% a Weak fit, and fewer than 3 cases is too few to judge). The fit comes from that share alone (9 of 9 close is a Strong fit). The second line is extra information and never lowers it: it counts how many of your key words (only words the page understood; not small words, not the theater's own names, not words you said the US would not do) show up in the titles, kinds or tags of those cases. A word the page could not read is shown as “not understood”. For hold weeks it is N/A. It is not a risk and never changes a risk number."],
     ["Not (in Your Words)", "The page treats the few words after “not”, “never”, “without”, “avoid”, “instead of” and similar as what the US would not do. They are left out of the matching, and the rest is read normally. If that is all you wrote, the page uses the hold weeks: the weeks with no new US move."],
     ["Closeness", "How close a past case is to what you described. Very close: the words are close and the case fits every box you filled in. Close: a little less close, or it misses one box. Loose: the weakest fit. It is the word model's reading of the words, not a probability, and the page lists the cases closest first (a description uses at most the 12 closest; boxes only, every case that fits)."],
+    ["Option I (Capture or kill the leader)", "An option that appears only in a tab where it is a live option (the analyst's call, re-checked every Monday). It is not one of this tab's own cases: its numbers come from past US operations against leaders worldwide, 1983-2026, in a shared library. Its top risk index covers the capture raids and kill strikes; \"Ways to do it\" gives seven sub-options, each with its own past cases. It is never part of options A to H, the risk index of this tab or its Report card."],
     ["Case", "One past time the US did something of that kind, together with what followed."],
     ["Hold week", "A week with no new US move, counted like a case. The option of making no new move uses them, and so does a personal option whose words say the US would hold back."],
     ["Reply", `An act by ${TH.actor} that the log links to a US move.`],
@@ -1516,6 +1547,10 @@ function renderHow(){
 /* ---------- per-theater words (category names and definitions come from the data file; the defaults are the Iran / Houthi words) ---------- */
 const WORDS0 = {name: {...CAT_NAME}, short: {...SHORT}, def: {...CAT_DEF}, rule: {...RULE}};
 function applyWords(){
+  applyWordsCore();
+  const nt = $("#intnote"); if(nt) nt.textContent = (TH.intensity && TH.intensity.note) || "War intensity counts logged hostile events in the 14 days before each date (2 points per direct strike, 1 per shipping attack or blockade move, +2 if someone died). Big campaigns are logged as a few rows, so hot weeks are understated.";
+}
+function applyWordsCore(){   /* the category words of the current TH (no page text is touched, so option I can borrow the library's words and give them back) */
   Object.assign(CAT_NAME, WORDS0.name); Object.assign(SHORT, WORDS0.short); Object.assign(CAT_DEF, WORDS0.def); Object.assign(RULE, WORDS0.rule);
   const pickWord = (spec, c, o) => { if(spec === undefined) return null; if(typeof spec === "string") return spec;
     if(c === "military") return spec[o.military] || spec.other || ""; return (o.is_hold && spec.hold) || (o.trigger && spec.trigger) || spec.other || ""; };
@@ -1526,7 +1561,6 @@ function applyWords(){
     RULE[c] = o => { const w = pickWord(s.rule, c, o); return w === null ? (pickWord(s, c, o) || r0(o)) : w; }; });
   const POL = "Risk = no talks followed within 14 days. ", pd = CAT_DEF.political, pr = RULE.political;
   CAT_DEF.political = o => POL + pd(o); RULE.political = o => POL + pr(o);
-  const nt = $("#intnote"); if(nt) nt.textContent = (TH.intensity && TH.intensity.note) || "War intensity counts logged hostile events in the 14 days before each date (2 points per direct strike, 1 per shipping attack or blockade move, +2 if someone died). Big campaigns are logged as a few rows, so hot weeks are understated.";
 }
 const smallNote = () => TH.small_n ? `<div class="smalln" role="note"><b>Small numbers.</b> ${esc(TH.small_n.replace(/^Small numbers[.:]\s*/i, ""))}<br><span class="mono">Counted cases:</span> ${D.options.map(x => `<span class="mono">${x.key} ${x.cases.length || "none"}</span>`).join(" · ")}</div>` : "";
 /* ---------- your own option: you fill in settings, this page finds past cases with the same tags and counts them ----------
@@ -1539,7 +1573,8 @@ const smallNote = () => TH.small_n ? `<div class="smalln" role="note"><b>Small n
    The saved record is just the typed settings; the cases are matched again from the latest data on every load. */
 const cut = (s, n) => clean(s, n);
 const winName = o => (o.name || "") + (o.mine ? " (yours)" : "");
-function optByKey(k){ return D && (D.options.find(q => q.key === k) || myOpts().find(q => q.key === k)); }
+function optByKey(k){ return D && (D.options.find(q => q.key === k) || leadOpt(k) || myOpts().find(q => q.key === k)); }
+const selOpt = () => { const o = optByKey(S.sel); return o && !o.leader ? o : D.options[0]; };   /* the selected option for screens that only know this tab's own options (option I is not one of them) */
 const mineKey = () => "napor-mine-" + (S.theater || "main");
 const todayIso = () => { const t = new Date(); return t.getFullYear() + "-" + String(t.getMonth() + 1).padStart(2, "0") + "-" + String(t.getDate()).padStart(2, "0"); };
 const FORM = {vals: {}, editing: null, timer: null, msg: null, more: false};
@@ -2314,13 +2349,13 @@ function relBox(o){   /* in the option window, at the top of the risk section */
   const hold = r.hold ? " Hold weeks are never rated close: the log cannot tell a chosen pause from a quiet week, so Relevance does not apply to them." : "";
   return `<div class="relbox" id="relbox"><div class="rl"><b>${esc(relHead(r))}</b>${r.band === "few" || r.hold ? "" : ` <span class="relband b-${r.band}">${esc(REL_BAND[r.band])}</span>`}</div>` + (relWords(r) ? `<div class="rl">${esc(relWords(r))}</div>` : "") + `<p class="nodata">${esc(RELDEF)}${esc(hold)}</p></div>`;
 }
-/* ----- A pointer to the Leader captures and raids tab. Python twin: matcher_ref.cross_hint. It is a pointer only: it never changes this tab's cases, numbers, Relevance or risk index. ----- */
+/* ----- A pointer to the worldwide library of past leader operations (option I's cases). Python twin: matcher_ref.cross_hint (decision, cases) and matcher_ref.cross_hint_box (the words). It is a pointer only: it never changes this tab's cases, numbers, Relevance or risk index. ----- */
 const CAPS = {state: "idle", d: null, cat: null, ctx: {}, memo: new Map()};   /* ctx: one reading context per home tab */   /* idle | loading | ready | failed */
 const CROSS_MOVES = ["raid", "strike", "legal"];
 function loadCaptures(){   /* one fetch of the captures data, only when a personal option is open; if it fails, nothing is shown */
   if(CAPS.state !== "idle") return;
   CAPS.state = "loading";
-  const t = THEATERS && THEATERS.theaters.find(x => x.id === "captures");
+  const t = THEATERS && THEATERS.theaters.find(x => thKind(x) === "library");
   if(!t){ CAPS.state = "failed"; return; }
   fetch(t.data, {cache: "no-store"}).then(r => { if(!r.ok) throw 0; return r.json(); }).then(d => {
     if(!d || !d.matcher || !Array.isArray(d.options)) throw 0;
@@ -2337,7 +2372,7 @@ function patchCross(){   /* the data arrived after a window was drawn: add the b
 }
 function crossHintCalc(spec){   /* the same matcher on the captures data -> {show, n, cases, band, moves}; the page's own data are put back in a finally block */
   const no = {show: false};
-  if(S.theater === "captures" || CAPS.state !== "ready" || !mvReady()) return no;
+  if(CAPS.state !== "ready" || !mvReady()) return no;
   const sD = D, sC = CAT, sM = MTH;
   try {
     const hid = S.theater, cx = CAPS.ctx[hid] || (CAPS.ctx[hid] = {   /* the captures data read as this tab would read them: the tab's own words (Houthi, Iran, Maduro...) are neutral, as they are at home */
@@ -2357,14 +2392,15 @@ function crossHintCalc(spec){   /* the same matcher on the captures data -> {sho
   } finally { D = sD; CAT = sC; MTH = sM; }
 }
 function crossBox(o){   /* under the Relevance box of a personal option; "" when there is nothing to point to */
-  if(!o.mine || o.waiting || o.is_hold || !o.rec || !o.rec.spec || S.theater === "captures") return "";
+  if(!o.mine || o.waiting || o.is_hold || !o.rec || !o.rec.spec) return "";
   if(CAPS.state === "idle") loadCaptures();
   if(CAPS.state !== "ready" || !mvReady()) return "";
   const key = S.theater + "|" + JSON.stringify(o.rec.spec);
   if(!CAPS.memo.has(key)) CAPS.memo.set(key, crossHintCalc(o.rec.spec));
   const h = CAPS.memo.get(key); if(!h || !h.show) return "";
   const list = h.cases.map(c => `${c.title} (${fmtDate(c.date, true)})`).join("; ");
-  return `<div class="relbox crossbox"><div class="rl">The <b>Leader captures and raids</b> tab has ${plural(h.n, "past case")} like this (US operations to capture or kill a leader anywhere, 1983-2026): ${esc(list)}. <a href="#captures">Open that tab →</a></div></div>`;
+  const lo = leadData(), ok = !!(lo && lo.valid && leadLib());   /* the button opens option I in this tab; where option I is not valid there is no link, only a line that says so */
+  return `<div class="relbox crossbox"><div class="rl"><b>Past leader operations worldwide:</b> ${plural(h.n, "case")} like this (US operations to capture or kill a leader, 1983-2026): ${esc(list)}.${ok ? ' <button type="button" class="linkbtn" data-leadopen>Open option I →</button>' : ""}</div>${ok ? "" : '<div class="rl">Capture or kill the leader is not a live option in this tab.</div>'}</div>`;
 }
 function autoName(rd){
   const parts = MFIELDS().filter(f => rd.sets[f]).map(f => rd.sets[f].map(v => valName(f, v)).join("/"));
@@ -2704,10 +2740,86 @@ function mineWhy(o){
   h += AI.confirm === o.key ? delRow(o.key) : `<button class="linkbtn" data-my="del" data-k="${o.key}">Delete this option</button>`;
   return h + `</div>${msgRow(o.key)}</section>`;
 }
+/* ---------- option I: "Capture or kill the leader" (owner order 2026-11-15) ----------
+   Not a tab and not one of A-H. It is listed only where this tab's data file says leader_option.valid (the analyst's call, re-checked every Monday); where it is not valid
+   the page shows one muted line with the reason. Its numbers are the worldwide library's past cases (US operations against leaders, 1983-2026): the capture raids (D) plus the kill strikes (E),
+   and its sub-options ("Ways to do it") take one library letter each. They are embedded in the data file and recounted here with the same code as every option, read in the library's own words
+   and windows (inLib swaps in the library's wording for the moment and gives this tab's back). They are never mixed into this tab's A-H numbers, index, pooled rate or Report card. */
+const LIB = {on: false, lo: null, saved: null};
+const leadData = () => LIB.on ? LIB.lo : (D && D.leader_option ? D.leader_option : null);   /* inside inLib, D is the library, so this tab's block is kept in LIB.lo */
+function leadLib(){   /* the library as a data object plus the option I objects, built once per data file; null when option I is not valid here */
+  const lo = leadData(); if(!lo || !lo.valid || !lo.lib) return null;
+  if(lo._ctx) return lo._ctx;
+  const L = lo.lib, th = Object.assign({actor:"the adversary or a group it backs", actor_short:"adversary or a backed group", adversary:"the adversary", proxy_note:"", salvo:null, presets:[]}, L.theater || {});
+  th.actor_cap = th.actor.charAt(0).toUpperCase() + th.actor.slice(1);
+  const byL = {}; L.options.forEach(o => byL[o.key] = o);
+  const dd = {theater: L.theater, asof: L.asof, generated: D.generated, build: D.build, options: L.options, estimate: L.estimate, sources: L.sources, hostile: L.hostile || [], baseline: L.baseline,
+              series: [[L.asof, 0]], phases: [], history: [], context: [], now: null, week_events: []};
+  const mk = (x, cases) => Object.assign({trigger: true, military: "reply", us_move: true, is_hold: false, salvo: false, leader: true, forecasts: [], uses: [], pros: "", harms: "", unknown: ""}, x, {cases});
+  const byDate = (a, b) => a.date < b.date ? -1 : a.date > b.date ? 1 : a.id - b.id;
+  const top = mk({key: "I", name: L.top.name, what: L.top.what, risks: L.top.risks, too_few: !!L.top.too_few}, [].concat(...L.top.letters.map(l => byL[l].cases)).sort(byDate));
+  const subs = L.subs.map(s => mk({key: s.key, letter: s.letter, sub: true, name: s.name, what: s.what, risks: byL[s.letter].risks, too_few: !!byL[s.letter].too_few}, byL[s.letter].cases));
+  return lo._ctx = {d: dd, th, I: top, subs, byL};
+}
+const leadOpt = k => k === "I" ? (leadLib() || {}).I || null : null;
+function inLib(fn){   /* run fn with the library's data and words (D, TH, the category words, the metric names); this tab's are put back in a finally block. A condition (phase or intensity) belongs to this tab's own cases, so it is off meanwhile */
+  const c = leadLib(); if(!c || LIB.on) return fn();
+  const sv = {D, TH, POOL, phase: S.phase, band: S.band};
+  LIB.on = true; LIB.saved = {phase: sv.phase, band: sv.band}; LIB.lo = sv.D.leader_option;
+  try { D = c.d; TH = c.th; S.phase = S.band = null; POOL = {key: null, val: null}; setMetrics(); applyWordsCore(); return fn(); }
+  finally { D = sv.D; TH = sv.TH; POOL = sv.POOL; S.phase = sv.phase; S.band = sv.band; LIB.on = false; setMetrics(); applyWordsCore(); }
+}
+const leadNote = () => "Past cases worldwide (US operations against leaders, 1983-2026), not this tab's own cases.";
+const leadNo = () => { const lo = leadData(); return lo && !lo.valid ? `<p class="leadno nodata" role="note"><b>Capture or kill the leader: not a live option here.</b> ${esc(lo.reason)}</p>` : ""; };
+function leadTop(o){   /* this tab's own words and logged events (read with this tab's sources) for option I's window */
+  const lo = D.leader_option;
+  return {lo, tab: (D.theater || {}).name || "this tab", evs: lo.events.map(e => `<li><span class="mono">${fmtDate(e.date, true)}</span> <b>#${e.id}</b> ${esc(short(e.title, 160))}${srcLinks(e.id)}</li>`).join("")};
+}
+function followed(c){   /* "what followed" for one library case, in the library's windows */
+  const rp = c.replies || [], parts = [];
+  if(c.replied === null) parts.push("reply status unclear, not counted");
+  else if(rp.length) parts.push(rp.slice(0, 2).map(r => `a reply came ${r.days} day${r.days === 1 ? "" : "s"} later (#${r.id}: ${esc(short(r.title, 90))})${r.hurt ? " that hurt people" : ""}`).join("; ") + (rp.length > 2 ? "; and " + (rp.length - 2) + " more" : ""));
+  else parts.push("no reply logged within " + RD() + " days");
+  if(c.talks14 === true) parts.push("talks within 14 days"); else if(c.talks14 === false) parts.push("no talks within 14 days");
+  if(c.civ) parts.push("civilian harm in the operation itself: " + esc(short(c.civ, 120)));
+  return parts.join("; ");
+}
+function leadCases(cs){   /* a compact case list: date, title, what followed, sources */
+  return `<ul class="leadcases">` + cs.map(c => `<li><span class="mono">${fmtDate(c.date, true)}</span> <b>#${c.id}</b> ${esc(short(c.title, 170))}<br><span class="nodata">What followed: ${followed(c)}.</span> ${srcLinks(c.id)}</li>`).join("") + `</ul>`;
+}
+function subRow(sub){
+  const cs = activeCases(sub), ix = riskIndex(sub, cs), n = cs.length, sc = catScores(sub, cs);
+  const head = !n ? "No past cases known on that date" : (ix ? `Risk index ${Math.round(ix.raw * 100)}% <small>range ${Math.round(ix.lo * 100)}–${Math.round(ix.hi * 100)}%${useEst() ? " · NAPOR estimate " + Math.round(ix.idx * 100) + "%" : ""}</small>` : "Too few cases for a risk index") + " · " + plural(n, "past case") + (n <= 3 && !fewNow(sub, cs) ? ' <span class="oldtag">very few cases</span>' : "");
+  const nums = n ? CATS.map(c => { const s = sc[c]; return `<span><b>${esc(CAT_NAME[c])}</b> ${s.nm ? "not measured" : s.assumed ? "0% (assumed)" : s.n ? P(s.k, s.n) + " <small>" + s.k + " of " + s.n + ", range " + R(s.k, s.n) + "</small>" : "no cases"}</span>`; }).join("") : "";
+  return `<details class="subopt"><summary><span class="key">${esc(sub.key)}</span><span class="nm">${esc(sub.name)}</span><span class="ev">${head}</span><span class="more"><span class="mc">Show cases ›</span><span class="mo">Hide cases ⌃</span></span></summary><div class="subbody"><p class="what">${esc(sub.what)}</p>${nums ? `<div class="subnums">${nums}</div>` : ""}${n ? leadCases(cs) : '<p class="nodata">No cases to list.</p>'}</div></details>`;
+}
+function leaderHtml(o, pre){   /* runs inside inLib: D and TH are the library's; pre is this tab's own part (leadTop) */
+  const lo = pre.lo, c = leadLib(), cs = activeCases(o), st = stats(o), ix = riskIndex(o, cs), n = cs.length;
+  const cond = LIB.saved && (LIB.saved.phase || LIB.saved.band);
+  let h = `<div class="head"><h3>I. ${esc(o.name)}</h3><p class="what">${esc(o.what)}</p>`;
+  h += `<div class="leadsrc" role="note"><b>Where these numbers come from.</b> ${esc(leadNote())} They count the library's ${plural(o.cases.length, "capture raid or kill strike", "capture raids and kill strikes")}. They are never mixed into options A to H, this tab's risk index or its Report card.${cond ? " The condition you picked (" + esc(LIB.saved.phase || LIB.saved.band) + ") applies to this tab's own cases only; option I always counts every past case." : ""}</div>`;
+  h += `<div class="avail"><div><span class="pill open">Valid here</span> <b>Why it applies in ${esc(pre.tab)}</b> <span class="nodata">(${esc(lo.by)}; as of ${fmtDate(lo.judged, true)})</span></div><div class="r"><b>Leader:</b> ${esc(lo.leader)}</div><div class="r">${esc(lo.reason)}</div>${pre.evs ? `<details class="sit"><summary>The logged events behind this call</summary><ul>${pre.evs}</ul></details>` : ""}</div>`;
+  h += n ? `<div class="meter"><span>${plural(n, "past case")} worldwide${S.asof ? " known on that date" : ""}${n <= 3 && !fewNow(o, cs) ? ' <span class="oldtag">very few cases</span>' : ""}</span><span class="bar"><i style="width:${Math.min(100, n / 8 * 100)}%"></i></span><span>8+ cases is a fair sample</span></div>` : "";
+  h += `</div>`;
+  h += `<section><h2 title="${esc(RISKDEF)}">NAPOR risk assessment (past cases worldwide)</h2><p class="legend idxdef">${esc(RISKDEF)}</p><p class="legend">These are the library's own rules, the same for every case worldwide: a reply, harm to people and military cost are looked for within ${CL("escalation")} days of the US move, and talks within ${CL("political")} days. Economic harm is not measured, so it is left out of the index. Each category's rule is under its percentage.</p>${n ? indexPanel(o, cs) : '<p class="nodata">No past case is known on that date, so there is no risk index.</p>'}</section>`;
+  h += `<section><h2><span class="h2l">What followed the last times the US did this</span><span class="h2s">What followed past cases</span></h2>${n ? outcomesBlock(o, st, ix) : '<p class="nodata">No past case is known on that date.</p>'}</section>`;
+  h += `<section><h2>Ways to do it</h2><p class="legend" style="margin:0 0 8px">Each way below takes its own past cases from the same worldwide library, with its own numbers. Open one to see its cases. Small samples give wide ranges. Not ranked.</p>${c.subs.map(subRow).join("")}</section>`;
+  const own = (lo.own || []).map(w => { const cc = (c.byL[w.letter] || {cases: []}).cases.find(x => x.id === w.id), sk = c.subs.find(s => s.letter === w.letter); return cc ? {cc, sk} : null; }).filter(Boolean);
+  h += `<section><h2>This country's own past cases</h2><p class="legend" style="margin:0 0 8px">Library rows about ${esc(pre.tab)}, then this tab's own logged events that the call above rests on. The library rows are counted in the worldwide numbers (in the ways shown); this tab's own log events are listed for context and are not counted here.</p>` +
+    (own.length ? `<ul class="leadcases">` + own.map(({cc, sk}) => `<li><span class="mono">${fmtDate(cc.date, true)}</span> <b>#${cc.id}</b> ${esc(short(cc.title, 170))}<br><span class="nodata">In the library as ${esc(sk ? sk.key + " " + sk.name : "")}${sk && (sk.letter === "D" || sk.letter === "E") ? ", counted in option I" : ", not in option I's total"}. What followed: ${followed(cc)}.</span> ${srcLinks(cc.id)}</li>`).join("") + `</ul>` : `<p class="nodata">No library row is about ${esc(pre.tab)}.</p>`) +
+    (pre.evs ? `<p class="nodata" style="margin:8px 0 2px"><b>Logged in ${esc(pre.tab)}'s own log (not counted in option I):</b></p><ul class="leadcases">${pre.evs}</ul>` : "") + `</section>`;
+  h += `<section><h2>Past cases behind these numbers</h2>${o.cases.length ? `<details class="cases"><summary>Show the ${plural(o.cases.length, "past case")}, one row each</summary>${caseTable(o)}</details>` : caseTable(o)}</section>`;
+  return h;
+}
 /* ---------- theaters and boot ---------- */
 let THEATERS = null, RESIZE = false;
+const thKind = t => t.kind || "country";
+/* The tab bar shows country theaters only. A theater of kind "library" (the shared past-leader-operations library) is still listed in theaters.json and is fetched by the
+   pointer box, but it is never a tab, so #captures opens the first country tab. Topic tabs may come back as another kind later. */
+const tabList = () => THEATERS ? THEATERS.theaters.filter(t => thKind(t) === "country") : [];
+const tabFor = h => { const l = tabList(); return (l.find(t => t.id === h) || l.find(t => t.id === THEATERS.default) || l[0] || {}).id; };
 function renderTheaterTabs(){
-  const nav = $("#theaters"), list = THEATERS ? THEATERS.theaters : (D ? [{id: (D.theater || {}).id || "main", name: (D.theater || {}).name || "Main", status: (D.theater || {}).status}] : []);
+  const nav = $("#theaters"), list = THEATERS ? tabList() : (D ? [{id: (D.theater || {}).id || "main", name: (D.theater || {}).name || "Main", status: (D.theater || {}).status}] : []);
   const showSt = list.some(t => t.status && t.status !== list[0].status);   /* one shared status on every tab adds nothing, so it is dropped */
   nav.innerHTML = list.map(t => `<a href="#${esc(t.id)}" data-theater="${esc(t.id)}"${t.id === S.theater ? ' aria-current="page"' : ""}>${esc(t.name)}${showSt && t.status ? ` <span class="st">${esc(t.status)}</span>` : ""}</a>`).join("");
 }
@@ -2717,12 +2829,15 @@ function loadData(path, fallback){
     .catch(() => fallback ? loadData(fallback) : failLoad());
 }
 function loadTheater(id){
-  const t = THEATERS.theaters.find(x => x.id === id) || THEATERS.theaters[0];
+  const t = tabList().find(x => x.id === id) || tabList()[0] || THEATERS.theaters[0];
   S.theater = t.id; renderTheaterTabs(); loadData(t.data, "data.json");
 }
 window.addEventListener("hashchange", () => {
   const h = (location.hash || "").slice(1);
-  if(THEATERS && h !== S.theater && THEATERS.theaters.some(t => t.id === h)) loadTheater(h);
+  if(!THEATERS || !h) return;
+  const id = tabFor(h);
+  if(id !== h) try { history.replaceState(null, "", "#" + id); } catch(e) {}   /* a hash that is not a tab (for example #captures) is replaced by the tab it falls back to */
+  if(id !== S.theater) loadTheater(id);
 });
 function boot(d){
   D = d; TH = Object.assign({actor:"the adversary or a group it backs", actor_short:"adversary or a backed group", adversary:"the adversary", proxy_note:"", salvo:null, presets:[]}, d.theater || {});
@@ -2741,6 +2856,6 @@ function boot(d){
   if(!RESIZE){ RESIZE = true; let t; window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => { if(!$("#m-int").hidden) drawChart(); }, 80); }); }
 }
 fetch("theaters.json", {cache:"no-store"}).then(r => { if(!r.ok) throw 0; return r.json(); })
-  .then(t => { THEATERS = t; const h = (location.hash || "").slice(1), ids = t.theaters.map(x => x.id); loadTheater(ids.includes(h) ? h : (t.default || ids[0])); })
+  .then(t => { THEATERS = t; const h = (location.hash || "").slice(1), id = tabFor(h); if(h && id !== h) try { history.replaceState(null, "", "#" + id); } catch(e) {} loadTheater(id); })
   .catch(() => loadData("data.json"));
 </script>

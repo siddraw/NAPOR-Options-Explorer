@@ -21,9 +21,9 @@
     "estimate": 0.361
    },
    "D": {
-    "n": 7,
-    "index": 0.464,
-    "estimate": 0.433
+    "n": 8,
+    "index": 0.438,
+    "estimate": 0.404
    },
    "E": {
     "n": 18,
@@ -41,9 +41,9 @@
     "estimate": 0.407
    },
    "H": {
-    "n": 4,
-    "index": 0.375,
-    "estimate": 0.367
+    "n": 3,
+    "index": 0.417,
+    "estimate": 0.396
    }
   },
   "status": {

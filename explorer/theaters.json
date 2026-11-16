@@ -7,42 +7,48 @@
    "name": "Iran",
    "status": "active",
    "data": "data/iran.json",
-   "asof": "2026-11-08"
+   "asof": "2026-11-08",
+   "kind": "country"
   },
   {
    "id": "houthis",
    "name": "Houthis / Red Sea",
    "status": "active",
    "data": "data/houthis.json",
-   "asof": "2026-11-08"
+   "asof": "2026-11-08",
+   "kind": "country"
   },
   {
    "id": "northkorea",
    "name": "North Korea",
    "status": "active",
    "data": "data/northkorea.json",
-   "asof": "2026-11-04"
+   "asof": "2026-11-04",
+   "kind": "country"
   },
   {
    "id": "china",
    "name": "China / Taiwan",
    "status": "active",
    "data": "data/china.json",
-   "asof": "2026-11-08"
+   "asof": "2026-11-08",
+   "kind": "country"
   },
   {
    "id": "venezuela",
    "name": "Venezuela / Caribbean",
    "status": "active",
    "data": "data/venezuela.json",
-   "asof": "2026-11-02"
+   "asof": "2026-11-02",
+   "kind": "country"
   },
   {
    "id": "captures",
    "name": "Leader captures and raids",
    "status": "active",
    "data": "data/captures.json",
-   "asof": "2026-02-28"
+   "asof": "2026-02-28",
+   "kind": "library"
   }
  ]
 }
