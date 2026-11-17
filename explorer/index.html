@@ -2861,3 +2861,5 @@ fetch("theaters.json", {cache:"no-store"}).then(r => { if(!r.ok) throw 0; return
   .then(t => { THEATERS = t; const h = (location.hash || "").slice(1), id = tabFor(h); if(h && id !== h) try { history.replaceState(null, "", "#" + id); } catch(e) {} loadTheater(id); })
   .catch(() => loadData("data.json"));
 </script>
+
+<!-- v52: audit fixes and owner decisions, 2026-11-17 -->
