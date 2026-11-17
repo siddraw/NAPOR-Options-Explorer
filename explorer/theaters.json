@@ -47,7 +47,7 @@
    "name": "Leader captures and raids",
    "status": "active",
    "data": "data/captures.json",
-   "asof": "2026-02-28",
+   "asof": "2026-06-12",
    "kind": "library"
   }
  ]
