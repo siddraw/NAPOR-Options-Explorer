@@ -1530,7 +1530,7 @@ function renderHow(){
     if(useEst() && p0){ const pl = pooled()[p0.c]; ex += `<p>NAPOR estimate for ${lc1(CAT_NAME[p0.c])}: (${WT().scheme === "none" ? p0.s.k : p0.s.swy.toFixed(2)} + ${EST_M()} × ${pct(pl)}) ÷ (${WT().scheme === "none" ? p0.s.n : p0.s.sw.toFixed(2)} + ${EST_M()}) = ${pct(p0.p)}. ${pct(pl)} is the same category across all options. The page shows the raw ${P(p0.s.k, p0.s.n)} big and this estimate small.</p>`; }
   }
   $("#howview").innerHTML = `<h2 style="padding-right:44px">How this works</h2>
-  <p><b>What this is:</b> a record of what followed past US moves, counted the same way for every option.<br><b>What it is not:</b> a forecast, a ranking or a recommendation.</p>
+  <p><b>What this is:</b> a record of what followed past US moves, counted the same way for every option.<br><b>What it is not:</b> a ranking or a recommendation. The options table is not a forecast; the Report card keeps a few separate forecasts, written down before the outcome and graded after.</p>
   <p>NAPOR keeps a log of credible-source events, links each US move to what followed, and counts how past cases of each kind of move went. It lays out options and risks. It never ranks options or says which to pick; options always appear in the same order.</p>
   <h3>The five categories</h3><ul>${CATS.map(c => `<li><b>${CAT_NAME[c]}:</b> ${esc(CAT_DEF[c](od))}</li>`).join("")}</ul>
   <h3>The risk index</h3><p>${esc(RISKDEF)} It is the average of the five categories, equal weights unless you change them. Categories are separate rates, so they don't add up to 100%. The big numbers on the page are the raw x of n.</p>${ex}
