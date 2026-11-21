@@ -9,7 +9,7 @@ five conflicts (1979 to 2026) and information pulled from 930+ credible source l
 
 ![NAPOR: Options Explorer](docs/screenshot.png)
 
-Options Explorer is built on NAPOR.
+Options Explorer is built on NAPOR, a system that keeps a careful, sourced record of real events and the way events have followed one another, and turns that record into plain counts of what usually happened next. For every US option on the page, Options Explorer asks NAPOR what followed the last times the US did something like it.
 
 For each conflict, the page lists the options the US has and shows what followed the last times the US did
 something like each one. **It does not rank the options or pick one.** That is the decision-maker's job.

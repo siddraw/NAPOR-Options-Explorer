@@ -524,7 +524,7 @@ const CAT_NAME = {people:"Harm to people", escalation:"Escalation", military:"Mi
 const S = {asof:null, sel:"D", open:[], mode:"explore", metric:"index", phase:null, band:null, pin:null, w:{people:1,escalation:1,military:1,economic:1,political:1}};
 try { S.sel = localStorage.getItem("napor-opt") || S.sel; } catch(e) {}
 const pick = k => { S.sel = k; try { localStorage.setItem("napor-opt", k); } catch(e) {} };
-const AI = {sample:null, status:"checking", started:false, hidden:false, busy:null, ctl:null, tok:0, msg:null, confirm:null};   /* the optional in-page Claude helper for "Your own option" */
+const AI = {sample:null, status:"checking", started:false, hidden:false, busy:null, ctl:null, tok:0, msg:null, confirm:null};   /* the optional helper for "Your own option" */
 let MINE = [], MY = null, CAT = new Map();   /* this viewer's saved personal options (records), their runtime copies, and every past case by id */
 const MAXMINE = 12;
 
@@ -1489,7 +1489,7 @@ function renderGloss(){
     ["Your Own Option", "A US action that is not on the list, which you describe in your own words and, if you like, with a few boxes (type of move, target, location, scale, who acts, open or covert). With a description, the page finds the past US actions that are the same kind of action (up to the 12 closest); with boxes only, it uses every past case that fits them. It counts them with the same five categories. It is saved only in your browser and is not one of NAPOR's options. It also shows in Compare all, marked yours."],
     ["Relevance", "How well the counted past cases fit what you typed for your own option. The headline is the share of counted cases rated Very close or Close (75% or more is a Strong fit, 50 to 74% a Moderate fit, under 50% a Weak fit, and fewer than 3 cases is too few to judge). The fit comes from that share alone (9 of 9 close is a Strong fit). The second line is extra information and never lowers it: it counts how many of your key words (only words the page understood; not small words, not the theater's own names, not words you said the US would not do) show up in the titles, kinds or tags of those cases. A word the page could not read is shown as “not understood”. For hold weeks it is N/A. It is not a risk and never changes a risk number."],
     ["Not (in Your Words)", "The page treats the few words after “not”, “never”, “without”, “avoid”, “instead of” and similar as what the US would not do. They are left out of the matching, and the rest is read normally. If that is all you wrote, the page uses the hold weeks: the weeks with no new US move."],
-    ["Closeness", "How close a past case is to what you described. Very close: the words are close and the case fits every box you filled in. Close: a little less close, or it misses one box. Loose: the weakest fit. It is the word model's reading of the words, not a probability, and the page lists the cases closest first (a description uses at most the 12 closest; boxes only, every case that fits)."],
+    ["Closeness", "How close a past case is to what you described. Very close: the words are close and the case fits every box you filled in. Close: a little less close, or it misses one box. Loose: the weakest fit. It is the page's reading of the words, not a probability, and the page lists the cases closest first (a description uses at most the 12 closest; boxes only, every case that fits)."],
     ["Option I (Capture or kill the leader)", "An option that appears only in a tab where it is a live option (the analyst's call, re-checked every Monday). It is not one of this tab's own cases: its numbers come from past US operations against leaders worldwide, 1983-2026, in a shared library. Its top risk index covers the capture raids and kill strikes; \"Ways to do it\" gives seven sub-options, each with its own past cases. It is never part of options A to H, the risk index of this tab or its Report card."],
     ["Case", "One past time the US did something of that kind, together with what followed."],
     ["Hold week", "A week with no new US move, counted like a case. The option of making no new move uses them, and so does a personal option whose words say the US would hold back."],
@@ -1499,10 +1499,10 @@ function renderGloss(){
     ["Category", "One of the five measures behind the risk index: harm to people, escalation, military cost, economic harm and political / diplomatic."],
     ["x of n", "\"5 of 12\" means 5 of the 12 past cases counted as risk."],
     ["Range", "The 95% range the true rate could plausibly sit in. A wide range means few cases."],
-    ["NAPOR estimate", "A small second number: the raw rate blended a little with the same category across all options, so a handful of cases never reads as a flat 0% or 100%."],
-    ["Credibility", "A 0-1 score for how well an event is sourced. Events under 0.5 are left out of the numbers."],
-    ["Claim", "Something one side says about itself. It is logged only when a credible outlet reports it, and shown as a labelled claim, never as fact. That side's own state media are never cited."],
-    ["War intensity points", "Points from logged hostile events in the 14 days before a date. The footer says how they are scored."],
+    ["NAPOR estimate", "A small second number, shown only where testing shows it helps, that steadies rates resting on very few cases."],
+    ["Credibility", "A 0-1 score for how well an event is sourced. Poorly sourced events are left out of the numbers."],
+    ["Claim", "Something one side says about itself. It is logged only when a credible outlet reports it, and shown as a labelled claim, never as fact."],
+    ["War intensity points", "Points from logged hostile events in the 14 days before a date, shown on the timeline."],
     ["Phase", "A stretch of the conflict (for example open war, ceasefire, quiet). Phase names were drawn with hindsight."],
     ["Look back", "View the page as it would have looked on a past date, using only what was known then."],
     ["Brier score", "A score for forecasts. 0 is perfect, 0.25 is what always saying 50% gets, and lower is better."],
@@ -1514,36 +1514,27 @@ function renderGloss(){
   $("#glossview").innerHTML = `<h2 style="padding-right:44px">Glossary</h2><dl>${G.map(([t, d]) => `<dt>${esc(t)}</dt><dd>${esc(d)}</dd>`).join("")}</dl>`;
 }
 /* ---------- how this works ---------- */
-function recencyHow(){
-  const w = WT(), nm = recLabel(w.name || "none");
-  return `<h3>Do older cases count less?</h3>` + (w.scheme === "none"
-    ? `<p>Every past case counts the same, old or new. A test of giving older cases less weight did not pass (see Report card).</p>`
-    : `<p>Yes, a little: the NAPOR estimate uses a "recency weight" for each case (${esc(nm)}), measured from the date you are viewing. A case with weight 0.5 counts half as much as one with weight 1. The "x of n" and the range still count every case once. Cases dated after the viewed date are never used.</p>`);
-}
 function renderHow(){
   const o = D.options.find(x => x.key === S.sel) || D.options[0], ix = riskIndex(o, activeCases(o));
   const od = D.options.find(x => x.trigger && x.military === "reply") || o;   /* a typical US move, so the category definitions below are not the hold option's */
   let ex = "";
   if(ix){ const used = ix.parts.filter(p => p.ok);
     ex = `<p>Example, option ${esc(o.key)} (${esc(o.name)}) right now: ${used.map(p => `${lc1(CAT_NAME[p.c])} ${p.s.assumed ? "0% (assumed)" : P(p.s.k, p.s.n) + ` (${p.s.k} of ${p.s.n})`}`).join(", ")}. Average: ${Math.round(ix.raw*100)}%${S.w && CATS.some(c => S.w[c] !== 1) ? " (with your weights)" : ""}.</p>`;
-    const p0 = used.find(p => !p.s.assumed && p.s.n);
-    if(useEst() && p0){ const pl = pooled()[p0.c]; ex += `<p>NAPOR estimate for ${lc1(CAT_NAME[p0.c])}: (${WT().scheme === "none" ? p0.s.k : p0.s.swy.toFixed(2)} + ${EST_M()} × ${pct(pl)}) ÷ (${WT().scheme === "none" ? p0.s.n : p0.s.sw.toFixed(2)} + ${EST_M()}) = ${pct(p0.p)}. ${pct(pl)} is the same category across all options. The page shows the raw ${P(p0.s.k, p0.s.n)} big and this estimate small.</p>`; }
   }
   $("#howview").innerHTML = `<h2 style="padding-right:44px">How this works</h2>
   <p><b>What this is:</b> a record of what followed past US moves, counted the same way for every option.<br><b>What it is not:</b> a ranking or a recommendation. The options table is not a forecast; the Report card keeps a few separate forecasts, written down before the outcome and graded after.</p>
-  <p>NAPOR keeps a log of credible-source events, links each US move to what followed, and counts how past cases of each kind of move went. It lays out options and risks. It never ranks options or says which to pick; options always appear in the same order.</p>
+  <h3>About NAPOR</h3><p>Options Explorer is built on NAPOR, a system that keeps a careful, sourced record of real events and the way events have followed one another, and turns that record into plain counts of what usually happened next. Options Explorer asks NAPOR one question for every option on this page: the last times the US did something like this, what followed? The answers are shown here as "x of n past cases". NAPOR does not rank options or pick one, and neither does this page.</p>
   <h3>The five categories</h3><ul>${CATS.map(c => `<li><b>${CAT_NAME[c]}:</b> ${esc(CAT_DEF[c](od))}</li>`).join("")}</ul>
-  <h3>The risk index</h3><p>${esc(RISKDEF)} It is the average of the five categories, equal weights unless you change them. Categories are separate rates, so they don't add up to 100%. The big numbers on the page are the raw x of n.</p>${ex}
-  ${useEst() ? `<h3>NAPOR estimate</h3><p>With few cases, a raw rate jumps around (1 of 2 is 50%). Each category is pulled a little toward the same category across all options: (k + ${EST_M()} × all-options rate) ÷ (n + ${EST_M()}). In the backtest this predicted better than the raw rate overall (see Report card). The page shows the raw rate big and this estimate small, as "NAPOR estimate".</p>` : ""}
-  ${useEst() ? recencyHow() : ""}
+  <h3>The risk index</h3><p>${esc(RISKDEF)} It sums up the five categories in one number; you can change how much each category counts. The categories are separate rates, so they do not add up to 100%. The big numbers on the page are the raw x of n.</p>${ex}
+  ${useEst() ? `<h3>NAPOR estimate</h3><p>Where testing shows it helps, a small second number steadies rates that rest on very few cases. The big number is always the raw x of n.</p>` : ""}
   <h3>x of n and the range</h3><p>"4 of 10" means 4 of the 10 past cases counted as risk. The range is where the true rate could plausibly sit (a 95% range). Small samples give wide ranges.</p>
-  <h3>Sources</h3><p>Only allowed outlets (wire services, major papers and broadcasters, defense press) and official or primary sources (government and military sites, legislative records, courts, the UN and other international bodies, a government's own ministry for what it did or said, official archives). No Wikipedia, blogs or social media. A copy of a story read on another site is labelled "via" that site. ${esc(TH.claim_note || (TH.adversary + "'s state media"))} and other state-run or armed-group media are never cited; a claim from that side is logged only when a credible outlet reports it. Every counted event links to at least one credible or official source; events without a link are left out. Each event also has a credibility score from 0 to 1; events under 0.5 are left out of the numbers.</p>
-  <h3>Weekly update</h3><p>An agent adds the week's events every Monday, grades forecasts and rebuilds this page after a full check. This data: ${fmtDate(D.generated, true)}, news through ${fmtDate(D.asof, true)}.</p>
+  <h3>Sources</h3><p>Only credible news outlets and official sources (governments, militaries, courts, the UN and similar). No Wikipedia, blogs, social media or state-run media.</p>
+  <h3>Weekly update</h3><p>The page is refreshed every Monday with the week's events. This data: ${fmtDate(D.generated, true)}, news through ${fmtDate(D.asof, true)}.</p>
   <p>Updated = when this page was built. News through = the last day of news in the log. Look back = view the page as it would have looked on a past date.</p>
-  <h3>Your Own Option</h3><p>If the US action you are thinking about is not on the list, describe it under "Your Own Option": fill in any of the boxes (type of move, target, location, scale, who acts, open or covert), or describe the action in your own words, or both. Leave a box as N/A when it does not matter. Every past US action in the log has tags for what the US did, never for what followed. The page does two things. First, fixed rules: a box you fill in is an exact rule (unless fewer than 3 cases fit, see below), and so is a clear move in your words ("pull troops out" is a withdrawal, "sell weapons to" is an arms sale), so opposite actions are never mixed. Then a small word-meaning model (about 20,000 words, kept in a file that comes with this page) ranks the remaining past cases by how close their words are to yours. With a description, the page uses at most the 12 closest, closest first, and calls each one Very close, Close or Loose; with boxes only, it uses every case that fits. If even the closest case is not close enough, the page says the log has nothing like it. The model only finds cases: the page counts them with the same five categories and the same risk index as the listed options. If you filled in boxes and fewer than 3 cases fit, the page ignores boxes one at a time (open or covert first, then who acts, scale, location and target; the type of move is never ignored) and tells you which; a case that misses an ignored box is called Close at best. The model understands words, not whole situations.</p>
-  <p>"Not" is read by fixed rules, not by the model. ${esc(NOT_RULE)} Those words are left out and never matched ("negotiate rather than strike" is read as talks; "sanctions but no strikes" as sanctions). If your words only say what the US would not do ("do not strike"), the page uses the hold weeks, the weeks the log counts as no new US move. That is the closest the log has, because it cannot tell a chosen pause from a quiet week. A long or unusual sentence can be misread, so check the words the page says it left out.</p>
-  <p>Next to the risk numbers the page shows "Relevance": how many of the counted cases are Very close or Close to your words, and, as extra information that never lowers the fit, how many of your key words show up in those cases. It says how well past cases fit what you typed, not how risky it is, and it never changes a risk number. If the log has no past cases like your request, the page says so and has nothing to count. With fewer than 3 counted cases (after you remove some, pick a date or pick a condition) it shows "Too few cases" instead of an index. You can remove any case, and the cases are matched again from the latest data every time you open the page. Your option is saved only in your browser. It shows in Compare all, marked yours, but it is not part of NAPOR's counts, the Report card or the weekly check. When this page is opened in Claude, an extra button can fill the boxes from your description.</p>
-  <h3>Privacy</h3><p>This page stores your last chosen option, and any options you made yourself, in your browser. The matching runs in your browser, using a word file that is part of this page: nothing you type is sent anywhere and nothing is downloaded from other websites. The only time anything leaves the page is if you press "Fill the boxes with Claude": then just the description you typed, and the list of setting words, go to Claude, through the Claude page you opened this in.</p>
+  <h3>Your Own Option</h3><p>If the US action you are thinking about is not on the list, describe it under "Your Own Option": fill in any of the boxes (type of move, target, location, scale, who acts, open or covert), or describe the action in your own words, or both. Leave a box as N/A when it does not matter. The page then finds past US actions of the same kind. With a description, it uses at most the 12 closest, closest first, and calls each one Very close, Close or Loose; with boxes only, it uses every case that fits. If nothing in the log is close enough, the page says so. The page counts the cases it finds with the same five categories and the same risk index as the listed options. If you filled in boxes and fewer than 3 cases fit, the page ignores boxes one at a time and tells you which. It understands words, not whole situations.</p>
+  <p>The page also reads "not". ${esc(NOT_RULE)} Those words are left out and never matched ("negotiate rather than strike" is read as talks; "sanctions but no strikes" as sanctions). If your words only say what the US would not do ("do not strike"), the page uses the hold weeks, the weeks the log counts as no new US move. A long or unusual sentence can be misread, so check the words the page says it left out.</p>
+  <p>Next to the risk numbers the page shows "Relevance": how many of the counted cases are Very close or Close to your words, and, as extra information that never lowers the fit, how many of your key words show up in those cases. It says how well past cases fit what you typed, not how risky it is, and it never changes a risk number. With fewer than 3 counted cases (after you remove some, pick a date or pick a condition) it shows "Too few cases" instead of an index. You can remove any case. Your option is saved only in your browser. It shows in Compare all, marked yours, but it is not part of NAPOR's counts, the Report card or the weekly check. Where it is offered, an extra button can fill the boxes from your description.</p>
+  <h3>Privacy</h3><p>This page stores your last chosen option, and any options you made yourself, in your browser. The matching runs in your browser: nothing you type is sent anywhere, except your description if you press the optional fill-the-boxes button where it is offered.</p>
   <h3>Known limits</h3><ul><li>Small samples: read numbers as hints.</li><li>Your Own Option reads “not” with fixed rules. ${esc(NOT_RULE)} A long or unusual sentence can be misread, so check the words the page says it left out.</li><li>"After" is not "because of".</li><li>Big campaigns are logged as a few rows; quiet weeks may be under-logged.</li>${TH.thin_before ? `<li>Older years (before ${esc(thinYear())}) are logged more thinly than recent ones, so older cases may be missing and numbers that rest on them are softer. Cases from those years carry an "older, thinner data" tag.</li>` : ""}<li>Phase names were drawn with hindsight.</li><li>${esc(TH.not_measured || "")}</li></ul>`;
 }
 /* ---------- per-theater words (category names and definitions come from the data file; the defaults are the Iran / Houthi words) ---------- */
@@ -1571,7 +1562,7 @@ const smallNote = () => TH.small_n ? `<div class="smalln" role="note"><b>Small n
    filters on the tags; a small word-meaning model (GloVe vectors, loaded from matcher_vectors.json, nothing from outside)
    then ranks the rest by closeness. It only retrieves: the page counts every number from the matched cases with the same
    code as the listed options. If the model file cannot load, the old key-word reader (v1, below) is used and says so. (Merged onto the live 2026-11-09 page.)
-   Claude (only on the claude.ai page) can optionally fill the boxes from a description; it never sees cases or outcomes.
+   The optional helper (only where it is offered) can optionally fill the boxes from a description; it never sees cases or outcomes.
    The saved record is just the typed settings; the cases are matched again from the latest data on every load. */
 const cut = (s, n) => clean(s, n);
 const winName = o => (o.name || "") + (o.mine ? " (yours)" : "");
@@ -2492,8 +2483,8 @@ function relOf(o){   /* the Relevance figure of a saved option for the cases cou
   if(o.match.hold) r.hold = true;
   return r;
 }
-/* ----- the optional Claude helper (claude.ai page only): turns a description into box words ----- */
-function resolveAI(){   /* once per page load; this only checks that the AI exists, it calls nothing */
+/* ----- the optional helper (only where it is offered): turns a description into box words ----- */
+function resolveAI(){   /* once per page load; this only checks that the helper exists, it calls nothing */
   if(AI.started) return; AI.started = true;
   if(!(window.claude && typeof window.claude.use === "function")){ AI.status = "none"; return; }
   let p; try { p = Promise.resolve(window.claude.use("sample")); } catch(e) { AI.status = "none"; return; }
@@ -2529,7 +2520,7 @@ function aiError(e){   /* a plain message for the viewer, or null when they pres
   if(code === "cancelled" || (e && e.name === "AbortError")) return null;
   if(["not_granted", "sampling_disabled", "not_declared", "capability_disabled", "capability_removed"].includes(code)){ AI.hidden = true; return null; }
   if(code === "rate_limited") return "Too many requests — try again in a bit.";
-  if(code === "refused") return "Claude declined that request — try rewording it.";
+  if(code === "refused") return "The helper declined that request — try rewording it.";
   return "Something went wrong — try again.";
 }
 function renderMine(){ if(D && S.mode === "explore") renderExplore(); renderForm(); }
@@ -2549,7 +2540,7 @@ async function fillWithClaude(){   /* only ever runs from a click; never retried
   if(!r){ AI.msg = {t: "Something went wrong — try again.", key: null}; return renderMine(); }
   let n = 0;
   MFIELDS().forEach(f => { if(r[f].length && NOTSET.includes(cut(FORM.vals[f], 200).toLowerCase())){ FORM.vals[f] = r[f].map(v => chipText(f, v)).join(", "); n++; } });
-  AI.msg = {t: n ? "Claude filled " + n + " box" + (n === 1 ? "" : "es") + ". Check them, change anything you like, then press Assess." : "Claude found nothing to fill in. Fill the boxes yourself.", key: null};
+  AI.msg = {t: n ? "Filled " + n + " box" + (n === 1 ? "" : "es") + ". Check them, change anything you like, then press Assess." : "Nothing to fill in. Fill the boxes yourself.", key: null};
   renderMine();
 }
 function stopAsk(){ if(!AI.busy) return; AI.tok++; try { AI.ctl.abort(); } catch(e) {} AI.ctl = null; AI.busy = null; renderMine(); }
@@ -2689,7 +2680,7 @@ function formHtml(){   /* the popup: grouped boxes, then a footer that stays in 
   let h = `<div class="mhead"><h2>${FORM.editing ? "Edit " + esc(FORM.editing) : "Your Own Option"} — If the US Did This…</h2><p class="note mhnote">Describe the action in your own words, or fill in boxes, or both. A past case must fit every box you fill in; if fewer than ${MINC} fit, the page ignores boxes one at a time (${fieldNames(D.matcher.widen)}) and says so. A description is matched by meaning (up to the ${MAXC()} closest cases); with boxes only, every case that fits is used. Leave the rest as N/A.</p></div><div class="mbody">`;
   groups.forEach(([t, fs]) => { h += `<div class="mgroup"><div class="eh"><b>${esc(t)}</b></div><div class="mgrid">${fs.map(f => fieldHtml(f, P)).join("")}</div></div>`; });
   h += `<div class="mgroup"><div class="eh"><b>In Your Own Words</b><span>Optional</span></div><div class="mf wide"><label for="mf-desc">Description</label><div class="mdescrow"><input type="text" id="mf-desc" maxlength="400" autocomplete="off" placeholder="N/A" value="${esc(FORM.vals.desc)}">` +
-    (claude ? `<button type="button" class="linkbtn" data-my="fill"${busy ? " disabled" : ""} title="Sends only your description to Claude">Fill the boxes with Claude</button>` : "") + `</div><p class="mread" id="mr-desc">${readLine("desc", P.rd)}</p></div></div>`;
+    (claude ? `<button type="button" class="linkbtn" data-my="fill"${busy ? " disabled" : ""} title="Sends only your description">Fill the boxes for me</button>` : "") + `</div><p class="mread" id="mr-desc">${readLine("desc", P.rd)}</p></div></div>`;
   if(busy && !AI.busy.key) h += busyRow();
   h += msgRow(null) + `</div>`;
   h += `<div class="mfoot">${MV.state === "loading" ? `<p class="mymsg" role="status">Loading the word-meaning model…</p>` : MV.state === "failed" ? `<p class="mymsg" role="status">${esc(MV_FAIL)}</p>` : ""}<p class="mprev" id="mprev" role="status">${prevHtml(P)}</p>` + (full ? `<p class="nodata">You have ${MAXMINE} saved options. Delete one to make another.</p>` : "") +
@@ -2720,15 +2711,15 @@ function mineBanner(o){
   const r = o.rec, b = o.baseOpt, made = r.made ? " Made on " + esc(fmtDate(r.made, true)) + "." : "";
   if(r.spec) return `<div class="mybanner" role="note"><p><b>Your option</b> — made from your settings. Not one of NAPOR's options and not checked by the weekly agent. Saved only in this browser. The page picked the past cases and counted every number from them.</p>` +
     `<p>The page counts the five categories the same way it does for option ${esc(b.key)} (${esc(b.name.replace(/ \(.*$/, ""))}).${made}</p></div>${settingsBox(o)}`;
-  return `<div class="mybanner" role="note"><p><b>Your option</b> — made by Claude's case picks (older version). Not one of NAPOR's options, not checked by the weekly agent, and saved only in this browser. Claude chose which past cases match; every number is counted by the page from those cases.</p>` +
-    `<p><b>Your words:</b> “${esc(r.q)}”</p>` + (r.note ? `<p><b>Claude's note:</b> ${esc(r.note)}</p>` : "") +
+  return `<div class="mybanner" role="note"><p><b>Your option</b> — made by the earlier case picker (older version). Not one of NAPOR's options, not part of the weekly check, and saved only in this browser. The picker chose which past cases match; every number is counted by the page from those cases.</p>` +
+    `<p><b>Your words:</b> “${esc(r.q)}”</p>` + (r.note ? `<p><b>Note:</b> ${esc(r.note)}</p>` : "") +
     `<p>The page counts the five categories the same way it does for option ${esc(b.key)} (${esc(b.name)}).${made}</p></div>`;
 }
 const tagLine = t => [t.move, t.target.join("+"), t.where, t.scale, t.who, t.open].join(" · ");
 function mineWhy(o){
   const act = new Set(activeCases(o).map(c => c.id)), r = o.rec, v2 = !!r.spec, ranked = v2 && o.reading.v === 2 && o.match.ranked, hold = v2 && o.reading.v === 2 && o.match.hold;
   const legend = v2 && !o.picked.length ? "No past case passed the rules, so none are listed." : hold ? HOLD_NOTE + " The tags below do not exist for weeks, so no week is rated close. Remove any week that does not fit; the numbers update right away."
-    : !v2 ? "Claude chose these from the log by what the US did, without seeing how things turned out. Remove any that don't fit; the numbers update right away."
+    : !v2 ? "These were chosen from the log by what the US did, without seeing how things turned out. Remove any that don't fit; the numbers update right away."
     : o.reading.v === 2 ? `The page kept past cases whose type of move fits${o.match.movesFrom === "words" ? " (read from your words: " + esc(o.match.moves.map(x => valName("move", x)).join(" / ")) + ")" : o.match.movesFrom === "box" ? " (the box you filled)" : ""}, then listed them ${ranked ? "closest first" : o.match.ordered ? "best fit first" : "by date"}. The tags describe what the US did and never what followed. ${ranked ? `With a description, at most the ${MAXC()} closest past cases are used. “Very close” means the words are close and every box you filled is met; “Close” is a little less close or misses one box; “Loose” is the weakest fit.` : `“Very close” means the case fits every box you filled, “Close” misses one box (one that the page had to ignore because fewer than ${MINC} cases fit), “Loose” misses two or more. (No description was typed, so every case that fits the boxes is shown, with no limit of ${MAXC()}.)`} Closeness is the model's reading of the words, not a probability. Remove any that don't fit; the numbers update right away.`
     : "The page picked these by their tags (key words only), which say what the US did and never what followed. “Very close” means the case fits every setting you filled in, “Close” misses one, “Loose” misses two or more. Remove any that don't fit; the numbers update right away.";
   let h = `<section><h2>Why These Past Cases</h2><p class="legend idxdef">${legend}${o.missing ? " " + plural(o.missing, "saved case") + " " + (o.missing === 1 ? "is" : "are") + " no longer in the log." : ""}</p>`;
