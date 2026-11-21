@@ -109,4 +109,6 @@ recommends.
 
 ## Running it
 
+**Built with.** The page itself is HTML and JavaScript. The tooling that builds its data and checks it every week is written in Python and kept private.
+
 The page is a static site: open `explorer/index.html` with the files in `explorer/`, or use the live link above. The data is refreshed every Monday.
