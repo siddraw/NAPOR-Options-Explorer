@@ -11,6 +11,8 @@ five conflicts (1979 to 2026) and information pulled from 930+ credible source l
 
 Options Explorer is built on NAPOR, a system that keeps a careful, sourced record of real events and the way events have followed one another, and turns that record into plain counts of what usually happened next. For every US option on the page, Options Explorer asks NAPOR what followed the last times the US did something like it.
 
+**Engine and tool.** NAPOR is the engine. Options Explorer is a tool built on it. NAPOR has no point of view of its own; Options Explorer adds the context, which is the US side, the options, the five kinds of risk and the conflicts. It keeps its own record and never changes the engine. The same engine could power other tools that ask different questions.
+
 For each conflict, the page lists the options the US has and shows what followed the last times the US did
 something like each one. **It does not rank the options or pick one.** That is the decision-maker's job.
 
