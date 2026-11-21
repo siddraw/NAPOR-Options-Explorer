@@ -499,7 +499,7 @@ details.subopt .subbody .what{margin:0 0 6px;font-size:13px}
     <p>Percentages are x of n past cases in the NAPOR log, with the 95% range the true rate could plausibly sit in. Small samples give wide ranges, so read each number as a hint. "After" is not "because of".</p>
     <p>The risk index summarizes how past cases of that kind went. It is not a forecast and not a recommendation, and the options are not ranked. See "How this works".</p>
     <p id="intnote">War intensity counts logged hostile events in the 14 days before each date (2 points per direct strike, 1 per shipping attack or blockade move, +2 if someone died). Big campaigns are logged as a few rows, so hot weeks are understated.</p>
-    <p>The weekly NAPOR agent regenerates the data every Monday. "Right now" notes are the agent's reading of the news, not data.</p>
+    <p>The data is refreshed every Monday. "Right now" notes are a weekly reading of the news, not data.</p>
     <p id="verline"></p>
   </footer>
 </div>
@@ -1021,7 +1021,7 @@ function situationBlock(o){
   if(S.asof){
     const st = statusAt(o, S.asof);
     const prior = (o.uses || []).filter(c => c.date <= S.asof).pop(), nxt = nextMoves(o, S.asof, 14);
-    return `<div class="avail"><div><span class="pill ${esc(st.status)}">${esc(st.label)}</span> <b>Available on ${fmtDate(S.asof, true)}?</b> <span class="nodata">${st.src === "agent" ? "(agent's weekly reading of the news, " + fmtDate(st.as_of) + ")" : "(worked out from the log: what the US had done in the 14 days before, and any ceasefire or pledge in force)"}</span></div>` + (st.reason ? `<div class="r">${esc(st.reason)}</div>` : "") +
+    return `<div class="avail"><div><span class="pill ${esc(st.status)}">${esc(st.label)}</span> <b>Available on ${fmtDate(S.asof, true)}?</b> <span class="nodata">${st.src === "agent" ? "(a weekly reading of the news, " + fmtDate(st.as_of) + ")" : "(worked out from the log: what the US had done in the 14 days before, and any ceasefire or pledge in force)"}</span></div>` + (st.reason ? `<div class="r">${esc(st.reason)}</div>` : "") +
       `<div class="r">${prior ? `Last time the US had done this: ${fmtDate(prior.date, true)} (#${prior.id}).` : "The US had not done this yet in the record."}</div>` +
       `<div class="r"><b>Logged US moves of this kind in the next 14 days:</b> ${nxt.length ? nxt.map(c => `#${c.id} ${fmtDate(c.date)}: ${esc(short(c.title, 90))}${c.unsorted ? " (a US strike not sorted into F or G)" : ""}`).join(" · ") : addDays(S.asof, 1) > D.asof ? "not known yet" : "none logged"}</div></div>`;
   }
@@ -1033,11 +1033,11 @@ function situationBlock(o){
   const ai = hv(a, o.key), bi = hv(b, o.key);
   const lastHold = o.is_hold ? o.cases.filter(isWeek).slice(-1)[0] : null;
   const lastUsed = lastHold ? `Last full hold week counted: week of ${fmtDate(lastHold.date, true)}.` : o.last_used ? `Last time the US did this: ${fmtDate(o.last_used, true)} (${Math.round((dd(D.asof) - dd(o.last_used)) / 864e5)} days before the latest news).` : "No past case of this kind in the log.";
-  return `<div class="avail"><div><span class="pill ${esc(i.status)}">${esc(i.label)}</span> <b>Available right now?</b> <span class="nodata">(agent's reading of the news as of ${fmtDate(n.as_of)})</span></div><div class="r">${esc(i.reason)}</div><div class="r">${esc(lastUsed)}</div>` +
+  return `<div class="avail"><div><span class="pill ${esc(i.status)}">${esc(i.label)}</span> <b>Available right now?</b> <span class="nodata">(a weekly reading of the news as of ${fmtDate(n.as_of)})</span></div><div class="r">${esc(i.reason)}</div><div class="r">${esc(lastUsed)}</div>` +
     `<div class="chips2">${n.key_dates.map(k => { const d = Math.round((dd(k.date) - today) / 864e5); return `<span><b>${d > 0 ? d + " days" : d === 0 ? "today" : "passed"}</b> · ${fmtDate(k.date)}: ${esc(k.label)}</span>`; }).join("")}</div>` +
     (n.pending && n.pending.length ? `<div class="r"><b>Waiting on:</b> ${n.pending.map(esc).join(" · ")}</div>` : "") +
     (a && b && bi !== null ? `<div class="r"><b>Since ${fmtDate(a.asof)}:</b> this option's risk index ${ai === null ? "is new at " + Math.round(bi*100) + "%" : Math.round(ai*100) + "% → " + Math.round(bi*100) + "%"} · ${esc(lc1(INTN()))} ${a.intensity} → ${b.intensity} pts · events counted: ${a.events} → ${b.events}</div>` : "") +
-    `<details class="sit"><summary>The situation right now (weekly agent's summary, ${fmtDate(n.as_of)}; applies to every option)</summary><ul>${n.headline.map(t => `<li>${esc(t)}</li>`).join("")}</ul>` +
+    `<details class="sit"><summary>The situation right now (weekly summary, ${fmtDate(n.as_of)}; applies to every option)</summary><ul>${n.headline.map(t => `<li>${esc(t)}</li>`).join("")}</ul>` +
     (D.week_events && D.week_events.length ? `<p class="nodata" style="margin-top:8px">New in the log this week:</p><ul>${D.week_events.slice().reverse().map(e => `<li><span class="mono">${fmtDate(e.date)}</span> #${e.id} ${esc(e.title.length > 130 ? e.title.slice(0,127) + "…" : e.title)}</li>`).join("")}</ul>` : "") + `</details></div>`;
 }
 function indexPanel(o, cs){
@@ -1050,7 +1050,7 @@ function indexPanel(o, cs){
   const holdNote = o.is_hold && TH.hold_note ? `<p class="note" style="margin-bottom:10px">${esc(TH.hold_note)}</p>` : "";
   const ix = riskIndex(o, cs);
   if(!ix) return `<p class="nodata">No past cases of this option match the condition you picked, so there is no index to show. Clear the condition above or pick another.</p>`;
-  const thin = (ix.n <= 3 ? "Very thin evidence: a rough sketch." : ix.n <= 7 ? "Thin evidence: wide range." : "Fair sample.") + (useEst() ? ` Big numbers are the raw count. The small NAPOR estimate blends in a little of the same category across all options (${EST_M()} cases' worth), so a handful of cases never reads as a flat 0% or 100%; it scored better in the backtest.` : "");
+  const thin = (ix.n <= 3 ? "Very thin evidence: a rough sketch." : ix.n <= 7 ? "Thin evidence: wide range." : "Fair sample.") + (useEst() ? ` Big numbers are the raw count. A small second number steadies rates resting on very few cases; shown only where testing shows it helps.` : "");
   let h = holdNote + `<div class="vis">${gaugeSvg(ix)}${radarSvg(ix)}<div class="stackcol"><div class="nodata" style="margin-bottom:4px">What makes up the ${Math.round(ix.raw*100)}%</div>${stackBar(ix)}<div class="stackaxis"><span>0%</span><span>50%</span><span>100%</span></div><div class="formula">${esc(formulaText(ix))}</div>${katLegend()}<p class="nodata">${esc(thin)} ${ix.used} of 5 categories measured.</p></div></div><div style="margin-top:10px">`;
   ix.parts.forEach((p, i) => {
     const s = p.s;
@@ -1214,7 +1214,7 @@ function detailHtml(o){
   h += `<section><h2 title="${esc(RISKDEF)}">NAPOR risk assessment</h2><p class="legend idxdef">${esc(RISKDEF)}</p>${o.mine ? relBox(Object.assign({}, o, {rel: relOf(o)})) + crossBox(o) : ""}${indexPanel(o, cs)}</section>`;
   if(o.mine) h += mineWhy(o);
   h += `<section><h2><span class="h2l">What followed the last times the US did this</span><span class="h2s">What followed past cases</span></h2>${outcomesBlock(o, st, ix)}</section>`;
-  if(!o.mine) h += `<section><h2>Pros and other harms (written by the weekly agent, not data; as of ${fmtDate(D.now && D.now.as_of ? D.now.as_of : D.generated)})</h2><div class="three"><div class="box"><b>Pros</b>${esc(o.pros)}</div><div class="box"><b>Other harms</b>${esc(o.harms)}</div><div class="box"><b>What the data cannot tell us</b>${esc(o.unknown)}</div></div></section>`;
+  if(!o.mine) h += `<section><h2>Pros and other harms (written in the weekly update, not data; as of ${fmtDate(D.now && D.now.as_of ? D.now.as_of : D.generated)})</h2><div class="three"><div class="box"><b>Pros</b>${esc(o.pros)}</div><div class="box"><b>Other harms</b>${esc(o.harms)}</div><div class="box"><b>What the data cannot tell us</b>${esc(o.unknown)}</div></div></section>`;
   h += `<section><h2>Past cases behind these numbers</h2>${o.cases.length ? `<details class="cases"><summary>Show the ${plural(o.cases.length, "past case")}, one row each</summary>${caseTable(o)}</details>` : caseTable(o)}</section>`;
   return h;
 }
@@ -1300,7 +1300,7 @@ function renderCompare(){
     `<p class="note" style="margin-bottom:8px">Not sorted or scored against each other. Wide range bars mean few cases. Click a row to open that option. Your own options, if you made any, come after H and are marked yours.${S.metric === "index" ? " Index values are the raw average of the category rates" + (useEst() ? "; the small NAPOR estimate sits under each (see How this works)" : "") + "." : ""}${S.phase || S.band ? " Your condition (" + esc(S.phase || S.band) + ") applies." : ""}</p>${S.metric === "index" ? katLegend() : ""}`;
   const rowOf = (o, yours) => {
     let mid, val;
-    if(yours && o.waiting){ mid = '<div class="nodata">Loading the word-meaning model…</div>'; val = "–"; }
+    if(yours && o.waiting){ mid = '<div class="nodata">Loading the matcher…</div>'; val = "–"; }
     else if(S.metric === "index"){
       const ix = riskIndex(o, activeCases(o));
       mid = ix ? stackBar(ix) : `<div class="nodata">${!o.cases.length ? (o.mine && o.picked && o.picked.length ? "Every case removed, so no index" : "No past cases, so no index") : fewNow(o, activeCases(o)) ? "Too few cases to show a risk index" : "No cases in this condition"}</div>`;
@@ -1455,19 +1455,19 @@ function renderReport(){
   if(bt.weighting){ // recency weights: a plain table, options of the test in fixed order (not sorted by score)
     const wg = bt.weighting, dw = wg.decision, inUse = (D.estimate.weighting || {}).name || "none";
     const bad = Object.entries(dw.worse_by_cat || {}).filter(([, v]) => v > 0.01).map(([c, v]) => `${lc1(CAT_NAME[c])} worse by ${f3(v)}`);
-    const why = dw.adopt ? `Adopted: ${recLabel(dw.name)} (lowest overall score, ${f3(dw.gain)} better than no weighting, and no category worse by more than 0.01).`
-      : `Not adopted. The lowest overall score was "${recLabel(dw.best_candidate)}", ${f3(dw.gain)} ${dw.gain >= 0 ? "better" : "worse"} than no weighting${dw.best_candidate === "none" ? "" : (dw.gain < 0.003 ? ", less than the 0.003 needed" : "") + (bad.length ? "; it made " + bad.join(" and ") + ", more than the 0.01 allowed" : "")}. So every case still counts 1.`;
+    const why = dw.adopt ? `Adopted: ${recLabel(dw.name)} (lowest overall score, ${f3(dw.gain)} better than no weighting, and no category clearly worse).`
+      : `Not adopted. The lowest overall score was "${recLabel(dw.best_candidate)}", ${f3(dw.gain)} ${dw.gain >= 0 ? "better" : "worse"} than no weighting${dw.best_candidate === "none" ? "" : (bad.length ? "; it made " + bad.join(" and ") : "")}. So every case still counts 1.`;
     h += `<div class="rc-card"><h3>Older cases count less?</h3><p class="take">We tried giving older cases less weight in the NAPOR estimate, replaying the cases in date order (each date uses only earlier cases). Lower Brier is closer to what happened.</p>` +
       `<div class="tbl"><table class="btable" style="min-width:0"><thead><tr><th>Weight</th><th>All (${wg.n})</th><th>2026 only (${wg.n_2026})</th></tr></thead><tbody>` +
       wg.candidates.map(c => `<tr><td>${esc(recLabel(c.name))}${c.name === inUse ? " <span class=\"nodata\">(in use)</span>" : ""}</td><td class="n">${f3(c.overall)}</td><td class="n">${f3(c.y2026)}</td></tr>`).join("") +
-      `</tbody></table></div><p class="take" style="margin-top:10px"><b>Decision:</b> ${esc(why)}</p><p class="legend">Rule: ${esc(dw.rule)} Ties go to the milder weight. The "x of n" and the range always count every case once.</p></div>`;
+      `</tbody></table></div><p class="take" style="margin-top:10px"><b>Decision:</b> ${esc(why)}</p><p class="legend">The "x of n" and the range always count every case once.</p></div>`;
   }
   h += `</div>`;   // closes the grid
   const ms = ["raw","shrunk2","pooled","half"];
   h += `<h3 style="font-size:16px;margin:22px 0 4px">By category</h3><div class="tbl"><table class="btable"><thead><tr><th>Category</th>${ms.map(m => `<th>${METHOD_NAME[m]}</th>`).join("")}<th>Predictions</th></tr></thead><tbody>` +
     ["overall"].concat(CATS).map(c => { const r = bt.brier[c], b = Math.min(...ms.map(m => r[m]).filter(v => v != null));
       return `<tr><td>${c === "overall" ? "<b>All</b>" : CAT_NAME[c]}</td>${ms.map(m => `<td class="n${r[m] === b ? " best" : ""}">${f3(r[m])}</td>`).join("")}<td class="n">${r.n}</td></tr>`; }).join("") +
-    `</tbody></table></div><p class="legend">Bold = best in the row. The NAPOR estimate is pulled ${EST_M()} cases' worth toward the all-options rate: (k + ${EST_M()} × all-options rate) ÷ (n + ${EST_M()}). Decision rule: ${esc(dec.rule)} Result: ${dec.adopt ? "adopted" : "not adopted"} (gain ${f3(dec.gain)}).</p>`;
+    `</tbody></table></div><p class="legend">Bold = best in the row. Lower Brier is closer to what happened; 0.25 is what always saying 50% gets.</p>`;
   const rb = bt.robustness;
   h += `<h3 style="font-size:16px;margin:22px 0 4px">How much do the reply rules matter?</h3><p class="take">Escalation rate for each option that has a reply test, under different rules for what counts as a reply.</p><div class="tbl"><table class="btable" style="min-width:600px"><thead><tr><th>Option</th>${(rb.short || rb.variants).map((v, i) => `<th title="${esc(rb.variants[i])}">${esc(v)}</th>`).join("")}</tr></thead><tbody>` +
     rb.rows.map(r => `<tr><td style="max-width:170px"><b class="mono" style="color:var(--accent)">${esc(r.key)}</b> ${esc(short(r.name, 34))}</td>${r.cells.map(c => `<td class="n">${c.n ? Math.round(100*c.k/c.n) + "% <span class=\"nodata\">(" + c.k + " of " + c.n + ")</span>" : '<span class="nodata">no cases</span>'}</td>`).join("")}</tr>`).join("") +
@@ -1664,7 +1664,7 @@ function osa(a, b, maxd){   /* edit distance (insert, delete, change, swap neigh
 /* ---- the word model (loaded once from matcher_vectors.json) ---- */
 const MV = {state: "idle", m: null, p: null};   /* idle | loading | ready | failed */
 const mvReady = () => MV.state === "ready" && !!MV.m && !!(D && D.matcher && D.matcher.params && D.matcher.cues);
-const MV_FAIL = "The word-meaning model did not load, so cases are matched by key words only.";
+const MV_FAIL = "The matcher did not load, so cases are matched by key words only.";
 const b64bytes = s => { const b = atob(s), a = new Uint8Array(b.length); for(let i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a; };
 function loadVectors(){   /* one fetch of the page's own file; nothing is downloaded from anywhere else */
   if(MV.p) return MV.p;
@@ -2441,7 +2441,7 @@ function allNotes(rd, m){   /* every note about how the words were read and whic
   return [body, readNotes(rd, m)].filter(Boolean).join(" ");
 }
 function previewParts(rd, m){   /* [the count line, the Relevance line (or "")] for the live preview */
-  if(MV.state === "loading" && rd.desc && rd.desc.text) return ["Your words are matched as soon as the model has loaded.", "", ""];
+  if(MV.state === "loading" && rd.desc && rd.desc.text) return ["Your words are matched as soon as the matcher has loaded.", "", ""];
   const fail = MV.state === "failed" && rd.desc && rd.desc.text ? " " + MV_FAIL : "";
   if(!rd.any){ const u = UNREAD(rd); return [rd.typed ? `The page could not read ${u.length ? "these words: " + u.slice(0, 8).join(", ") : "what you typed"}. Try other words, or fill the boxes.` : "Fill in at least one box, or describe the action, to see how many past cases match.", "", ""]; }
   if(m.reason === "negation") return [NEG_NOTE, "", ""];
@@ -2462,7 +2462,7 @@ function myOpts(){
     if(r.spec){
       if(!mvReady() && MV.state !== "failed" && cut(r.spec.desc, 400)){   /* saved words need the model: wait for it, never show v1 numbers meanwhile */
         const base = baseFor("", []);
-        return Object.assign({}, base, common, {name: r.name, what: "Matching your saved words…", baseOpt: base, reading: {fields: {}, desc: {text: "", ignored: [], fills: {}}, sets: {}}, match: {cases: [], dropped: [], kept: []}, cases: [], picked: [], missing: 0, too_few: true, waiting: true, evidence: "Loading the word-meaning model…"});
+        return Object.assign({}, base, common, {name: r.name, what: "Matching your saved words…", baseOpt: base, reading: {fields: {}, desc: {text: "", ignored: [], fills: {}}, sets: {}}, match: {cases: [], dropped: [], kept: []}, cases: [], picked: [], missing: 0, too_few: true, waiting: true, evidence: "Loading the matcher…"});
       }
       const m = matchCases(readSpec(r.spec)), rd = m.rd, hold = !!m.hold, base = hold ? m.cases.length ? m.cases[0].o : D.options.find(x => x.is_hold) : baseFor("", m.cases.map(x => x.c.id));
       const picked = m.cases.map(x => ({c: x.c, from: x.o, strength: x.strength, missed: x.missed, sim: x.sim, gone: r.gone.includes(x.c.id)}));
@@ -2662,7 +2662,7 @@ function mineSection(){   /* the small card on the page: one button, the saved o
   h += msgRow(null);
   if(list.length) h += `<div class="mylist" role="group" aria-label="Your saved options">` + list.map(o => {
     const cs = activeCases(o), ix = riskIndex(o, cs);
-    return `<div class="mc${AI.confirm === o.key ? " confirming" : ""}"><button class="mgo" data-my="open" data-k="${o.key}" title="${esc(winName(o))}" aria-pressed="${S.open.includes(o.key)}"${o.waiting ? " disabled" : ""}><span class="key">${o.key}</span><span class="nm">${esc(o.name)} <span class="oldtag">yours</span></span><span class="ev">${o.waiting ? "Loading the word-meaning model…" : !o.cases.length ? "No cases counted" : (ix ? "Risk index " + Math.round(ix.raw * 100) + "% · " : fewNow(o, cs) ? "Too few cases · " : "") + cntMine(o, cs) + (S.phase || S.band ? " in this condition" : "")}</span>${relCard(o)}${o.reading && o.reading.v === 2 && o.rec.spec.desc && MV.state === "failed" ? `<span class="mfail">${esc(MV_FAIL)}</span>` : ""}</button>` +
+    return `<div class="mc${AI.confirm === o.key ? " confirming" : ""}"><button class="mgo" data-my="open" data-k="${o.key}" title="${esc(winName(o))}" aria-pressed="${S.open.includes(o.key)}"${o.waiting ? " disabled" : ""}><span class="key">${o.key}</span><span class="nm">${esc(o.name)} <span class="oldtag">yours</span></span><span class="ev">${o.waiting ? "Loading the matcher…" : !o.cases.length ? "No cases counted" : (ix ? "Risk index " + Math.round(ix.raw * 100) + "% · " : fewNow(o, cs) ? "Too few cases · " : "") + cntMine(o, cs) + (S.phase || S.band ? " in this condition" : "")}</span>${relCard(o)}${o.reading && o.reading.v === 2 && o.rec.spec.desc && MV.state === "failed" ? `<span class="mfail">${esc(MV_FAIL)}</span>` : ""}</button>` +
       (AI.confirm === o.key ? delRow(o.key) : `<button class="mx" data-my="del" data-k="${o.key}" aria-label="Delete ${o.key}" title="Delete">×</button>`) + `</div>`; }).join("") + `</div>`;
   return h + `</div>`;
 }
@@ -2683,7 +2683,7 @@ function formHtml(){   /* the popup: grouped boxes, then a footer that stays in 
     (claude ? `<button type="button" class="linkbtn" data-my="fill"${busy ? " disabled" : ""} title="Sends only your description">Fill the boxes for me</button>` : "") + `</div><p class="mread" id="mr-desc">${readLine("desc", P.rd)}</p></div></div>`;
   if(busy && !AI.busy.key) h += busyRow();
   h += msgRow(null) + `</div>`;
-  h += `<div class="mfoot">${MV.state === "loading" ? `<p class="mymsg" role="status">Loading the word-meaning model…</p>` : MV.state === "failed" ? `<p class="mymsg" role="status">${esc(MV_FAIL)}</p>` : ""}<p class="mprev" id="mprev" role="status">${prevHtml(P)}</p>` + (full ? `<p class="nodata">You have ${MAXMINE} saved options. Delete one to make another.</p>` : "") +
+  h += `<div class="mfoot">${MV.state === "loading" ? `<p class="mymsg" role="status">Loading the matcher…</p>` : MV.state === "failed" ? `<p class="mymsg" role="status">${esc(MV_FAIL)}</p>` : ""}<p class="mprev" id="mprev" role="status">${prevHtml(P)}</p>` + (full ? `<p class="nodata">You have ${MAXMINE} saved options. Delete one to make another.</p>` : "") +
     `<div class="myrow"><button class="mybtn" id="my-go" data-my="assess"${P.can && !full ? "" : " disabled"}>Assess</button>` + (FORM.editing ? `<span class="mupd">Updating ${esc(FORM.editing)}</span><button class="linkbtn" data-my="cancel">Cancel</button>` : "") + `<button type="button" class="linkbtn mmore" data-my="more" aria-expanded="${!!FORM.more}">${FORM.more ? "Show less" : "Show more"}</button><button class="linkbtn mclear" data-my="clear">Clear all</button></div></div>`;
   return h;
 }
@@ -2696,7 +2696,7 @@ function renderForm(){
 }
 function settingsBox(o){
   const rd = o.reading, M = D.matcher, v2 = rd.v === 2;
-  if(o.waiting) return `<div class="mset"><b>Your Settings</b><p>Loading the word-meaning model…</p></div>`;
+  if(o.waiting) return `<div class="mset"><b>Your Settings</b><p>Loading the matcher…</p></div>`;
   const rows = M.fields.map(f => { const fd = rd.fields[f];
     const read = fd.vals.length ? (fd.fromDesc ? "from your words: " : "") + fd.vals.map(v => valName(f, v)).join(" / ") : "N/A";
     return `<dt>${esc(LBL(f))}</dt><dd>${fd.unset ? "" : "“" + esc(fd.typed) + "” → "}${esc(read)}${fd.ignored.length ? " " + IGN(fd.ignored) : ""}</dd>`; }).join("");
@@ -2709,7 +2709,7 @@ function settingsBox(o){
 }
 function mineBanner(o){
   const r = o.rec, b = o.baseOpt, made = r.made ? " Made on " + esc(fmtDate(r.made, true)) + "." : "";
-  if(r.spec) return `<div class="mybanner" role="note"><p><b>Your option</b> — made from your settings. Not one of NAPOR's options and not checked by the weekly agent. Saved only in this browser. The page picked the past cases and counted every number from them.</p>` +
+  if(r.spec) return `<div class="mybanner" role="note"><p><b>Your option</b> — made from your settings. Not one of NAPOR's options and not part of the weekly check. Saved only in this browser. The page picked the past cases and counted every number from them.</p>` +
     `<p>The page counts the five categories the same way it does for option ${esc(b.key)} (${esc(b.name.replace(/ \(.*$/, ""))}).${made}</p></div>${settingsBox(o)}`;
   return `<div class="mybanner" role="note"><p><b>Your option</b> — made by the earlier case picker (older version). Not one of NAPOR's options, not part of the weekly check, and saved only in this browser. The picker chose which past cases match; every number is counted by the page from those cases.</p>` +
     `<p><b>Your words:</b> “${esc(r.q)}”</p>` + (r.note ? `<p><b>Note:</b> ${esc(r.note)}</p>` : "") +
@@ -2720,7 +2720,7 @@ function mineWhy(o){
   const act = new Set(activeCases(o).map(c => c.id)), r = o.rec, v2 = !!r.spec, ranked = v2 && o.reading.v === 2 && o.match.ranked, hold = v2 && o.reading.v === 2 && o.match.hold;
   const legend = v2 && !o.picked.length ? "No past case passed the rules, so none are listed." : hold ? HOLD_NOTE + " The tags below do not exist for weeks, so no week is rated close. Remove any week that does not fit; the numbers update right away."
     : !v2 ? "These were chosen from the log by what the US did, without seeing how things turned out. Remove any that don't fit; the numbers update right away."
-    : o.reading.v === 2 ? `The page kept past cases whose type of move fits${o.match.movesFrom === "words" ? " (read from your words: " + esc(o.match.moves.map(x => valName("move", x)).join(" / ")) + ")" : o.match.movesFrom === "box" ? " (the box you filled)" : ""}, then listed them ${ranked ? "closest first" : o.match.ordered ? "best fit first" : "by date"}. The tags describe what the US did and never what followed. ${ranked ? `With a description, at most the ${MAXC()} closest past cases are used. “Very close” means the words are close and every box you filled is met; “Close” is a little less close or misses one box; “Loose” is the weakest fit.` : `“Very close” means the case fits every box you filled, “Close” misses one box (one that the page had to ignore because fewer than ${MINC} cases fit), “Loose” misses two or more. (No description was typed, so every case that fits the boxes is shown, with no limit of ${MAXC()}.)`} Closeness is the model's reading of the words, not a probability. Remove any that don't fit; the numbers update right away.`
+    : o.reading.v === 2 ? `The page kept past cases whose type of move fits${o.match.movesFrom === "words" ? " (read from your words: " + esc(o.match.moves.map(x => valName("move", x)).join(" / ")) + ")" : o.match.movesFrom === "box" ? " (the box you filled)" : ""}, then listed them ${ranked ? "closest first" : o.match.ordered ? "best fit first" : "by date"}. The tags describe what the US did and never what followed. ${ranked ? `With a description, at most the ${MAXC()} closest past cases are used. “Very close” means the words are close and every box you filled is met; “Close” is a little less close or misses one box; “Loose” is the weakest fit.` : `“Very close” means the case fits every box you filled, “Close” misses one box (one that the page had to ignore because fewer than ${MINC} cases fit), “Loose” misses two or more. (No description was typed, so every case that fits the boxes is shown, with no limit of ${MAXC()}.)`} Closeness is the matcher's reading of the words, not a probability. Remove any that don't fit; the numbers update right away.`
     : "The page picked these by their tags (key words only), which say what the US did and never what followed. “Very close” means the case fits every setting you filled in, “Close” misses one, “Loose” misses two or more. Remove any that don't fit; the numbers update right away.";
   let h = `<section><h2>Why These Past Cases</h2><p class="legend idxdef">${legend}${o.missing ? " " + plural(o.missing, "saved case") + " " + (o.missing === 1 ? "is" : "are") + " no longer in the log." : ""}</p>`;
   const rows = o.picked.map(p => { const c = p.c, off = !p.gone && !act.has(c.id);
