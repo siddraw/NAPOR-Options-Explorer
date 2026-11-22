@@ -422,7 +422,7 @@
   "options": {
    "A": {
     "n": 79,
-    "index": 0.258,
+    "index": 0.289,
     "estimate": null
    },
    "B": {
@@ -432,7 +432,7 @@
    },
    "C": {
     "n": 15,
-    "index": 0.2,
+    "index": 0.227,
     "estimate": null
    },
    "D": {
@@ -442,12 +442,12 @@
    },
    "E": {
     "n": 8,
-    "index": 0.2,
+    "index": 0.25,
     "estimate": null
    },
    "F": {
     "n": 3,
-    "index": 0.667,
+    "index": 0.6,
     "estimate": null
    },
    "G": {

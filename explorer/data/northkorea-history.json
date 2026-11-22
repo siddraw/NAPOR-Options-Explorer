@@ -339,43 +339,43 @@
   "options": {
    "A": {
     "n": 67,
-    "index": 0.265,
-    "estimate": null
+    "index": 0.239,
+    "estimate": 0.244
    },
    "B": {
     "n": 16,
-    "index": 0.25,
-    "estimate": null
+    "index": 0.263,
+    "estimate": 0.395
    },
    "C": {
     "n": 15,
-    "index": 0.482,
-    "estimate": null
+    "index": 0.429,
+    "estimate": 0.487
    },
    "D": {
     "n": 17,
-    "index": 0.5,
-    "estimate": null
+    "index": 0.424,
+    "estimate": 0.472
    },
    "E": {
     "n": 1,
-    "index": 0.25,
-    "estimate": null
+    "index": 0.2,
+    "estimate": 0.312
    },
    "F": {
     "n": 1,
-    "index": 0.75,
-    "estimate": null
+    "index": 0.6,
+    "estimate": 0.32
    },
    "G": {
     "n": 12,
-    "index": 0.521,
-    "estimate": null
+    "index": 0.483,
+    "estimate": 0.481
    },
    "H": {
     "n": 3,
-    "index": 0.667,
-    "estimate": null
+    "index": 0.6,
+    "estimate": 0.447
    }
   },
   "status": {

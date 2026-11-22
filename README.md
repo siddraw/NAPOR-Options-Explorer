@@ -41,7 +41,7 @@ Each option is described with the same five kinds of risk:
 1. **People** – someone was hurt, by the US action or by the reply.
 2. **Escalation** – the other side struck back within days.
 3. **Military** – the reply used missiles, rockets or drones.
-4. **Economic Harm** – for Iran, the Brent oil price rose at least twice a normal day's move within 3 days (price data: FRED/EIA). The other tabs keep their earlier measures for now.
+4. **Economic Harm** – a market price moved against the US side's interest within 3 days, by at least twice a normal day's move: Brent oil for Iran, the Houthis and Venezuela; the Taiwan dollar for China / Taiwan; the South Korean won for North Korea (price data: FRED, from the EIA and the Federal Reserve).
 5. **Political** – no talks, meetings or deals followed within 14 days.
 
 ### Your own option
@@ -88,7 +88,7 @@ it. Other uses:
 
 - **Iran** (Nov 1979 on, mostly the 2026 war): the main tab, with forecasts and a decision log. Caveat: older years are logged more thinly.
 - **Houthis / Red Sea** (Sep 2014 on): US moves and Houthi replies. Caveat: 2024 was continuous fighting, so few cases count, and the 2025–26 log is thin.
-- **North Korea** (Mar 1993 on): US/South Korea moves and North Korean launches. Caveat: the launch log is a sample; economic harm is not measured.
+- **North Korea** (Mar 1993 on): US/South Korea moves and North Korean launches. Caveat: the launch log is a sample; economic harm uses the South Korean won.
 - **China / Taiwan** (May 1995 on): Taiwan Strait and South China Sea. Caveat: small numbers; option A has no cases.
 - **Venezuela / Caribbean** (Feb 1999 on): US moves toward Venezuela and the boat-strike campaign, and Venezuelan or armed-group replies. Caveat: more than 70 boat strikes are known, but the log has only 18 boat-strike rows (some rows cover several strikes); most Venezuelan replies are statements and are not counted as escalation; hold weeks may hide unlogged strikes.
 
