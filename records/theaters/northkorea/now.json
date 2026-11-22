@@ -1,0 +1,89 @@
+{
+ "as_of": "2026-11-20",
+ "note": "Analyst reading of the news, written from logged events. Not data. The weekly agent replaces it every week. The log is a sample: it ends with the Oct 12, 2026 launch (#2076) and many launches are missing.",
+ "headline": [
+  "No North Korean missile launch, test or provocation was reported Nov 12-19 (#2117 census check).",
+  "Trump left China on Nov 19 without meeting Kim Jong Un: 'The relationship is there, but we didn't meet' and 'We'll have that meeting at some point' (#2119). North Korean state media did not mention the trip.",
+  "The IAEA chief says North Korea is expanding its Yongbyon enrichment plant, calling it a clear violation of UN Security Council resolutions (#2120).",
+  "No new US sanctions, Justice Department action, joint drill or deployment was found this week."
+ ],
+ "key_dates": [],
+ "pending": [
+  "Whether a Trump-Kim meeting is set; Trump says 'at some point' (#2119); North Korea said on Nov 4 it has 'no need to sit face to face' (#2087)",
+  "Whether North Korea follows its Nov 4 threat of stronger 'counteraction' (#2087)",
+  "Whether the IAEA report on Yongbyon (#2120) leads to new sanctions"
+ ],
+ "options": {
+  "A": {
+   "status": "open",
+   "label": "Open",
+   "reason": "Not the course over the last two weeks: the Justice Department acted against North Korean crypto theft on Nov 12 (#2117). No new US move was found Nov 16-20.",
+   "events": [
+    2117,
+    2080,
+    2081
+   ]
+  },
+  "B": {
+   "status": "open",
+   "label": "Open",
+   "reason": "Trump did not meet Kim in China and says they will meet 'at some point' (#2119); North Korea rejects sitting down with the US (#2087). No talks are set.",
+   "events": [
+    2119,
+    2118,
+    2087
+   ]
+  },
+  "C": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last step is the Nov 12 Justice Department and FBI action against North Korean crypto theft (#2117); no new sanctions or legal action was found Nov 16-20.",
+   "events": [
+    2117,
+    2081
+   ]
+  },
+  "D": {
+   "status": "open",
+   "label": "Open",
+   "reason": "No new joint drill was found in an allowed outlet this week; the last logged is Freedom Flag (Oct 26 - Nov 6, #2080).",
+   "events": [
+    2080,
+    2071
+   ]
+  },
+  "E": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last seizure in the log was announced on Jul 30, 2021 (#2015).",
+   "events": [
+    2015
+   ]
+  },
+  "F": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The Mar 2026 report of THAAD parts moving to the Middle East (#2065) is not confirmed. The last confirmed move in the log is the missile-warning data link of Dec 19, 2023 (#2037).",
+   "events": [
+    2065,
+    2037
+   ]
+  },
+  "G": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last deployment in the log is the carrier USS George Washington at Busan on Nov 5, 2025 (#2061).",
+   "events": [
+    2061
+   ]
+  },
+  "H": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last posture move in the log is Defense Secretary Hegseth's DMZ visit on Nov 3, 2025 (#2058).",
+   "events": [
+    2058
+   ]
+  }
+ }
+}

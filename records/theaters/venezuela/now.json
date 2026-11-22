@@ -1,0 +1,92 @@
+{
+ "as_of": "2026-11-20",
+ "note": "Analyst reading of the news, written from logged events. Not data. The weekly agent replaces it every week. The log is a sample of named events (only 18 log rows cover the more than 70 boat strikes (some rows cover several strikes)) and nothing is logged after Oct 27, 2026.",
+ "headline": [
+  "Defense Secretary Hegseth made an unannounced visit to Caracas on Nov 18 and announced a deal with the interim government to restore military ties, including training and intelligence sharing (#4115). He called Venezuela 'a compliant security partner'.",
+  "No US boat strike was found Nov 14-20; the last logged is Oct 27 (#4067). No Venezuelan or armed-group hostile act toward the US was found.",
+  "No new sanctions action, oil licence or court step in the Maduro case was found this week.",
+  "Small numbers: most options have only a handful of counted cases, and options F and G are too thin to measure."
+ ],
+ "key_dates": [],
+ "pending": [
+  "What the military deal covers; its text was not published (#4115)",
+  "Whether the US resumes boat strikes (#4067); none since Oct 27",
+  "Whether the Exxon memorandum becomes a contract (#4112)"
+ ],
+ "options": {
+  "A": {
+   "status": "open",
+   "label": "Open",
+   "reason": "Not the course this week: the US signed a military-ties deal with the interim government on Nov 18 (#4115). No US strike, sanctions or deployment was found.",
+   "events": [
+    4115,
+    4067
+   ]
+  },
+  "B": {
+   "status": "active",
+   "label": "In use now",
+   "reason": "Ties with the interim government keep growing: Hegseth announced a deal to restore military ties in Caracas on Nov 18 (#4115), after the Nov 2 meeting with the foreign minister (#4070) and the Exxon memorandum (#4112).",
+   "events": [
+    4115,
+    4070,
+    4112
+   ]
+  },
+  "C": {
+   "status": "open",
+   "label": "Open",
+   "reason": "No new sanctions, delisting or indictment is logged since the Oct 14 delisting of Jorge Rodriguez (#4066) and the Oct 8 superseding indictment of Maduro (#4065).",
+   "events": [
+    4066,
+    4065
+   ]
+  },
+  "D": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The latest logged boat strike was on Oct 27 in the eastern Pacific and killed five (#4067); none was found Oct 28 - Nov 20 (SOUTHCOM's own release list could not be read).",
+   "events": [
+    4067,
+    4064,
+    4062
+   ]
+  },
+  "E": {
+   "status": "open",
+   "label": "Open",
+   "reason": "No deployment is logged in 2026. The last is the carrier USS Gerald R. Ford entering the Caribbean on Nov 16, 2025 (#4033).",
+   "events": [
+    4033,
+    4032
+   ]
+  },
+  "F": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last land strike in the log is the Jun 2026 strike on a Tren de Aragua compound in Venezuela, announced Jun 12 (#4061); before it the Dec 2025 dock strike (#4048).",
+   "events": [
+    4061,
+    4048
+   ]
+  },
+  "G": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The only case in the log is the Jan 2-3, 2026 raid that captured Maduro (#4049).",
+   "events": [
+    4049,
+    4065
+   ]
+  },
+  "H": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last move of this kind in the log is the Jan 7, 2026 seizure of two Venezuela-linked tankers (#4053); the blockade order of Dec 16, 2025 (#4044) is the last declaration.",
+   "events": [
+    4053,
+    4044
+   ]
+  }
+ }
+}

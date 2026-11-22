@@ -1,0 +1,94 @@
+{
+ "as_of": "2026-11-20",
+ "note": "Analyst reading of the news, written from logged events. Not data. The weekly agent replaces it every week.",
+ "headline": [
+  "The Houthi-Saudi war grew: a Houthi missile hit the Public Investment Fund tower in Riyadh on Nov 19, damaging several floors, with no injuries reported (#1373). The coalition says it intercepted more missiles and drones on Nov 17, 18 and 20 (#1370, #1371, #1374).",
+  "The Houthis told airlines to keep out of Saudi airspace and warned workers to leave Saudi Red Sea ports; the coalition threatened Hodeidah port in turn (#1375). No ship was attacked.",
+  "No US move against the Houthis was found: no strike, sanctions, naval action or talks. CENTCOM's commander met the Saudi crown prince in Riyadh; Reuters' sources say Trump has not agreed to US strikes and the US gives intelligence and targeting help (#1372).",
+  "No one was reported hurt in the Houthi attacks this week (#1370-#1374)."
+ ],
+ "key_dates": [],
+ "pending": [
+  "Whether the US joins the Saudi strikes (#1341, #1372); no decision found by Nov 20",
+  "Whether the Houthis carry out their threat against Saudi airspace and Red Sea ports (#1375)",
+  "Whether Houthi control of the Bab el-Mandeb shoreline leads to attacks on shipping (#1368)"
+ ],
+ "options": {
+  "A": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The current course: no US move against the Houthis was found this week and no US strike since May 6, 2025 (#1319); Houthi fire was on Saudi targets (#1371, #1373, #1374).",
+   "events": [
+    1319,
+    1371,
+    1373,
+    1374
+   ]
+  },
+  "B": {
+   "status": "open",
+   "label": "Open",
+   "reason": "US officials met Houthi officials in Muscat on Sep 12-13 (#1337); no new meeting or proposal has been found since. The US embassy's Nov 10 statement on the 'blockade' is words, not talks (#1363).",
+   "events": [
+    1337,
+    1363
+   ]
+  },
+  "C": {
+   "status": "open",
+   "label": "Open",
+   "reason": "Treasury's last Houthi sanctions round in the log is Jan 16, 2026 (#1329); no new US designation of the Houthis was found Nov 16-20 (the Nov 18 round was on Hizballah). The UN Security Council renewed Yemen sanctions on Nov 12 (#1366).",
+   "events": [
+    1329,
+    1366
+   ]
+  },
+  "D": {
+   "status": "open",
+   "label": "Open",
+   "reason": "No US naval-defense move against Houthi attacks is logged in 2026; the Houthi attacks this week were on Saudi targets (#1362, #1367).",
+   "events": [
+    1362,
+    1367
+   ]
+  },
+  "E": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last arms seizure in the log was announced on Jul 16, 2025, carried out by Yemeni forces (#1323).",
+   "events": [
+    1323
+   ]
+  },
+  "F": {
+   "status": "constrained",
+   "label": "Constrained",
+   "reason": "Trump declined Saudi requests for US strikes (#1336) and said on Oct 10 only 'We may' (#1341); Reuters' sources say on Nov 19 he still has not agreed and the US gives intelligence and targeting help (#1372).",
+   "events": [
+    1319,
+    1336,
+    1341,
+    1372
+   ]
+  },
+  "G": {
+   "status": "constrained",
+   "label": "Constrained",
+   "reason": "Same limits as F: no US strike on the Houthis is logged since May 6, 2025 (#1319, #1336).",
+   "events": [
+    1319,
+    1336
+   ]
+  },
+  "H": {
+   "status": "active",
+   "label": "In use now",
+   "reason": "US advisers remain in Saudi Arabia (#1335) and the Oct 21 ordered departure of non-emergency staff still stands (#1347); the US Embassy in Riyadh issued a new security alert on Nov 14 (#1367).",
+   "events": [
+    1335,
+    1347,
+    1367
+   ]
+  }
+ }
+}

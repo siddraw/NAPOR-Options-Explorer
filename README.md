@@ -109,6 +109,8 @@ recommends.
 - The war-phase boundaries were drawn with hindsight.
 - July's nightly US strikes and pre-September shipping attacks are under-logged.
 
+**Records and weekly scan.** The `weekly/` folder has a plain-language report of each Monday's scan: what happened in each conflict and which events were added, plus the source standard every source must meet. `records/` holds the event source links and verdicts, the locked forecasts and decisions, and the weekly "right now" readings. The code that builds the numbers stays private.
+
 ## Running it
 
 **Built with.** The page itself is HTML and JavaScript. The tooling that builds its data and checks it every week is written in Python and kept private.

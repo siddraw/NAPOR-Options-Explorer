@@ -1,0 +1,88 @@
+{
+ "as_of": "2026-11-20",
+ "note": "Analyst reading of the news, written from logged events. Not data. The weekly agent replaces it every week. The log is a sample of named events; routine PLA flights and many coast-guard patrols are not logged. This tab was not updated between Jul 23 and Nov 2, 2026; the main items from that gap were added on Nov 2.",
+ "headline": [
+  "Trump and Xi met in Shenzhen on Nov 19 for about an hour, then held the first US-China-Russia summit with Putin (#3124). China's account says Xi told Trump the US 'must keep doing the right thing' on Taiwan; the joint statement says 'there can be no winners in a nuclear war'. CBS says little concrete came of it.",
+  "China's readout says Trump said the US does not support Taiwan independence; Taiwan says that is untrue. No allowed outlet confirms what Trump said (#3124).",
+  "No US transit, arms notice, sanctions or export-control step against China was found this week; the $14 billion Taiwan arms package is still paused (#3064).",
+  "No new PLA drill, patrol, aircraft surge or coast-guard clash was found Nov 14-20; Russian bombers flew near Taiwan on Nov 17 and 19 (Russia, not logged here).",
+  "Small numbers: most options have only a handful of counted cases."
+ ],
+ "key_dates": [],
+ "pending": [
+  "Whether the 'action plan' China's readout mentions is agreed (#3124)",
+  "Whether the paused $14 billion Taiwan package goes ahead (#3064)",
+  "Whether China's unannounced drills (#3120) resume"
+ ],
+ "options": {
+  "A": {
+   "status": "open",
+   "label": "Open",
+   "reason": "Not measured for China: no hold weeks are built. The only US move this week was the Shenzhen summit (#3124).",
+   "events": [
+    3124
+   ]
+  },
+  "B": {
+   "status": "active",
+   "label": "In use now",
+   "reason": "Trump and Xi met in Shenzhen on Nov 19 and held a three-way summit with Putin (#3124); they last met in Washington on Sep 24 (#3066).",
+   "events": [
+    3124,
+    3066
+   ]
+  },
+  "C": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last counted round in the log is the Oct 7, 2022 chip controls (#3030); no new US sanctions or controls on China were found this week.",
+   "events": [
+    3030
+   ]
+  },
+  "D": {
+   "status": "open",
+   "label": "Open",
+   "reason": "No US transit or patrol was found in an allowed outlet this week. The last logged are the Oct 20 Sabina Shoal operation and the Aug 21 P-8A flight (#3068, #3065).",
+   "events": [
+    3068,
+    3065,
+    3059
+   ]
+  },
+  "E": {
+   "status": "constrained",
+   "label": "Limited",
+   "reason": "The record $14 billion package has been paused since May (#3064); Trump calls arms sales a negotiating chip with Xi. No new notice this week.",
+   "events": [
+    3064,
+    3056
+   ]
+  },
+  "F": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last high-level contact in the log is Lai's Hawaii and Guam transit of Nov 30, 2024 (#3046).",
+   "events": [
+    3046
+   ]
+  },
+  "G": {
+   "status": "open",
+   "label": "Open",
+   "reason": "Keen Sword 27 (Oct 19-29) has ended (#3067); no new allied drill was found this week.",
+   "events": [
+    3067,
+    3040
+   ]
+  },
+  "H": {
+   "status": "open",
+   "label": "Open",
+   "reason": "The last posture move in the log is the two-carrier operations from Jul 4, 2020 (#3011).",
+   "events": [
+    3011
+   ]
+  }
+ }
+}
