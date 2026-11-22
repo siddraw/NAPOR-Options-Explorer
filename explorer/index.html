@@ -544,11 +544,12 @@ function asofCase(c){
   if(c.date > Dt) return null;
   const k = Dt + "|" + c.id + "|" + c.date; if(MASK.key !== Dt){ MASK = {key:Dt, map:new Map()}; } if(MASK.map.has(k)) return MASK.map.get(k);
   const known = e => e.date <= Dt, reps = c.replies.filter(known), done = n => addDays(c.date, n) <= Dt;
-  const m = {...c, replies: reps, strike_ev: c.strike_ev.filter(known), talk_ev: c.talk_ev.filter(known), ship_a_ev: done(EDAYS()) ? c.ship_a_ev : []};
+  const m = {...c, replies: reps, strike_ev: c.strike_ev.filter(known), talk_ev: c.talk_ev.filter(known), ship_a_ev: done(SDAYS()) ? c.ship_a_ev : []};
   m.replied = c.replied === null ? null : done(CL("escalation")) ? c.replied : (reps.length ? true : null);
   m.strike7 = c.strike7 === null ? (m.strike_ev.length ? true : null) : done(7) ? c.strike7 : (m.strike_ev.length ? true : null);
   m.talks14 = m.talk_ev.length ? true : (done(14) && c.talks14 !== null ? false : null);
-  m.ship_a = done(EDAYS()) ? c.ship_a : null;
+  m.ship_a = done(SDAYS()) ? c.ship_a : null;
+  m.mkt = c.mkt && done(EDAYS()) ? c.mkt : null;
   /* a category that reads linked replies at any lag stays open until its window closes, unless a hurt / kinetic reply is already known */
   m.open_people = !done(CL("people")) && !(c.civ || reps.some(r => r.hurt));
   m.open_mil = !done(CL("military")) && !reps.some(r => r.kinetic);
@@ -579,6 +580,7 @@ const USH = dflt => TH.us_hurt || dflt;   /* a theater may word the "harm in the
 const RD = () => TH.reply_days || 5;                                              // days a reply is looked for
 const ECONM = () => TH.econ || {mode:"ships", days:7};                            // economic category: ships (attacks on shipping), events (counter-measures within N days) or none (not measured)
 const EDAYS = () => ECONM().days || 7;
+const SDAYS = () => ECONM().mode === "market" ? 7 : EDAYS();      // shipping fields keep their own 7-day window even when the category uses oil prices
 /* Closing window per category (days until a case's outcome is final), from the data file's theater.close; Iran / Houthi defaults when absent. Same numbers as napor_cases.window_days. */
 const CL = cat => { const v = (TH.close || {})[cat]; return v != null ? v : ({people:7, escalation:RD(), military:RD(), economic:EDAYS(), political:14})[cat]; };
 const ACT = () => Object.assign({verb:"struck within 7 days", row:"strikes within 7 days", col:"Strike ≤7d", none:"No strike"}, TH.act || {});
@@ -600,7 +602,7 @@ function catScores(o, cs){
   sc.escalation = o.trigger ? rate(cs, c => c.replied !== null, c => c.replied === true) : rate(cs, c => c.strike7 !== null, c => c.strike7 === true);
   sc.military = o.military === "reply" ? rate(cs, c => c.replied !== null && !(c.open_mil && CL("military") > RD()), c => c.replies.some(r => r.kinetic))
               : o.military === "strike" ? rate(cs, c => c.strike7 !== null, c => c.mil7 === true) : {k:0, n:0, assumed:true};
-  sc.economic = ECONM().mode === "none" ? {k:0, n:0, sw:0, swy:0, nm:true} : rate(cs, c => c.ship_a !== null, c => c.ship_a > c.ship_b);   // nm = not measured for this theater
+  sc.economic = ECONM().mode === "none" ? {k:0, n:0, sw:0, swy:0, nm:true} : ECONM().mode === "market" ? rate(cs, c => !!c.mkt, c => c.mkt.y === true) : rate(cs, c => c.ship_a !== null, c => c.ship_a > c.ship_b);   // nm = not measured for this theater
   sc.political = rate(cs, c => c.talks14 !== null, c => c.talks14 === false);
   return sc;
 }
@@ -611,7 +613,7 @@ const CAT_DEF = {
   military: o => o.military === "reply" ? "Share of past cases answered with a missile, rocket or drone strike. " + salvoText()
                : o.military === "strike" ? `Share of hold weeks with a strike by ${TH.actor} in the 7 days after (the kind that uses up interceptors).`
                : "No direct military cost is counted for the move itself, so this counts as 0%.",
-  economic: o => "Share of past cases where attacks on shipping rose in the 7 days after, compared with the 7 days before.",
+  economic: o => ECONM().mode === "market" ? "Share of past cases where Brent crude oil rose at least twice a normal day's move within 3 days of the US move." : "Share of past cases where attacks on shipping rose in the 7 days after, compared with the 7 days before.",
   political: o => `Share of past cases NOT followed within 14 days by talks, a meeting, a ceasefire or a deal between the US and ${TH.adversary} (directly or through a mediator). Statements, threats and appeals do not count.`
 };
 /* NAPOR estimate: each category's rate pulled toward the same category's rate across all options (backtested; see Report card). */
@@ -1001,14 +1003,15 @@ function outcomesBlock(o, st, ix){
   if(o.is_hold) h += labelRow("Hold weeks counted: " + st.cases);
   const s7 = st.strike7; h += flowRow(TH.actor_short + " " + ACT().row, o.is_hold ? "share of hold weeks" : "timing only, not shown to be a reply", pc(s7), P(s7.k, s7.n), s7.k + " of " + s7.n + " · " + R(s7.k, s7.n), "", "var(--k2)", s7);
   const tk = st.talks14; h += flowRow("Talks follow within 14 days", "share of past cases with a full window or a talk already", pc(tk), P(tk.k, tk.n), tk.k + " of " + tk.n + " · " + R(tk.k, tk.n), "", "var(--k4)", tk);
-  const em = ECONM(), cs = activeCases(o).filter(c => c.ship_a !== null), up = {k: cs.filter(c => c.ship_a > c.ship_b).length, n: cs.length};
+  const em = ECONM(), mk = em.mode === "market", cs = activeCases(o).filter(c => mk ? !!c.mkt : c.ship_a !== null), up = {k: cs.filter(c => mk ? c.mkt.y : c.ship_a > c.ship_b).length, n: cs.length};
   if(em.mode === "none") h += flowRow((em.name || "Economic") + " harm", "no clear measure in the log", 0, "not measured", "", "", "var(--k5)");
-  else h += flowRow(em.mode === "events" ? (em.label || "Counter-measures follow within " + em.days + " days") : "Attacks on shipping rise the next week", "share of past cases", pc(up), P(up.k, up.n), up.k + " of " + up.n + " · " + R(up.k, up.n), "", "var(--k5)", up);
+  else h += flowRow(mk ? "Oil price jumps within " + em.days + " days" : em.mode === "events" ? (em.label || "Counter-measures follow within " + em.days + " days") : "Attacks on shipping rise the next week", "share of past cases", pc(up), P(up.k, up.n), up.k + " of " + up.n + " · " + R(up.k, up.n), "", "var(--k5)", up);
   if(o.is_hold){ const hu = rate(activeCases(o), c => c.strike7 !== null && c.hurt7 !== null, c => c.hurt7 === true); h += flowRow("Someone hurt in a hostile act that week", "share of hold weeks (checked by hand)", pc(hu), P(hu.k, hu.n), hu.k + " of " + hu.n, "", "var(--k2)"); }
   else { const cv = st.civ; h += flowRow(USH("Civilians reported hurt in the US action itself"), "share of past cases", pc(cv), P(cv.k, cv.n), cv.k + " of " + cv.n, "", "var(--k2)"); }
   h += '</div>';
-  const sb = cs.reduce((a,c) => a + c.ship_b, 0), sa = cs.reduce((a,c) => a + c.ship_a, 0), mx = Math.max(1, sb, sa);
-  h += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,420px));gap:16px;margin-top:16px">` + (em.mode !== "ships" ? "" : `<div><h2>Economic Harm: shipping attacks ${EDAYS()} days before vs after</h2><div class="pair"><div><i style="height:${sb/mx*100}%"></i>${sb} ${sb === 1 ? "attack" : "attacks"} before</div><div><i style="height:${sa/mx*100}%"></i>${sa} ${sa === 1 ? "attack" : "attacks"} after</div></div><p class="legend">Attacks on shipping in the ${EDAYS()} days before and after each past case, added up across ${cs.length} cases: ${sb} before, ${sa} after${sb ? " (" + (sa >= sb ? "+" : "") + Math.round((sa-sb)/sb*100) + "%)" : ""}. These are logged attacks only (a big wave is logged as one row), so the numbers are small. The Economic Harm category counts the cases where attacks rose. Not shown to be caused by the US action.</p></div>`);
+  const sb = mk ? 0 : cs.reduce((a,c) => a + c.ship_b, 0), sa = mk ? 0 : cs.reduce((a,c) => a + c.ship_a, 0), mx = Math.max(1, sb, sa);
+  const mkMoves = mk ? cs.map(c => c.mkt.r).sort((a,b) => a-b) : [], mkMed = mkMoves.length ? mkMoves[Math.floor(mkMoves.length/2)] : 0;
+  h += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,420px));gap:16px;margin-top:16px">` + (mk ? `<div><h2>Economic Harm: Brent oil price within ${EDAYS()} days</h2><p class="legend">Brent crude rose at least twice a normal day's move within ${EDAYS()} days in ${up.k} of ${cs.length} past cases. The middle case moved ${mkMed >= 0 ? "+" : ""}${mkMed}%. Only cases from May 1987 on, when the price series starts, are counted. A rise is not shown to be caused by the US move. Source: U.S. Energy Information Administration via FRED.</p></div>` : em.mode !== "ships" ? "" : `<div><h2>Economic Harm: shipping attacks ${EDAYS()} days before vs after</h2><div class="pair"><div><i style="height:${sb/mx*100}%"></i>${sb} ${sb === 1 ? "attack" : "attacks"} before</div><div><i style="height:${sa/mx*100}%"></i>${sa} ${sa === 1 ? "attack" : "attacks"} after</div></div><p class="legend">Attacks on shipping in the ${EDAYS()} days before and after each past case, added up across ${cs.length} cases: ${sb} before, ${sa} after${sb ? " (" + (sa >= sb ? "+" : "") + Math.round((sa-sb)/sb*100) + "%)" : ""}. These are logged attacks only (a big wave is logged as one row), so the numbers are small. The Economic Harm category counts the cases where attacks rose. Not shown to be caused by the US action.</p></div>`);
   if(o.is_hold) h += `<div><h2>${esc(BASEN())} per week (logged)</h2>${weeklyShipping()}<p class="legend">The real count is higher: big clusters are logged as one row.</p></div>`;
   if(fcs(o).length) h += `<div><h2>NAPOR's locked forecasts (written down before the outcome, then graded)</h2>` + fcs(o).map(f => `<div class="fgauge"><div class="q">${esc(f.question)}<small>${esc(f.id)} · by ${fmtDate(f.deadline)}</small></div><div class="big">${Math.round(f.p*100)}%</div><div class="bar"><i style="width:${f.p*100}%"></i></div></div>`).join("") + `</div>`;
   return h + '</div>';
@@ -1072,7 +1075,7 @@ const RULE = {
   people: o => o.is_hold ? "Counts when a hostile act in the 7 days after the Monday hurt anyone. Checked by hand from each logged event's damage text." : `Counts when civilians were reported hurt in the US action itself, or when a reply from ${TH.actor} within about 5 days hurt anyone (troops or civilians).`,
   escalation: o => o.trigger ? `Counts when ${TH.actor} replied within about 5 days.` : `Counts when ${TH.actor} struck anywhere within 7 days (timing only, not shown to be a reply).`,
   military: o => o.military === "strike" ? `Counts when ${TH.actor} carried out a strike in the 7 days after, the kind that uses up interceptors.` : "Counts when the reply was a missile, rocket or drone strike, the kind that uses up interceptors" + (TH.salvo ? ` (about ${TH.salvo.count} ${TH.salvo.weapon} in the ${TH.salvo.when} salvo).` : "."),
-  economic: o => "Counts when logged attacks on shipping in the 7 days after were higher than in the 7 days before.",
+  economic: o => ECONM().mode === "market" ? "Counts when Brent crude oil rose, from the last close before the case to the last close within 3 days after, by at least twice a normal day's move (the typical daily move over the 60 trading days before). A price rise is not shown to be caused by the US move." : "Counts when logged attacks on shipping in the 7 days after were higher than in the 7 days before.",
   political: o => `Counts when no talks, meeting, negotiation (including messages passed through intermediaries), formal proposal, ceasefire or deal between the US and ${TH.adversary}, directly or through a mediator, was logged within 14 days. Statements, threats and appeals do not count as talks. Rule changed on 2026-10-26.`
 };
 const short = (t, n=140) => t.length > n ? t.slice(0, n-1) + "…" : t;
@@ -1117,6 +1120,11 @@ function judge(o, c, cat){
   }
   if(cat === "economic"){
     const em = ECONM();
+    if(em.mode === "market"){
+      if(!c.mkt) return {base:false, why:["<li>Not measured: the Brent price series starts in May 1987, or the 3 days after this case are not over yet.</li>"]};
+      const mm = c.mkt; L.push(`<li><b>Brent ${mm.p0} → ${mm.p3} dollars a barrel (${mm.r >= 0 ? "+" : ""}${mm.r}%)</b>, from the ${fmtDate(mm.d0, true)} close to the ${fmtDate(mm.d3, true)} close</li>`, `<li>A rise of ${mm.t}% or more counts as pressure (twice a normal day's move before this case)</li>`);
+      return {base:true, flag:mm.y === true, why:L};
+    }
     if(c.ship_a === null) return {base:false, why:[`<li>Less than ${em.days || 7} days of news after this case; not counted yet.</li>`]};
     if(em.mode === "events"){
       L.push(`<li><b>${c.ship_a} counter-sanction or trade measure${c.ship_a === 1 ? "" : "s"}</b> logged in the ${em.days} days after</li>`);
@@ -1154,6 +1162,7 @@ function renderCat0(){
     h += `<div class="tally"><span>${USH("Civilians hurt in the US action")}: <b>${civ}</b> case${civ === 1 ? "" : "s"}</span><span>A reply hurt people: <b>${rh}</b> case${rh === 1 ? "" : "s"}</span><span>No one hurt: <b>${n - k}</b></span></div>`;
   }
   if(cat === "economic" && ECONM().mode === "events"){ const sa = base.reduce((a,r) => a + r.c.ship_a, 0); h += `<div class="tally"><span>Counter-sanctions or trade measures, all cases: <b>${sa}</b></span><span>Prices: not measured</span></div>`; }
+  else if(cat === "economic" && ECONM().mode === "market"){ h += `<div class="tally"><span>Brent crude (EIA via FRED), rise within ${EDAYS()} days: <b>${k} of ${n}</b> cases</span><span>Cases before May 1987: not measured</span></div>`; }
   else if(cat === "economic"){ const sb = base.reduce((a,r) => a + r.c.ship_b, 0), sa = base.reduce((a,r) => a + r.c.ship_a, 0); h += `<div class="tally"><span>Attacks on shipping, all cases: <b>${sb} before → ${sa} after</b></span><span>Oil prices: not measured</span></div>`; }
   h += `<div class="cmpbar">${[["all","All " + rows.length],["yes","Risk " + k],["no","No risk " + (n - k)],["na","Window still open " + (rows.length - n)]].map(([v,l]) => `<button class="chip" data-cf="${v}" aria-pressed="${f === v}">${l}</button>`).join("")}</div>`;
   const shown = rows.filter(r => f === "all" || (f === "yes" && r.j.base && r.j.flag) || (f === "no" && r.j.base && !r.j.flag) || (f === "na" && !r.j.base));
@@ -1281,8 +1290,8 @@ function renderWins(){
     const wr = w.querySelector('[id="' + k + '-w-reset"]'); if(wr) wr.onclick = () => { CATS.forEach(c => S.w[c] = 1); renderExplore(); const w2 = document.querySelector('.win[data-k="' + k + '"]'); if(w2){ const d = w2.querySelector(".weights"); if(d) d.open = true; } };
   });
 }
-const econHead = () => { const em = ECONM(); return em.mode === "none" ? "" : em.mode === "events" ? `<th class="c">Counter-measure ≤${em.days}d</th><th>Counter-measures logged</th>` : '<th class="c">Shipping up</th><th>Shipping attacks 7d before → after</th>'; };
-const econCells = (c, tri) => { const em = ECONM(); return em.mode === "none" ? "" : em.mode === "events" ? `<td class="c">${tri(c.ship_a === null ? null : c.ship_a > 0)}</td><td class="mono">${c.ship_a === null ? "…" : c.ship_a}</td>` : `<td class="c">${tri(c.ship_a === null ? null : c.ship_a > c.ship_b)}</td><td class="mono">${c.ship_b} → ${c.ship_a === null ? "…" : c.ship_a}</td>`; };
+const econHead = () => { const em = ECONM(); return em.mode === "none" ? "" : em.mode === "market" ? '<th class="c">Oil jump</th><th>Brent move within 3 days</th>' : em.mode === "events" ? `<th class="c">Counter-measure ≤${em.days}d</th><th>Counter-measures logged</th>` : '<th class="c">Shipping up</th><th>Shipping attacks 7d before → after</th>'; };
+const econCells = (c, tri) => { const em = ECONM(); return em.mode === "none" ? "" : em.mode === "market" ? `<td class="c">${tri(c.mkt ? c.mkt.y : null)}</td><td class="mono">${c.mkt ? (c.mkt.r >= 0 ? "+" : "") + c.mkt.r + "%" : "n/a"}</td>` : em.mode === "events" ? `<td class="c">${tri(c.ship_a === null ? null : c.ship_a > 0)}</td><td class="mono">${c.ship_a === null ? "…" : c.ship_a}</td>` : `<td class="c">${tri(c.ship_a === null ? null : c.ship_a > c.ship_b)}</td><td class="mono">${c.ship_b} → ${c.ship_a === null ? "…" : c.ship_a}</td>`; };
 function caseTable(o){
   if(!o.cases.length) return o.mine ? '<p class="nodata">No cases to list.</p>' : '<p class="nodata">No past cases of this kind are in the log, so there is nothing to count. The notes above are reasoning, not data.</p>';
   const act = new Set(activeCases(o).map(c => c.id));

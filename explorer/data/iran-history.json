@@ -462,43 +462,43 @@
   "options": {
    "A": {
     "n": 11,
-    "index": 0.164,
-    "estimate": null
+    "index": 0.182,
+    "estimate": 0.204
    },
    "B": {
     "n": 29,
-    "index": 0.191,
-    "estimate": null
+    "index": 0.17,
+    "estimate": 0.175
    },
    "C": {
     "n": 40,
-    "index": 0.185,
-    "estimate": null
+    "index": 0.204,
+    "estimate": 0.207
    },
    "D": {
     "n": 11,
-    "index": 0.227,
-    "estimate": null
+    "index": 0.267,
+    "estimate": 0.283
    },
    "E": {
     "n": 3,
     "index": 0.5,
-    "estimate": null
+    "estimate": 0.415
    },
    "F": {
     "n": 16,
-    "index": 0.547,
-    "estimate": null
+    "index": 0.56,
+    "estimate": 0.528
    },
    "G": {
     "n": 6,
-    "index": 0.667,
-    "estimate": null
+    "index": 0.767,
+    "estimate": 0.657
    },
    "H": {
     "n": 37,
-    "index": 0.2,
-    "estimate": null
+    "index": 0.216,
+    "estimate": 0.218
    }
   },
   "status": {

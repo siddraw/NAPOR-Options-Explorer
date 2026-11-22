@@ -41,7 +41,7 @@ Each option is described with the same five kinds of risk:
 1. **People** – someone was hurt, by the US action or by the reply.
 2. **Escalation** – the other side struck back within days.
 3. **Military** – the reply used missiles, rockets or drones.
-4. **Economic** – attacks on shipping or other economic damage went up afterward.
+4. **Economic Harm** – for Iran, the Brent oil price rose at least twice a normal day's move within 3 days (price data: FRED/EIA). The other tabs keep their earlier measures for now.
 5. **Political** – no talks, meetings or deals followed within 14 days.
 
 ### Your own option
