@@ -1,11 +1,11 @@
 {
- "as_of": "2026-11-20",
+ "as_of": "2026-11-23",
  "note": "Analyst reading of the news, written from logged events. Not data. The weekly agent replaces it every week. The log is a sample: it ends with the Oct 12, 2026 launch (#2076) and many launches are missing.",
  "headline": [
-  "No North Korean missile launch, test or provocation was reported Nov 12-19 (#2117 census check).",
-  "Trump left China on Nov 19 without meeting Kim Jong Un: 'The relationship is there, but we didn't meet' and 'We'll have that meeting at some point' (#2119). North Korean state media did not mention the trip.",
+  "No North Korean missile launch, test or provocation was found Nov 19-23 (last checked in the #2117 census row, Nov 12-19).",
+  "Trump left China on Nov 19 without meeting Kim Jong Un: 'The relationship is there, but we didn't meet' and 'We'll have that meeting at some point' (#2119). No newer word on a meeting was found. North Korean state media did not mention the trip.",
   "The IAEA chief says North Korea is expanding its Yongbyon enrichment plant, calling it a clear violation of UN Security Council resolutions (#2120).",
-  "No new US sanctions, Justice Department action, joint drill or deployment was found this week."
+  "No new US sanctions, Justice Department action, joint drill or deployment was found Nov 19-23."
  ],
  "key_dates": [],
  "pending": [
@@ -17,7 +17,7 @@
   "A": {
    "status": "open",
    "label": "Open",
-   "reason": "Not the course over the last two weeks: the Justice Department acted against North Korean crypto theft on Nov 12 (#2117). No new US move was found Nov 16-20.",
+   "reason": "Not the course over the last two weeks: the Justice Department acted against North Korean crypto theft on Nov 12 (#2117). No new US move was found Nov 19-23.",
    "events": [
     2117,
     2080,
@@ -37,7 +37,7 @@
   "C": {
    "status": "open",
    "label": "Open",
-   "reason": "The last step is the Nov 12 Justice Department and FBI action against North Korean crypto theft (#2117); no new sanctions or legal action was found Nov 16-20.",
+   "reason": "The last step is the Nov 12 Justice Department and FBI action against North Korean crypto theft (#2117); no new sanctions or legal action was found Nov 19-23.",
    "events": [
     2117,
     2081
@@ -46,7 +46,7 @@
   "D": {
    "status": "open",
    "label": "Open",
-   "reason": "No new joint drill was found in an allowed outlet this week; the last logged is Freedom Flag (Oct 26 - Nov 6, #2080).",
+   "reason": "No new joint drill was found in an allowed outlet Nov 19-23; the last logged is Freedom Flag (Oct 26 - Nov 6, #2080).",
    "events": [
     2080,
     2071

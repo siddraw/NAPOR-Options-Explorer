@@ -1795,3 +1795,34 @@ SOURCES.update({
  188: [_TIME_NOV18, _STRIPES_NOV19, _CBS_LIVE_NOV18],
  189: [_TOI_NOV20, _CBS_LIVE_NOV20],
 })
+
+# ---------------------------------------------------------------------------
+# Weekly update, 2026-11-23 (weekly agent). Every URL below came from this week's scan, which read each page in full.
+# CBS and ABC live pages are updated all day, so they carry the date of the update read (Nov 23). Claims by Iranian
+# state media or the IRGC are logged only as a credible outlet reports them ("CBS News; reports a Tasnim claim").
+# ---------------------------------------------------------------------------
+_AJ_LIVE_NOV19 = _s('Iran war live: Saudi-led coalition strikes Yemen, ships on fire in Hormuz', 'Al Jazeera; reports an IRGC Navy claim', '2026-11-19',
+                    'https://www.aljazeera.com/amp/news/liveblog/2026/11/19/iran-war-live-saudi-led-coalition-strikes-yemen-ships-on-fire-in-hormuz', 'full text')
+_CBS_LIVE_NOV23 = _s("Trump says he wants 'permanent' deal with Iran; says next move may not come until 2027 (live updates)", 'CBS News', '2026-11-23',
+                     'https://www.cbsnews.com/live-updates/iran-war-trump-tehran-denies-chemical-weapons/', 'full text')
+_CBS_LIVE_NOV23_TASNIM = _s("Trump says he wants 'permanent' deal with Iran; says next move may not come until 2027 (live updates)", 'CBS News; reports a Tasnim claim', '2026-11-23',
+                            'https://www.cbsnews.com/live-updates/iran-war-trump-tehran-denies-chemical-weapons/', 'full text')
+_CBS_LIVE_NOV23_TV = _s("Trump says he wants 'permanent' deal with Iran; says next move may not come until 2027 (live updates)", 'CBS News; reports an Iranian state TV claim', '2026-11-23',
+                        'https://www.cbsnews.com/live-updates/iran-war-trump-tehran-denies-chemical-weapons/', 'full text')
+_ABC_LIVE_NOV23 = _s('Iran live updates: Tehran says Strait of Hormuz will be safe if its demands are met', 'ABC News; reports an IRGC claim', '2026-11-23',
+                     'https://abcnews.com/International/live-updates/iran-live-updates-tehran-strait-hormuz-safe-demands/?id=138369648', 'full text')
+_ABC_LIVE_NOV23_IRNA = _s('Iran live updates: Tehran says Strait of Hormuz will be safe if its demands are met', 'ABC News; reports an IRNA claim', '2026-11-23',
+                          'https://abcnews.com/International/live-updates/iran-live-updates-tehran-strait-hormuz-safe-demands/?id=138369648', 'full text')
+
+VERDICT.update({190: 'confirmed', 191: 'confirmed', 192: 'confirmed', 193: 'confirmed', 194: 'partly_confirmed', 195: 'confirmed',
+                196: 'confirmed', 197: 'confirmed'})
+SOURCES.update({
+ 190: [_AJ_LIVE_NOV19],
+ 191: [_CBS_LIVE_NOV23],
+ 192: [_CBS_LIVE_NOV23_TASNIM],
+ 193: [_CBS_LIVE_NOV23],
+ 194: [_ABC_LIVE_NOV23, _CBS_LIVE_NOV23],
+ 195: [_CBS_LIVE_NOV23_TV, _ABC_LIVE_NOV23_IRNA],
+ 196: [_CBS_LIVE_NOV23],
+ 197: [_ABC_LIVE_NOV23_IRNA],
+})

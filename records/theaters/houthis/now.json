@@ -1,28 +1,30 @@
 {
- "as_of": "2026-11-20",
+ "as_of": "2026-11-23",
  "note": "Analyst reading of the news, written from logged events. Not data. The weekly agent replaces it every week.",
  "headline": [
-  "The Houthi-Saudi war grew: a Houthi missile hit the Public Investment Fund tower in Riyadh on Nov 19, damaging several floors, with no injuries reported (#1373). The coalition says it intercepted more missiles and drones on Nov 17, 18 and 20 (#1370, #1371, #1374).",
-  "The Houthis told airlines to keep out of Saudi airspace and warned workers to leave Saudi Red Sea ports; the coalition threatened Hodeidah port in turn (#1375). No ship was attacked.",
-  "No US move against the Houthis was found: no strike, sanctions, naval action or talks. CENTCOM's commander met the Saudi crown prince in Riyadh; Reuters' sources say Trump has not agreed to US strikes and the US gives intelligence and targeting help (#1372).",
-  "No one was reported hurt in the Houthi attacks this week (#1370-#1374)."
+  "The Saudi-led coalition stepped up air strikes in Yemen: it says it hit 60 Houthi military targets on Nov 17 (#1376) and Hodeidah port facilities and Houthi missile and drone sites in Sanaa on Nov 20 (#1377). Al Jazeera's reporter calls the Nov 20 strikes the heaviest since the conflict began.",
+  "Houthi-side authorities report people killed and hurt: six injured at a Sanaa fuel station (Nov 22, #1379), four killed and 18 wounded at a Hodeidah telecom building (Nov 23, #1380) and 19 killed on a civilian boat (Nov 20, #1381). These are claims; the coalition had not commented and none is confirmed.",
+  "A Houthi drone aimed at Riyadh was destroyed and a ballistic missile aimed at the western region was intercepted on Nov 22; no casualties or damage were reported (#1378). The Houthi threat to Saudi airspace and Red Sea ports from Nov 20 is still open (#1375).",
+  "No US move against the Houthis was found: no strike, sanctions, naval action or talks, and the coverage read names no US role in the Saudi strikes. Reuters' sources said on Nov 19 that Trump has not agreed to US strikes and the US gives intelligence and targeting help (#1372)."
  ],
  "key_dates": [],
  "pending": [
-  "Whether the US joins the Saudi strikes (#1341, #1372); no decision found by Nov 20",
+  "Whether the US joins the Saudi strikes (#1341, #1372); no decision found by Nov 23",
   "Whether the Houthis carry out their threat against Saudi airspace and Red Sea ports (#1375)",
+  "Whether the Saudi-led strikes on Hodeidah port (#1377) and the Houthi-side reports of civilian deaths (#1379-#1381) lead to a wider fight over Red Sea ports",
   "Whether Houthi control of the Bab el-Mandeb shoreline leads to attacks on shipping (#1368)"
  ],
  "options": {
   "A": {
    "status": "open",
    "label": "Open",
-   "reason": "The current course: no US move against the Houthis was found this week and no US strike since May 6, 2025 (#1319); Houthi fire was on Saudi targets (#1371, #1373, #1374).",
+   "reason": "The current course: no US move against the Houthis was found this week and no US strike since May 6, 2025 (#1319); the fighting was between the Houthis and the Saudi-led coalition (#1374, #1376, #1377, #1378).",
    "events": [
     1319,
-    1371,
-    1373,
-    1374
+    1374,
+    1376,
+    1377,
+    1378
    ]
   },
   "B": {

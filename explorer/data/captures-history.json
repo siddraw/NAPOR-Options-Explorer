@@ -1,92 +1,9 @@
 [
  {
-  "asof": "2026-02-28",
-  "intensity": 4,
+  "asof": "2026-11-21",
+  "intensity": 2,
   "band": "Low",
-  "events": 134,
-  "options": {
-   "A": {
-    "n": 0,
-    "index": null,
-    "estimate": null
-   },
-   "B": {
-    "n": 5,
-    "index": 0.35,
-    "estimate": 0.407
-   },
-   "C": {
-    "n": 4,
-    "index": 0.25,
-    "estimate": 0.361
-   },
-   "D": {
-    "n": 8,
-    "index": 0.438,
-    "estimate": 0.404
-   },
-   "E": {
-    "n": 18,
-    "index": 0.605,
-    "estimate": 0.436
-   },
-   "F": {
-    "n": 3,
-    "index": 0.583,
-    "estimate": 0.407
-   },
-   "G": {
-    "n": 4,
-    "index": 0.5,
-    "estimate": 0.407
-   },
-   "H": {
-    "n": 3,
-    "index": 0.417,
-    "estimate": 0.396
-   }
-  },
-  "status": {
-   "A": {
-    "status": "open",
-    "label": "Open"
-   },
-   "B": {
-    "status": "open",
-    "label": "Open"
-   },
-   "C": {
-    "status": "open",
-    "label": "Open"
-   },
-   "D": {
-    "status": "open",
-    "label": "Open"
-   },
-   "E": {
-    "status": "open",
-    "label": "Open"
-   },
-   "F": {
-    "status": "open",
-    "label": "Open"
-   },
-   "G": {
-    "status": "open",
-    "label": "Open"
-   },
-   "H": {
-    "status": "open",
-    "label": "Open"
-   }
-  },
-  "status_as_of": "2026-11-15"
- },
- {
-  "asof": "2026-06-12",
-  "intensity": 0,
-  "band": "Quiet",
-  "events": 137,
+  "events": 139,
   "options": {
    "A": {
     "n": 0,
@@ -163,6 +80,6 @@
     "label": "Open"
    }
   },
-  "status_as_of": "2026-11-15"
+  "status_as_of": "2026-11-23"
  }
 ]

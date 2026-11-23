@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-22",
+ "generated": "2026-11-23",
  "default": "iran",
  "theaters": [
   {
@@ -7,7 +7,7 @@
    "name": "Iran",
    "status": "active",
    "data": "data/iran.json",
-   "asof": "2026-11-20",
+   "asof": "2026-11-23",
    "kind": "country"
   },
   {
@@ -15,7 +15,7 @@
    "name": "Houthis / Red Sea",
    "status": "active",
    "data": "data/houthis.json",
-   "asof": "2026-11-20",
+   "asof": "2026-11-23",
    "kind": "country"
   },
   {
@@ -47,7 +47,7 @@
    "name": "Leader captures and raids",
    "status": "active",
    "data": "data/captures.json",
-   "asof": "2026-06-12",
+   "asof": "2026-11-21",
    "kind": "library"
   }
  ]

@@ -1,18 +1,13 @@
 {
- "as_of": "2026-11-20",
+ "as_of": "2026-11-23",
  "note": "Analyst reading of the news, written by the weekly agent from logged events. Not data. Replace every week.",
  "headline": [
-  "The US struck Iran again: on Nov 17 US jets hit an IRGC missile launch site on Qeshm Island, which officials call 'self-defense' after IRGC drones were aimed at a US radar in Bahrain the same day (#179, #180). No casualties were reported.",
-  "Iranian drones then went at Ali Al Salem air base in Kuwait, apparently Iran's first attack there in two months, and at Bahrain on Nov 18; all were intercepted and no US personnel were hurt (#181, #183).",
-  "Shipping: the LPG tanker Tara Gas was hit twice near Khasab (Nov 16-17; one crew member missing, two badly burned, #178) and an ADNOC L&S tanker was hit (one missing, 11 injured, #182). CENTCOM now says ship-to-ship transfers of Iranian cargo can count as running the blockade (#184).",
-  "No deal and no direct talks. Trump threatened Iran over reported chemical and 'dirty bomb' plans (#188), says Iran's terms are unacceptable and he is 'not rushing' (#189), and the Shenzhen summit with Xi and Putin left Iran out of its declaration (#187).",
-  "The USS George Washington left the region; two US carriers remain (#185). Treasury sanctioned a Hizballah / IRGC-Qods Force finance network (#186)."
+  "Shipping attacks rose: UKMTO reports a tanker hit leaving Hormuz on Nov 20 and two more on Nov 21, with no casualties reported (#191, #193); Iran claims more ships hit its mines (#190, not confirmed).",
+  "On Nov 21 an Iranian attack set fire to an industrial site in Sitra, Bahrain; reports differ on injuries and a US official says US forces were not affected (#194). Iran claims two more US drones shot down; CENTCOM has not commented (#195).",
+  "No new US strike confirmed: CENTCOM denied an Iranian report of a missile hit on Qeshm on Nov 20 (#192); the last confirmed US strike is Nov 17 (#179).",
+  "No deal and no direct talks: Trump says Iran fired more drones and missiles last week than at any time in over a year (#196); Iran says Hormuz can be safe quickly if the US lifts the blockade and sanctions (#197); Qatar's mediators were in Tehran on Nov 21 (not confirmed as US-Iran talks)."
  ],
  "key_dates": [
-  {
-   "date": "2026-11-22",
-   "label": "Forecasts F010 (Iranian attack on US forces), F011 (direct meeting or agreed deal) and F012 (shipping attacks Nov 16-22) close"
-  },
   {
    "date": "2026-11-29",
    "label": "Forecast F014 (shipping attacks Nov 23-29) closes"
@@ -27,8 +22,9 @@
   }
  ],
  "pending": [
-  "Whether the US answers the Nov 18 drone attacks on Kuwait and Bahrain (#181, #183); Trump suggests waiting until 'after January 1st' (#188)",
-  "Whether Qatar's and Pakistan's mediation leads anywhere; reported to be at an impasse (in the review queue, not logged)",
+  "Whether the US answers the Nov 21 attack on Bahrain (#194) and the Nov 18 drone attacks on Kuwait and Bahrain (#181, #183); Trump suggests waiting until 'after January 1st' (#188)",
+  "What the Nov 22 Gulf of Oman tanker incident was: UKMTO reports an incident involving a tanker and military forces; the IRGC claims two tankers hit mines (in the review queue, not logged)",
+  "Whether Qatar's and Pakistan's mediation leads anywhere; Qatari mediators were in Tehran on Nov 21 and Iran says talks on Hormuz are pointless until its demands are met (in the review queue, not logged)",
   "Whether CENTCOM actually stops or boards ships doing ship-to-ship transfers (#184)",
   "Reported US-Israeli planning for a new air campaign: not confirmed, not logged"
  ],
@@ -36,20 +32,21 @@
   "A": {
    "status": "open",
    "label": "Open",
-   "reason": "Available, but not the course this week: the US struck Qeshm on Nov 17 (#179) and tightened the blockade (#184). Trump says he is 'not rushing' (#189).",
+   "reason": "Available, but not the course this week: the US tightened the blockade (#184) and has not struck since Nov 17 (#179); CENTCOM denied a new strike on Qeshm on Nov 20 (#192). Trump says he is 'not rushing' (#189).",
    "events": [
     179,
     184,
-    189
+    189,
+    192
    ]
   },
   "B": {
    "status": "open",
    "label": "Open",
-   "reason": "No new US-Iran talks were logged this week; Trump says Iran wants a deal but not one 'acceptable to me' (#189), and the Shenzhen summit did not take up Iran (#187). Qatari mediation continues but is not logged (review queue).",
+   "reason": "No new US-Iran talks were logged this week; Iran says Hormuz can be made safe quickly if the US meets its conditions (#197) and Trump says Iran wants a deal but not one 'acceptable to me' (#189). Qatari mediators were in Tehran on Nov 21 (review queue, not logged as talks).",
    "events": [
-    187,
-    189
+    189,
+    197
    ]
   },
   "C": {
@@ -65,10 +62,12 @@
   "D": {
    "status": "active",
    "label": "In use now",
-   "reason": "The blockade continues and CENTCOM extended it to ship-to-ship transfers on Nov 18 (#184). No ship was disabled this week (the last was M/V Huda on Nov 7, #152).",
+   "reason": "The blockade continues and CENTCOM extended it to ship-to-ship transfers on Nov 18 (#184). No ship was disabled this week (the last was M/V Huda on Nov 7, #152); the tankers hit Nov 20-21 were hit by an unknown attacker (#191, #193).",
    "events": [
     184,
-    152
+    152,
+    191,
+    193
    ]
   },
   "E": {
@@ -82,20 +81,22 @@
   "F": {
    "status": "active",
    "label": "In use now",
-   "reason": "US jets struck an IRGC missile launch site on Qeshm on Nov 17, called self-defense (#179), the third limited Qeshm strike this month (#142, #149).",
+   "reason": "US jets struck an IRGC missile launch site on Qeshm on Nov 17, called self-defense (#179), the third limited Qeshm strike this month (#142, #149). No newer US strike is confirmed; CENTCOM denied one on Nov 20 (#192).",
    "events": [
     179,
     142,
-    149
+    149,
+    192
    ]
   },
   "G": {
    "status": "open",
    "label": "Open",
-   "reason": "No US strike aimed at people is logged. Trump threatens to 'wipe them out' if Iran pursues chemical or biological weapons (#188) but says he is not rushing (#189).",
+   "reason": "No US strike aimed at people is logged. Trump threatens to 'wipe them out' if Iran pursues chemical or biological weapons (#188), says he is not rushing (#189) and says Iran fired more drones and missiles last week than in over a year (#196).",
    "events": [
     188,
-    189
+    189,
+    196
    ]
   },
   "H": {

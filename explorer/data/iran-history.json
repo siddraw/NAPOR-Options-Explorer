@@ -1,484 +1,29 @@
 [
  {
-  "asof": "2026-10-11",
-  "intensity": 8,
-  "band": "Medium",
-  "events": 102,
-  "options": {
-   "A": {
-    "n": 0,
-    "index": null
-   },
-   "B": {
-    "n": 6,
-    "index": 0.233
-   },
-   "C": {
-    "n": 2,
-    "index": 0.2
-   },
-   "D": {
-    "n": 3,
-    "index": 0.333
-   },
-   "E": {
-    "n": 2,
-    "index": 0.5
-   },
-   "F": {
-    "n": 5,
-    "index": 0.48
-   },
-   "G": {
-    "n": 4,
-    "index": 0.7
-   },
-   "H": {
-    "n": 3,
-    "index": 0.2
-   }
-  }
- },
- {
-  "asof": "2026-10-18",
-  "intensity": 12,
+  "asof": "2026-11-23",
+  "intensity": 28,
   "band": "High",
-  "events": 178,
-  "options": {
-   "A": {
-    "n": 11,
-    "index": 0.164,
-    "estimate": 0.192
-   },
-   "B": {
-    "n": 16,
-    "index": 0.188,
-    "estimate": 0.195
-   },
-   "C": {
-    "n": 11,
-    "index": 0.187,
-    "estimate": 0.2
-   },
-   "D": {
-    "n": 7,
-    "index": 0.238,
-    "estimate": 0.265
-   },
-   "E": {
-    "n": 3,
-    "index": 0.5,
-    "estimate": 0.424
-   },
-   "F": {
-    "n": 12,
-    "index": 0.567,
-    "estimate": 0.535
-   },
-   "G": {
-    "n": 7,
-    "index": 0.629,
-    "estimate": 0.566
-   },
-   "H": {
-    "n": 10,
-    "index": 0.2,
-    "estimate": 0.209
-   }
-  },
-  "status": {
-   "A": {
-    "status": "open",
-    "label": "Open"
-   },
-   "B": {
-    "status": "active",
-    "label": "In use now"
-   },
-   "C": {
-    "status": "active",
-    "label": "In use now"
-   },
-   "D": {
-    "status": "active",
-    "label": "In use now"
-   },
-   "E": {
-    "status": "constrained",
-    "label": "Constrained"
-   },
-   "F": {
-    "status": "constrained",
-    "label": "Constrained until Nov 3"
-   },
-   "G": {
-    "status": "constrained",
-    "label": "Constrained until Nov 3"
-   },
-   "H": {
-    "status": "open",
-    "label": "Open"
-   }
-  },
-  "status_as_of": "2026-10-18"
- },
- {
-  "asof": "2026-10-26",
-  "intensity": 8,
-  "band": "Medium",
-  "events": 259,
-  "options": {
-   "A": {
-    "n": 11,
-    "index": 0.164,
-    "estimate": 0.19
-   },
-   "B": {
-    "n": 23,
-    "index": 0.2,
-    "estimate": 0.204
-   },
-   "C": {
-    "n": 30,
-    "index": 0.194,
-    "estimate": 0.198
-   },
-   "D": {
-    "n": 7,
-    "index": 0.238,
-    "estimate": 0.262
-   },
-   "E": {
-    "n": 3,
-    "index": 0.5,
-    "estimate": 0.419
-   },
-   "F": {
-    "n": 12,
-    "index": 0.583,
-    "estimate": 0.548
-   },
-   "G": {
-    "n": 7,
-    "index": 0.629,
-    "estimate": 0.564
-   },
-   "H": {
-    "n": 12,
-    "index": 0.217,
-    "estimate": 0.221
-   }
-  },
-  "status": {
-   "A": {
-    "status": "open",
-    "label": "Open"
-   },
-   "B": {
-    "status": "active",
-    "label": "In use now"
-   },
-   "C": {
-    "status": "active",
-    "label": "In use now"
-   },
-   "D": {
-    "status": "active",
-    "label": "In use now"
-   },
-   "E": {
-    "status": "constrained",
-    "label": "Constrained"
-   },
-   "F": {
-    "status": "constrained",
-    "label": "Constrained until Nov 3"
-   },
-   "G": {
-    "status": "constrained",
-    "label": "Constrained until Nov 3"
-   },
-   "H": {
-    "status": "active",
-    "label": "In use now"
-   }
-  },
-  "status_as_of": "2026-10-26"
- },
- {
-  "asof": "2026-11-01",
-  "intensity": 9,
-  "band": "Medium",
-  "events": 275,
-  "options": {
-   "A": {
-    "n": 11,
-    "index": 0.164,
-    "estimate": 0.189
-   },
-   "B": {
-    "n": 25,
-    "index": 0.192,
-    "estimate": 0.196
-   },
-   "C": {
-    "n": 30,
-    "index": 0.193,
-    "estimate": 0.197
-   },
-   "D": {
-    "n": 7,
-    "index": 0.238,
-    "estimate": 0.261
-   },
-   "E": {
-    "n": 3,
-    "index": 0.5,
-    "estimate": 0.417
-   },
-   "F": {
-    "n": 12,
-    "index": 0.583,
-    "estimate": 0.547
-   },
-   "G": {
-    "n": 7,
-    "index": 0.629,
-    "estimate": 0.563
-   },
-   "H": {
-    "n": 14,
-    "index": 0.2,
-    "estimate": 0.205
-   }
-  },
-  "status": {
-   "A": {
-    "status": "open",
-    "label": "Open"
-   },
-   "B": {
-    "status": "active",
-    "label": "In use now"
-   },
-   "C": {
-    "status": "active",
-    "label": "In use now"
-   },
-   "D": {
-    "status": "active",
-    "label": "In use now"
-   },
-   "E": {
-    "status": "constrained",
-    "label": "Constrained until Nov 3"
-   },
-   "F": {
-    "status": "constrained",
-    "label": "Constrained until Nov 3"
-   },
-   "G": {
-    "status": "constrained",
-    "label": "Constrained until Nov 3"
-   },
-   "H": {
-    "status": "active",
-    "label": "In use now"
-   }
-  },
-  "status_as_of": "2026-11-02"
- },
- {
-  "asof": "2026-11-08",
-  "intensity": 17,
-  "band": "High",
-  "events": 334,
-  "options": {
-   "A": {
-    "n": 11,
-    "index": 0.164,
-    "estimate": null
-   },
-   "B": {
-    "n": 27,
-    "index": 0.185,
-    "estimate": null
-   },
-   "C": {
-    "n": 39,
-    "index": 0.19,
-    "estimate": null
-   },
-   "D": {
-    "n": 10,
-    "index": 0.244,
-    "estimate": null
-   },
-   "E": {
-    "n": 3,
-    "index": 0.5,
-    "estimate": null
-   },
-   "F": {
-    "n": 15,
-    "index": 0.567,
-    "estimate": null
-   },
-   "G": {
-    "n": 6,
-    "index": 0.667,
-    "estimate": null
-   },
-   "H": {
-    "n": 36,
-    "index": 0.2,
-    "estimate": null
-   }
-  },
-  "status": {
-   "A": {
-    "status": "open",
-    "label": "Open"
-   },
-   "B": {
-    "status": "active",
-    "label": "In use now"
-   },
-   "C": {
-    "status": "active",
-    "label": "In use now"
-   },
-   "D": {
-    "status": "active",
-    "label": "In use now"
-   },
-   "E": {
-    "status": "open",
-    "label": "Open"
-   },
-   "F": {
-    "status": "active",
-    "label": "In use now"
-   },
-   "G": {
-    "status": "open",
-    "label": "Open"
-   },
-   "H": {
-    "status": "active",
-    "label": "In use now"
-   }
-  },
-  "status_as_of": "2026-11-09"
- },
- {
-  "asof": "2026-11-15",
-  "intensity": 22,
-  "band": "High",
-  "events": 347,
-  "options": {
-   "A": {
-    "n": 11,
-    "index": 0.164,
-    "estimate": null
-   },
-   "B": {
-    "n": 28,
-    "index": 0.186,
-    "estimate": null
-   },
-   "C": {
-    "n": 39,
-    "index": 0.185,
-    "estimate": null
-   },
-   "D": {
-    "n": 10,
-    "index": 0.227,
-    "estimate": null
-   },
-   "E": {
-    "n": 3,
-    "index": 0.5,
-    "estimate": null
-   },
-   "F": {
-    "n": 15,
-    "index": 0.547,
-    "estimate": null
-   },
-   "G": {
-    "n": 6,
-    "index": 0.667,
-    "estimate": null
-   },
-   "H": {
-    "n": 37,
-    "index": 0.2,
-    "estimate": null
-   }
-  },
-  "status": {
-   "A": {
-    "status": "open",
-    "label": "Open"
-   },
-   "B": {
-    "status": "active",
-    "label": "In use now"
-   },
-   "C": {
-    "status": "open",
-    "label": "Open"
-   },
-   "D": {
-    "status": "active",
-    "label": "In use now"
-   },
-   "E": {
-    "status": "open",
-    "label": "Open"
-   },
-   "F": {
-    "status": "open",
-    "label": "Open"
-   },
-   "G": {
-    "status": "open",
-    "label": "Open"
-   },
-   "H": {
-    "status": "active",
-    "label": "In use now"
-   }
-  },
-  "status_as_of": "2026-11-16"
- },
- {
-  "asof": "2026-11-20",
-  "intensity": 23,
-  "band": "High",
-  "events": 359,
+  "events": 367,
   "options": {
    "A": {
     "n": 11,
     "index": 0.182,
-    "estimate": 0.204
+    "estimate": 0.205
    },
    "B": {
     "n": 29,
-    "index": 0.17,
-    "estimate": 0.175
+    "index": 0.173,
+    "estimate": 0.178
    },
    "C": {
     "n": 40,
-    "index": 0.204,
-    "estimate": 0.207
+    "index": 0.212,
+    "estimate": 0.215
    },
    "D": {
     "n": 11,
-    "index": 0.267,
-    "estimate": 0.283
+    "index": 0.286,
+    "estimate": 0.296
    },
    "E": {
     "n": 3,
@@ -487,8 +32,8 @@
    },
    "F": {
     "n": 16,
-    "index": 0.56,
-    "estimate": 0.528
+    "index": 0.55,
+    "estimate": 0.521
    },
    "G": {
     "n": 6,
@@ -496,9 +41,9 @@
     "estimate": 0.657
    },
    "H": {
-    "n": 37,
-    "index": 0.216,
-    "estimate": 0.218
+    "n": 38,
+    "index": 0.221,
+    "estimate": 0.222
    }
   },
   "status": {
@@ -535,6 +80,6 @@
     "label": "In use now"
    }
   },
-  "status_as_of": "2026-11-20"
+  "status_as_of": "2026-11-23"
  }
 ]

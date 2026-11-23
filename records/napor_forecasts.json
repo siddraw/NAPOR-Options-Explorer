@@ -259,10 +259,16 @@
    156,
    157
   ],
-  "outcome": null,
-  "resolved_on": null,
-  "resolution_note": null,
-  "brier": null
+  "outcome": "YES",
+  "resolved_on": "2026-11-23",
+  "resolution_note": "YES. Iran attacked US forces inside the Nov 9-22 window: the IRGC sent drones at the US radar at Sheikh Isa air base in Bahrain on Nov 17 (#180; CENTCOM confirmed they were intercepted), drones went at Ali Al Salem air base in Kuwait on Nov 18 (#181) and at the US radar at Al-Riffa on Nov 15 (#176).",
+  "brier": 0.16,
+  "sources": [
+   "https://www.stripes.com/theaters/middle_east/2026-11-17/iran-bahrain-central-command-drone-attack-23493671.html",
+   "https://www.stripes.com/theaters/middle_east/2026-11-18/iran-kuwait-bahrain-drone-attacks-patriot-missile-23504134.html",
+   "https://time.com/article/2026/11/18/qeshm-island-strikes-us-iran-end-forever-war-vance",
+   "https://www.cbsnews.com/live-updates/us-iran-war-trump-nuclear-material-no-deal/"
+  ]
  },
  {
   "id": "F011",
@@ -280,10 +286,15 @@
    156,
    157
   ],
-  "outcome": null,
-  "resolved_on": null,
-  "resolution_note": null,
-  "brier": null
+  "outcome": "NO",
+  "resolved_on": "2026-11-23",
+  "resolution_note": "NO. No face-to-face meeting between US and Iranian officials and no joint agreement was found for Nov 9-22. Contacts were through mediators only: Qatari mediators met Iranian officials on Nov 17 and held talks in Tehran on Nov 21, when Araghchi said discussion on the Strait of Hormuz is 'pointless' while Iran's demands are not met. Trump says Iran's terms are unacceptable (#189) and Iran says Hormuz can be made safe if the US meets its conditions (#197).",
+  "brier": 0.022,
+  "sources": [
+   "https://www.cbsnews.com/live-updates/iran-war-trump-tehran-denies-chemical-weapons/",
+   "https://abcnews.com/International/live-updates/iran-live-updates-tehran-strait-hormuz-safe-demands/?id=138369648",
+   "https://www.stripes.com/theaters/middle_east/2026-11-18/iran-kuwait-bahrain-drone-attacks-patriot-missile-23504134.html"
+  ]
  },
  {
   "id": "F012",
@@ -300,10 +311,15 @@
    169,
    174
   ],
-  "outcome": null,
-  "resolved_on": null,
-  "resolution_note": null,
-  "brier": null
+  "outcome": "YES",
+  "resolved_on": "2026-11-23",
+  "resolution_note": "YES. UKMTO and allowed outlets reported new attacks on commercial ships in the Strait of Hormuz area inside Nov 16-22: the Tara Gas near Khasab on Nov 16-17 (#178), the ADNOC L&S tanker on Nov 17 (#182), an outbound tanker hit by an unknown projectile on Nov 20 (#191) and two tankers hit on Nov 21 (#193).",
+  "brier": 0.006,
+  "sources": [
+   "https://www.stripes.com/theaters/middle_east/2026-11-17/iran-bahrain-central-command-drone-attack-23493671.html",
+   "https://www.arabnews.pk/middle-east/adnoc-says-one-missing-after-ship-hit-in-hormuz-3007365",
+   "https://www.cbsnews.com/live-updates/iran-war-trump-tehran-denies-chemical-weapons/"
+  ]
  },
  {
   "id": "F013",

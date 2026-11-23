@@ -1,12 +1,13 @@
 {
- "as_of": "2026-11-15",
- "note": "Analyst reading of the log, written only from logged events. Not data. The weekly agent replaces it every week. The log is a sample of well-documented operations and its last row is Jun 12, 2026 (#5640); later operations may be missing.",
+ "as_of": "2026-11-23",
+ "note": "Analyst reading of the log, written only from logged events. Not data. The weekly agent replaces it every week. The log is a sample of well-documented operations and its last US operation is Nov 20, 2026 (#5643); later operations may be missing.",
  "headline": [
   "On Jan 3, 2026 US special forces and aircraft raided Maduro's compound in Venezuela and flew him and his wife to New York (#5633). The log says a few US personnel were hurt and none killed, and that Venezuelan civilians and military were killed (no total given). What followed in Venezuela is logged in the Venezuela tab.",
   "On Jan 20, 2026 Mexico sent 37 more cartel members to the US, the third transfer, bringing the total sent to 92 (#5634). No violence was reported on the page read.",
   "On Feb 22, 2026 Mexico's army killed Jalisco cartel leader El Mencho; the White House said the US gave intelligence support (#5641). The cartel burned vehicles and blocked roads in 20 states the same day and at least 14 died (#5642).",
   "On Feb 28, 2026 a joint US-Israeli operation killed Iran's Supreme Leader Ali Khamenei (#5635). Iran then fired missiles and drones at US bases and Gulf states, and six US soldiers were killed in Kuwait in the first week (#5636). Both are also in the Iran tab.",
-  "On Jun 12, 2026 Trump announced that a US military strike in Venezuela had killed Tren de Aragua leader Hector Guerrero Flores; Venezuela's government said it took part (#5640, also in the Venezuela tab as #4061). Not yet checked for a reply."
+  "On Jun 12, 2026 Trump announced that a US military strike in Venezuela had killed Tren de Aragua leader Hector Guerrero Flores; Venezuela's government said it took part (#5640, also in the Venezuela tab as #4061). Not yet checked for a reply.",
+  "On Nov 20, 2026 Mexican special forces captured Fausto Isidro Meza Flores ('Chapo Isidro'), a Sinaloa-linked leader on the FBI Ten Most Wanted list, in Guasave; seven alleged gunmen and four Mexican soldiers were killed (#5643). The Justice Department says its Homeland Security Task Force supported the operation and Mexico's government credits US intelligence. The same night the group kept roadblocks with burning vehicles in Guasave (#5644, AP). The 30-day reply window runs to Dec 20, so it is not yet counted in the rates."
  ],
  "key_dates": [],
  "pending": [],
@@ -66,10 +67,10 @@
   "G": {
    "status": "open",
    "label": "Open",
-   "reason": "Available. The last logged case of backing a partner is the Feb 2026 killing of El Mencho by Mexico's army, with US intelligence support (#5641); before it, the Oct 2011 strike on Gaddafi's convoy with France and NATO (#5341).",
+   "reason": "Available. The last logged case of backing a partner is the Nov 20, 2026 capture of Meza Flores by Mexican special forces, with US intelligence support (#5643); before it, the Feb 2026 killing of El Mencho by Mexico's army, with US intelligence support (#5641).",
    "events": [
-    5641,
-    5341
+    5643,
+    5641
    ]
   },
   "H": {
